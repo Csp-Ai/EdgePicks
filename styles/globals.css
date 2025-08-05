@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-gray-50 text-gray-900;
+@layer base {
+  html {
+    @apply text-[16px] sm:text-[17px];
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 ease-out;
+  }
 }
+
+@layer components {
+  /* Card backgrounds and transitions */
+  .bg-white {
+    @apply dark:bg-gray-800 transition-all duration-300 ease-in-out;
+  }
+  .bg-gray-50 {
+    @apply dark:bg-gray-700 transition-colors duration-300 ease-in-out;
+  }
+  .bg-gray-200 {
+    @apply dark:bg-gray-600;
+  }
+
+  /* Improved text contrast */
+  .text-gray-600 {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+  .text-gray-500 {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+  .text-gray-400 {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  /* Smooth shadow transitions for expanding cards */
+  .shadow-sm,
+  .shadow,
+  .shadow-md,
+  .shadow-lg {
+    @apply transition-shadow duration-300 ease-in-out;
+  }
+}
+
