@@ -18,10 +18,16 @@ const runners: Record<string, AgentFunc> = {
   statCruncher,
 };
 
-export const agents = (agentsMeta as readonly AgentMeta[]).map((meta) => ({
+export const registry: AgentMeta[] = agentsMeta as AgentMeta[];
+
+export interface Agent extends AgentMeta {
+  run: AgentFunc;
+}
+
+export const agents: Agent[] = registry.map((meta) => ({
   ...meta,
   run: runners[meta.name],
-})) as const;
+}));
 
 export type AgentDescriptor = (typeof agents)[number];
 export type AgentName = AgentDescriptor['name'];
