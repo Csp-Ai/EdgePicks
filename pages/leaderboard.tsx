@@ -21,7 +21,7 @@ const agentIcons: Record<AgentName, string> = {
 };
 
 const LeaderboardPage: React.FC<LeaderboardProps> = ({ stats }) => (
-  <main className="min-h-screen bg-gray-50 p-6">
+  <main className="min-h-screen bg-gray-50 p-6" suppressHydrationWarning>
     <header className="text-center mb-8">
       <h1 className="text-3xl font-mono font-bold">Agent Leaderboard</h1>
       <p className="text-gray-600">Accuracy of agent predictions</p>

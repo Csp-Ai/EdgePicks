@@ -53,8 +53,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  await logToSupabase(matchup, agentsOutput, pickSummary);
+  const loggedAt = await logToSupabase(matchup, agentsOutput, pickSummary);
 
-  res.status(200).json({ agents: agentsOutput, pick: pickSummary });
+  res.status(200).json({ matchup, agents: agentsOutput, pick: pickSummary, loggedAt });
 }
 

@@ -3,20 +3,24 @@ import React, { useEffect, useState } from 'react';
 interface Props {
   percent: number; // 0-100
   color?: string;
+  className?: string;
 }
 
-const ScoreBar: React.FC<Props> = ({ percent, color = 'bg-blue-500' }) => {
-  const [mounted, setMounted] = useState(false);
+const ScoreBar: React.FC<Props> = ({ percent, color = 'bg-blue-500', className }) => {
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const id = requestAnimationFrame(() => setWidth(percent));
+    return () => cancelAnimationFrame(id);
+  }, [percent]);
 
   return (
-    <div className="flex-1 h-2 bg-gray-200 rounded">
+    <div
+      className={`flex-1 h-2 bg-gray-200 rounded overflow-hidden ${className || ''}`}
+    >
       <div
-        className={`h-full ${color} rounded transition-all duration-500`}
-        style={{ width: mounted ? `${percent}%` : 0 }}
+        className={`h-full ${color} transition-all duration-500 ease-out`}
+        style={{ width: `${width}%` }}
       />
     </div>
   );
