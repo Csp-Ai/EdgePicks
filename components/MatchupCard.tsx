@@ -42,7 +42,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <div className="flex gap-2 items-center">
           {onRerun && (
             <button
-              className="min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50"
+              className={`min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50`}
               onClick={onRerun}
               disabled={loading}
             >
