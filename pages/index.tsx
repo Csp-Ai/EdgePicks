@@ -4,6 +4,7 @@ import ExplanationGlossary from '../components/ExplanationGlossary';
 import AgentDebugPanel from '../components/AgentDebugPanel';
 import AgentSummary from '../components/AgentSummary';
 import PickSummary from '../components/PickSummary';
+import Footer from '../components/Footer';
 import { AgentOutputs, AgentResult, Matchup, PickSummary as PickSummaryType } from '../lib/types';
 
 interface ResultPayload {
@@ -18,6 +19,7 @@ interface ResultPayload {
 const HomePage: React.FC = () => {
   const [result, setResult] = useState<ResultPayload | null>(null);
   const [showGlossary, setShowGlossary] = useState(true);
+  const [showDebug, setShowDebug] = useState(false);
 
   const handleStart = ({ teamA, teamB, matchDay }: { teamA: string; teamB: string; matchDay: number }) => {
     setResult({ teamA, teamB, matchDay, agents: {} });
@@ -43,32 +45,35 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 p-6">
-      <header className="text-center mb-8">
-        <h1 className="text-3xl font-mono font-bold">EdgePicks – AI Matchup Insights for Any Sport.</h1>
-        <p
-          className="text-gray-600"
-          title="Our modular agents make it easy to add support for more sports soon."
-        >
-          Powered by modular agents — more sports coming soon.
-        </p>
-      </header>
-      <MatchupInputForm onStart={handleStart} onAgent={handleAgent} onComplete={handleComplete} />
-      {result && (
-        <div className="mt-6 space-y-6">
-          {result.pick && (
-            <PickSummary
-              teamA={result.teamA}
-              teamB={result.teamB}
-              winner={result.pick.winner}
-              confidence={result.pick.confidence}
-            />
-          )}
-          <AgentSummary agents={result.agents} />
-          <AgentDebugPanel agents={result.agents} />
-        </div>
-      )}
-      {showGlossary && <ExplanationGlossary onClose={() => setShowGlossary(false)} />}
+    <main className="min-h-screen bg-gray-50 p-6 pb-24">
+      <div className="container max-w-screen-xl mx-auto space-y-8">
+        <header className="text-center">
+          <h1 className="text-3xl font-mono font-bold">EdgePicks – AI Matchup Insights for Any Sport.</h1>
+          <p
+            className="text-gray-600"
+            title="Our modular agents make it easy to add support for more sports soon."
+          >
+            Powered by modular agents — more sports coming soon.
+          </p>
+        </header>
+        <MatchupInputForm onStart={handleStart} onAgent={handleAgent} onComplete={handleComplete} />
+        {result && (
+          <div className="space-y-6">
+            {result.pick && (
+              <PickSummary
+                teamA={result.teamA}
+                teamB={result.teamB}
+                winner={result.pick.winner}
+                confidence={result.pick.confidence}
+              />
+            )}
+            <AgentSummary agents={result.agents} />
+            {showDebug && <AgentDebugPanel agents={result.agents} />}
+          </div>
+        )}
+        {showGlossary && <ExplanationGlossary onClose={() => setShowGlossary(false)} />}
+      </div>
+      <Footer showDebug={showDebug} onToggleDebug={() => setShowDebug((d) => !d)} />
     </main>
   );
 };

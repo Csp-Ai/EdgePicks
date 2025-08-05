@@ -35,24 +35,22 @@ const AnimatedConfidenceBar: React.FC<Props> = ({ confidence }) => {
     };
   }, [confidence]);
 
-  const barColor =
-    confidence >= 80
-      ? 'bg-green-500'
-      : confidence >= 55
-      ? 'bg-yellow-500'
-      : 'bg-red-500';
-
   return (
     <div aria-label={`Confidence ${confidence}%`}>
       <div className="flex justify-between items-center mb-1">
         <span className="font-semibold">Confidence</span>
         <span className="font-bold">{display}%</span>
       </div>
-      <div className="w-full h-2 bg-gray-200 rounded">
+      <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-red-500 opacity-20 blur-sm animate-pulse" />
         <div
-          className={`h-full ${barColor} rounded transition-all duration-700 ease-in-out`}
+          className="relative h-full bg-gradient-to-r from-green-400 to-red-500 transition-[width] duration-700 ease-out"
           style={{ width: `${fill}%` }}
-        />
+        >
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-gray-800 text-white text-xs px-1 py-0.5 rounded shadow">
+            {display}%
+          </span>
+        </div>
       </div>
     </div>
   );
