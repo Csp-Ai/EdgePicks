@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { agents } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
+import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
 
@@ -38,16 +39,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const agentsOutput: Partial<AgentOutputs> = {};
 
-  await runFlow(flow, matchup, ({ name, result, error }) => {
-    if (!error && result) {
-      agentsOutput[name] = result;
-      res.write(`data: ${JSON.stringify({ type: 'agent', name, result })}\n\n`);
-    } else {
-      res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
+  await runFlow(
+    flow,
+    matchup,
+    ({ name, result, error }) => {
+      if (!error && result) {
+        agentsOutput[name] = result;
+        res.write(`data: ${JSON.stringify({ type: 'agent', name, result })}\n\n`);
+      } else {
+        res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
+      }
+      // @ts-ignore - flush may not exist in some environments
+      res.flush?.();
+    },
+    (event) => {
+      lifecycleAgent(event, matchup);
+      res.write(`data: ${JSON.stringify({ type: 'lifecycle', ...event })}\n\n`);
+      // @ts-ignore - flush may not exist in some environments
+      res.flush?.();
     }
-    // @ts-ignore - flush may not exist in some environments
-    res.flush?.();
-  });
+  );
 
   const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
   flow.agents.forEach((name) => {
