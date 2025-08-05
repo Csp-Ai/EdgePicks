@@ -5,6 +5,7 @@ import AgentDebugPanel from '../components/AgentDebugPanel';
 import AgentSummary from '../components/AgentSummary';
 import PickSummary from '../components/PickSummary';
 import Footer from '../components/Footer';
+import UpcomingGamesPanel from '../components/UpcomingGamesPanel';
 import { AgentOutputs, AgentResult, Matchup, PickSummary as PickSummaryType } from '../lib/types';
 
 interface ResultPayload {
@@ -20,6 +21,7 @@ const HomePage: React.FC = () => {
   const [result, setResult] = useState<ResultPayload | null>(null);
   const [showGlossary, setShowGlossary] = useState(true);
   const [showDebug, setShowDebug] = useState(false);
+  const [showUpcomingGames, setShowUpcomingGames] = useState(false);
 
   const handleStart = ({ teamA, teamB, matchDay }: { teamA: string; teamB: string; matchDay: number }) => {
     setResult({ teamA, teamB, matchDay, agents: {} });
@@ -44,6 +46,10 @@ const HomePage: React.FC = () => {
     });
   };
 
+  const handleSeeUpcomingGames = () => {
+    setShowUpcomingGames((s) => !s);
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 p-6 pb-24">
       <div className="container max-w-screen-xl mx-auto space-y-8">
@@ -55,7 +61,9 @@ const HomePage: React.FC = () => {
           >
             Powered by modular agents — more sports coming soon.
           </p>
+          <button onClick={handleSeeUpcomingGames}>🏈 See Upcoming Games</button>
         </header>
+        {showUpcomingGames && <UpcomingGamesPanel />}
         <MatchupInputForm onStart={handleStart} onAgent={handleAgent} onComplete={handleComplete} />
         {result && (
           <div className="space-y-6">
