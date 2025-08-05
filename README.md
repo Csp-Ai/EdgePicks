@@ -1,51 +1,95 @@
-# EdgePicks
+# 🧠 EdgePicks
 
-AI-powered research assistant for NFL Pick'em that combines multiple lightweight agents to surface weekly matchup edges.
+**EdgePicks** is an AI-powered research assistant for Pick’em players, analysts, and fans. It combines modular agent logic and transparent reasoning to surface smart, explainable picks across matchups—whether you're tracking football, basketball, baseball, or beyond.
 
-## Project Purpose
+## 🏆 Project Purpose
 
-EdgePicks aggregates insights from modular agents so pick'em players can quickly identify advantageous matchups and understand the reasoning behind each recommendation.
+EdgePicks helps users make informed predictions by aggregating insights from lightweight, explainable agents. Each agent contributes a score and rationale, allowing users to understand not just what to pick—but *why*.
 
-## Agent Architecture
+Built for extensibility and clarity, EdgePicks supports:
+- Weekly matchup analysis
+- Per-agent insight comparison
+- Data logging and performance tracking
+- Multi-sport flexibility
 
-Agents live in `lib/agents/` and each returns an `AgentResult` describing a favored team, score, and justification.
+---
 
-- `injuryScout` – checks injury reports.
-- `lineWatcher` – monitors betting line movement.
-- `statCruncher` – looks at efficiency stats.
-- `pickBot` – orchestrator that combines agent scores to produce a final pick.
+## ⚙️ Agent Architecture
 
-## API Endpoints
+Agents live in `lib/agents/` and return an `AgentResult` describing:
+- the **favored team**
+- a **confidence score**
+- the **reasoning** behind the pick
 
-- `GET /api/run-agents?teamA=<team>&teamB=<team>&week=<number>` runs all agents for the supplied matchup and returns individual results plus an overall pick summary.
+Current agents include:
 
-## Environment Variables
+- `injuryScout` – scans injury data for potential advantages
+- `lineWatcher` – monitors line movement for sharp betting behavior
+- `statCruncher` – evaluates team performance and efficiency
+- `pickBot` – orchestrator that aggregates all agent scores into a final recommendation
 
-Copy `.env.example` to `.env` and provide:
+---
+
+## 📡 API Endpoint
+
+Run all agents for a matchup via:
+
+GET /api/run-agents?teamA=<team>&teamB=<team>&week=<number>
+
+yaml
+Copy
+Edit
+
+Returns:
+- Per-agent results (`team`, `score`, `reason`)
+- Overall winner and confidence
+- Logs the outcome to Supabase (if configured)
+
+---
+
+## 🌐 Environment Variables
+
+To enable Supabase integration, create a `.env` file with:
 
 ```bash
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
-```
+These are used in lib/supabaseClient.ts.
 
-These values are used by `lib/supabaseClient.ts` to connect to Supabase.
+🧪 Example Commands
+bash
+Copy
+Edit
+npm install             # install dependencies
+npm run dev             # start dev server (localhost:3000)
 
-## Example Commands
+curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&week=1"
+# sample multi-sport matchup request
+🧱 Adding New Agents or Data Sources
+Create a new file in lib/agents/ exporting an AgentResult based on a Matchup.
 
-```bash
-npm install            # install dependencies
-npm run dev            # start Next.js development server
-curl "http://localhost:3000/api/run-agents?teamA=NE&teamB=NYJ&week=1"  # sample API call
-```
+Register the agent in:
 
-## Adding New Agents or Data Sources
+lib/agents/pickBot.ts
 
-1. Create a new file in `lib/agents/` that exports an `AgentResult` for a `Matchup`.
-2. Import the agent in `lib/agents/pickBot.ts` and `pages/api/run-agents.ts` and adjust the weights.
-3. If the agent relies on external data, configure access (e.g., update `lib/supabaseClient.ts` or add new fetch logic) and document any required env vars.
-4. Optionally add a prompt file in `codex-prompts/` to describe the agent's role.
-5. Run the example commands above to ensure the new agent works end-to-end.
+pages/api/run-agents.ts
 
-## License
+If needed, add data access via lib/supabaseClient.ts or new APIs.
 
+Document the agent in codex-prompts/ (optional).
+
+Test with npm run dev or curl command to ensure end-to-end functionality.
+
+📈 Built-in Features
+✅ Responsive UI with confidence bars, reasoning summaries, and dark mode
+
+📊 Leaderboard to track agent performance over time
+
+🧠 Glossary to explain how agents work
+
+🗂 History page showing past evaluations
+
+🔬 Debug panel for raw/weighted score breakdowns
+
+📄 License
 MIT
