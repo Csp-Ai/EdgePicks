@@ -63,7 +63,7 @@ export default async function handler(
         pickSummary,
         null,
         'football-pick',
-        { isAutoPick: true }
+        true
       );
 
       results.push({
