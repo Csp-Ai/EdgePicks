@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "echo \"No tests\""
+    "test": "echo \"No tests\"",
+    "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.5",
@@ -15,9 +16,11 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^24.2.0",
+    "@types/react": "^19.1.9",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.2"
   }
 }
