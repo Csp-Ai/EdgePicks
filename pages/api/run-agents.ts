@@ -59,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  const loggedAt = await logToSupabase(matchup, agentsOutput as AgentOutputs, pickSummary);
+  const loggedAt = logToSupabase(matchup, agentsOutput as AgentOutputs, pickSummary);
 
   res.write(
     `data: ${JSON.stringify({
