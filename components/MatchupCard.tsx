@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 
 export type MatchupProps = {
   teamA: string;
@@ -51,16 +52,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
       </div>
       <div className="mb-4">
-        <div className="flex justify-between items-center mb-1">
-          <span className="font-semibold">Confidence</span>
-          <span className="font-bold">{confidencePct}%</span>
-        </div>
-        <div className="w-full h-2 bg-gray-200 rounded">
-          <div
-            className="h-full bg-blue-600 rounded"
-            style={{ width: `${confidencePct}%` }}
-          />
-        </div>
+        <AnimatedConfidenceBar confidence={confidencePct} />
         {confidencePct > 80 && (
           <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">🟢 High Confidence</span>
         )}
