@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
+import {
+  AgentOutputs,
+  AgentResult,
+  Matchup,
+  PickSummary,
+} from '../lib/types';
+
+interface SummaryPayload {
+  matchup: Matchup;
+  agents: AgentOutputs;
+  pick: PickSummary;
+  loggedAt?: string;
+}
 
 export type Props = {
-  onResult: (data: any) => void;
+  onStart: (info: { teamA: string; teamB: string; matchDay: number }) => void;
+  onAgent: (name: string, result: AgentResult) => void;
+  onComplete: (data: SummaryPayload) => void;
 };
 
-const MatchupInputForm: React.FC<Props> = ({ onResult }) => {
+const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => {
   const [teamA, setTeamA] = useState('');
   const [teamB, setTeamB] = useState('');
   const [matchDay, setMatchDay] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!teamA || !teamB || !matchDay) {
       setError('All fields are required');
@@ -25,16 +40,33 @@ const MatchupInputForm: React.FC<Props> = ({ onResult }) => {
 
     setError(null);
     setLoading(true);
+    onStart({ teamA, teamB, matchDay: matchDayNum });
+
     try {
-      const res = await fetch(
-        `/api/run-agents?teamA=${encodeURIComponent(teamA)}&teamB=${encodeURIComponent(teamB)}&matchDay=${matchDayNum}`
+      const es = new EventSource(
+        `/api/run-agents?teamA=${encodeURIComponent(teamA)}&teamB=${encodeURIComponent(
+          teamB
+        )}&matchDay=${matchDayNum}`
       );
-      if (!res.ok) throw new Error('Network error');
-      const data = await res.json();
-      onResult({ ...data, teamA, teamB, matchDay: matchDayNum });
+
+      es.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'agent') {
+          onAgent(data.name, data.result as AgentResult);
+        } else if (data.type === 'summary') {
+          onComplete(data as SummaryPayload);
+          setLoading(false);
+          es.close();
+        }
+      };
+
+      es.onerror = () => {
+        setError('Failed to fetch result');
+        setLoading(false);
+        es.close();
+      };
     } catch (e) {
       setError('Failed to fetch result');
-    } finally {
       setLoading(false);
     }
   };
