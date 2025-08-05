@@ -3,6 +3,7 @@ import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
 import AgentComparePanel from './AgentComparePanel';
+import ScoreBar from './ScoreBar';
 import { AgentOutputs, AgentName, displayNames } from '../lib/types';
 import { getContribution } from '../lib/utils';
 
@@ -41,12 +42,7 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
             <li key={name} className="flex items-center gap-2 cursor-help" title={tooltip}>
               <span className="w-28">{displayNames[name]}</span>
               <div className="flex items-center flex-1 gap-2">
-                <div className="flex-1 h-2 bg-gray-200 rounded">
-                  <div
-                    className="h-full bg-blue-500 rounded transition-[width] duration-500 ease-out"
-                    style={{ width: `${contributionPct}%` }}
-                  />
-                </div>
+                <ScoreBar percent={contributionPct} />
                 <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
                 <span className="w-24 text-right font-mono">
                   {contribution.toFixed(2)} ({Math.round(contributionPct)}%)
@@ -86,8 +82,8 @@ const MatchupCard: React.FC<MatchupProps> = ({
   const winnerColor = result.winner === teamA ? 'text-blue-600' : 'text-red-600';
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-      <div className="flex justify-between items-center mb-4">
+    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
         <h3 className="font-semibold flex items-center gap-3">
           <span className="flex items-center gap-2">
             <TeamBadge team={teamA} isWinner={result.winner === teamA} />
@@ -142,6 +138,9 @@ const MatchupCard: React.FC<MatchupProps> = ({
           <ConfidenceBreakdown agents={result.agents} total={result.confidence} />
         </>
       )}
+      <p className="mt-4 text-center text-xs text-gray-500">
+        Powered by modular AI agents
+      </p>
     </div>
   );
 };

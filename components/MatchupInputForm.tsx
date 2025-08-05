@@ -31,7 +31,7 @@ const MatchupInputForm: React.FC<Props> = ({ onResult }) => {
       );
       if (!res.ok) throw new Error('Network error');
       const data = await res.json();
-      onResult(data);
+      onResult({ ...data, teamA, teamB, week: weekNum });
     } catch (e) {
       setError('Failed to fetch result');
     } finally {
@@ -42,7 +42,7 @@ const MatchupInputForm: React.FC<Props> = ({ onResult }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow p-4 flex flex-col sm:flex-row sm:items-end gap-4"
+      className="bg-white rounded-lg shadow p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end gap-4"
     >
       <div className="flex-1">
         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="teamA">

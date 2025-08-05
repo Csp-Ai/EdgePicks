@@ -4,8 +4,9 @@ import { AgentOutputs, Matchup, PickSummary } from './types';
 export async function logToSupabase(
   matchup: Matchup,
   agents: AgentOutputs,
-  pick: PickSummary
-): Promise<void> {
+  pick: PickSummary,
+  loggedAt: string = new Date().toISOString()
+): Promise<string> {
   const client = getSupabaseClient();
   const { error } = await client.from('matchups').insert({
     team_a: matchup.homeTeam,
@@ -13,10 +14,12 @@ export async function logToSupabase(
     week: matchup.week,
     agents,
     pick,
-    created_at: new Date().toISOString(),
+    created_at: loggedAt,
   });
 
   if (error) {
     console.error('Error inserting matchup log:', error);
   }
+
+  return loggedAt;
 }
