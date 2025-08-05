@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScoreBar from './ScoreBar';
 import { AgentName, AgentResult } from '../lib/types';
+import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
 interface Props {
@@ -21,6 +22,7 @@ const AgentCard: React.FC<Props> = ({
   className = '',
 }) => {
   const [visible, setVisible] = useState(false);
+  const meta = agentRegistry.find((a) => a.name === name);
 
   useEffect(() => {
     setVisible(true);
@@ -36,7 +38,9 @@ const AgentCard: React.FC<Props> = ({
       } ${className}`}
     >
       <div className="flex items-center justify-between">
-        <span className="font-medium">{formatAgentName(name)}</span>
+        <span className="font-medium" title={meta?.description}>
+          {formatAgentName(name)}
+        </span>
         {showWeight && (
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}

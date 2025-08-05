@@ -1,18 +1,27 @@
 import type { AgentFunc } from '../types';
+import agentsMeta from './agents.json';
 import { injuryScout } from './injuryScout';
 import { lineWatcher } from './lineWatcher';
 import { statCruncher } from './statCruncher';
 
-export interface AgentDescriptor {
+export interface AgentMeta {
   name: string;
+  description: string;
+  type: string;
   weight: number;
-  run: AgentFunc;
+  sources: string[];
 }
 
-export const agents = [
-  { name: 'injuryScout', weight: 0.5, run: injuryScout },
-  { name: 'lineWatcher', weight: 0.3, run: lineWatcher },
-  { name: 'statCruncher', weight: 0.2, run: statCruncher },
-] as const satisfies readonly AgentDescriptor[];
+const runners: Record<string, AgentFunc> = {
+  injuryScout,
+  lineWatcher,
+  statCruncher,
+};
 
-export type AgentName = (typeof agents)[number]['name'];
+export const agents = (agentsMeta as readonly AgentMeta[]).map((meta) => ({
+  ...meta,
+  run: runners[meta.name],
+})) as const;
+
+export type AgentDescriptor = (typeof agents)[number];
+export type AgentName = AgentDescriptor['name'];

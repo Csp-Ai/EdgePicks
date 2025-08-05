@@ -4,10 +4,10 @@ import { AgentOutputs } from '../lib/types';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
-const agentMeta: Record<string, { badge: string; about: string }> = {
-  injuryScout: { badge: '🏥 Injury', about: 'Tracks player injuries and availability.' },
-  lineWatcher: { badge: '📈 Line', about: 'Monitors betting line movement and market signals.' },
-  statCruncher: { badge: '🧠 Stat', about: 'Crunches historical statistics for trends.' },
+const typeBadge: Record<string, string> = {
+  injury: '🏥 Injury',
+  line: '📈 Line',
+  stat: '🧠 Stat',
 };
 
 type Props = {
@@ -18,7 +18,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
   return (
     <div>
       <div className="space-y-4 sm:hidden">
-        {agentRegistry.map(({ name, weight }) => {
+        {agentRegistry.map(({ name, weight, type, description }) => {
           const result = agents[name];
           const display = formatAgentName(name);
           if (!result) {
@@ -32,7 +32,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
           const scorePct = result.score * 100;
           const weighted = result.score * weight;
           const weightedPct = weighted * 100;
-          const meta = agentMeta[name];
+          const badge = typeBadge[type] || type;
 
           return (
             <div
@@ -41,7 +41,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
             >
               <div className="flex items-center justify-between">
                 <div className="font-medium">{display}</div>
-                <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{meta.badge}</span>
+                <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{badge}</span>
               </div>
               <div className="mt-2">
                 <ScoreBar percent={scorePct} className="w-full" />
@@ -64,7 +64,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               </div>
               <details className="mt-2 text-xs">
                 <summary className="cursor-pointer text-blue-600">About This Agent</summary>
-                <p className="mt-1">{meta.about}</p>
+                <p className="mt-1">{description}</p>
               </details>
             </div>
           );
@@ -82,7 +82,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
             </tr>
           </thead>
           <tbody>
-            {agentRegistry.map(({ name, weight }) => {
+            {agentRegistry.map(({ name, weight, type, description }) => {
               const result = agents[name];
               const display = formatAgentName(name);
               if (!result) {
@@ -98,13 +98,13 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               const scorePct = result.score * 100;
               const weighted = result.score * weight;
               const weightedPct = weighted * 100;
-              const meta = agentMeta[name];
+              const badge = typeBadge[type] || type;
 
               return (
                 <tr key={name} className="border-t ring-1 ring-blue-500">
                   <td className="p-2 font-medium flex items-center gap-2">
                     {display}
-                    <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{meta.badge}</span>
+                    <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{badge}</span>
                   </td>
                   <td className="p-2">
                     <div className="flex items-center gap-2">
@@ -126,7 +126,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                     <div className="truncate" title={result.reason}>{result.reason}</div>
                     <details>
                       <summary className="cursor-pointer text-blue-600">About This Agent</summary>
-                      <p className="mt-1">{meta.about}</p>
+                      <p className="mt-1">{description}</p>
                     </details>
                   </td>
                 </tr>

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "injuryScout",
+    "description": "Tracks player injuries and availability.",
+    "type": "injury",
+    "weight": 0.5,
+    "sources": ["espn", "teamReports"]
+  },
+  {
+    "name": "lineWatcher",
+    "description": "Monitors betting line movement and market signals.",
+    "type": "line",
+    "weight": 0.3,
+    "sources": ["marketData"]
+  },
+  {
+    "name": "statCruncher",
+    "description": "Crunches historical statistics for trends.",
+    "type": "stat",
+    "weight": 0.2,
+    "sources": ["statsApi"]
+  }
+]
