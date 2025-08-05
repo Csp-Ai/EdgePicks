@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import ScoreBar from './ScoreBar';
 import { AgentOutputs, AgentName, displayNames } from '../lib/types';
 
 type Props = {
@@ -7,12 +8,6 @@ type Props = {
 };
 
 const AgentDebugPanel: React.FC<Props> = ({ agents, weights }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <div className="overflow-x-auto">
       <table className="w-full table-auto text-sm">
@@ -37,12 +32,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents, weights }) => {
                 <td className="p-2 font-medium">{displayNames[name]}</td>
                 <td className="p-2">
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 h-2 bg-gray-200 rounded">
-                      <div
-                        className="h-full bg-blue-500 rounded transition-all duration-500"
-                        style={{ width: mounted ? `${scorePct}%` : 0 }}
-                      />
-                    </div>
+                    <ScoreBar percent={scorePct} />
                     <span className="w-20 text-right font-mono">
                       {result.score.toFixed(2)} ({Math.round(scorePct)}%)
                     </span>
@@ -50,12 +40,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents, weights }) => {
                 </td>
                 <td className="p-2">
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 h-2 bg-gray-200 rounded">
-                      <div
-                        className="h-full bg-green-500 rounded transition-all duration-500"
-                        style={{ width: mounted ? `${weightedPct}%` : 0 }}
-                      />
-                    </div>
+                    <ScoreBar percent={weightedPct} color="bg-green-500" />
                     <span className="w-20 text-right font-mono">
                       {weighted.toFixed(2)} ({Math.round(weightedPct)}%)
                     </span>

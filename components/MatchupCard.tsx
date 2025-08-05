@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
+import AgentComparePanel from './AgentComparePanel';
 import { AgentOutputs, AgentName, displayNames } from '../lib/types';
 import { getContribution } from '../lib/utils';
 
@@ -80,6 +81,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
   loading,
 }) => {
   const [open, setOpen] = useState(false);
+  const [compare, setCompare] = useState(false);
   const confidencePct = Math.round(result.confidence * 100);
   const winnerColor = result.winner === teamA ? 'text-blue-600' : 'text-red-600';
 
@@ -109,6 +111,12 @@ const MatchupCard: React.FC<MatchupProps> = ({
           )}
           <button
             className="min-h-[44px] px-3 py-1 text-sm text-blue-600 underline"
+            onClick={() => setCompare((c) => !c)}
+          >
+            {compare ? 'Hide' : 'Compare Agents'}
+          </button>
+          <button
+            className="min-h-[44px] px-3 py-1 text-sm text-blue-600 underline"
             onClick={() => setOpen((o) => !o)}
           >
             {open ? 'Hide' : 'Why?'}
@@ -127,6 +135,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
           <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
         )}
       </div>
+      {compare && <AgentComparePanel agents={result.agents} />}
       {open && (
         <>
           <AgentSummary agents={result.agents} />
