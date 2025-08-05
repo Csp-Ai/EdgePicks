@@ -19,5 +19,12 @@
     "type": "stat",
     "weight": 0.2,
     "sources": ["statsApi"]
+  },
+  {
+    "name": "guardianAgent",
+    "description": "Reviews outputs for inconsistent or incomplete reasoning.",
+    "type": "guardian",
+    "weight": 0,
+    "sources": []
   }
 ]

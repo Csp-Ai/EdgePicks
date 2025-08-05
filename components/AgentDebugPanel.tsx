@@ -62,6 +62,13 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               <div className="mt-2 text-xs text-gray-600 truncate" title={result.reason}>
                 {result.reason}
               </div>
+              {result.warnings && result.warnings.length > 0 && (
+                <ul className="mt-2 text-xs text-yellow-700 list-disc pl-4">
+                  {result.warnings.map((w, i) => (
+                    <li key={i}>{w}</li>
+                  ))}
+                </ul>
+              )}
               <details className="mt-2 text-xs">
                 <summary className="cursor-pointer text-blue-600">About This Agent</summary>
                 <p className="mt-1">{description}</p>
@@ -124,6 +131,13 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                   </td>
                   <td className="p-2 text-xs text-gray-600 max-w-xs">
                     <div className="truncate" title={result.reason}>{result.reason}</div>
+                    {result.warnings && result.warnings.length > 0 && (
+                      <ul className="mt-1 list-disc pl-4 text-yellow-700">
+                        {result.warnings.map((w, i) => (
+                          <li key={i}>{w}</li>
+                        ))}
+                      </ul>
+                    )}
                     <details>
                       <summary className="cursor-pointer text-blue-600">About This Agent</summary>
                       <p className="mt-1">{description}</p>
