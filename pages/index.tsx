@@ -4,7 +4,7 @@ import ExplanationGlossary from '../components/ExplanationGlossary';
 import AgentDebugPanel from '../components/AgentDebugPanel';
 import AgentSummary from '../components/AgentSummary';
 import PickSummary from '../components/PickSummary';
-import { AgentOutputs, AgentName } from '../lib/types';
+import { AgentOutputs } from '../lib/types';
 
 interface ResultPayload {
   teamA: string;
@@ -18,12 +18,6 @@ interface ResultPayload {
   };
   loggedAt?: string;
 }
-
-const weights: Record<AgentName, number> = {
-  injuryScout: 0.5,
-  lineWatcher: 0.3,
-  statCruncher: 0.2,
-};
 
 const HomePage: React.FC = () => {
   const [result, setResult] = useState<ResultPayload | null>(null);
@@ -50,7 +44,7 @@ const HomePage: React.FC = () => {
             confidence={result.pick.confidence}
           />
           <AgentSummary agents={result.agents} />
-          <AgentDebugPanel agents={result.agents} weights={weights} />
+          <AgentDebugPanel agents={result.agents} />
         </div>
       )}
       {showGlossary && <ExplanationGlossary onClose={() => setShowGlossary(false)} />}

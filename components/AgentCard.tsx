@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScoreBar from './ScoreBar';
-import { AgentName, AgentResult, displayNames } from '../lib/types';
+import { AgentName, AgentResult } from '../lib/types';
+import { formatAgentName } from '../lib/utils';
 
 interface Props {
   name: AgentName;
@@ -35,7 +36,7 @@ const AgentCard: React.FC<Props> = ({
       } ${className}`}
     >
       <div className="flex items-center justify-between">
-        <span className="font-medium">{displayNames[name]}</span>
+        <span className="font-medium">{formatAgentName(name)}</span>
         {showWeight && (
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}

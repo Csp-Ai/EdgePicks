@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AgentName, AgentOutputs, displayNames } from '../lib/types';
+import { AgentName, AgentOutputs } from '../lib/types';
+import { formatAgentName } from '../lib/utils';
 import { getSupabaseClient } from '../lib/supabaseClient';
 
 interface MatchupRow {
@@ -62,7 +63,7 @@ const HistoryPage: React.FC = () => {
                   return (
                     <li key={name} className="p-3 bg-gray-50 rounded">
                       <div className="font-medium">
-                        {displayNames[name]}: {result.team}
+                        {formatAgentName(name)}: {result.team}
                       </div>
                       <div className="text-xs text-gray-600">
                         Score: {result.score.toFixed(2)} – {result.reason}

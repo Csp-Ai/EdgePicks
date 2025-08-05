@@ -4,14 +4,9 @@ import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
 import AgentComparePanel from './AgentComparePanel';
 import ScoreBar from './ScoreBar';
-import { AgentOutputs, AgentName, displayNames } from '../lib/types';
-import { getContribution } from '../lib/utils';
-
-const weights: Record<AgentName, number> = {
-  injuryScout: 0.5,
-  lineWatcher: 0.3,
-  statCruncher: 0.2,
-};
+import { AgentOutputs } from '../lib/types';
+import { getContribution, formatAgentName } from '../lib/utils';
+import { agents as agentRegistry } from '../lib/agents/registry';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -31,16 +26,16 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
         </span>
       </div>
       <ul className="space-y-2 text-sm">
-        {(Object.keys(agents) as AgentName[]).map((name) => {
+        {agentRegistry.map(({ name, weight }) => {
           const score = agents[name].score;
-          const weight = weights[name];
           const contribution = getContribution(score, weight);
           const contributionPct = total > 0 ? (contribution / total) * 100 : 0;
-          const tooltip = `${displayNames[name]} scored ${score.toFixed(2)} with weight ${weight.toFixed(2)}, contributing ${contribution.toFixed(2)} (${Math.round(contributionPct)}%) to the final pick`;
+          const display = formatAgentName(name);
+          const tooltip = `${display} scored ${score.toFixed(2)} with weight ${weight.toFixed(2)}, contributing ${contribution.toFixed(2)} (${Math.round(contributionPct)}%) to the final pick`;
 
           return (
             <li key={name} className="flex items-center gap-2 cursor-help" title={tooltip}>
-              <span className="w-28">{displayNames[name]}</span>
+              <span className="w-28">{display}</span>
               <div className="flex items-center flex-1 gap-2">
                 <ScoreBar percent={contributionPct} />
                 <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>

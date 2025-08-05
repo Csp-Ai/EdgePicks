@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getSupabaseClient } from '../lib/supabaseClient';
-import { AgentName, AgentOutputs, displayNames } from '../lib/types';
+import { AgentName, AgentOutputs } from '../lib/types';
+import { agents as agentRegistry } from '../lib/agents/registry';
+import { formatAgentName } from '../lib/utils';
 
 interface AgentStats {
   name: AgentName;
@@ -9,11 +11,13 @@ interface AgentStats {
   accuracy: number;
 }
 
-const agentIcons: Record<AgentName, string> = {
-  injuryScout: '🩺',
-  lineWatcher: '📈',
-  statCruncher: '📊',
-};
+const defaultIcon = '🤖';
+const agentIcons: Record<AgentName, string> = Object.fromEntries(
+  agentRegistry.map(({ name }) => [name, defaultIcon])
+) as Record<AgentName, string>;
+agentIcons.injuryScout = '🩺';
+agentIcons.lineWatcher = '📈';
+agentIcons.statCruncher = '📊';
 
 const LeaderboardPage: React.FC = () => {
   const [stats, setStats] = useState<AgentStats[]>([]);
@@ -33,17 +37,15 @@ const LeaderboardPage: React.FC = () => {
         return;
       }
 
-      const tallies: Record<AgentName, { correct: number; total: number }> = {
-        injuryScout: { correct: 0, total: 0 },
-        lineWatcher: { correct: 0, total: 0 },
-        statCruncher: { correct: 0, total: 0 },
-      };
+      const tallies = Object.fromEntries(
+        agentRegistry.map(({ name }) => [name, { correct: 0, total: 0 }])
+      ) as Record<AgentName, { correct: number; total: number }>;
 
       data.forEach((row: { agents: AgentOutputs; winner?: string; pick?: { winner?: string } }) => {
         const actualWinner = row.winner || row.pick?.winner;
         if (!actualWinner || !row.agents) return;
 
-        (Object.keys(tallies) as AgentName[]).forEach((name) => {
+        agentRegistry.forEach(({ name }) => {
           const agentPick = row.agents[name]?.team;
           if (agentPick) {
             tallies[name].total += 1;
@@ -54,8 +56,8 @@ const LeaderboardPage: React.FC = () => {
         });
       });
 
-      const computed: AgentStats[] = (Object.keys(tallies) as AgentName[])
-        .map((name) => {
+      const computed: AgentStats[] = agentRegistry
+        .map(({ name }) => {
           const { correct, total } = tallies[name];
           return {
             name,
@@ -92,7 +94,7 @@ const LeaderboardPage: React.FC = () => {
               <div className="flex items-center mb-2">
                 <span className="w-6 text-lg font-bold">{idx + 1}</span>
                 <span className="text-2xl mr-2">{agentIcons[s.name]}</span>
-                <span className="font-semibold">{displayNames[s.name]}</span>
+                <span className="font-semibold">{formatAgentName(s.name)}</span>
                 <span className="ml-auto text-sm text-gray-500">
                   {s.correct}/{s.total}
                 </span>

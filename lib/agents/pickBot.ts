@@ -1,31 +1,16 @@
-import { injuryScout } from './injuryScout';
-import { lineWatcher } from './lineWatcher';
-import { statCruncher } from './statCruncher';
-import { AgentResult, Matchup, PickResult } from '../types';
-
-const weights = {
-  injury: 0.5,
-  line: 0.3,
-  stats: 0.2,
-};
+import { agents } from './registry';
+import { Matchup, PickResult } from '../types';
 
 export const pickBot = async (matchup: Matchup): Promise<PickResult> => {
-  const [injury, line, stats] = await Promise.all([
-    injuryScout(matchup),
-    lineWatcher(matchup),
-    statCruncher(matchup),
-  ]);
+  const results = await Promise.all(agents.map((a) => a.run(matchup)));
 
   const teams = [matchup.homeTeam, matchup.awayTeam];
   const scores: Record<string, number> = { [teams[0]]: 0, [teams[1]]: 0 };
 
-  const apply = (result: AgentResult, weight: number) => {
+  results.forEach((result, idx) => {
+    const weight = agents[idx].weight;
     scores[result.team] += result.score * weight;
-  };
-
-  apply(injury, weights.injury);
-  apply(line, weights.line);
-  apply(stats, weights.stats);
+  });
 
   const pick = scores[teams[0]] >= scores[teams[1]] ? teams[0] : teams[1];
   const confidence = Math.max(scores[teams[0]], scores[teams[1]]);
@@ -33,6 +18,6 @@ export const pickBot = async (matchup: Matchup): Promise<PickResult> => {
   return {
     pick,
     confidence,
-    reasons: [injury.reason, line.reason, stats.reason],
+    reasons: results.map((r) => r.reason),
   };
 };

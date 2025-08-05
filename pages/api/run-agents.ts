@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { injuryScout } from '../../lib/agents/injuryScout';
-import { lineWatcher } from '../../lib/agents/lineWatcher';
-import { statCruncher } from '../../lib/agents/statCruncher';
+import { agents } from '../../lib/agents/registry';
 import { AgentResult, AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 
@@ -21,31 +19,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, matchDay: matchDayNum };
 
-  const [injury, line, stats] = await Promise.all([
-    injuryScout(matchup),
-    lineWatcher(matchup),
-    statCruncher(matchup),
-  ]);
+  const results = await Promise.all(agents.map((a) => a.run(matchup)));
 
-  const agentsOutput: AgentOutputs = {
-    injuryScout: injury,
-    lineWatcher: line,
-    statCruncher: stats,
-  };
+  const agentsOutput = Object.fromEntries(
+    agents.map((a, i) => [a.name, results[i]])
+  ) as AgentOutputs;
 
-  const weights = { injury: 0.5, line: 0.3, stats: 0.2 };
   const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
   const apply = (result: AgentResult, weight: number) => {
     scores[result.team] += result.score * weight;
   };
 
-  apply(injury, weights.injury);
-  apply(line, weights.line);
-  apply(stats, weights.stats);
+  results.forEach((result, i) => apply(result, agents[i].weight));
 
   const winner = scores[teamA] >= scores[teamB] ? teamA : teamB;
   const confidence = Math.max(scores[teamA], scores[teamB]);
-  const topReasons = [injury.reason, line.reason, stats.reason];
+  const topReasons = results.map((r) => r.reason);
 
   const pickSummary: PickSummary = {
     winner,
