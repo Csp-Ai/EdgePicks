@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
-import { AgentOutputs, AgentName } from '../lib/types';
-
-const displayNames: Record<AgentName, string> = {
-  injuryScout: 'InjuryScout',
-  lineWatcher: 'LineWatcher',
-  statCruncher: 'StatCruncher',
-};
+import { AgentOutputs, AgentName, displayNames } from '../lib/types';
+import { getContribution } from '../lib/utils';
 
 const weights: Record<AgentName, number> = {
   injuryScout: 0.5,
@@ -37,20 +32,25 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
         {(Object.keys(agents) as AgentName[]).map((name) => {
           const score = agents[name].score;
           const weight = weights[name];
-          const contribution = score * weight;
-          const width = total > 0 ? (contribution / total) * 100 : 0;
+          const contribution = getContribution(score, weight);
+          const contributionPct = total > 0 ? (contribution / total) * 100 : 0;
+          const tooltip = `${displayNames[name]} scored ${score.toFixed(2)} with weight ${weight.toFixed(2)}, contributing ${contribution.toFixed(2)} (${Math.round(contributionPct)}%) to the final pick`;
 
           return (
-            <li key={name} className="flex items-center gap-2">
+            <li key={name} className="flex items-center gap-2 cursor-help" title={tooltip}>
               <span className="w-28">{displayNames[name]}</span>
-              <div className="flex-1 h-2 bg-gray-200 rounded">
-                <div
-                  className="h-full bg-blue-500 rounded transition-all duration-500"
-                  style={{ width: `${Math.round(width)}%` }}
-                />
+              <div className="flex items-center flex-1 gap-2">
+                <div className="flex-1 h-2 bg-gray-200 rounded">
+                  <div
+                    className="h-full bg-blue-500 rounded transition-[width] duration-500 ease-out"
+                    style={{ width: `${contributionPct}%` }}
+                  />
+                </div>
+                <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
+                <span className="w-24 text-right font-mono">
+                  {contribution.toFixed(2)} ({Math.round(contributionPct)}%)
+                </span>
               </div>
-              <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
-              <span className="w-16 text-right font-mono">{contribution.toFixed(2)}</span>
             </li>
           );
         })}
