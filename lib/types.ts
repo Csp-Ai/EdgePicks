@@ -30,3 +30,10 @@ export interface PickResult {
 }
 
 export type MatchupWithPick = Matchup & PickResult;
+
+export interface AgentLifecycle {
+  status: 'started' | 'completed' | 'errored';
+  startedAt: number;
+  endedAt?: number;
+  durationMs?: number;
+}

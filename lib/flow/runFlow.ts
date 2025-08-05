@@ -1,4 +1,10 @@
-import type { Matchup, AgentOutputs, AgentResult, AgentName } from '../types';
+import type {
+  Matchup,
+  AgentOutputs,
+  AgentResult,
+  AgentName,
+  AgentLifecycle,
+} from '../types';
 import { agents as registry } from '../agents/registry';
 import type { FlowConfig } from './loadFlow';
 
@@ -15,7 +21,8 @@ export interface AgentExecution {
 export async function runFlow(
   flow: FlowConfig,
   matchup: Matchup,
-  onAgent?: (exec: AgentExecution) => void
+  onAgent?: (exec: AgentExecution) => void,
+  onLifecycle?: (event: { name: AgentName } & AgentLifecycle) => void
 ): Promise<Partial<AgentOutputs>> {
   const outputs: Partial<AgentOutputs> = {};
 
@@ -28,14 +35,34 @@ export async function runFlow(
     }
 
     console.log(`[runFlow] ${name} input:`, matchup);
+    const start = Date.now();
+    onLifecycle?.({ name, status: 'started', startedAt: start });
     try {
       const result = await agent.run(matchup);
+      const end = Date.now();
+      const duration = end - start;
       console.log(`[runFlow] ${name} output:`, result);
       outputs[name] = result;
       onAgent?.({ name, result });
+      onLifecycle?.({
+        name,
+        status: 'completed',
+        startedAt: start,
+        endedAt: end,
+        durationMs: duration,
+      });
     } catch (err) {
+      const end = Date.now();
+      const duration = end - start;
       console.error(`[runFlow] ${name} error:`, err);
       onAgent?.({ name, error: true });
+      onLifecycle?.({
+        name,
+        status: 'errored',
+        startedAt: start,
+        endedAt: end,
+        durationMs: duration,
+      });
     }
   }
 
