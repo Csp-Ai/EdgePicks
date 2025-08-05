@@ -31,7 +31,7 @@ const AgentCard: React.FC<Props> = ({
 
   return (
     <div
-      className={`p-3 bg-gray-50 rounded shadow-sm flex flex-col gap-2 transition-all duration-500 ease-out ${
+      className={`p-3 bg-gray-50 rounded shadow-sm flex flex-col gap-2 transition-all duration-500 ease-out hover:scale-[1.02] ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       } ${className}`}
     >
@@ -48,7 +48,9 @@ const AgentCard: React.FC<Props> = ({
         <ScoreBar percent={scorePct} />
         <span className="w-10 text-right font-mono text-sm">{result.score.toFixed(2)}</span>
       </div>
-      <p className="text-xs text-gray-600">{result.reason}</p>
+      <p className="text-xs text-gray-600 truncate" title={result.reason}>
+        {result.reason}
+      </p>
     </div>
   );
 };

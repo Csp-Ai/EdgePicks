@@ -74,9 +74,9 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end gap-4"
+      className="bg-white rounded-lg shadow p-4 sm:p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
-      <div className="flex-1">
+      <div className="flex flex-col">
         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="teamA">
           Team/Player A
         </label>
@@ -90,7 +90,7 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
           placeholder="e.g., BOS or Federer"
         />
       </div>
-      <div className="flex-1">
+      <div className="flex flex-col">
         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="teamB">
           Team/Player B
         </label>
@@ -104,7 +104,7 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
           placeholder="e.g., LAL or Nadal"
         />
       </div>
-      <div className="w-full sm:w-24">
+      <div className="flex flex-col">
         <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="matchDay">
           Match Day
         </label>
@@ -121,14 +121,14 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
       <div className="sm:self-end">
         <button
           type="submit"
-          className="min-h-[44px] px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+          className="min-h-[44px] px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 transition-transform hover:scale-105"
           disabled={loading}
         >
           {loading ? 'Loading...' : 'Run'}
         </button>
       </div>
       {error && (
-        <p className="text-red-600 text-sm sm:ml-4 sm:self-center">{error}</p>
+        <p className="text-red-600 text-sm sm:col-span-2 lg:col-span-4">{error}</p>
       )}
     </form>
   );

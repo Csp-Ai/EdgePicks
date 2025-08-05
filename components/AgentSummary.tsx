@@ -9,11 +9,11 @@ interface Props {
 
 const AgentSummary: React.FC<Props> = ({ agents }) => {
   return (
-    <ul className="mt-2 text-sm space-y-3">
+    <ul className="mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {agentRegistry.map(({ name, weight }) => {
         const result = agents[name];
         return (
-          <li key={name}>
+          <li key={name} className="list-none">
             {result ? (
               <AgentCard name={name} result={result} weight={weight} showWeight />
             ) : (

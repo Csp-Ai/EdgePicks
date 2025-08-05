@@ -4,6 +4,12 @@ import { AgentOutputs } from '../lib/types';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
+const agentMeta: Record<string, { badge: string; about: string }> = {
+  injuryScout: { badge: '🏥 Injury', about: 'Tracks player injuries and availability.' },
+  lineWatcher: { badge: '📈 Line', about: 'Monitors betting line movement and market signals.' },
+  statCruncher: { badge: '🧠 Stat', about: 'Crunches historical statistics for trends.' },
+};
+
 type Props = {
   agents: Partial<AgentOutputs>;
 };
@@ -17,7 +23,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
           const display = formatAgentName(name);
           if (!result) {
             return (
-              <div key={name} className="border rounded p-4">
+              <div key={name} className="border rounded p-4 opacity-50">
                 <div className="font-medium">{display}</div>
                 <div className="mt-2 text-sm text-gray-500">Loading...</div>
               </div>
@@ -26,10 +32,17 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
           const scorePct = result.score * 100;
           const weighted = result.score * weight;
           const weightedPct = weighted * 100;
+          const meta = agentMeta[name];
 
           return (
-            <div key={name} className="border rounded p-4">
-              <div className="font-medium">{display}</div>
+            <div
+              key={name}
+              className="border rounded p-4 ring-1 ring-blue-500 transition hover:scale-[1.01]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="font-medium">{display}</div>
+                <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{meta.badge}</span>
+              </div>
               <div className="mt-2">
                 <ScoreBar percent={scorePct} className="w-full" />
                 <div className="mt-1 font-mono text-sm">
@@ -46,9 +59,13 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                   {weighted.toFixed(2)} ({Math.round(weightedPct)}%)
                 </div>
               </div>
-              <div className="mt-2 text-xs text-gray-600 break-words">
+              <div className="mt-2 text-xs text-gray-600 truncate" title={result.reason}>
                 {result.reason}
               </div>
+              <details className="mt-2 text-xs">
+                <summary className="cursor-pointer text-blue-600">About This Agent</summary>
+                <p className="mt-1">{meta.about}</p>
+              </details>
             </div>
           );
         })}
@@ -70,7 +87,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               const display = formatAgentName(name);
               if (!result) {
                 return (
-                  <tr key={name} className="border-t">
+                  <tr key={name} className="border-t opacity-50">
                     <td className="p-2 font-medium">{display}</td>
                     <td className="p-2" colSpan={3}>
                       <span className="text-gray-500">Loading...</span>
@@ -81,10 +98,14 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               const scorePct = result.score * 100;
               const weighted = result.score * weight;
               const weightedPct = weighted * 100;
+              const meta = agentMeta[name];
 
               return (
-                <tr key={name} className="border-t">
-                  <td className="p-2 font-medium">{display}</td>
+                <tr key={name} className="border-t ring-1 ring-blue-500">
+                  <td className="p-2 font-medium flex items-center gap-2">
+                    {display}
+                    <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{meta.badge}</span>
+                  </td>
                   <td className="p-2">
                     <div className="flex items-center gap-2">
                       <ScoreBar percent={scorePct} />
@@ -101,8 +122,12 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                       </span>
                     </div>
                   </td>
-                  <td className="p-2 text-xs text-gray-600 break-words">
-                    {result.reason}
+                  <td className="p-2 text-xs text-gray-600 max-w-xs">
+                    <div className="truncate" title={result.reason}>{result.reason}</div>
+                    <details>
+                      <summary className="cursor-pointer text-blue-600">About This Agent</summary>
+                      <p className="mt-1">{meta.about}</p>
+                    </details>
                   </td>
                 </tr>
               );
