@@ -1,0 +1,55 @@
+import React, { useEffect, useState } from 'react';
+import ScoreBar from './ScoreBar';
+import { AgentName, AgentResult, displayNames } from '../lib/types';
+
+interface Props {
+  name: AgentName;
+  result: AgentResult;
+  weight?: number;
+  showWeight?: boolean;
+  showTeam?: boolean;
+  className?: string;
+}
+
+const AgentCard: React.FC<Props> = ({
+  name,
+  result,
+  weight = 0,
+  showWeight = false,
+  showTeam = false,
+  className = '',
+}) => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setVisible(true);
+  }, []);
+
+  const scorePct = Math.round(result.score * 100);
+  const weightPct = Math.round(weight * 100);
+
+  return (
+    <div
+      className={`p-3 bg-gray-50 rounded shadow-sm flex flex-col gap-2 transition-all duration-500 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      } ${className}`}
+    >
+      <div className="flex items-center justify-between">
+        <span className="font-medium">{displayNames[name]}</span>
+        {showWeight && (
+          <span className="text-xs text-gray-500">{weightPct}% weight</span>
+        )}
+      </div>
+      {showTeam && (
+        <span className="text-sm text-gray-700">Favored: {result.team}</span>
+      )}
+      <div className="flex items-center gap-2">
+        <ScoreBar percent={scorePct} />
+        <span className="w-10 text-right font-mono text-sm">{result.score.toFixed(2)}</span>
+      </div>
+      <p className="text-xs text-gray-600">{result.reason}</p>
+    </div>
+  );
+};
+
+export default AgentCard;
