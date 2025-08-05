@@ -1,51 +1,56 @@
-# 🧠 EdgePicks
+🧠 EdgePicks
 
-**EdgePicks** is an AI-powered research assistant for Pick’em players, analysts, and fans. It combines modular agent logic and transparent reasoning to surface smart, explainable picks across matchups—whether you're tracking football, basketball, baseball, or beyond.
+EdgePicks is an AI-powered research assistant for Pick’em players, analysts, and fans. It combines modular agent logic and transparent reasoning to surface smart, explainable picks across matchups—whether you're tracking football, basketball, baseball, or beyond.
 
-## 🏆 Project Purpose
+🏆 Project Purpose
 
-EdgePicks helps users make informed predictions by aggregating insights from lightweight, explainable agents. Each agent contributes a score and rationale, allowing users to understand not just what to pick—but *why*.
+EdgePicks helps users make informed predictions by aggregating insights from lightweight, explainable agents. Each agent contributes a score and rationale, allowing users to understand not just what to pick—but why.
 
 Built for extensibility and clarity, EdgePicks supports:
-- Weekly matchup analysis
-- Per-agent insight comparison
-- Data logging and performance tracking
-- Multi-sport flexibility
 
----
+Weekly matchup analysis
 
-## ⚙️ Agent Architecture
+Per-agent insight comparison
 
-Agents live in `lib/agents/` and return an `AgentResult` describing:
-- the **favored team**
-- a **confidence score**
-- the **reasoning** behind the pick
+Data logging and performance tracking
+
+Multi-sport flexibility
+
+⚙️ Agent Architecture
+
+Agents live in lib/agents/ and return an AgentResult describing:
+
+the favored team
+
+a confidence score
+
+the reasoning behind the pick
 
 Current agents include:
 
-- `injuryScout` – scans injury data for potential advantages
-- `lineWatcher` – monitors line movement for sharp betting behavior
-- `statCruncher` – evaluates team performance and efficiency
-- `pickBot` – orchestrator that aggregates all agent scores into a final recommendation
+injuryScout – scans injury data for potential advantages
 
----
+lineWatcher – monitors line movement for sharp betting behavior
 
-## 📡 API Endpoint
+statCruncher – evaluates team performance and efficiency
+
+pickBot – orchestrator that aggregates all agent scores into a final recommendation
+
+📱 API Endpoint
 
 Run all agents for a matchup via:
 
 GET /api/run-agents?teamA=<team>&teamB=<team>&matchDay=<number>
 
-yaml
-Copy
-Edit
-
 Returns:
-- Per-agent results (`team`, `score`, `reason`)
-- Overall winner and confidence
-- Logs the outcome to Supabase (if configured)
 
-### Log Status Endpoint
+Per-agent results (team, score, reason)
+
+Overall winner and confidence
+
+Logs the outcome to Supabase (if configured)
+
+Log Status Endpoint
 
 Monitor the in-memory log queue via:
 
@@ -53,39 +58,32 @@ GET /api/log-status
 
 This returns the number of pending log entries and the last error encountered (if any).
 
----
+🌐 Environment Variables
 
-## 🌐 Environment Variables
+To enable Supabase integration, create a .env file in the project root:
 
-To enable Supabase integration, create a `.env` file in the project root:
-
-```bash
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
-```
 
-You can find these values in your Supabase dashboard under **Project Settings → API**. They are required by `lib/supabaseClient.ts` to connect to your Supabase project.
+You can find these values in your Supabase dashboard under Project Settings → API. They are required by lib/supabaseClient.ts to connect to your Supabase project.
 
-## 🧪 Example Commands
+🧪 Example Commands
 
-```bash
 npm install             # install dependencies
 npm run dev             # start dev server (localhost:3000)
 
 curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&matchDay=1" # sample multi-sport matchup request
-```
 
-## 📝 Updating Actual Results
+📝 Updating Actual Results
 
-After games conclude, record the real-world outcome so the leaderboard can track accuracy. Update the `actual_winner` column in Supabase via the Table Editor or SQL:
+After games conclude, record the real-world outcome so the leaderboard can track accuracy. Update the actual_winner column in Supabase via the Table Editor or SQL:
 
-```sql
 update matchups set actual_winner = 'BOS' where id = '<matchup-id>';
-```
 
-Rows without an outcome show **N/A** in the history page and are ignored in accuracy calculations.
+Rows without an outcome show N/A in the history page and are ignored in accuracy calculations.
 
 🧱 Adding New Agents or Data Sources
+
 Create a new file in lib/agents/ exporting an AgentResult based on a Matchup.
 
 Register the agent in:
@@ -101,6 +99,7 @@ Document the agent in codex-prompts/ (optional).
 Test with npm run dev or curl command to ensure end-to-end functionality.
 
 📈 Built-in Features
+
 ✅ Responsive UI with confidence bars, reasoning summaries, and dark mode
 
 📊 Leaderboard to track agent performance over time
@@ -112,4 +111,5 @@ Test with npm run dev or curl command to ensure end-to-end functionality.
 🔬 Debug panel for raw/weighted score breakdowns
 
 📄 License
+
 MIT
