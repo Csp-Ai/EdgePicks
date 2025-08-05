@@ -1,13 +1,4 @@
-export interface AgentResult {
-  team: string;
-  score: number; // higher score favors team
-  reason: string;
-}
-
-interface Matchup {
-  homeTeam: string;
-  awayTeam: string;
-}
+import { AgentResult, Matchup } from '../types';
 
 import { pseudoMetric } from './utils';
 

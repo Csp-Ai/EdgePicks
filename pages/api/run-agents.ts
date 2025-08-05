@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { injuryScout } from '../../lib/agents/injuryScout';
 import { lineWatcher } from '../../lib/agents/lineWatcher';
 import { statCruncher } from '../../lib/agents/statCruncher';
-import type { AgentResult } from '../../lib/agents/injuryScout';
+import { AgentResult, Matchup } from '../../lib/types';
 
 interface AgentOutput {
   injuryScout: AgentResult;
@@ -15,6 +15,7 @@ interface PickSummary {
   confidence: number;
   topReasons: string[];
 }
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { teamA, teamB, week } = req.query;
 
@@ -29,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
+  const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
 
   const [injury, line, stats] = await Promise.all([
     injuryScout(matchup),
@@ -65,3 +66,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   res.status(200).json({ agents: agentsOutput, pick: pickSummary });
 }
+

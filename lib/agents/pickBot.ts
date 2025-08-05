@@ -1,18 +1,7 @@
 import { injuryScout } from './injuryScout';
 import { lineWatcher } from './lineWatcher';
 import { statCruncher } from './statCruncher';
-import type { AgentResult } from './injuryScout';
-
-interface Matchup {
-  homeTeam: string;
-  awayTeam: string;
-}
-
-export interface PickResult {
-  pick: string;
-  confidence: number;
-  reasons: string[];
-}
+import { AgentResult, Matchup, PickResult } from '../types';
 
 const weights = {
   injury: 0.5,

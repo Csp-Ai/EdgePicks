@@ -1,10 +1,5 @@
-import type { AgentResult } from './injuryScout';
+import { AgentResult, Matchup } from '../types';
 import { pseudoMetric } from './utils';
-
-interface Matchup {
-  homeTeam: string;
-  awayTeam: string;
-}
 
 export const statCruncher = async (matchup: Matchup): Promise<AgentResult> => {
   const [homeEff, awayEff] = await Promise.all([
