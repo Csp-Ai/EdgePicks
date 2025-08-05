@@ -8,6 +8,7 @@ type LogEntry = {
   pick: PickSummary;
   actualWinner: string | null;
   flow: string;
+  extras?: Record<string, any>;
   loggedAt: string;
 };
 
@@ -31,6 +32,7 @@ async function processQueue() {
       pick: entry.pick,
       flow: entry.flow,
       actual_winner: entry.actualWinner,
+      extras: entry.extras,
       created_at: entry.loggedAt,
     });
 
@@ -62,9 +64,10 @@ export function logToSupabase(
   pick: PickSummary,
   actualWinner: string | null = null,
   flow: string = 'unknown',
+  extras: Record<string, any> = {},
   loggedAt: string = new Date().toISOString()
 ): string {
-  queue.push({ matchup, agents, pick, actualWinner, flow, loggedAt });
+  queue.push({ matchup, agents, pick, actualWinner, flow, extras, loggedAt });
   setImmediate(processQueue);
   return loggedAt;
 }
