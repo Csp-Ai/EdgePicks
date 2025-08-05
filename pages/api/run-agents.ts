@@ -1,0 +1,71 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { injuryScout } from '../../lib/agents/injuryScout';
+import { lineWatcher } from '../../lib/agents/lineWatcher';
+import { statCruncher } from '../../lib/agents/statCruncher';
+
+interface AgentResult {
+  team: string;
+  score: number;
+  reason: string;
+}
+
+interface AgentOutput {
+  injuryScout: AgentResult;
+  lineWatcher: AgentResult;
+  statCruncher: AgentResult;
+}
+
+interface PickSummary {
+  winner: string;
+  confidence: number;
+  topReasons: string[];
+}
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { teamA, teamB, week } = req.query;
+
+  if (typeof teamA !== 'string' || typeof teamB !== 'string' || typeof week !== 'string') {
+    res.status(400).json({ error: 'teamA, teamB, and week query params are required' });
+    return;
+  }
+
+  const weekNum = parseInt(week, 10);
+  if (isNaN(weekNum)) {
+    res.status(400).json({ error: 'week must be a number' });
+    return;
+  }
+
+  const matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
+
+  const injury = injuryScout(matchup);
+  const line = lineWatcher(matchup);
+  const stats = statCruncher(matchup);
+
+  const agentsOutput: AgentOutput = {
+    injuryScout: injury,
+    lineWatcher: line,
+    statCruncher: stats,
+  };
+
+  const weights = { injury: 0.5, line: 0.3, stats: 0.2 };
+  const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
+  const apply = (result: AgentResult, weight: number) => {
+    scores[result.team] += result.score * weight;
+  };
+
+  apply(injury, weights.injury);
+  apply(line, weights.line);
+  apply(stats, weights.stats);
+
+  const winner = scores[teamA] >= scores[teamB] ? teamA : teamB;
+  const confidence = Math.max(scores[teamA], scores[teamB]);
+  const topReasons = [injury.reason, line.reason, stats.reason];
+
+  const pickSummary: PickSummary = {
+    winner,
+    confidence,
+    topReasons,
+  };
+
+  res.status(200).json({ agents: agentsOutput, pick: pickSummary });
+}
