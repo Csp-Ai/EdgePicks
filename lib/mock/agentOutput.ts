@@ -1,12 +1,6 @@
-export interface Matchup {
-  homeTeam: string;
-  awayTeam: string;
-  pick: string;
-  confidence: number; // value between 0 and 1
-  reasons: string[];
-}
+import { MatchupWithPick } from '../types';
 
-export const mockMatchups: Matchup[] = [
+export const mockMatchups: MatchupWithPick[] = [
   {
     homeTeam: 'Patriots',
     awayTeam: 'Jets',
