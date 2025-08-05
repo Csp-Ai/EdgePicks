@@ -69,6 +69,13 @@ const HistoryPage: React.FC = () => {
                       <div className="text-xs text-gray-600">
                         Score: {result.score.toFixed(2)} – {result.reason}
                       </div>
+                      {result.warnings && result.warnings.length > 0 && (
+                        <ul className="mt-1 text-xs text-yellow-700 list-disc pl-4">
+                          {result.warnings.map((w, i) => (
+                            <li key={i}>{w}</li>
+                          ))}
+                        </ul>
+                      )}
                     </li>
                   );
                 })}

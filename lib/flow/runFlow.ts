@@ -38,7 +38,7 @@ export async function runFlow(
     const start = Date.now();
     onLifecycle?.({ name, status: 'started', startedAt: start });
     try {
-      const result = await agent.run(matchup);
+      const result = await agent.run(matchup, outputs);
       const end = Date.now();
       const duration = end - start;
       console.log(`[runFlow] ${name} output:`, result);
