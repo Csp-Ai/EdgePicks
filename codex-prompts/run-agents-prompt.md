@@ -2,10 +2,10 @@
 Create an API route that runs the EdgePicks agent pipeline for a given NFL matchup. This route gathers data from InjuryScout, LineWatcher, and StatCruncher, processes them with PickBot, and returns a complete pick with confidence and reasoning.
 
 # API Endpoint
-`GET /api/run-agents?teamA=49ers&teamB=Cowboys&week=1`
+`GET /api/run-agents?teamA=49ers&teamB=Cowboys&matchDay=1`
 
 # Responsibilities
-1. Accept teamA, teamB, week from query params  
+1. Accept teamA, teamB, matchDay from query params
 2. Call each modular agent:  
    - `injuryScout(matchup)`  
    - `lineWatcher(matchup)`  

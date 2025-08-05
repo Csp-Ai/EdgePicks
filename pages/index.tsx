@@ -9,7 +9,7 @@ import { AgentOutputs, AgentName } from '../lib/types';
 interface ResultPayload {
   teamA: string;
   teamB: string;
-  week: number;
+  matchDay: number;
   agents: AgentOutputs;
   pick: {
     winner: string;
