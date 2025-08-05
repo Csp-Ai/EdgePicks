@@ -1,22 +1,20 @@
-🧠 EdgePicks
+Last Updated: 2025-08-05
+
+# 🧠 EdgePicks
 
 EdgePicks is an AI-powered research assistant for Pick’em players, analysts, and fans. It combines modular agent logic and transparent reasoning to surface smart, explainable picks across matchups—whether you're tracking football, basketball, baseball, or beyond.
 
-🏆 Project Purpose
+## Features
+
+- Live predictions panel
+- Transparency dashboards
+- Accuracy leaderboards
+
+## Project Purpose
 
 EdgePicks helps users make informed predictions by aggregating insights from lightweight, explainable agents. Each agent contributes a score and rationale, allowing users to understand not just what to pick—but why.
 
-Built for extensibility and clarity, EdgePicks supports:
-
-Weekly matchup analysis
-
-Per-agent insight comparison
-
-Data logging and performance tracking
-
-Multi-sport flexibility
-
-⚙️ Agent Architecture
+## Agent Architecture
 
 Agents live in lib/agents/ and return an AgentResult describing:
 
@@ -28,15 +26,24 @@ the reasoning behind the pick
 
 Current agents include:
 
-injuryScout – scans injury data for potential advantages
-
-lineWatcher – monitors line movement for sharp betting behavior
-
-statCruncher – evaluates team performance and efficiency
+- injuryScout – scans injury data for potential advantages
+- lineWatcher – monitors line movement for sharp betting behavior
+- statCruncher – evaluates team performance and efficiency
+- trendsAgent – analyzes historical and momentum trends
+- guardianAgent – raises warnings on risky or inconsistent picks
 
 pickBot – orchestrator that aggregates all agent scores into a final recommendation
 
-📱 API Endpoint
+See [AGENTS.md](AGENTS.md) for detailed agent metadata.
+
+## Project Structure
+
+- `lib/` – core agent logic, flow helpers, and utilities
+- `components/` – reusable UI elements
+- `pages/api/` – Next.js API routes
+- `supabase/` – database schema and seed helpers
+
+## API Endpoint
 
 Run all agents for a matchup via:
 
@@ -50,7 +57,7 @@ Overall winner and confidence
 
 Logs the outcome to Supabase (if configured)
 
-Log Status Endpoint
+### Log Status Endpoint
 
 Monitor the in-memory log queue via:
 
@@ -58,7 +65,7 @@ GET /api/log-status
 
 This returns the number of pending log entries and the last error encountered (if any).
 
-🌐 Environment Variables
+## Environment Variables
 
 To enable Supabase integration, create a .env file in the project root:
 
@@ -67,16 +74,25 @@ SUPABASE_ANON_KEY=<your-anon-key>
 
 You can find these values in your Supabase dashboard under Project Settings → API. They are required by lib/supabaseClient.ts to connect to your Supabase project.
 
-🧪 Example Commands
+## Development Setup
 
-npm install             # install dependencies
-npm run dev             # start dev server (localhost:3000)
+1. `npm install`
+2. Copy `.env.example` to `.env` and configure values
+3. `npm run dev` (starts dev server at `localhost:3000`)
 
-curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&matchDay=1" # sample multi-sport matchup request
+## Flow Execution
 
-📝 Updating Actual Results
+matchup → agents → `logToSupabase` → accuracy updates
 
-After games conclude, record the real-world outcome so the leaderboard can track accuracy. Update the actual_winner column in Supabase via the Table Editor or SQL:
+## Database Schema Notes
+
+- `actual_winner` – actual outcome recorded post-game
+- `is_auto_pick` – whether a selection was auto-generated
+- `extras` – JSON field for additional metadata
+
+## Updating Actual Results
+
+After games conclude, record the real-world outcome so the leaderboard can track accuracy. Update the `actual_winner` column in Supabase via the Table Editor or SQL:
 
 update matchups set actual_winner = 'BOS' where id = '<matchup-id>';
 
