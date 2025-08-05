@@ -19,5 +19,12 @@
     "type": "stat",
     "weight": 0.2,
     "sources": ["statsApi"]
+  },
+  {
+    "name": "trendsAgent",
+    "description": "Analyzes recent matchups for flow popularity and agent hit rates.",
+    "type": "analytics",
+    "weight": 0,
+    "sources": ["supabase"]
   }
 ]

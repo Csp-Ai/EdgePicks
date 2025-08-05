@@ -1,0 +1,4 @@
+{
+  "name": "Trends Analysis Flow",
+  "agents": ["trendsAgent"]
+}
