@@ -2,6 +2,8 @@ export interface Matchup {
   homeTeam: string;
   awayTeam: string;
   matchDay?: number;
+  time?: string;
+  league?: string;
 }
 
 export interface AgentResult {
