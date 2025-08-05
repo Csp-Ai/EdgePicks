@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import MatchupCard from '../components/MatchupCard';
+import ExplanationGlossary from '../components/ExplanationGlossary';
 import { AgentOutputs } from '../lib/types';
 
 type Matchup = {
@@ -89,19 +90,35 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
   );
 };
 
-const HomePage: React.FC = () => (
-  <main className="min-h-screen bg-gray-50 p-6">
-    <header className="text-center mb-8">
-      <h1 className="text-3xl font-mono font-bold">EdgePicks – AI NFL Matchup Insights</h1>
-      <p className="text-gray-600">Updated weekly. Powered by modular agents.</p>
-    </header>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {matchups.map((m, idx) => (
-        <MatchupFetcher key={idx} {...m} />
-      ))}
-    </div>
-  </main>
-);
+const HomePage: React.FC = () => {
+  const [showGlossary, setShowGlossary] = useState(false);
+
+  return (
+    <main className="min-h-screen bg-gray-50 p-6">
+      <header className="text-center mb-8">
+        <h1 className="text-3xl font-mono font-bold">EdgePicks – AI NFL Matchup Insights</h1>
+        <p className="text-gray-600">Updated weekly. Powered by modular agents.</p>
+        <button
+          onClick={() => setShowGlossary(true)}
+          className="mt-2 mx-auto flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <span className="w-5 h-5 flex items-center justify-center border border-blue-600 rounded-full text-xs font-bold mr-2">
+            ?
+          </span>
+          <span className="underline">What powers these picks?</span>
+        </button>
+      </header>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {matchups.map((m, idx) => (
+          <MatchupFetcher key={idx} {...m} />
+        ))}
+      </div>
+      {showGlossary && (
+        <ExplanationGlossary onClose={() => setShowGlossary(false)} />
+      )}
+    </main>
+  );
+};
 
 export default HomePage;
 
