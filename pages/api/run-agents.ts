@@ -30,7 +30,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.flushHeaders?.();
 
   const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, matchDay: matchDayNum };
-
   const agentsOutput: Partial<AgentOutputs> = {};
 
   await Promise.all(
@@ -59,11 +58,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  const loggedAt = await logToSupabase(
+  const loggedAt = logToSupabase(
     matchup,
     agentsOutput as AgentOutputs,
     pickSummary,
-    null
+    null // Optional actualWinner for future expansion
   );
 
   res.write(
@@ -77,4 +76,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
   res.end();
 }
+
 

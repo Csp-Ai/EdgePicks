@@ -45,6 +45,14 @@ Returns:
 - Overall winner and confidence
 - Logs the outcome to Supabase (if configured)
 
+### Log Status Endpoint
+
+Monitor the in-memory log queue via:
+
+GET /api/log-status
+
+This returns the number of pending log entries and the last error encountered (if any).
+
 ---
 
 ## 🌐 Environment Variables
