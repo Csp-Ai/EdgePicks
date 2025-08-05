@@ -9,10 +9,12 @@ const weights = {
   stats: 0.2,
 };
 
-export const pickBot = (matchup: Matchup): PickResult => {
-  const injury = injuryScout(matchup);
-  const line = lineWatcher(matchup);
-  const stats = statCruncher(matchup);
+export const pickBot = async (matchup: Matchup): Promise<PickResult> => {
+  const [injury, line, stats] = await Promise.all([
+    injuryScout(matchup),
+    lineWatcher(matchup),
+    statCruncher(matchup),
+  ]);
 
   const teams = [matchup.homeTeam, matchup.awayTeam];
   const scores: Record<string, number> = { [teams[0]]: 0, [teams[1]]: 0 };

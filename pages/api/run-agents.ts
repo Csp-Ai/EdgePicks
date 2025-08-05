@@ -16,7 +16,7 @@ interface PickSummary {
   topReasons: string[];
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { teamA, teamB, week } = req.query;
 
   if (typeof teamA !== 'string' || typeof teamB !== 'string' || typeof week !== 'string') {
@@ -32,9 +32,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
 
-  const injury = injuryScout(matchup);
-  const line = lineWatcher(matchup);
-  const stats = statCruncher(matchup);
+  const [injury, line, stats] = await Promise.all([
+    injuryScout(matchup),
+    lineWatcher(matchup),
+    statCruncher(matchup),
+  ]);
 
   const agentsOutput: AgentOutput = {
     injuryScout: injury,
@@ -64,3 +66,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.status(200).json({ agents: agentsOutput, pick: pickSummary });
 }
+
