@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 import TeamBadge from './TeamBadge';
+import AgentSummary from './AgentSummary';
+import { AgentOutputs } from '../lib/types';
 
 export type MatchupProps = {
   teamA: string;
@@ -9,6 +11,7 @@ export type MatchupProps = {
     winner: string;
     confidence: number;
     topReasons: string[];
+    agents: AgentOutputs;
   };
   onRerun?: () => void;
   loading?: boolean;
@@ -69,13 +72,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
           <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
         )}
       </div>
-      {open && (
-        <ul className="mt-2 list-disc list-inside text-sm space-y-1">
-          {result.topReasons.slice(0, 3).map((reason, idx) => (
-            <li key={idx}>{reason}</li>
-          ))}
-        </ul>
-      )}
+      {open && <AgentSummary agents={result.agents} />}
     </div>
   );
 };
