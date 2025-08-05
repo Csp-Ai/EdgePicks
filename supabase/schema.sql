@@ -9,6 +9,8 @@ create table if not exists matchups (
   pick jsonb not null,
   flow text not null default 'football-pick',
   actual_winner text,
+  is_auto_pick boolean,
+  extras jsonb,
   created_at timestamptz default now()
 );
 
