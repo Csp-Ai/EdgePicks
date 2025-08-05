@@ -52,7 +52,9 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
       es.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.type === 'agent') {
-          onAgent(data.name, data.result as AgentResult);
+          if (!data.error) {
+            onAgent(data.name, data.result as AgentResult);
+          }
         } else if (data.type === 'summary') {
           onComplete(data as SummaryPayload);
           setLoading(false);
