@@ -17,7 +17,7 @@ export function lifecycleAgent(
       confidence: event.durationMs ?? 0,
       topReasons: [`status: ${event.status}`],
     };
-    logToSupabase(matchup, agents, pick, null);
+    logToSupabase(matchup, agents, pick, null, 'lifecycle');
   } catch (err) {
     console.error('[lifecycleAgent] failed to log to Supabase:', err);
   }
