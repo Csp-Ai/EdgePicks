@@ -5,6 +5,7 @@ export async function logToSupabase(
   matchup: Matchup,
   agents: AgentOutputs,
   pick: PickSummary,
+  actualWinner: string | null = null,
   loggedAt: string = new Date().toISOString()
 ): Promise<string> {
   const client = getSupabaseClient();
@@ -14,6 +15,7 @@ export async function logToSupabase(
     match_day: matchup.matchDay,
     agents,
     pick,
+    actual_winner: actualWinner,
     created_at: loggedAt,
   });
 

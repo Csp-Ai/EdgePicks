@@ -67,6 +67,16 @@ npm run dev             # start dev server (localhost:3000)
 curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&matchDay=1" # sample multi-sport matchup request
 ```
 
+## 📝 Updating Actual Results
+
+After games conclude, record the real-world outcome so the leaderboard can track accuracy. Update the `actual_winner` column in Supabase via the Table Editor or SQL:
+
+```sql
+update matchups set actual_winner = 'BOS' where id = '<matchup-id>';
+```
+
+Rows without an outcome show **N/A** in the history page and are ignored in accuracy calculations.
+
 🧱 Adding New Agents or Data Sources
 Create a new file in lib/agents/ exporting an AgentResult based on a Matchup.
 

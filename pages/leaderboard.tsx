@@ -28,7 +28,7 @@ const LeaderboardPage: React.FC = () => {
       const client = getSupabaseClient();
       const { data, error } = await client
         .from('matchups')
-        .select('agents, winner, pick');
+        .select('agents, actual_winner');
 
       if (error || !data) {
         console.error('Error fetching leaderboard data:', error);
@@ -41,15 +41,14 @@ const LeaderboardPage: React.FC = () => {
         agentRegistry.map(({ name }) => [name, { correct: 0, total: 0 }])
       ) as Record<AgentName, { correct: number; total: number }>;
 
-      data.forEach((row: { agents: AgentOutputs; winner?: string; pick?: { winner?: string } }) => {
-        const actualWinner = row.winner || row.pick?.winner;
-        if (!actualWinner || !row.agents) return;
+      data.forEach((row: { agents: AgentOutputs; actual_winner: string | null }) => {
+        if (!row.actual_winner || !row.agents) return;
 
         agentRegistry.forEach(({ name }) => {
           const agentPick = row.agents[name]?.team;
           if (agentPick) {
             tallies[name].total += 1;
-            if (agentPick === actualWinner) {
+            if (agentPick === row.actual_winner) {
               tallies[name].correct += 1;
             }
           }
