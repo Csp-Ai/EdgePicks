@@ -16,7 +16,9 @@ const ScoreBar: React.FC<Props> = ({ percent, color = 'bg-blue-500', className }
 
   return (
     <div
-      className={`flex-1 h-2 bg-gray-200 rounded overflow-hidden ${className || ''}`}
+      className={`flex-1 min-w-0 h-2 bg-gray-200 rounded overflow-hidden ${
+        className || ''
+      }`}
     >
       <div
         className={`h-full ${color} transition-all duration-500 ease-out`}
