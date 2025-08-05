@@ -49,22 +49,24 @@ Returns:
 
 ## 🌐 Environment Variables
 
-To enable Supabase integration, create a `.env` file with:
+To enable Supabase integration, create a `.env` file in the project root:
 
 ```bash
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
-These are used in lib/supabaseClient.ts.
+```
 
-🧪 Example Commands
-bash
-Copy
-Edit
+You can find these values in your Supabase dashboard under **Project Settings → API**. They are required by `lib/supabaseClient.ts` to connect to your Supabase project.
+
+## 🧪 Example Commands
+
+```bash
 npm install             # install dependencies
 npm run dev             # start dev server (localhost:3000)
 
-curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&week=1"
-# sample multi-sport matchup request
+curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&week=1" # sample multi-sport matchup request
+```
+
 🧱 Adding New Agents or Data Sources
 Create a new file in lib/agents/ exporting an AgentResult based on a Matchup.
 
