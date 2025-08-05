@@ -45,7 +45,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ({ name, result, error }) => {
       if (!error && result) {
         agentsOutput[name] = result;
-        res.write(`data: ${JSON.stringify({ type: 'agent', name, result })}\n\n`);
+        res.write(
+          `data: ${JSON.stringify({
+            type: 'agent',
+            name,
+            result,
+            warnings: result.warnings,
+          })}\n\n`
+        );
       } else {
         res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
       }

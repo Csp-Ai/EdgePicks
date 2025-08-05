@@ -8,14 +8,18 @@ export interface AgentResult {
   team: string;
   score: number; // higher score favors team
   reason: string;
+  warnings?: string[];
 }
 
 import type { AgentName } from './agents/registry';
 export type { AgentName } from './agents/registry';
 
-export type AgentFunc = (matchup: Matchup) => Promise<AgentResult>;
-
 export type AgentOutputs = Record<AgentName, AgentResult>;
+
+export type AgentFunc = (
+  matchup: Matchup,
+  agentOutputs?: Partial<AgentOutputs>
+) => Promise<AgentResult>;
 
 export interface PickSummary {
   winner: string;

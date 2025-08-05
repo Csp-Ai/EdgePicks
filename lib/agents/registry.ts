@@ -4,6 +4,7 @@ import { injuryScout } from './injuryScout';
 import { lineWatcher } from './lineWatcher';
 import { statCruncher } from './statCruncher';
 import { trendsAgent } from './trendsAgent';
+import { guardianAgent } from './guardianAgent';
 
 export interface AgentMeta {
   name: string;
@@ -18,6 +19,7 @@ const runners: Record<string, AgentFunc> = {
   lineWatcher,
   statCruncher,
   trendsAgent,
+  guardianAgent,
 };
 
 export const registry: AgentMeta[] = agentsMeta as AgentMeta[];

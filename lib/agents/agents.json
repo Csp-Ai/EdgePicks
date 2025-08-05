@@ -26,5 +26,13 @@
     "type": "analytics",
     "weight": 0,
     "sources": ["supabase"]
+  },
+  {
+    "name": "guardianAgent",
+    "description": "Reviews outputs for inconsistent or incomplete reasoning.",
+    "type": "guardian",
+    "weight": 0,
+    "sources": []
   }
 ]
+

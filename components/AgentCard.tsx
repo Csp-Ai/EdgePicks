@@ -45,7 +45,7 @@ const AgentCard: React.FC<Props> = ({
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}
       </div>
-      {showTeam && (
+      {showTeam && !result.warnings && (
         <span className="text-sm text-gray-700">Favored: {result.team}</span>
       )}
       <div className="flex items-center gap-2">
@@ -55,6 +55,13 @@ const AgentCard: React.FC<Props> = ({
       <p className="text-xs text-gray-600 truncate" title={result.reason}>
         {result.reason}
       </p>
+      {result.warnings && result.warnings.length > 0 && (
+        <ul className="text-xs text-yellow-700 list-disc pl-4">
+          {result.warnings.map((w, i) => (
+            <li key={i}>{w}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

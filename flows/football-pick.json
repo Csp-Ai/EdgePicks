@@ -1,4 +1,4 @@
 {
   "name": "Default NFL Flow",
-  "agents": ["injuryScout", "statCruncher", "lineWatcher"]
+  "agents": ["injuryScout", "statCruncher", "lineWatcher", "guardianAgent"]
 }
