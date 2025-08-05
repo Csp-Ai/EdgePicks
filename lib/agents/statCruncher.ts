@@ -1,9 +1,4 @@
-import { AgentResult } from './injuryScout';
-
-interface Matchup {
-  homeTeam: string;
-  awayTeam: string;
-}
+import { AgentResult, Matchup } from '../types';
 
 export const statCruncher = (matchup: Matchup): AgentResult => {
   return {

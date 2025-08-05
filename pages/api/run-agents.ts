@@ -2,12 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { injuryScout } from '../../lib/agents/injuryScout';
 import { lineWatcher } from '../../lib/agents/lineWatcher';
 import { statCruncher } from '../../lib/agents/statCruncher';
-
-interface AgentResult {
-  team: string;
-  score: number;
-  reason: string;
-}
+import { AgentResult, Matchup } from '../../lib/types';
 
 interface AgentOutput {
   injuryScout: AgentResult;
@@ -35,7 +30,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  const matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
+  const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
 
   const injury = injuryScout(matchup);
   const line = lineWatcher(matchup);
