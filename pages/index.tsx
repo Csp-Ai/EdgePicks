@@ -53,7 +53,7 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
 
   if (loading) {
     return (
-      <div className="border rounded p-4 shadow-sm w-full md:w-1/2 flex justify-center">
+      <div className="bg-white rounded-lg shadow p-6 flex justify-center">
         <div className="w-6 h-6 border-4 border-gray-300 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -61,10 +61,10 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
 
   if (error || !result) {
     return (
-      <div className="border rounded p-4 shadow-sm w-full md:w-1/2 text-center text-red-600">
+      <div className="bg-white rounded-lg shadow p-6 text-center text-red-600">
         {error || 'Insufficient data'}
         <button
-          className="block mt-2 text-blue-500 text-sm mx-auto"
+          className="mt-2 min-h-[44px] px-3 py-1 text-sm text-blue-600 underline"
           onClick={fetchPick}
         >
           Retry
@@ -85,10 +85,16 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
 };
 
 const HomePage: React.FC = () => (
-  <main className="p-4 flex flex-col gap-4 items-center">
-    {matchups.map((m, idx) => (
-      <MatchupFetcher key={idx} {...m} />
-    ))}
+  <main className="min-h-screen bg-gray-50 p-6">
+    <header className="text-center mb-8">
+      <h1 className="text-3xl font-mono font-bold">EdgePicks – AI NFL Matchup Insights</h1>
+      <p className="text-gray-600">Updated weekly. Powered by modular agents.</p>
+    </header>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {matchups.map((m, idx) => (
+        <MatchupFetcher key={idx} {...m} />
+      ))}
+    </div>
   </main>
 );
 

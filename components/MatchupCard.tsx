@@ -21,21 +21,18 @@ const MatchupCard: React.FC<MatchupProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const confidencePct = Math.round(result.confidence * 100);
+  const winnerColor = result.winner === teamA ? 'text-blue-600' : 'text-red-600';
 
   return (
-    <div
-      className={`border rounded p-4 shadow-sm w-full md:w-1/2 ${
-        result.confidence > 0.8 ? 'border-green-500' : ''
-      }`}
-    >
-      <div className="flex justify-between items-center">
+    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+      <div className="flex justify-between items-center mb-4">
         <h3 className="font-semibold">
-          {teamA} vs {teamB}
+          {teamA} <span className="text-gray-400">vs</span> {teamB}
         </h3>
         <div className="flex gap-2 items-center">
           {onRerun && (
             <button
-              className="text-blue-500 text-sm disabled:opacity-50"
+              className="min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50"
               onClick={onRerun}
               disabled={loading}
             >
@@ -43,24 +40,37 @@ const MatchupCard: React.FC<MatchupProps> = ({
             </button>
           )}
           <button
-            className="text-blue-500 text-sm"
+            className="min-h-[44px] px-3 py-1 text-sm text-blue-600 underline"
             onClick={() => setOpen((o) => !o)}
           >
-            {open ? 'Hide' : 'Details'}
+            {open ? 'Hide' : 'Why?'}
           </button>
         </div>
       </div>
-      <p className="mt-2">
-        Pick: <span className="font-bold">{result.winner}</span> ({confidencePct}%)
-        {result.confidence > 0.8 && (
-          <span className="ml-2 px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
-            High Confidence
-          </span>
+      <div className="text-center mb-4">
+        <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
+      </div>
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-1">
+          <span className="font-semibold">Confidence</span>
+          <span className="font-bold">{confidencePct}%</span>
+        </div>
+        <div className="w-full h-2 bg-gray-200 rounded">
+          <div
+            className="h-full bg-blue-600 rounded"
+            style={{ width: `${confidencePct}%` }}
+          />
+        </div>
+        {confidencePct > 80 && (
+          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">🟢 High Confidence</span>
         )}
-      </p>
+        {confidencePct < 55 && (
+          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
+        )}
+      </div>
       {open && (
-        <ul className="mt-2 list-disc list-inside text-sm">
-          {result.topReasons.map((reason, idx) => (
+        <ul className="mt-2 list-disc list-inside text-sm space-y-1">
+          {result.topReasons.slice(0, 3).map((reason, idx) => (
             <li key={idx}>{reason}</li>
           ))}
         </ul>
