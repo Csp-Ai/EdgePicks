@@ -21,6 +21,13 @@
     "sources": ["statsApi"]
   },
   {
+    "name": "trendsAgent",
+    "description": "Analyzes recent matchups for flow popularity and agent hit rates.",
+    "type": "analytics",
+    "weight": 0,
+    "sources": ["supabase"]
+  },
+  {
     "name": "guardianAgent",
     "description": "Reviews outputs for inconsistent or incomplete reasoning.",
     "type": "guardian",
@@ -28,3 +35,4 @@
     "sources": []
   }
 ]
+
