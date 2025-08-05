@@ -5,17 +5,24 @@ import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
 type Props = {
-  agents: AgentOutputs;
+  agents: Partial<AgentOutputs>;
 };
 
 const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
-
   return (
     <div>
       <div className="space-y-4 sm:hidden">
         {agentRegistry.map(({ name, weight }) => {
           const result = agents[name];
           const display = formatAgentName(name);
+          if (!result) {
+            return (
+              <div key={name} className="border rounded p-4">
+                <div className="font-medium">{display}</div>
+                <div className="mt-2 text-sm text-gray-500">Loading...</div>
+              </div>
+            );
+          }
           const scorePct = result.score * 100;
           const weighted = result.score * weight;
           const weightedPct = weighted * 100;
@@ -61,6 +68,16 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
             {agentRegistry.map(({ name, weight }) => {
               const result = agents[name];
               const display = formatAgentName(name);
+              if (!result) {
+                return (
+                  <tr key={name} className="border-t">
+                    <td className="p-2 font-medium">{display}</td>
+                    <td className="p-2" colSpan={3}>
+                      <span className="text-gray-500">Loading...</span>
+                    </td>
+                  </tr>
+                );
+              }
               const scorePct = result.score * 100;
               const weighted = result.score * weight;
               const weightedPct = weighted * 100;

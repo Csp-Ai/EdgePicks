@@ -1,7 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { agents } from '../../lib/agents/registry';
-import { AgentResult, AgentOutputs, Matchup, PickSummary } from '../../lib/types';
+import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { teamA, teamB, matchDay } = req.query;
@@ -17,24 +23,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  // @ts-ignore - flush may not exist in some environments
+  res.flushHeaders?.();
+
   const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, matchDay: matchDayNum };
 
-  const results = await Promise.all(agents.map((a) => a.run(matchup)));
+  const agentsOutput: Partial<AgentOutputs> = {};
 
-  const agentsOutput = Object.fromEntries(
-    agents.map((a, i) => [a.name, results[i]])
-  ) as AgentOutputs;
+  await Promise.all(
+    agents.map(async (a) => {
+      const result = await a.run(matchup);
+      agentsOutput[a.name] = result;
+      res.write(`data: ${JSON.stringify({ type: 'agent', name: a.name, result })}\n\n`);
+      // @ts-ignore - flush may not exist in some environments
+      res.flush?.();
+    })
+  );
 
   const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
-  const apply = (result: AgentResult, weight: number) => {
+  agents.forEach(({ name, weight }) => {
+    const result = agentsOutput[name]!;
     scores[result.team] += result.score * weight;
-  };
-
-  results.forEach((result, i) => apply(result, agents[i].weight));
+  });
 
   const winner = scores[teamA] >= scores[teamB] ? teamA : teamB;
   const confidence = Math.max(scores[teamA], scores[teamB]);
-  const topReasons = results.map((r) => r.reason);
+  const topReasons = agents.map(({ name }) => agentsOutput[name]!.reason);
 
   const pickSummary: PickSummary = {
     winner,
@@ -42,8 +59,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  const loggedAt = await logToSupabase(matchup, agentsOutput, pickSummary);
+  const loggedAt = await logToSupabase(matchup, agentsOutput as AgentOutputs, pickSummary);
 
-  res.status(200).json({ matchup, agents: agentsOutput, pick: pickSummary, loggedAt });
+  res.write(
+    `data: ${JSON.stringify({
+      type: 'summary',
+      matchup,
+      agents: agentsOutput,
+      pick: pickSummary,
+      loggedAt,
+    })}\n\n`
+  );
+  res.end();
 }
 
