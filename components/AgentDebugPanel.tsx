@@ -1,28 +1,28 @@
 import React from 'react';
 import ScoreBar from './ScoreBar';
-import { AgentOutputs, AgentName, displayNames } from '../lib/types';
+import { AgentOutputs } from '../lib/types';
+import { agents as agentRegistry } from '../lib/agents/registry';
+import { formatAgentName } from '../lib/utils';
 
 type Props = {
   agents: AgentOutputs;
-  weights: Record<AgentName, number>;
 };
 
-const AgentDebugPanel: React.FC<Props> = ({ agents, weights }) => {
-  const entries = Object.keys(agents) as AgentName[];
+const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
 
   return (
     <div>
       <div className="space-y-4 sm:hidden">
-        {entries.map((name) => {
+        {agentRegistry.map(({ name, weight }) => {
           const result = agents[name];
-          const weight = weights[name] ?? 0;
+          const display = formatAgentName(name);
           const scorePct = result.score * 100;
           const weighted = result.score * weight;
           const weightedPct = weighted * 100;
 
           return (
             <div key={name} className="border rounded p-4">
-              <div className="font-medium">{displayNames[name]}</div>
+              <div className="font-medium">{display}</div>
               <div className="mt-2">
                 <ScoreBar percent={scorePct} className="w-full" />
                 <div className="mt-1 font-mono text-sm">
@@ -58,16 +58,16 @@ const AgentDebugPanel: React.FC<Props> = ({ agents, weights }) => {
             </tr>
           </thead>
           <tbody>
-            {entries.map((name) => {
+            {agentRegistry.map(({ name, weight }) => {
               const result = agents[name];
-              const weight = weights[name] ?? 0;
+              const display = formatAgentName(name);
               const scorePct = result.score * 100;
               const weighted = result.score * weight;
               const weightedPct = weighted * 100;
 
               return (
                 <tr key={name} className="border-t">
-                  <td className="p-2 font-medium">{displayNames[name]}</td>
+                  <td className="p-2 font-medium">{display}</td>
                   <td className="p-2">
                     <div className="flex items-center gap-2">
                       <ScoreBar percent={scorePct} />

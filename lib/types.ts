@@ -10,7 +10,10 @@ export interface AgentResult {
   reason: string;
 }
 
-export type AgentName = 'injuryScout' | 'lineWatcher' | 'statCruncher';
+import type { AgentName } from './agents/registry';
+export type { AgentName } from './agents/registry';
+
+export type AgentFunc = (matchup: Matchup) => Promise<AgentResult>;
 
 export type AgentOutputs = Record<AgentName, AgentResult>;
 
@@ -19,12 +22,6 @@ export interface PickSummary {
   confidence: number;
   topReasons: string[];
 }
-
-export const displayNames: Record<AgentName, string> = {
-  injuryScout: 'InjuryScout',
-  lineWatcher: 'LineWatcher',
-  statCruncher: 'StatCruncher',
-};
 
 export interface PickResult {
   pick: string;
