@@ -2,19 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { injuryScout } from '../../lib/agents/injuryScout';
 import { lineWatcher } from '../../lib/agents/lineWatcher';
 import { statCruncher } from '../../lib/agents/statCruncher';
-import { AgentResult, Matchup } from '../../lib/types';
-
-interface AgentOutput {
-  injuryScout: AgentResult;
-  lineWatcher: AgentResult;
-  statCruncher: AgentResult;
-}
-
-interface PickSummary {
-  winner: string;
-  confidence: number;
-  topReasons: string[];
-}
+import { AgentResult, AgentOutputs, Matchup, PickSummary } from '../../lib/types';
+import { logToSupabase } from '../../lib/logToSupabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { teamA, teamB, week } = req.query;
@@ -38,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     statCruncher(matchup),
   ]);
 
-  const agentsOutput: AgentOutput = {
+  const agentsOutput: AgentOutputs = {
     injuryScout: injury,
     lineWatcher: line,
     statCruncher: stats,
@@ -63,6 +52,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     confidence,
     topReasons,
   };
+
+  await logToSupabase(matchup, agentsOutput, pickSummary);
 
   res.status(200).json({ agents: agentsOutput, pick: pickSummary });
 }
