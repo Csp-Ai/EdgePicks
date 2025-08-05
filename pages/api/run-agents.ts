@@ -91,7 +91,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     matchup,
     agentsOutput as AgentOutputs,
     pickSummary,
-    null // Optional actualWinner for future expansion
+    null, // Optional actualWinner for future expansion
+    flowName
   );
 
   res.write(
