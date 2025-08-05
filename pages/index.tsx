@@ -32,8 +32,13 @@ const HomePage: React.FC = () => {
   return (
     <main className="min-h-screen bg-gray-50 p-6">
       <header className="text-center mb-8">
-        <h1 className="text-3xl font-mono font-bold">EdgePicks – AI Matchup Insights</h1>
-        <p className="text-gray-600">Sport-agnostic picks powered by modular agents.</p>
+        <h1 className="text-3xl font-mono font-bold">EdgePicks – AI Matchup Insights for Any Sport.</h1>
+        <p
+          className="text-gray-600"
+          title="Our modular agents make it easy to add support for more sports soon."
+        >
+          Powered by modular agents — more sports coming soon.
+        </p>
       </header>
       <MatchupInputForm onResult={setResult} />
       {result && (
