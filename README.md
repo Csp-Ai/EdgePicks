@@ -34,7 +34,7 @@ Current agents include:
 
 Run all agents for a matchup via:
 
-GET /api/run-agents?teamA=<team>&teamB=<team>&week=<number>
+GET /api/run-agents?teamA=<team>&teamB=<team>&matchDay=<number>
 
 yaml
 Copy
@@ -64,7 +64,7 @@ You can find these values in your Supabase dashboard under **Project Settings â†
 npm install             # install dependencies
 npm run dev             # start dev server (localhost:3000)
 
-curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&week=1" # sample multi-sport matchup request
+curl "http://localhost:3000/api/run-agents?teamA=BOS&teamB=LAL&matchDay=1" # sample multi-sport matchup request
 ```
 
 ðŸ§± Adding New Agents or Data Sources

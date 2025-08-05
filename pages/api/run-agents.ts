@@ -6,20 +6,20 @@ import { AgentResult, AgentOutputs, Matchup, PickSummary } from '../../lib/types
 import { logToSupabase } from '../../lib/logToSupabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { teamA, teamB, week } = req.query;
+  const { teamA, teamB, matchDay } = req.query;
 
-  if (typeof teamA !== 'string' || typeof teamB !== 'string' || typeof week !== 'string') {
-    res.status(400).json({ error: 'teamA, teamB, and week query params are required' });
+  if (typeof teamA !== 'string' || typeof teamB !== 'string' || typeof matchDay !== 'string') {
+    res.status(400).json({ error: 'teamA, teamB, and matchDay query params are required' });
     return;
   }
 
-  const weekNum = parseInt(week, 10);
-  if (isNaN(weekNum)) {
-    res.status(400).json({ error: 'week must be a number' });
+  const matchDayNum = parseInt(matchDay, 10);
+  if (isNaN(matchDayNum)) {
+    res.status(400).json({ error: 'matchDay must be a number' });
     return;
   }
 
-  const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, week: weekNum };
+  const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, matchDay: matchDayNum };
 
   const [injury, line, stats] = await Promise.all([
     injuryScout(matchup),

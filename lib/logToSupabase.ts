@@ -11,7 +11,7 @@ export async function logToSupabase(
   const { error } = await client.from('matchups').insert({
     team_a: matchup.homeTeam,
     team_b: matchup.awayTeam,
-    week: matchup.week,
+    match_day: matchup.matchDay,
     agents,
     pick,
     created_at: loggedAt,
