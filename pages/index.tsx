@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MatchupCard from '../components/MatchupCard';
 
 type Matchup = {
@@ -24,7 +24,7 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPick = async () => {
+  const fetchPick = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -44,12 +44,11 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [teamA, teamB, week]);
 
   useEffect(() => {
     fetchPick();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamA, teamB, week]);
+  }, [fetchPick]);
 
   if (loading) {
     return (
