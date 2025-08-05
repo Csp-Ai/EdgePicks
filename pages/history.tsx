@@ -12,6 +12,7 @@ interface MatchupRow {
     winner: string;
     confidence: number;
   };
+  actual_winner: string | null;
 }
 
 const HistoryPage: React.FC = () => {
@@ -23,7 +24,7 @@ const HistoryPage: React.FC = () => {
       const client = getSupabaseClient();
       const { data, error } = await client
         .from('matchups')
-        .select('*')
+        .select('id, team_a, team_b, agents, pick, actual_winner')
         .order('created_at', { ascending: false });
 
       if (error || !data) {
@@ -73,7 +74,9 @@ const HistoryPage: React.FC = () => {
                 })}
               </ul>
               <div className="text-sm">
-                <span className="font-medium">Winner:</span> {m.pick.winner}
+                <span className="font-medium">Prediction:</span> {m.pick.winner}
+                <span className="ml-2 font-medium">Outcome:</span>{' '}
+                {m.actual_winner ?? 'N/A'}
                 <span className="ml-2 font-medium">Confidence:</span>{' '}
                 {Math.round(m.pick.confidence * 100)}%
               </div>

@@ -5,6 +5,7 @@ type LogEntry = {
   matchup: Matchup;
   agents: AgentOutputs;
   pick: PickSummary;
+  actualWinner: string | null;
   loggedAt: string;
 };
 
@@ -26,16 +27,19 @@ async function processQueue() {
       match_day: entry.matchup.matchDay,
       agents: entry.agents,
       pick: entry.pick,
+      actual_winner: entry.actualWinner,
       created_at: entry.loggedAt,
     });
+
     if (error) {
       throw error;
     }
+
     lastError = null;
   } catch (err: any) {
     console.error('Error inserting matchup log:', err);
     lastError = err.message || String(err);
-    queue.push(entry);
+    queue.push(entry); // Re-queue for retry
   } finally {
     processing = false;
     if (queue.length > 0) {
@@ -48,9 +52,10 @@ export function logToSupabase(
   matchup: Matchup,
   agents: AgentOutputs,
   pick: PickSummary,
+  actualWinner: string | null = null,
   loggedAt: string = new Date().toISOString()
 ): string {
-  queue.push({ matchup, agents, pick, loggedAt });
+  queue.push({ matchup, agents, pick, actualWinner, loggedAt });
   setImmediate(processQueue);
   return loggedAt;
 }
@@ -61,3 +66,4 @@ export function getLogStatus() {
     lastError,
   };
 }
+
