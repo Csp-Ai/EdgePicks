@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AgentOutputs, AgentName, AgentResult } from '../lib/types';
+import { AgentOutputs, AgentName, AgentResult, displayNames } from '../lib/types';
 
 interface Props {
   agents: AgentOutputs;
 }
-
-const displayNames: Record<AgentName, string> = {
-  injuryScout: 'InjuryScout',
-  lineWatcher: 'LineWatcher',
-  statCruncher: 'StatCruncher',
-};
 
 const weights: Record<AgentName, number> = {
   injuryScout: 0.5,

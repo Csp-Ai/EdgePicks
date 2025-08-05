@@ -14,6 +14,12 @@ export type AgentName = 'injuryScout' | 'lineWatcher' | 'statCruncher';
 
 export type AgentOutputs = Record<AgentName, AgentResult>;
 
+export const displayNames: Record<AgentName, string> = {
+  injuryScout: 'InjuryScout',
+  lineWatcher: 'LineWatcher',
+  statCruncher: 'StatCruncher',
+};
+
 export interface PickResult {
   pick: string;
   confidence: number;
