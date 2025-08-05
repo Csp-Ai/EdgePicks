@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import MatchupCard from '../components/MatchupCard';
+import { AgentOutputs } from '../lib/types';
 
 type Matchup = {
   teamA: string;
@@ -13,10 +14,14 @@ const matchups: Matchup[] = [
   { teamA: 'Chiefs', teamB: 'Bills', week: 1 },
 ];
 
-type PickResult = {
+type PickSummary = {
   winner: string;
   confidence: number;
   topReasons: string[];
+};
+
+type PickResult = PickSummary & {
+  agents: AgentOutputs;
 };
 
 const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
@@ -33,11 +38,12 @@ const MatchupFetcher: React.FC<Matchup> = ({ teamA, teamB, week }) => {
       );
       if (!res.ok) throw new Error('Network error');
       const data = await res.json();
-      const pick = data.pick ?? data;
+      const pick: PickSummary = data.pick ?? data;
+      const agents: AgentOutputs = data.agents ?? {};
       if (!pick || !pick.winner) {
         setError('Insufficient data');
       } else {
-        setResult(pick as PickResult);
+        setResult({ ...pick, agents });
       }
     } catch (e) {
       setError('Error loading pick');

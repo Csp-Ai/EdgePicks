@@ -10,6 +10,10 @@ export interface AgentResult {
   reason: string;
 }
 
+export type AgentName = 'injuryScout' | 'lineWatcher' | 'statCruncher';
+
+export type AgentOutputs = Record<AgentName, AgentResult>;
+
 export interface PickResult {
   pick: string;
   confidence: number;
