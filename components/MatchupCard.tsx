@@ -2,7 +2,62 @@ import React, { useState } from 'react';
 import AnimatedConfidenceBar from './AnimatedConfidenceBar';
 import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
-import { AgentOutputs } from '../lib/types';
+import { AgentOutputs, AgentName } from '../lib/types';
+
+const displayNames: Record<AgentName, string> = {
+  injuryScout: 'InjuryScout',
+  lineWatcher: 'LineWatcher',
+  statCruncher: 'StatCruncher',
+};
+
+const weights: Record<AgentName, number> = {
+  injuryScout: 0.5,
+  lineWatcher: 0.3,
+  statCruncher: 0.2,
+};
+
+interface BreakdownProps {
+  agents: AgentOutputs;
+  total: number;
+}
+
+const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
+  return (
+    <div className="mt-4">
+      <div className="flex items-center gap-1 mb-2">
+        <h4 className="font-semibold text-sm">Confidence Breakdown</h4>
+        <span
+          className="text-gray-400 text-xs cursor-help"
+          title="Final confidence is the sum of each agent score multiplied by its weight."
+        >
+          ?
+        </span>
+      </div>
+      <ul className="space-y-2 text-sm">
+        {(Object.keys(agents) as AgentName[]).map((name) => {
+          const score = agents[name].score;
+          const weight = weights[name];
+          const contribution = score * weight;
+          const width = total > 0 ? (contribution / total) * 100 : 0;
+
+          return (
+            <li key={name} className="flex items-center gap-2">
+              <span className="w-28">{displayNames[name]}</span>
+              <div className="flex-1 h-2 bg-gray-200 rounded">
+                <div
+                  className="h-full bg-blue-500 rounded transition-all duration-500"
+                  style={{ width: `${Math.round(width)}%` }}
+                />
+              </div>
+              <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
+              <span className="w-16 text-right font-mono">{contribution.toFixed(2)}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
 export type MatchupProps = {
   teamA: string;
@@ -72,7 +127,12 @@ const MatchupCard: React.FC<MatchupProps> = ({
           <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
         )}
       </div>
-      {open && <AgentSummary agents={result.agents} />}
+      {open && (
+        <>
+          <AgentSummary agents={result.agents} />
+          <ConfidenceBreakdown agents={result.agents} total={result.confidence} />
+        </>
+      )}
     </div>
   );
 };
