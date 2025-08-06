@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FADE_DURATION, EASE } from '../lib/animations';
+import { logUiEvent } from '../lib/logUiEvent';
 
 interface Props {
   onReveal: () => void;
@@ -9,6 +10,10 @@ interface Props {
    * Defaults to 1500ms.
    */
   stepDuration?: number;
+  /**
+   * Index of the prediction being revealed, used for analytics logging.
+   */
+  revealedIndex?: number;
 }
 
 const steps = [
@@ -18,7 +23,11 @@ const steps = [
   'Pick Ready – Click to Reveal',
 ];
 
-const PredictionTracker: React.FC<Props> = ({ onReveal, stepDuration = 1500 }) => {
+const PredictionTracker: React.FC<Props> = ({
+  onReveal,
+  stepDuration = 1500,
+  revealedIndex,
+}) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -29,6 +38,13 @@ const PredictionTracker: React.FC<Props> = ({ onReveal, stepDuration = 1500 }) =
   }, [index, stepDuration]);
 
   const isFinal = index === steps.length - 1;
+
+  useEffect(() => {
+    if (isFinal) {
+      const extras = revealedIndex !== undefined ? { revealedIndex } : undefined;
+      logUiEvent('prediction_tracker_complete', extras);
+    }
+  }, [isFinal, revealedIndex]);
 
   return (
     <AnimatePresence mode="wait">
