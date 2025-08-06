@@ -1,27 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import TeamBadge from './TeamBadge';
-import ConfidenceMeter from './ConfidenceMeter';
-import { formatAgentName } from '../lib/utils';
-import type { AgentExecution } from '../lib/flow/runFlow';
-import type { ConfidenceMeterProps } from './ConfidenceMeter';
-
-interface UpcomingGame {
-  homeTeam: ConfidenceMeterProps['teamA'];
-  awayTeam: ConfidenceMeterProps['teamB'];
-  confidence: number;
-  time: string;
-  league: string;
-  edgePick: AgentExecution[];
-  odds?: {
-    spread?: number;
-    overUnder?: number;
-    moneyline?: { home?: number; away?: number };
-    bookmaker?: string;
-    lastUpdate?: string;
-  };
-  source?: string;
-}
+import NextBigGame from './NextBigGame';
 
 const valueProps = [
   'Injury Insights',
@@ -30,11 +8,7 @@ const valueProps = [
   'Trend Analysis',
 ];
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const HeroSection: React.FC = () => {
-  const { data } = useSWR<UpcomingGame[]>('/api/upcoming-games', fetcher);
-  const game = data && data.length > 0 ? data[0] : null;
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -69,52 +43,7 @@ const HeroSection: React.FC = () => {
           {valueProps[index]}
         </span>
       </div>
-      <div
-        className={`max-w-md mx-auto bg-white rounded-xl shadow p-6 transition-transform duration-300 hover:scale-105 ${
-          game ? '' : 'animate-pulse'
-        }`}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-lg">Today's Edge</h2>
-          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
-            AI-Powered Pick
-          </span>
-        </div>
-        {game ? (
-          <>
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <TeamBadge team={game.homeTeam.name} logoUrl={game.homeTeam.logo} />
-                <span>{game.homeTeam.name}</span>
-                <span className="text-gray-400">vs</span>
-                <TeamBadge team={game.awayTeam.name} logoUrl={game.awayTeam.logo} />
-                <span>{game.awayTeam.name}</span>
-              </div>
-              <time className="text-sm text-gray-500">{game.time}</time>
-            </div>
-            <ConfidenceMeter
-              teamA={game.homeTeam}
-              teamB={game.awayTeam}
-              confidence={game.confidence}
-            />
-            <div className="mt-4 space-y-2 text-sm text-left">
-              {game.edgePick
-                .filter((e) => e.result && e.name !== 'guardianAgent')
-                .slice(0, 2)
-                .map((e) => (
-                  <p key={e.name}>
-                    <span className="font-medium">
-                      {formatAgentName(e.name)}:
-                    </span>{' '}
-                    {e.result!.reason}
-                  </p>
-                ))}
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-gray-500">Loading matchup...</p>
-        )}
-      </div>
+      <NextBigGame />
       <button
         onClick={handleScroll}
         className="mt-4 px-6 py-3 bg-blue-600 text-white rounded focus:outline-none transition ring-2 ring-transparent hover:ring-blue-400 focus:ring-blue-400"
