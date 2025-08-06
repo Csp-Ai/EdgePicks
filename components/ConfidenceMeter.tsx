@@ -73,3 +73,4 @@ const ConfidenceMeter: React.FC<Props> = ({
 };
 
 export default ConfidenceMeter;
+

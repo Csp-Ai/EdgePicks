@@ -77,7 +77,19 @@ const AgentCard: React.FC<Props> = ({
     >
       <div className="flex items-center justify-between">
         <AgentTooltip name={name}>
-          <span className="flex items-center gap-2 font-medium">
+          <span
+            className="flex items-center gap-2 font-medium"
+            onMouseEnter={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: name })
+              )
+            }
+            onMouseLeave={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: null })
+              )
+            }
+          >
             <Icon className="w-4 h-4" />
             {formatAgentName(name)}
           </span>
@@ -111,3 +123,4 @@ const AgentCard: React.FC<Props> = ({
 };
 
 export default AgentCard;
+

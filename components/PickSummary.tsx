@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ConfidenceMeter from './ConfidenceMeter';
 import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
+import { getAccuracyHistory } from '../lib/accuracy';
 
 type Props = {
   teamA: string;
@@ -13,6 +14,14 @@ type Props = {
 const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
   const pct = Math.round(confidence * 100);
   const winnerColor = winner === teamA ? 'text-blue-600' : 'text-red-600';
+  const [history, setHistory] = useState<number[]>([]);
+
+  useEffect(() => {
+    getAccuracyHistory()
+      .then((h) => setHistory(h))
+      .catch(() => setHistory([]));
+  }, []);
+
   return (
     <div className="bg-white rounded-lg shadow p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
@@ -31,7 +40,12 @@ const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
           <span className={winnerColor}>{winner}</span>
         </div>
       </div>
-      <ConfidenceMeter value={pct} />
+      <ConfidenceMeter
+        teamA={{ name: teamA }}
+        teamB={{ name: teamB }}
+        confidence={pct}
+        history={history}
+      />
       <DisagreementBadge confidence={pct} />
       <p className="mt-4 text-center text-xs text-gray-500">
         Powered by modular AI agents
@@ -41,3 +55,4 @@ const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
 };
 
 export default PickSummary;
+

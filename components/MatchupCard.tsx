@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ConfidenceMeter from './ConfidenceMeter';
 import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
@@ -8,6 +8,7 @@ import ScoreBar from './ScoreBar';
 import { AgentOutputs } from '../lib/types';
 import { getContribution, formatAgentName } from '../lib/utils';
 import { agents as agentRegistry } from '../lib/agents/registry';
+import { getAccuracyHistory } from '../lib/accuracy';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -74,8 +75,15 @@ const MatchupCard: React.FC<MatchupProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [compare, setCompare] = useState(false);
+  const [accuracyHistory, setAccuracyHistory] = useState<number[]>([]);
   const confidencePct = Math.round(result.confidence * 100);
   const winnerColor = result.winner === teamA ? 'text-blue-600' : 'text-red-600';
+
+  useEffect(() => {
+    getAccuracyHistory()
+      .then((h) => setAccuracyHistory(h))
+      .catch(() => setAccuracyHistory([]));
+  }, []);
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
@@ -119,8 +127,23 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
       </div>
       <div className="mb-4">
-        <ConfidenceMeter value={confidencePct} />
+        <ConfidenceMeter
+          teamA={{ name: teamA }}
+          teamB={{ name: teamB }}
+          confidence={confidencePct}
+          history={accuracyHistory}
+        />
         <DisagreementBadge confidence={confidencePct} />
+        {confidencePct > 80 && (
+          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
+            🟢 High Confidence
+          </span>
+        )}
+        {confidencePct < 55 && (
+          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">
+            🟡 Toss-Up
+          </span>
+        )}
       </div>
       {compare && <AgentComparePanel agents={result.agents} />}
       {open && (
