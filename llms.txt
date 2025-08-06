@@ -196,10 +196,14 @@ Files:
 - pages/api/upcoming-games.ts (+7/-0)
 - scripts/testLocal.ts (+6/-0)
 
-Timestamp: 2025-08-06T20:26:37.523Z
-Commit: 6f7af8f4dbb30506f0d68d3aa905986ac7e0b3c9
-Author: Codex
-Message: refactor upcoming-games to parallelize game flows
-Files:
-- pages/api/upcoming-games.ts (+77/-72)
+## This PR contains two Codex prompts:
+
+1. **Parallelize Game Flow Execution**
+- Changed: pages/api/upcoming-games.ts
+- Benefit: Faster prediction response time with Promise.all()
+
+2. **Graceful Flow Error Handling**
+- Changed: pages/api/run-agents.ts
+- Benefit: Returns 400 error on missing flow instead of crashing SSE
+n
 
