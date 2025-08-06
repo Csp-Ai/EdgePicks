@@ -1,6 +1,9 @@
 import { Matchup } from '../types';
 
-type League = 'NFL' | 'MLB' | 'NBA' | 'NHL';
+// Supported league identifiers.  We expose these so callers can reference the
+// specific league types when needed but the public API of this module is via
+// the dedicated fetch helpers defined at the bottom of the file.
+export type League = 'NFL' | 'MLB' | 'NBA' | 'NHL';
 
 const SPORTS_DB_API_KEY = process.env.SPORTS_DB_API_KEY ?? '1';
 const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_DB_API_KEY}/lookupteam.php?id=`;
@@ -39,7 +42,11 @@ interface OddsGame {
   }[];
 }
 
-export async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
+// Generic fetcher used internally.  Given a league identifier it will fetch
+// upcoming games from TheSportsDB and odds information from The Odds API.
+// Specific league helpers simply wrap this function with the appropriate
+// league argument.
+async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
   const isDev = process.env.NODE_ENV === 'development';
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];
@@ -144,4 +151,12 @@ export async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
     return [];
   }
 }
+
+// Convenience helpers for each supported league.  These provide a clearer API
+// for consumers that want to fetch games for a specific sport without having to
+// remember league string literals.
+export const fetchNflGames = () => fetchUpcomingGames('NFL');
+export const fetchMlbGames = () => fetchUpcomingGames('MLB');
+export const fetchNbaGames = () => fetchUpcomingGames('NBA');
+export const fetchNhlGames = () => fetchUpcomingGames('NHL');
 

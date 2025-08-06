@@ -28,6 +28,14 @@ interface UpcomingGame {
   disagreements: string[];
 }
 
+const leagueIcons: Record<string, string> = {
+  NFL: '🏈',
+  NBA: '🏀',
+  MLB: '⚾',
+  NHL: '🏒',
+  MLS: '⚽',
+};
+
 const UpcomingGamesPanel: React.FC = () => {
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,7 +101,10 @@ const UpcomingGamesPanel: React.FC = () => {
               </h3>
               <div className="text-sm text-gray-500 flex flex-col items-end">
                 <time>{game.time}</time>
-                <span>{game.league}</span>
+                <span className="flex items-center gap-1">
+                  <span aria-hidden>{leagueIcons[game.league] || '🏟️'}</span>
+                  {game.league}
+                </span>
                 {game.source && <span className="text-xs">{game.source}</span>}
               </div>
             </div>
