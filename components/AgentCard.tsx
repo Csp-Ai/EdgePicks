@@ -13,6 +13,7 @@ import { formatAgentName } from '../lib/utils';
 import Tooltip from './Tooltip';
 import ConfidenceMeter from './ConfidenceMeter';
 import AgentTooltip from './AgentTooltip';
+import { agentCard, agentCardSkeleton } from '../styles/cardStyles';
 
 interface Props {
   name: AgentName;
@@ -51,7 +52,7 @@ const AgentCard: React.FC<Props> = ({
 
   if (isLoading || !result) {
     return (
-      <div className={`p-4 rounded-xl border bg-gray-100 animate-pulse ${className}`}>
+      <div className={`${agentCardSkeleton} ${className}`}>
         <div className="h-4 bg-gray-300 rounded w-1/3 mb-2" />
         <div className="h-3 bg-gray-300 rounded w-full mb-2" />
         <div className="h-3 bg-gray-300 rounded w-2/3" />
@@ -70,7 +71,7 @@ const AgentCard: React.FC<Props> = ({
 
   return (
     <div
-      className={`relative p-4 bg-gray-50 rounded-xl border flex flex-col gap-2 transition-all duration-500 ease-out ${
+      className={`${agentCard} ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       } ${className}`}
       style={{ boxShadow: `0 0 8px ${glowColor}` }}

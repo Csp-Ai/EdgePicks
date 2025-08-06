@@ -58,7 +58,7 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
         className={`flex items-center mb-1 ${showTeams ? 'justify-between' : 'justify-end'}`}
       >
         {showTeams && <span className="font-semibold">{teamALabel}</span>}
-        <span className="font-bold">{hideValues ? '??' : `${display}%`}</span>
+        <span className="confidenceText">{hideValues ? '??' : `${display}%`}</span>
         {showTeams && <span className="font-semibold">{teamBLabel}</span>}
       </div>
       <div

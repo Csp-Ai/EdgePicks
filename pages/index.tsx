@@ -45,7 +45,7 @@ export default function Home() {
           whileHover={{ scale: 1.05 }}
         >
           <Link href="/matchups/public">
-            <Button>Explore Matchups</Button>
+            <Button variant="primaryCTA">Explore Matchups</Button>
           </Link>
         </motion.div>
         <div className="pt-8 space-y-4">
