@@ -79,3 +79,10 @@ Testing:
 - npm test — passed
 - npx tsc --noEmit — passed
 
+Timestamp: 2025-08-06T04:01:38Z
+Summary:
+- Documented NextAuth environment variables in README and `.env.example` for Google sign-in configuration.
+Testing:
+- npm test — passed
+- npx tsc --noEmit — passed
+
