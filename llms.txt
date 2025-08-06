@@ -396,3 +396,13 @@ Files:
 - pages/_app.tsx (+8/-1)
 - pages/index.tsx (+14/-2)
 
+Timestamp: 2025-08-06T23:00:17.712Z
+Commit: 0ee0b2314e618cddc87c272314ed72973c0ed9f0
+Author: Codex
+Message: feat: log session data
+Files:
+- lib/logUiEvent.test.js (+1/-1)
+- lib/logUiEvent.ts (+4/-0)
+- pages/_app.tsx (+11/-4)
+- supabase/schema.sql (+9/-0)
+
