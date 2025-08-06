@@ -1,8 +1,23 @@
 import { Matchup } from '../types';
 
-const SPORTSDB_EVENTS_URL = 'https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4391';
-const SPORTSDB_TEAM_URL = 'https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=';
-const ODDS_API_URL = 'https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds/';
+type League = 'NFL' | 'MLB' | 'NBA' | 'NHL';
+
+const SPORTS_DB_API_KEY = process.env.SPORTS_DB_API_KEY ?? '1';
+const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_DB_API_KEY}/lookupteam.php?id=`;
+
+const SPORTS_DB_LEAGUE_IDS: Record<League, string | undefined> = {
+  NFL: process.env.SPORTS_DB_NFL_ID,
+  MLB: process.env.SPORTS_DB_MLB_ID,
+  NBA: process.env.SPORTS_DB_NBA_ID,
+  NHL: process.env.SPORTS_DB_NHL_ID,
+};
+
+const ODDS_API_SPORT_MAP: Record<League, string> = {
+  NFL: 'americanfootball_nfl',
+  MLB: 'baseball_mlb',
+  NBA: 'basketball_nba',
+  NHL: 'icehockey_nhl',
+};
 
 interface SportsDbEvent {
   idEvent: string;
@@ -24,10 +39,15 @@ interface OddsGame {
   }[];
 }
 
-export async function fetchUpcomingGames(): Promise<Matchup[]> {
+export async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
   const isDev = process.env.NODE_ENV === 'development';
+  const leagueId = SPORTS_DB_LEAGUE_IDS[league];
+  if (!leagueId) return [];
+  const eventsUrl = `https://www.thesportsdb.com/api/v1/json/${SPORTS_DB_API_KEY}/eventsnextleague.php?id=${leagueId}`;
+  const oddsSport = ODDS_API_SPORT_MAP[league];
+  const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/${oddsSport}/odds/`;
   try {
-    const res = await fetch(SPORTSDB_EVENTS_URL);
+    const res = await fetch(eventsUrl);
     const json = await res.json();
     if (isDev) {
       console.log('TheSportsDB response', {
@@ -64,7 +84,7 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
       const oddsKey = process.env.ODDS_API_KEY;
       if (oddsKey) {
         const oddsRes = await fetch(
-          `${ODDS_API_URL}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`
+          `${oddsApiUrl}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`
         );
         if (oddsRes.ok) {
           oddsData = await oddsRes.json();
@@ -111,12 +131,12 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
         homeTeam: home,
         awayTeam: away,
         time: e.dateEvent && e.strTime ? `${e.dateEvent} ${e.strTime}` : e.dateEvent || '',
-        league: 'NFL',
+        league,
         gameId: e.idEvent ?? undefined,
         homeLogo: e.idHomeTeam ? logoMap[e.idHomeTeam] : undefined,
         awayLogo: e.idAwayTeam ? logoMap[e.idAwayTeam] : undefined,
         odds,
-        source: 'live-nfl-api',
+        source: `live-${league.toLowerCase()}-api`,
       } as Matchup;
     });
   } catch (err) {
