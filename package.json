@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "echo \"No tests\"",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
-    "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts"
+    "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.5",
@@ -24,6 +25,7 @@
     "@types/node": "^24.2.0",
     "@types/react": "^19.1.9",
     "autoprefixer": "^10.4.14",
+    "husky": "^9.1.7",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.2",
