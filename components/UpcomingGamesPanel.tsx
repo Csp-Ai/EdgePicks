@@ -3,6 +3,7 @@ import TeamBadge from './TeamBadge';
 import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
 import { AgentExecution } from '../lib/flow/runFlow';
 import AgentRationalePanel from './AgentRationalePanel';
+import EmptyState from './EmptyState';
 
 interface UpcomingGame {
   homeTeam: ConfidenceMeterProps['teamA'];
@@ -103,7 +104,7 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
         {warning && (
           <p className="text-center text-yellow-600 mb-2">{warning}</p>
         )}
-        <p className="text-center">No upcoming games found.</p>
+        <EmptyState message="No matchups available right now. Check back later." />
       </>
     );
   }

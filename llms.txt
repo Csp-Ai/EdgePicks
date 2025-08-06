@@ -343,3 +343,10 @@ Files:
 main
  main
 
+Timestamp: 2025-08-06T22:29:16.958Z
+Commit: 6bbd67491c9aca1eec5860dad30fd4216a3a12c2
+Author: Codex
+Message: Use EmptyState for empty upcoming games
+Files:
+- components/UpcomingGamesPanel.tsx (+2/-1)
+
