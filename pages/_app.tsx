@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import '../styles/globals.css';
+import '../styles/typography.css';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {

@@ -273,3 +273,14 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+Timestamp: 2025-08-06T22:04:48.157Z
+Commit: 8f2a506d22c9c912e8ddc933de1dd11a693ccb7d
+Author: Codex
+Message: style: add confidence text utility
+Files:
+- components/AgentRationalePanel.tsx (+1/-1)
+- components/ConfidenceMeter.tsx (+1/-1)
+- components/MatchupCard.tsx (+3/-3)
+- pages/_app.tsx (+1/-0)
+- styles/typography.css (+5/-0)
+
