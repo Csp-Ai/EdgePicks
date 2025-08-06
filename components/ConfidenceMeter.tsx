@@ -5,6 +5,9 @@ export interface ConfidenceMeterProps {
   teamB: { name: string; logo?: string };
   confidence: number;
   history?: number[];
+  spread?: number;
+  publicLean?: number;
+  agentDelta?: number;
 }
 
 const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
@@ -12,6 +15,9 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
   teamB,
   confidence,
   history = [],
+  spread,
+  publicLean,
+  agentDelta,
 }) => {
   const [fill, setFill] = useState(0);
   const [display, setDisplay] = useState(0);
@@ -62,9 +68,14 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
           style={{ width: `${fill}%` }}
         />
       </div>
-      {history.length > 0 && (
-        <div className="mt-1 text-xs text-gray-500">
-          {history.join(', ')}
+      {(history.length > 0 || spread !== undefined || publicLean !== undefined || agentDelta !== undefined) && (
+        <div className="mt-1 text-xs text-gray-500 flex flex-col gap-1">
+          {history.length > 0 && <div>{history.join(', ')}</div>}
+          <div className="flex gap-2">
+            {spread !== undefined && <span>Spread {spread}</span>}
+            {publicLean !== undefined && <span>Public {publicLean}%</span>}
+            {agentDelta !== undefined && <span>Δ {Math.round(agentDelta * 100) / 100}</span>}
+          </div>
         </div>
       )}
     </div>

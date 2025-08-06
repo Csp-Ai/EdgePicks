@@ -99,7 +99,7 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
         homeLogo: e.idHomeTeam ? logoMap[e.idHomeTeam] : undefined,
         awayLogo: e.idAwayTeam ? logoMap[e.idAwayTeam] : undefined,
         odds,
-        source: 'TheSportsDB + OddsAPI',
+        source: 'live-nfl-api',
       } as Matchup;
     });
   } catch (err) {

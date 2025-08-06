@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const agentsOutput: Partial<AgentOutputs> = {};
 
-  await runFlow(
+  const { outputs } = await runFlow(
     flow,
     matchup,
     ({ name, result, error }) => {
@@ -72,6 +72,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.flush?.();
     }
   );
+
+  Object.assign(agentsOutput, outputs);
 
   const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
   flow.agents.forEach((name) => {

@@ -24,15 +24,19 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
         lastUpdate?: string;
       };
       source?: string;
+      winner: string;
+      edgeDelta: number;
+      confidenceDrop: number;
+      publicLean?: number;
+      agentDelta?: number;
+      disagreements: string[];
       edgePick: AgentExecution[];
     }[] = [];
 
     for (const game of games) {
-      const executions: AgentExecution[] = [];
-      const outputs = await runFlow(
+      const { outputs, executions } = await runFlow(
         { name: 'upcoming', agents: [...agentList] },
-        { ...game, isLiveData: true, source: 'beta-nfl-api' },
-        (exec) => executions.push(exec)
+        { ...game, isLiveData: true, source: 'live-nfl-api' }
       );
 
       const scores: Record<string, number> = {
@@ -51,13 +55,35 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
         scores[game.homeTeam] >= scores[game.awayTeam] ? game.homeTeam : game.awayTeam;
       const confidenceRaw = Math.max(scores[game.homeTeam], scores[game.awayTeam]);
       const confidence = Math.round(confidenceRaw * 100);
+      const edgeDelta = Math.abs(scores[game.homeTeam] - scores[game.awayTeam]);
+      const confidenceDrop = 1 - confidenceRaw;
+      const publicLean = (() => {
+        const home = game.odds?.moneyline?.home;
+        const away = game.odds?.moneyline?.away;
+        if (home !== undefined && away !== undefined) {
+          const total = Math.abs(home) + Math.abs(away);
+          return total ? Math.round((Math.abs(home) / total) * 100) : undefined;
+        }
+        return undefined;
+      })();
+      const agentDelta = game.odds?.spread !== undefined ? edgeDelta - game.odds.spread : undefined;
+      const disagreements = executions
+        .filter((e) => e.result && e.result.team !== winner)
+        .map((e) => e.name);
       const topReasons = agentList
         .map((name) => outputs[name]?.reason)
         .filter((r): r is string => Boolean(r));
 
       const pickSummary: PickSummary = { winner, confidence: confidenceRaw, topReasons };
 
-      logToSupabase(game, outputs as AgentOutputs, pickSummary, null, 'upcoming-games', true);
+      logToSupabase(
+        { ...game, source: 'live-nfl-api' },
+        outputs as AgentOutputs,
+        pickSummary,
+        null,
+        'upcoming-games',
+        true
+      );
 
       results.push({
         homeTeam: { name: game.homeTeam, logo: game.homeLogo },
@@ -66,7 +92,13 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
         time: game.time,
         league: game.league,
         odds: game.odds,
-        source: game.source,
+        source: 'live-nfl-api',
+        winner,
+        edgeDelta,
+        confidenceDrop,
+        publicLean,
+        agentDelta,
+        disagreements,
         edgePick: executions,
       });
     }

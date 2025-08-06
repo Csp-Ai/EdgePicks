@@ -50,3 +50,9 @@ codex:edgepicks-integrate-thesportsdb-oddsapi
 Testing:
 - npm test — passed
 - npx tsc --noEmit — passed
+Timestamp: 2025-08-06T03:28:19Z
+codex:edgepicks-agent-beta-sweep
+Agents now evaluate live matchups with visible rationales and edge breakdowns
+ConfidenceMeter reflects betting spreads and disagreement signals
+AgentRationalePanel added for deeper trust in each pick
+Live-data transparency surfaced in UI
