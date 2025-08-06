@@ -273,3 +273,10 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+Timestamp: 2025-08-06T22:06:01.459Z
+Commit: 3f1cf29f6b69396ef8e1ab8ab6436ba5428b1b6d
+Author: Codex
+Message: style: enlarge header buttons
+Files:
+- pages/_app.tsx (+3/-3)
+
