@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-interface Team {
-  name: string;
-}
-
-interface Props {
-  teamA?: Team;
-  teamB?: Team;
-  /** confidence value in percent (0-100) */
+interface ConfidenceMeterProps {
+  teamA: { name: string };
+  teamB: { name: string };
   confidence: number;
-  /** optional history of previous confidences */
   history?: number[];
-  /** gradient classes for the bar */
-  gradientClass?: string;
-  className?: string;
 }
 
-const ConfidenceMeter: React.FC<Props> = ({
+const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
   teamA,
   teamB,
   confidence,
   history = [],
-  gradientClass = 'from-green-400 to-red-500',
-  className = '',
 }) => {
   const [fill, setFill] = useState(0);
   const [display, setDisplay] = useState(0);
@@ -51,12 +40,12 @@ const ConfidenceMeter: React.FC<Props> = ({
     };
   }, [confidence]);
 
-  const teamALabel = teamA?.name;
-  const teamBLabel = teamB?.name;
+  const teamALabel = teamA.name;
+  const teamBLabel = teamB.name;
   const showTeams = Boolean(teamALabel || teamBLabel);
 
   return (
-    <div aria-label={`Confidence ${confidence}%`} className={className}>
+    <div aria-label={`Confidence ${confidence}%`}>
       <div
         className={`flex items-center mb-1 ${showTeams ? 'justify-between' : 'justify-end'}`}
       >
@@ -66,10 +55,10 @@ const ConfidenceMeter: React.FC<Props> = ({
       </div>
       <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
         <div
-          className={`absolute inset-0 bg-gradient-to-r ${gradientClass} opacity-20 blur-sm animate-pulse`}
+          className={`absolute inset-0 bg-gradient-to-r from-green-400 to-red-500 opacity-20 blur-sm animate-pulse`}
         />
         <div
-          className={`relative h-full bg-gradient-to-r ${gradientClass} transition-[width] duration-700 ease-out`}
+          className={`relative h-full bg-gradient-to-r from-green-400 to-red-500 transition-[width] duration-700 ease-out`}
           style={{ width: `${fill}%` }}
         />
       </div>
