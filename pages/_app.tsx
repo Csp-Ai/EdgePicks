@@ -9,6 +9,7 @@ import '../styles/typography.css';
 import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
 import { ToastProvider } from '../lib/useToast';
+import { logUiEvent } from '../lib/logUiEvent';
 
 function Header() {
   const { data: session, status } = useSession();
@@ -67,7 +68,13 @@ function Header() {
           </>
         ) : (
           <button
-            onClick={() => signIn('google')}
+            onClick={() => {
+              logUiEvent(
+                'sign_in_click',
+                session?.user?.id ? { user_id: session.user.id } : {},
+              );
+              signIn('google');
+            }}
             className="min-h-[44px] px-4 py-2 border rounded"
           >
             Sign in with Google

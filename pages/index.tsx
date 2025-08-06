@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useSession } from 'next-auth/react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { TypographyH1, TypographyMuted } from '../components/ui/typography';
 import dynamic from 'next/dynamic';
 import type { AgentOutputs } from '../lib/types';
 import { FADE_DURATION, EASE } from '../lib/animations';
+import { logUiEvent } from '../lib/logUiEvent';
 
 const MatchupCard = dynamic(() => import('../components/MatchupCard'), { ssr: false });
 
@@ -25,7 +27,7 @@ const dummyResult = {
 };
 
 export default function Home() {
-
+  const { data: session } = useSession();
   return (
     <main className="min-h-screen bg-gradient-to-br from-zinc-900 to-neutral-950 text-white">
       <div className="max-w-3xl mx-auto py-16 space-y-6 text-center">
@@ -47,7 +49,17 @@ export default function Home() {
           whileHover={{ scale: 1.05 }}
         >
           <Link href="/matchups/public">
-            <Button variant="primaryCTA">Explore Matchups</Button>
+            <Button
+              variant="primaryCTA"
+              onClick={() =>
+                logUiEvent(
+                  'explore_matchups_click',
+                  session?.user?.id ? { user_id: session.user.id } : {},
+                )
+              }
+            >
+              Explore Matchups
+            </Button>
           </Link>
         </motion.div>
         <div className="pt-8 space-y-4">
