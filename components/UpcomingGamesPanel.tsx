@@ -3,6 +3,7 @@ import TeamBadge from './TeamBadge';
 import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
 import { AgentExecution } from '../lib/flow/runFlow';
 import AgentRationalePanel from './AgentRationalePanel';
+import LoadingShimmer from './LoadingShimmer';
 
 interface UpcomingGame {
   homeTeam: ConfidenceMeterProps['teamA'];
@@ -90,7 +91,7 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
   }, []);
 
   if (loading) {
-    return <p className="text-center">Loading upcoming games...</p>;
+    return <LoadingShimmer lineClassName="h-20" />;
   }
 
   if (error) {

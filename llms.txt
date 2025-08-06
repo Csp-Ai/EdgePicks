@@ -343,3 +343,10 @@ Files:
 main
  main
 
+Timestamp: 2025-08-06T22:29:43.682Z
+Commit: 7456d593868aead2aeb6abb634990f27fa21b88a
+Author: Codex
+Message: Use LoadingShimmer in upcoming games panel
+Files:
+- components/UpcomingGamesPanel.tsx (+2/-1)
+
