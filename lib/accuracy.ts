@@ -79,3 +79,14 @@ export async function recomputeAccuracy() {
   return { agentStats, flowStats };
 }
 
+export async function getAccuracyHistory(): Promise<number[]> {
+  try {
+    const res = await fetch('/api/accuracy');
+    const data = await res.json();
+    return (data.flows || []).map((f: any) => f.accuracy * 100);
+  } catch (err) {
+    console.error('Failed to load accuracy history', err);
+    return [];
+  }
+}
+
