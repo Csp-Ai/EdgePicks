@@ -1,14 +1,20 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
+import Link from 'next/link';
 import Image from 'next/image';
+
 import '../styles/globals.css';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {
   const { data: session } = useSession();
+
   return (
-    <header className="p-4 flex justify-end gap-4">
+    <header className="p-4 flex justify-end gap-4 items-center">
       <ThemeToggle />
+      <Link href="/predictions" className="px-2 py-1 border rounded">
+        Predictions
+      </Link>
       {session ? (
         <>
           {session.user?.image && (
