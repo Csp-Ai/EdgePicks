@@ -25,9 +25,18 @@ interface OddsGame {
 }
 
 export async function fetchUpcomingGames(): Promise<Matchup[]> {
+  const isDev = process.env.NODE_ENV === 'development';
   try {
     const res = await fetch(SPORTSDB_EVENTS_URL);
     const json = await res.json();
+    if (isDev) {
+      console.log('TheSportsDB response', {
+        status: res.status,
+        error: res.ok ? undefined : res.statusText,
+        dataLength: json.events ? json.events.length : 0,
+        data: json,
+      });
+    }
     const events: SportsDbEvent[] = json.events ? json.events.slice(0, 5) : [];
 
     const teamIds = Array.from(
@@ -45,7 +54,7 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
           const team = d.teams && d.teams[0];
           if (team?.strTeamBadge) logoMap[id] = team.strTeamBadge;
         } catch (err) {
-          console.error('team lookup failed', err);
+          if (isDev) console.error('team lookup failed', err);
         }
       })
     );
@@ -60,9 +69,17 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
         if (oddsRes.ok) {
           oddsData = await oddsRes.json();
         }
+        if (isDev) {
+          console.log('OddsAPI response', {
+            status: oddsRes.status,
+            error: oddsRes.ok ? undefined : oddsRes.statusText,
+            dataLength: oddsData.length,
+            data: oddsData,
+          });
+        }
       }
     } catch (err) {
-      console.error('odds fetch failed', err);
+      if (isDev) console.error('odds fetch failed', err);
     }
 
     return events.map((e) => {
@@ -103,7 +120,7 @@ export async function fetchUpcomingGames(): Promise<Matchup[]> {
       } as Matchup;
     });
   } catch (err) {
-    console.error('fetchUpcomingGames error', err);
+    if (isDev) console.error('fetchUpcomingGames error', err);
     return [];
   }
 }

@@ -56,3 +56,8 @@ Agents now evaluate live matchups with visible rationales and edge breakdowns
 ConfidenceMeter reflects betting spreads and disagreement signals
 AgentRationalePanel added for deeper trust in each pick
 Live-data transparency surfaced in UI
+Timestamp: 2025-08-06T03:38:12Z
+codex:fix-liveMatchup-fetch-failure
+- Fixed bug causing "No upcoming games found" when APIs failed silently
+- Added logging for dev inspection and fallback data loader for resilience
+- Agent run flow now handles missing odds/logos safely
