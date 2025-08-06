@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ConfidenceMeter from './ConfidenceMeter';
+import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
 import { getAccuracyHistory } from '../lib/accuracy';
 
@@ -45,6 +46,7 @@ const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
         confidence={pct}
         history={history}
       />
+      <DisagreementBadge confidence={pct} />
       <p className="mt-4 text-center text-xs text-gray-500">
         Powered by modular AI agents
       </p>
@@ -53,3 +55,4 @@ const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
 };
 
 export default PickSummary;
+

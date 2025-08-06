@@ -1,5 +1,6 @@
 import React from 'react';
 import ScoreBar from './ScoreBar';
+import AgentTooltip from './AgentTooltip';
 import { AgentOutputs } from '../lib/types';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
@@ -18,7 +19,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
   return (
     <div>
       <div className="space-y-4 sm:hidden">
-        {agentRegistry.map(({ name, weight, type, description }) => {
+        {agentRegistry.map(({ name, weight, type }) => {
           const result = agents[name];
           const display = formatAgentName(name);
           if (!result) {
@@ -40,7 +41,9 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               className="border rounded p-4 ring-1 ring-blue-500 transition hover:scale-[1.01]"
             >
               <div className="flex items-center justify-between">
-                <div className="font-medium">{display}</div>
+                <AgentTooltip name={name}>
+                  <div className="font-medium">{display}</div>
+                </AgentTooltip>
                 <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{badge}</span>
               </div>
               <div className="mt-2">
@@ -69,10 +72,6 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                   ))}
                 </ul>
               )}
-              <details className="mt-2 text-xs">
-                <summary className="cursor-pointer text-blue-600">About This Agent</summary>
-                <p className="mt-1">{description}</p>
-              </details>
             </div>
           );
         })}
@@ -89,7 +88,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
             </tr>
           </thead>
           <tbody>
-            {agentRegistry.map(({ name, weight, type, description }) => {
+            {agentRegistry.map(({ name, weight, type }) => {
               const result = agents[name];
               const display = formatAgentName(name);
               if (!result) {
@@ -110,7 +109,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               return (
                 <tr key={name} className="border-t ring-1 ring-blue-500">
                   <td className="p-2 font-medium flex items-center gap-2">
-                    {display}
+                    <AgentTooltip name={name}>{display}</AgentTooltip>
                     <span className="text-xs px-2 py-0.5 bg-gray-200 rounded">{badge}</span>
                   </td>
                   <td className="p-2">
@@ -138,10 +137,6 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                         ))}
                       </ul>
                     )}
-                    <details>
-                      <summary className="cursor-pointer text-blue-600">About This Agent</summary>
-                      <p className="mt-1">{description}</p>
-                    </details>
                   </td>
                 </tr>
               );

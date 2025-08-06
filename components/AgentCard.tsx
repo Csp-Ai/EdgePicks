@@ -9,9 +9,10 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import { AgentName, AgentResult } from '../lib/types';
-import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 import Tooltip from './Tooltip';
+import ConfidenceMeter from './ConfidenceMeter';
+import AgentTooltip from './AgentTooltip';
 
 interface Props {
   name: AgentName;
@@ -41,8 +42,6 @@ const AgentCard: React.FC<Props> = ({
   loading = false,
 }) => {
   const [visible, setVisible] = useState(false);
-  const meta = agentRegistry.find((a) => a.name === name);
-
   useEffect(() => {
     setVisible(true);
   }, []);
@@ -77,23 +76,24 @@ const AgentCard: React.FC<Props> = ({
       style={{ boxShadow: `0 0 8px ${glowColor}` }}
     >
       <div className="flex items-center justify-between">
-        <span
-          className="flex items-center gap-2 font-medium"
-          title={meta?.description}
-          onMouseEnter={() =>
-            window.dispatchEvent(
-              new CustomEvent('glossary-hover', { detail: name })
-            )
-          }
-          onMouseLeave={() =>
-            window.dispatchEvent(
-              new CustomEvent('glossary-hover', { detail: null })
-            )
-          }
-        >
-          <Icon className="w-4 h-4" />
-          {formatAgentName(name)}
-        </span>
+        <AgentTooltip name={name}>
+          <span
+            className="flex items-center gap-2 font-medium"
+            onMouseEnter={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: name })
+              )
+            }
+            onMouseLeave={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: null })
+              )
+            }
+          >
+            <Icon className="w-4 h-4" />
+            {formatAgentName(name)}
+          </span>
+        </AgentTooltip>
         {showWeight && (
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}
@@ -101,13 +101,11 @@ const AgentCard: React.FC<Props> = ({
       {showTeam && result && !result.warnings && (
         <span className="text-sm text-gray-700">Favored: {result.team}</span>
       )}
-      <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 transition-[width] duration-700"
-          style={{ width: `${scorePct}%` }}
-        />
-        <div className="absolute inset-0 bg-white/20" />
-      </div>
+      <ConfidenceMeter
+        value={scorePct}
+        showLabel={false}
+        gradientClass="from-green-400 via-blue-500 to-purple-600"
+      />
       <div className="text-xs text-gray-600 flex items-center">
         <Tooltip content={result.reason}>
           <Info className="w-4 h-4 cursor-help" />
@@ -125,3 +123,4 @@ const AgentCard: React.FC<Props> = ({
 };
 
 export default AgentCard;
+

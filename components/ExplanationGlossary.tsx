@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import AgentTooltip from './AgentTooltip';
+import { agents as agentRegistry } from '../lib/agents/registry';
+import { formatAgentName } from '../lib/utils';
 
 type Props = {
   onClose: () => void;
@@ -68,36 +71,18 @@ const ExplanationGlossary: React.FC<Props> = ({ onClose, highlightAgent }) => {
         <div className="flex-1 overflow-y-auto">
           {activeTab === 'agents' && (
             <ul className="p-4 space-y-3 text-sm text-gray-700">
-              <li
-                id="agent-injuryScout"
-                className={`p-2 rounded ${highlighted === 'injuryScout' ? 'bg-yellow-100' : ''}`}
-              >
-                <strong>injuryScout</strong>: evaluates player injury reports and roster depth to assess how absences could sway the matchup.
-              </li>
-              <li
-                id="agent-lineWatcher"
-                className={`p-2 rounded ${highlighted === 'lineWatcher' ? 'bg-yellow-100' : ''}`}
-              >
-                <strong>lineWatcher</strong>: monitors betting line movement to reflect the market's confidence in each team.
-              </li>
-              <li
-                id="agent-statCruncher"
-                className={`p-2 rounded ${highlighted === 'statCruncher' ? 'bg-yellow-100' : ''}`}
-              >
-                <strong>statCruncher</strong>: favors efficiency metrics, defensive strength, and other advanced stats to compare teams.
-              </li>
-              <li
-                id="agent-trendsAgent"
-                className={`p-2 rounded ${highlighted === 'trendsAgent' ? 'bg-yellow-100' : ''}`}
-              >
-                <strong>trendsAgent</strong>: surfaces historical and momentum trends that may influence outcomes.
-              </li>
-              <li
-                id="agent-guardianAgent"
-                className={`p-2 rounded ${highlighted === 'guardianAgent' ? 'bg-yellow-100' : ''}`}
-              >
-                <strong>guardianAgent</strong>: highlights warnings when agent outputs conflict or signal risk.
-              </li>
+              {agentRegistry.map(({ name, description }) => (
+                <li
+                  key={name}
+                  id={`agent-${name}`}
+                  className={`p-2 rounded ${highlighted === name ? 'bg-yellow-100' : ''}`}
+                >
+                  <AgentTooltip name={name}>
+                    <strong>{formatAgentName(name)}</strong>
+                  </AgentTooltip>
+                  : {description}
+                </li>
+              ))}
             </ul>
           )}
           {activeTab === 'scoring' && (
@@ -119,4 +104,5 @@ const ExplanationGlossary: React.FC<Props> = ({ onClose, highlightAgent }) => {
 };
 
 export default ExplanationGlossary;
+
 
