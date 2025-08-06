@@ -8,7 +8,9 @@ import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 
 export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
   try {
-    let games = await fetchUpcomingGames();
+    const leagues = ['NFL', 'MLB', 'NBA', 'NHL'] as const;
+    const allGames = await Promise.all(leagues.map((l) => fetchUpcomingGames(l)));
+    let games = allGames.flat();
     if (!games.length) {
       games = getFallbackMatchups();
     }
