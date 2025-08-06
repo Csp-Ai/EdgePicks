@@ -370,3 +370,10 @@ Files:
 - components/UpcomingGamesPanel.tsx (+2/-1)
 main
 
+Timestamp: 2025-08-06T22:54:10.476Z
+Commit: a3a17787d8d6554d47cbb41b9b602a4b6a8e0ebf
+Author: Codex
+Message: chore: add script to inject sports API key
+Files:
+- scripts/set-sports-api-key.js (+33/-0)
+
