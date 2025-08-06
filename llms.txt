@@ -406,3 +406,12 @@ Files:
 - pages/_app.tsx (+11/-4)
 - supabase/schema.sql (+9/-0)
 
+Timestamp: 2025-08-06T23:09:44.509Z
+Commit: ef69ff4b6c52bb8ea28c9399b7cb9befc77d082c
+Author: Codex
+Message: Show agent rationale on name hover
+Files:
+- components/AgentCard.tsx (+14/-9)
+- components/Tooltip.tsx (+3/-0)
+- manual-qa.md (+7/-0)
+
