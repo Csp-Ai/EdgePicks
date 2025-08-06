@@ -20,3 +20,19 @@ Testing:
 - npm test — passed
 - npx tsc --noEmit — passed
 
+Timestamp: 2025-08-06T19:42:00Z
+Summary:
+- Codex audit `codex:edgepicks-prep-beta-ux-polish` completed for public beta readiness.
+- Evaluated visual hierarchy, clarity, toggle logic, confidence meter labels, glossary usage, and first-load UX.
+- Logged improvements needed for mobile responsiveness, tooltip accessibility, keyboard navigation, and color contrast.
+- Recommends glossary CTA, better toggle labels, confidence meter text, and layout polish for ADHD-friendliness.
+- Treats llms.txt and README.md as living documents for agent state alignment.
+Testing:
+- Manual UX audit — passed
+- Mobile + keyboard nav smoke test — partial success
+- Tooltip glossary audit — clarity pending for screen readers
+Notes:
+- README should reflect llms.txt as the primary Codex constitution for all AI-driven changes.
+- Future prompts should append to this log with timestamp and rationale to maintain LLM context continuity.
+
+
