@@ -25,6 +25,7 @@ export interface Matchup {
   /** Flags to indicate real-time data */
   isLiveData?: boolean;
   source?: string;
+  useFallback?: boolean;
 }
 
 export interface AgentResult {
