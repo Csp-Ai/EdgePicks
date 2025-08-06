@@ -27,3 +27,12 @@ create table if not exists flow_stats (
   losses int default 0,
   accuracy float default 0
 );
+
+create table if not exists ui_events (
+  id uuid primary key default gen_random_uuid(),
+  event text not null,
+  session_type text,
+  user_id text,
+  extras jsonb,
+  created_at timestamptz default now()
+);
