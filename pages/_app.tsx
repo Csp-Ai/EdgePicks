@@ -1,11 +1,12 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app';
-import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { SessionProvider, signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import '../styles/globals.css';
 import '../styles/typography.css';
+import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {
@@ -82,8 +83,13 @@ export default function MyApp({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
+      <Navbar />
       <Header />
-      <Component {...pageProps} />
+      <div className="pt-16">
+        <Component {...pageProps} />
+      </div>
     </SessionProvider>
   );
 }
+
+

@@ -273,6 +273,7 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+
 Timestamp: 2025-08-06T22:04:48.157Z
 Commit: 8f2a506d22c9c912e8ddc933de1dd11a693ccb7d
 Author: Codex
@@ -283,4 +284,32 @@ Files:
 - components/MatchupCard.tsx (+3/-3)
 - pages/_app.tsx (+1/-0)
 - styles/typography.css (+5/-0)
+=======
+
+Timestamp: 2025-08-06T22:02:59.752Z
+Commit: 2fc7496dd0e4b13a1f8c0bc831a7b994dd35dcb7
+Author: Codex
+Message: refactor: centralize card styles
+Files:
+- components/AgentCard.tsx (+3/-2)
+- components/MatchupCard.tsx (+2/-1)
+- styles/cardStyles.ts (+3/-0)
+=======
+Timestamp: 2025-08-06T22:04:08.496Z
+Commit: 6951ba0e836dd63c9c831f8486c082be1d23277f
+Author: Codex
+Message: feat: add mobile hamburger menu
+Files:
+- components/Navbar.tsx (+130/-0)
+- pages/_app.tsx (+5/-78)
+=======
+Timestamp: 2025-08-06T22:03:35.141Z
+Commit: b39ef7ba74b4cc82a5c4ed98fc9a662eeadda5f2
+Author: Codex
+Message: feat: add navbar with scroll gradient
+Files:
+- components/Navbar.tsx (+60/-0)
+- pages/_app.tsx (+6/-75)
+
+
 
