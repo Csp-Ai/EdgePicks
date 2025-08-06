@@ -406,3 +406,10 @@ Files:
 - pages/_app.tsx (+11/-4)
 - supabase/schema.sql (+9/-0)
 
+Timestamp: 2025-08-06T23:10:29.798Z
+Commit: 423bccade410cdb4feb4cfedaf40c999a05a3406
+Author: Codex
+Message: Wrap AgentCard in dashboard link when authenticated
+Files:
+- components/AgentCard.tsx (+12/-2)
+

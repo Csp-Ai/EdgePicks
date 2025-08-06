@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import {
   Activity,
   LineChart,
@@ -43,6 +45,7 @@ const AgentCard: React.FC<Props> = ({
   loading = false,
 }) => {
   const [visible, setVisible] = useState(false);
+  const { data: session } = useSession();
   useEffect(() => {
     setVisible(true);
   }, []);
@@ -68,8 +71,7 @@ const AgentCard: React.FC<Props> = ({
       ? 'rgba(250,204,21,0.6)'
       : 'rgba(239,68,68,0.6)';
   const Icon = (agentIcons[name] || Info) as LucideIcon;
-
-  return (
+  const content = (
     <div
       className={`${agentCard} ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
@@ -120,6 +122,14 @@ const AgentCard: React.FC<Props> = ({
         </ul>
       )}
     </div>
+  );
+
+  return session?.user ? (
+    <Link href="/dashboard" aria-label="View agent dashboard">
+      {content}
+    </Link>
+  ) : (
+    content
   );
 };
 
