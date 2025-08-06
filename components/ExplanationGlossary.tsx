@@ -1,4 +1,7 @@
 import React from 'react';
+import AgentTooltip from './AgentTooltip';
+import { agents as agentRegistry } from '../lib/agents/registry';
+import { formatAgentName } from '../lib/utils';
 
 type Props = {
   onClose: () => void;
@@ -10,21 +13,13 @@ const ExplanationGlossary: React.FC<Props> = ({ onClose }) => {
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
         <h2 className="text-xl font-semibold mb-4">Agent Glossary</h2>
         <ul className="space-y-3 text-sm text-gray-700">
-          <li>
-            <strong>injuryScout</strong>: evaluates player injury reports and roster depth to assess how absences could sway the matchup.
-          </li>
-          <li>
-            <strong>lineWatcher</strong>: monitors betting line movement to reflect the market's confidence in each team.
-          </li>
-          <li>
-            <strong>statCruncher</strong>: favors efficiency metrics, defensive strength, and other advanced stats to compare teams.
-          </li>
-          <li>
-            <strong>trendsAgent</strong>: surfaces historical and momentum trends that may influence outcomes.
-          </li>
-          <li>
-            <strong>guardianAgent</strong>: highlights warnings when agent outputs conflict or signal risk.
-          </li>
+          {agentRegistry.map(({ name, description }) => (
+            <li key={name}>
+              <AgentTooltip name={name}>
+                <strong>{formatAgentName(name)}</strong>
+              </AgentTooltip>: {description}
+            </li>
+          ))}
         </ul>
         <button
           onClick={onClose}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import AnimatedConfidenceBar from './AnimatedConfidenceBar';
+import ConfidenceMeter from './ConfidenceMeter';
+import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
 import AgentComparePanel from './AgentComparePanel';
@@ -118,13 +119,8 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
       </div>
       <div className="mb-4">
-        <AnimatedConfidenceBar confidence={confidencePct} />
-        {confidencePct > 80 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">🟢 High Confidence</span>
-        )}
-        {confidencePct < 55 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
-        )}
+        <ConfidenceMeter value={confidencePct} />
+        <DisagreementBadge confidence={confidencePct} />
       </div>
       {compare && <AgentComparePanel agents={result.agents} />}
       {open && (

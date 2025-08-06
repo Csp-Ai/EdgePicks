@@ -14,11 +14,7 @@ const AgentSummary: React.FC<Props> = ({ agents }) => {
         const result = agents[name];
         return (
           <li key={name} className="list-none">
-            {result ? (
-              <AgentCard name={name} result={result} weight={weight} showWeight />
-            ) : (
-              <div className="p-3 bg-gray-50 rounded shadow-sm text-gray-500">Loading...</div>
-            )}
+            <AgentCard name={name} result={result} weight={weight} showWeight />
           </li>
         );
       })}

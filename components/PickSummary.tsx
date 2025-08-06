@@ -1,5 +1,6 @@
 import React from 'react';
-import AnimatedConfidenceBar from './AnimatedConfidenceBar';
+import ConfidenceMeter from './ConfidenceMeter';
+import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
 
 type Props = {
@@ -30,7 +31,8 @@ const PickSummary: React.FC<Props> = ({ teamA, teamB, winner, confidence }) => {
           <span className={winnerColor}>{winner}</span>
         </div>
       </div>
-      <AnimatedConfidenceBar confidence={pct} />
+      <ConfidenceMeter value={pct} />
+      <DisagreementBadge confidence={pct} />
       <p className="mt-4 text-center text-xs text-gray-500">
         Powered by modular AI agents
       </p>
