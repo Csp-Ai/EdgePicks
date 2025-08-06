@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
 import '../styles/globals.css';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -10,6 +11,15 @@ function Header() {
       <ThemeToggle />
       {session ? (
         <>
+          {session.user?.image && (
+            <Image
+              src={session.user.image}
+              alt={session.user?.name ? `${session.user.name}'s avatar` : 'User avatar'}
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+          )}
           <span>{session.user?.name}</span>
           <button
             onClick={() => signOut()}
