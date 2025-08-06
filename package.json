@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "test": "node scripts/update-llms-log.test.js",
+    "dev:local": "next dev --port 3000",
+    "test:local": "npm test",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
     "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
     "prepare": "husky"
@@ -19,7 +21,8 @@
     "next-auth": "^4.24.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "^2.3.4"
+    "swr": "^2.3.4",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@types/next-auth": "^3.13.0",

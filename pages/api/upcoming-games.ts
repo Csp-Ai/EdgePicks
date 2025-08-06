@@ -1,4 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import fs from 'fs';
+import path from 'path';
 import {
   fetchNbaGames,
   fetchMlbGames,
@@ -10,10 +12,21 @@ import { agents as registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
+import { hasSportsDbKey } from '../../lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (!process.env.SPORTS_DB_API_KEY || process.env.SPORTS_DB_API_KEY === '1') {
-    res.status(500).json({ error: 'Missing or invalid SPORTS_DB_API_KEY' });
+  if (!hasSportsDbKey) {
+    console.warn('Sports API key missing. Add it to `.env.local` to enable live games.');
+    try {
+      const mockPath = path.join(process.cwd(), 'mock', 'upcoming-games.json');
+      const raw = await fs.promises.readFile(mockPath, 'utf-8');
+      const mock = JSON.parse(raw);
+      res.setHeader('x-missing-api-key', '1');
+      res.status(200).json(mock);
+    } catch (err) {
+      res.setHeader('x-missing-api-key', '1');
+      res.status(200).json(getFallbackMatchups());
+    }
     return;
   }
   try {
