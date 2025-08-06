@@ -1,0 +1,5 @@
+@layer components {
+  .confidenceText {
+    @apply font-semibold;
+  }
+}
