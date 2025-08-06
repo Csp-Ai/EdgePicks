@@ -11,18 +11,21 @@ const leagues = ['NFL', 'NBA', 'MLB', 'NHL'];
 
 const PredictionsPanel: React.FC<Props> = ({ session }) => {
   const [league, setLeague] = useState('NFL');
+  const [result, setResult] = useState<string>('');
 
   const handleRun = async () => {
     try {
-      await runPredictionFlow();
+      const res = await runPredictionFlow();
+      setResult(JSON.stringify(res));
     } catch (err) {
+      setResult('Prediction flow failed');
       console.error(err);
     }
   };
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold">Welcome, {session.user?.name}</h1>
+      <h1 className="text-2xl font-semibold">Welcome, {session.user?.name || 'Anonymous'}</h1>
       <div className="flex items-center gap-2">
         <label htmlFor="league">League:</label>
         <select
@@ -45,6 +48,9 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
         </button>
       </div>
       <LiveGamesList league={league} />
+      {result && (
+        <pre className="bg-gray-100 p-2 rounded text-sm whitespace-pre-wrap">{result}</pre>
+      )}
     </div>
   );
 };

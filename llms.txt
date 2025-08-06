@@ -130,3 +130,14 @@ Files:
 - pages/api/upcoming-games.ts (+17/-10)
 - pages/predictions.tsx (+19/-107)
 
+Timestamp: 2025-08-06T04:56:44.608Z
+Commit: 2a648b08fda7332e970d3ae22c82f9c89da2b8e2
+Author: Codex
+Message: feat: finalize beta lock-in
+Files:
+- components/PredictionsPanel.tsx (+8/-2)
+- lib/api.ts (+7/-13)
+- pages/_app.tsx (+6/-2)
+- pages/api/upcoming-games.ts (+7/-7)
+- pages/predictions.tsx (+6/-3)
+
