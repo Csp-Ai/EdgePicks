@@ -17,6 +17,7 @@ import {
   AgentLifecycle,
 } from '../lib/types';
 import { agents as agentRegistry } from '../lib/agents/registry';
+import { logUiEvent } from '../lib/logUiEvent';
 
 interface ResultPayload {
   teamA: string;
@@ -32,7 +33,7 @@ const HomePage: React.FC = () => {
   const [showGlossary, setShowGlossary] = useState(true);
   const [highlightAgent, setHighlightAgent] = useState<string | null>(null);
   const [showDebug, setShowDebug] = useState(false);
-  const [showUpcomingGames, setShowUpcomingGames] = useState(false);
+  const [showManual, setShowManual] = useState(false);
   const [agentStatuses, setAgentStatuses] = useState<Partial<AgentStatusMap>>({});
 
   const handleStart = ({ teamA, teamB, matchDay }: { teamA: string; teamB: string; matchDay: number }) => {
@@ -70,8 +71,12 @@ const HomePage: React.FC = () => {
     }));
   };
 
-  const handleSeeUpcomingGames = () => {
-    setShowUpcomingGames((s) => !s);
+  const handleToggleManual = () => {
+    setShowManual((s) => !s);
+    logUiEvent('toggleManualEntry', {
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString(),
+    }).catch(() => {});
   };
 
   useEffect(() => {
@@ -91,39 +96,46 @@ const HomePage: React.FC = () => {
   return (
     <main className="min-h-screen bg-gray-50 p-6 pb-24">
       <div className="container max-w-screen-xl mx-auto space-y-8">
-        <header className="text-center">
-          <h1 className="text-3xl font-mono font-bold">EdgePicks – AI Matchup Insights for Any Sport.</h1>
-          <p
-            className="text-gray-600"
-            title="Our modular agents make it easy to add support for more sports soon."
+        <header className="text-center space-y-2">
+          <h1 className="text-3xl font-mono font-bold">EdgePicks</h1>
+          <p className="text-gray-600">AI-Powered Pick’em Intelligence.</p>
+          <button
+            onClick={handleToggleManual}
+            aria-expanded={showManual}
+            aria-controls="manual-entry"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Powered by modular agents — more sports coming soon.
-          </p>
-          <button onClick={handleSeeUpcomingGames}>
-            {showUpcomingGames ? 'Hide Upcoming Games' : '🏈 See Upcoming Games'}
+            🔀 Switch to Manual Entry
           </button>
         </header>
-        {showUpcomingGames && <UpcomingGamesPanel />}
-        <MatchupInputForm
-          onStart={handleStart}
-          onAgent={handleAgent}
-          onComplete={handleComplete}
-          onLifecycle={handleLifecycle}
-        />
-        {result && (
-          <div className="space-y-6">
-            {result.pick && (
-              <PickSummary
-                teamA={result.teamA}
-                teamB={result.teamB}
-                winner={result.pick.winner}
-                confidence={result.pick.confidence}
-              />
-            )}
-            <AgentSummary agents={result.agents} />
-            {showDebug && <AgentDebugPanel agents={result.agents} />}
-          </div>
-        )}
+        <UpcomingGamesPanel />
+        <div
+          id="manual-entry"
+          className={`transition-all duration-300 overflow-hidden ${
+            showManual ? 'opacity-100 max-h-[5000px]' : 'opacity-0 max-h-0'
+          }`}
+        >
+          <MatchupInputForm
+            onStart={handleStart}
+            onAgent={handleAgent}
+            onComplete={handleComplete}
+            onLifecycle={handleLifecycle}
+          />
+          {result && (
+            <div className="space-y-6 mt-6">
+              {result.pick && (
+                <PickSummary
+                  teamA={result.teamA}
+                  teamB={result.teamB}
+                  winner={result.pick.winner}
+                  confidence={result.pick.confidence}
+                />
+              )}
+              <AgentSummary agents={result.agents} />
+              {showDebug && <AgentDebugPanel agents={result.agents} />}
+            </div>
+          )}
+        </div>
         {showGlossary && (
           <ExplanationGlossary
             onClose={() => setShowGlossary(false)}

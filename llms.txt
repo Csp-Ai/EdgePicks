@@ -11,3 +11,12 @@ Testing:
 Notes:
 - Add `@types/react` to devDependencies to fix build.
 
+Timestamp: 2025-08-06T02:16:43Z
+Summary:
+- Landing page features UpcomingGamesPanel with hero heading and manual entry toggle.
+- Toggle logs `uiEvent: 'toggleManualEntry'` to Supabase and reveals MatchupInputForm with animation.
+- UpcomingGamesPanel shows three matchups by default, mobile agent accordions, and "Show More Matchups" loader.
+Testing:
+- npm test — passed
+- npx tsc --noEmit — passed
+

@@ -3,6 +3,7 @@ import AgentCard from './AgentCard';
 import TeamBadge from './TeamBadge';
 import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
 import { AgentExecution } from '../lib/flow/runFlow';
+import { formatAgentName } from '../lib/utils';
 
 interface UpcomingGame {
   homeTeam: ConfidenceMeterProps['teamA'];
@@ -18,6 +19,7 @@ const UpcomingGamesPanel: React.FC = () => {
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
     let cancelled = false;
@@ -57,7 +59,7 @@ const UpcomingGamesPanel: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {games.map((game, idx) => {
+      {games.slice(0, visibleCount).map((game, idx) => {
         const agentResults = game.edgePick
           .filter((a) => a.result && a.name !== 'guardianAgent')
           .sort((a, b) => b.result!.score - a.result!.score);
@@ -91,14 +93,31 @@ const UpcomingGamesPanel: React.FC = () => {
               history={game.history}
             />
             <div className="flex flex-col gap-2">
-              {agentResults.map((exec) => (
-                <AgentCard
-                  key={exec.name}
-                  name={exec.name as any}
-                  result={exec.result!}
-                  showTeam
-                />
-              ))}
+              <div className="hidden sm:flex flex-col gap-2">
+                {agentResults.map((exec) => (
+                  <AgentCard
+                    key={exec.name}
+                    name={exec.name as any}
+                    result={exec.result!}
+                    showTeam
+                  />
+                ))}
+              </div>
+              <div className="sm:hidden flex flex-col gap-2">
+                {agentResults.map((exec) => (
+                  <details key={exec.name} className="border rounded">
+                    <summary className="cursor-pointer px-2 py-1 font-medium">
+                      {formatAgentName(exec.name)}
+                    </summary>
+                    <AgentCard
+                      name={exec.name as any}
+                      result={exec.result!}
+                      showTeam
+                      className="mt-2"
+                    />
+                  </details>
+                ))}
+              </div>
             </div>
             {guardian?.result?.warnings && (
               <div className="bg-yellow-50 border border-yellow-200 rounded p-2">
@@ -115,6 +134,16 @@ const UpcomingGamesPanel: React.FC = () => {
           </div>
         );
       })}
+      {visibleCount < games.length && (
+        <div className="sm:col-span-2 text-center">
+          <button
+            onClick={() => setVisibleCount((c) => c + 3)}
+            className="px-4 py-2 bg-blue-600 text-white rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            Show More Matchups
+          </button>
+        </div>
+      )}
     </div>
   );
 };
