@@ -223,3 +223,15 @@ Message: Add exponential retry backoff for Supabase logging
 Files:
 - lib/logToSupabase.ts (+17/-2)
 
+Timestamp: 2025-08-06T20:50:58.528Z
+Commit: 2e2ee4e08217bafa18fd6ec219f5fbd188aa07c1
+Author: Codex
+Message: feat: redesign landing page and fix google sign-in
+Files:
+- components/ui/button.tsx (+18/-0)
+- components/ui/card.tsx (+14/-0)
+- components/ui/typography.tsx (+10/-0)
+- lib/utils.ts (+4/-0)
+- pages/index.tsx (+55/-153)
+- tailwind.config.js (+5/-1)
+
