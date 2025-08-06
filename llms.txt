@@ -1,0 +1,13 @@
+Timestamp: 2025-08-06T01:35:19Z
+Summary:
+- Repository docs synced (README + AGENTS.md)
+- AgentStatusPanel added for real-time visibility
+- ConfidenceMeter refactored to accept structured team objects and history
+- UpcomingGamesPanel now fetches live matchups via `/api/upcoming-games`
+Testing:
+- npm test — passed
+- npx tsc --noEmit — passed
+- Build failed — @types/react missing
+Notes:
+- Add `@types/react` to devDependencies to fix build.
+
