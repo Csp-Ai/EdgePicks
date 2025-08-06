@@ -4,8 +4,12 @@ export const getUpcomingGames = async (league: string = 'NFL') => {
   return res.json();
 };
 
-export const runPredictionFlow = async () => {
-  const res = await fetch('/api/run-agents', { method: 'POST' });
+export const runPredictions = async (league: string, games: any[]) => {
+  const res = await fetch('/api/run-predictions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ league, games }),
+  });
   if (!res.ok) throw new Error('Prediction flow failed');
   return res.json();
 };
