@@ -1,14 +1,13 @@
+// pages/_app.tsx
 import type { AppProps } from 'next/app';
 import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
-import Link from 'next/link';
 import Image from 'next/image';
-
+import Link from 'next/link';
 import '../styles/globals.css';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {
   const { data: session } = useSession();
-
   return (
     <header className="p-4 flex justify-end gap-4 items-center">
       <ThemeToggle />
@@ -46,7 +45,10 @@ function Header() {
   );
 }
 
-export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps }
+}: AppProps) {
   return (
     <SessionProvider session={session}>
       <Header />
