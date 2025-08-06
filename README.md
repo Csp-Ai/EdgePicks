@@ -19,6 +19,10 @@ This file serves as the **Codex constitution** and **single source of truth** fo
 **All future agents and developers must reference `llms.txt` before executing changes.**  
 The README reflects system-level intent. The `llms.txt` file reflects execution history, behavior shifts, and rationale.
 
+## Git Hooks
+
+This project uses [Husky](https://typicode.github.io/husky) to manage Git hooks. A pre-push hook runs `npm run postpush`, which executes `scripts/log-llms-entry.ts` and appends the latest commit details to `llms.txt`.
+
 ---
 
 ## Features
