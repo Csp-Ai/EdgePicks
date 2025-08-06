@@ -242,3 +242,11 @@ Message: fix: correct Supabase typing in trendsAgent
 Files:
 - lib/agents/trendsAgent.ts (+4/-2)
 
+Timestamp: 2025-08-06T21:22:24.804Z
+Commit: 79a8425ad265d926f7b876119a7aea9ed0973988
+Author: Codex
+Message: Add public matchups page with limited upcoming games
+Files:
+- components/UpcomingGamesPanel.tsx (+8/-3)
+- pages/matchups/public.tsx (+13/-0)
+

@@ -36,12 +36,17 @@ const leagueIcons: Record<string, string> = {
   MLS: '⚽',
 };
 
-const UpcomingGamesPanel: React.FC = () => {
+interface UpcomingGamesPanelProps {
+  /** Maximum number of matchups to display. If set, the "Show More" button is hidden. */
+  maxVisible?: number;
+}
+
+const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({ maxVisible }) => {
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(3);
+  const [visibleCount, setVisibleCount] = useState(maxVisible ?? 3);
 
   useEffect(() => {
     let cancelled = false;
@@ -155,7 +160,7 @@ const UpcomingGamesPanel: React.FC = () => {
           </div>
         );
       })}
-      {visibleCount < games.length && (
+      {!maxVisible && visibleCount < games.length && (
         <div className="sm:col-span-2 text-center">
           <button
             onClick={() => setVisibleCount((c) => c + 3)}
