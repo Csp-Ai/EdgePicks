@@ -14,6 +14,11 @@ export interface AgentExecution {
   error?: true;
 }
 
+export interface FlowRunResult {
+  outputs: Partial<AgentOutputs>;
+  executions: AgentExecution[];
+}
+
 /**
  * Execute a flow sequentially, running each agent in order.
  * Logs input and output for each agent and marks failures.
@@ -23,8 +28,9 @@ export async function runFlow(
   matchup: Matchup,
   onAgent?: (exec: AgentExecution) => void,
   onLifecycle?: (event: { name: AgentName } & AgentLifecycle) => void
-): Promise<Partial<AgentOutputs>> {
+): Promise<FlowRunResult> {
   const outputs: Partial<AgentOutputs> = {};
+  const executions: AgentExecution[] = [];
 
   for (const name of flow.agents) {
     const agent = registry.find((a) => a.name === name);
@@ -43,7 +49,9 @@ export async function runFlow(
       const duration = end - start;
       console.log(`[runFlow] ${name} output:`, result);
       outputs[name] = result;
-      onAgent?.({ name, result });
+      const exec: AgentExecution = { name, result };
+      executions.push(exec);
+      onAgent?.(exec);
       onLifecycle?.({
         name,
         status: 'completed',
@@ -55,7 +63,9 @@ export async function runFlow(
       const end = Date.now();
       const duration = end - start;
       console.error(`[runFlow] ${name} error:`, err);
-      onAgent?.({ name, error: true });
+      const exec: AgentExecution = { name, error: true };
+      executions.push(exec);
+      onAgent?.(exec);
       onLifecycle?.({
         name,
         status: 'errored',
@@ -66,5 +76,5 @@ export async function runFlow(
     }
   }
 
-  return outputs;
+  return { outputs, executions };
 }

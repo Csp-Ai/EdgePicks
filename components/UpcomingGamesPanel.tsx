@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import AgentCard from './AgentCard';
 import TeamBadge from './TeamBadge';
 import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
 import { AgentExecution } from '../lib/flow/runFlow';
-import { formatAgentName } from '../lib/utils';
+import AgentRationalePanel from './AgentRationalePanel';
 
 interface UpcomingGame {
   homeTeam: ConfidenceMeterProps['teamA'];
@@ -21,6 +20,12 @@ interface UpcomingGame {
     lastUpdate?: string;
   };
   source?: string;
+  winner: string;
+  edgeDelta: number;
+  confidenceDrop: number;
+  publicLean?: number;
+  agentDelta?: number;
+  disagreements: string[];
 }
 
 const UpcomingGamesPanel: React.FC = () => {
@@ -68,9 +73,6 @@ const UpcomingGamesPanel: React.FC = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {games.slice(0, visibleCount).map((game, idx) => {
-        const agentResults = game.edgePick
-          .filter((a) => a.result && a.name !== 'guardianAgent')
-          .sort((a, b) => b.result!.score - a.result!.score);
         const guardian = game.edgePick.find((a) => a.name === 'guardianAgent');
         return (
           <div
@@ -92,6 +94,7 @@ const UpcomingGamesPanel: React.FC = () => {
               <div className="text-sm text-gray-500 flex flex-col items-end">
                 <time>{game.time}</time>
                 <span>{game.league}</span>
+                {game.source && <span className="text-xs">{game.source}</span>}
               </div>
             </div>
             <ConfidenceMeter
@@ -99,34 +102,15 @@ const UpcomingGamesPanel: React.FC = () => {
               teamB={game.awayTeam}
               confidence={game.confidence}
               history={game.history}
+              spread={game.odds?.spread}
+              publicLean={game.publicLean}
+              agentDelta={game.agentDelta}
             />
-            <div className="flex flex-col gap-2">
-              <div className="hidden sm:flex flex-col gap-2">
-                {agentResults.map((exec) => (
-                  <AgentCard
-                    key={exec.name}
-                    name={exec.name as any}
-                    result={exec.result!}
-                    showTeam
-                  />
-                ))}
-              </div>
-              <div className="sm:hidden flex flex-col gap-2">
-                {agentResults.map((exec) => (
-                  <details key={exec.name} className="border rounded">
-                    <summary className="cursor-pointer px-2 py-1 font-medium">
-                      {formatAgentName(exec.name)}
-                    </summary>
-                    <AgentCard
-                      name={exec.name as any}
-                      result={exec.result!}
-                      showTeam
-                      className="mt-2"
-                    />
-                  </details>
-                ))}
-              </div>
+            <div className="text-xs text-gray-500">
+              Edge Δ: {Math.round(game.edgeDelta * 100)}% | Confidence Drop:{' '}
+              {Math.round(game.confidenceDrop * 100)}%
             </div>
+            <AgentRationalePanel executions={game.edgePick} winner={game.winner} />
             {guardian?.result?.warnings && (
               <div className="bg-yellow-50 border border-yellow-200 rounded p-2">
                 <h4 className="text-sm font-semibold text-yellow-800 mb-1">
