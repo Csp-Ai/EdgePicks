@@ -118,14 +118,14 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
         const guardian = game.edgePick.find((a) => a.name === 'guardianAgent');
         const card = (
           <div className="bg-white rounded shadow p-4 flex flex-col gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <h3 className="font-semibold flex items-center gap-2">
-                <span className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+              <h3 className="font-semibold flex items-center gap-3 sm:gap-2">
+                <span className="flex items-center gap-3 sm:gap-2">
                   <TeamBadge team={game.homeTeam.name} logoUrl={game.homeTeam.logo} />
                   {game.homeTeam.name}
                 </span>
                 <span className="text-gray-400">vs</span>
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-3 sm:gap-2">
                   <TeamBadge team={game.awayTeam.name} logoUrl={game.awayTeam.logo} />
                   {game.awayTeam.name}
                 </span>
@@ -177,7 +177,7 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
         <div className="sm:col-span-2 text-center">
           <button
             onClick={() => setVisibleCount((c) => c + 3)}
-            className="px-4 py-2 bg-blue-600 text-white rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="min-h-[44px] px-4 py-2 bg-blue-600 text-white rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Show More Matchups
           </button>
