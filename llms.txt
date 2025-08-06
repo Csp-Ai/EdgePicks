@@ -141,3 +141,26 @@ Files:
 - pages/api/upcoming-games.ts (+7/-7)
 - pages/predictions.tsx (+6/-3)
 
+Timestamp: 2025-08-06T05:08:06.703Z
+Commit: 17a05413e514bfbad12bfd60233d2a330323668e
+Author: Codex
+Message: feat: add local env and dev support
+Files:
+- .env.local.example (+11/-0)
+- .husky/pre-commit (+1/-0)
+- README.md (+26/-4)
+- components/UpcomingGamesPanel.tsx (+21/-2)
+- lib/env.ts (+18/-0)
+- mock/upcoming-games.json (+12/-0)
+- package-lock.json (+18/-5)
+- package.json (+4/-1)
+- pages/api/auth/[...nextauth].ts (+2/-1)
+- pages/api/upcoming-games.ts (+15/-2)
+
+Timestamp: 2025-08-06T05:08:26.996Z
+Commit: e3842f3f97ecf3baa03b16a0d46bc1dabde603c2
+Author: Codex
+Message: chore: ensure pre-commit hook is executable
+Files:
+- .husky/pre-commit (+0/-0)
+

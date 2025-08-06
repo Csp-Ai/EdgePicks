@@ -99,7 +99,14 @@ This returns the number of pending log entries and the last error encountered (i
 
 ## Environment Variables
 
-Create a `.env` file in the project root to configure Supabase, Google OAuth, and other services:
+Create a `.env.local` file in the project root for local development. The app
+falls back to `.env` if `.env.local` is absent. Start by copying the example:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Then add your own keys:
 
 ```env
 SUPABASE_URL=<your-supabase-url>
@@ -108,7 +115,7 @@ NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 GOOGLE_CLIENT_ID=<your-client-id>
 GOOGLE_CLIENT_SECRET=<your-client-secret>
-NEXTAUTH_URL=https://your-deployed-url.com
+NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=<secure-generated-secret>
 ODDS_API_KEY=<your-oddsapi-key>
 SPORTS_DB_API_KEY=<your-thesportsdb-api-key>
@@ -121,11 +128,26 @@ The NextAuth variables enable Google sign-in for protected routes.
 `NFL_LEAGUE_ID` sets the TheSportsDB league ID for NFL (default `4391`). Configure other league ID variables for additional sports as needed.
 
 ### Development Setup
+
+```bash
 npm install
+npm run dev:local    # starts dev server at http://localhost:3000
+```
 
-Copy .env.example to .env and configure values
+Run tests locally:
 
-npm run dev (starts dev server at localhost:3000)
+```bash
+npm run test:local
+```
+
+### Local API Tests
+With the server running you can verify key routes:
+
+```bash
+curl -I http://localhost:3000/auth/signin
+curl -X GET "http://localhost:3000/api/upcoming-games?league=NFL"
+curl -X POST http://localhost:3000/api/run-agents
+```
 
 Flow Execution
 nginx
