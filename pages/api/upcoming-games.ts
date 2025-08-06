@@ -12,9 +12,13 @@ import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (!process.env.SPORTS_DB_API_KEY || process.env.SPORTS_DB_API_KEY === '1') {
+    res.status(500).json({ error: 'Missing or invalid SPORTS_DB_API_KEY' });
+    return;
+  }
   try {
     const leagueParam =
-      typeof req.query.league === 'string' ? req.query.league.toUpperCase() : undefined;
+      typeof req.query.league === 'string' ? req.query.league.toUpperCase() : 'NFL';
 
     const fetchMap = {
       NFL: fetchNflGames,
@@ -23,13 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       NHL: fetchNhlGames,
     } as const;
 
-    const leaguesToFetch = leagueParam && fetchMap[leagueParam as keyof typeof fetchMap]
-      ? [leagueParam as keyof typeof fetchMap]
-      : (Object.keys(fetchMap) as (keyof typeof fetchMap)[]);
+    const fetchFn = fetchMap[leagueParam as keyof typeof fetchMap] || fetchMap.NFL;
 
-    const leagueData = await Promise.all(leaguesToFetch.map((l) => fetchMap[l]()));
-
-    let games = leagueData.flat();
+    let games = await fetchFn();
     if (!games.length) {
       games = getFallbackMatchups();
     }

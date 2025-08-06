@@ -18,7 +18,7 @@ function Header() {
         <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
       ) : session ? (
         <>
-          {session.user?.image && (
+          {session.user?.image ? (
             <Image
               src={session.user.image}
               alt={session.user?.name ? `${session.user.name}'s avatar` : 'User avatar'}
@@ -26,8 +26,12 @@ function Header() {
               height={32}
               className="rounded-full"
             />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm">
+              {session.user?.name ? session.user.name.charAt(0) : '?'}
+            </div>
           )}
-          <span>{session.user?.name}</span>
+          <span>{session.user?.name || 'Anonymous'}</span>
           <button
             onClick={() => signOut()}
             className="px-2 py-1 border rounded"
