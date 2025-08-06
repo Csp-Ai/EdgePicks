@@ -13,6 +13,14 @@ interface UpcomingGame {
   league: string;
   time: string;
   edgePick: AgentExecution[];
+  odds?: {
+    spread?: number;
+    overUnder?: number;
+    moneyline?: { home?: number; away?: number };
+    bookmaker?: string;
+    lastUpdate?: string;
+  };
+  source?: string;
 }
 
 const UpcomingGamesPanel: React.FC = () => {
@@ -72,12 +80,12 @@ const UpcomingGamesPanel: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <h3 className="font-semibold flex items-center gap-2">
                 <span className="flex items-center gap-2">
-                  <TeamBadge team={game.homeTeam.name} />
+                  <TeamBadge team={game.homeTeam.name} logoUrl={game.homeTeam.logo} />
                   {game.homeTeam.name}
                 </span>
                 <span className="text-gray-400">vs</span>
                 <span className="flex items-center gap-2">
-                  <TeamBadge team={game.awayTeam.name} />
+                  <TeamBadge team={game.awayTeam.name} logoUrl={game.awayTeam.logo} />
                   {game.awayTeam.name}
                 </span>
               </h3>

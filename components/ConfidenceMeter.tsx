@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 export interface ConfidenceMeterProps {
-  teamA: { name: string };
-  teamB: { name: string };
+  teamA: { name: string; logo?: string };
+  teamB: { name: string; logo?: string };
   confidence: number;
   history?: number[];
 }

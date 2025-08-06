@@ -2,6 +2,17 @@ import { AgentResult, Matchup } from '../types';
 import { pseudoMetric } from './utils';
 
 export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
+  if (matchup.odds?.spread !== undefined) {
+    const favored = matchup.odds.spread < 0 ? matchup.homeTeam : matchup.awayTeam;
+    const movement = Math.abs(matchup.odds.spread);
+    const score = Math.min(1, 0.5 + movement / 20);
+    return {
+      team: favored,
+      score,
+      reason: `Spread ${matchup.odds.spread} from ${matchup.odds.bookmaker} (updated ${matchup.odds.lastUpdate})`,
+    };
+  }
+
   const [homeLine, awayLine] = await Promise.all([
     pseudoMetric(`${matchup.homeTeam}-line`, 10),
     pseudoMetric(`${matchup.awayTeam}-line`, 10),

@@ -13,6 +13,14 @@ interface UpcomingGame {
   time: string;
   league: string;
   edgePick: AgentExecution[];
+  odds?: {
+    spread?: number;
+    overUnder?: number;
+    moneyline?: { home?: number; away?: number };
+    bookmaker?: string;
+    lastUpdate?: string;
+  };
+  source?: string;
 }
 
 const valueProps = [
@@ -76,10 +84,10 @@ const HeroSection: React.FC = () => {
           <>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <TeamBadge team={game.homeTeam.name} />
+                <TeamBadge team={game.homeTeam.name} logoUrl={game.homeTeam.logo} />
                 <span>{game.homeTeam.name}</span>
                 <span className="text-gray-400">vs</span>
-                <TeamBadge team={game.awayTeam.name} />
+                <TeamBadge team={game.awayTeam.name} logoUrl={game.awayTeam.logo} />
                 <span>{game.awayTeam.name}</span>
               </div>
               <time className="text-sm text-gray-500">{game.time}</time>

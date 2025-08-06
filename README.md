@@ -26,6 +26,7 @@ The README reflects system-level intent. The `llms.txt` file reflects execution 
 - Live predictions panel
 - Transparency dashboards
 - Accuracy leaderboards
+- Upcoming games sourced from TheSportsDB with betting odds from OddsAPI
 
 ## Project Purpose
 
@@ -59,6 +60,10 @@ Corresponding prompt templates reside in `lib/prompts/`.
 - `components/` – reusable UI elements
 - `pages/api/` – Next.js API routes
 - `supabase/` – database schema and seed helpers
+
+## Live Data Sources
+
+Upcoming NFL matchups are fetched from [TheSportsDB](https://www.thesportsdb.com/) and enriched with betting odds from [OddsAPI](https://the-odds-api.com/). The `/api/upcoming-games` endpoint exposes the top five games with team logos, kickoff times, and market lines.
 
 ## API Endpoint
 
@@ -95,6 +100,7 @@ To enable Supabase integration, create a `.env` file in the project root:
 ```env
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
+ODDS_API_KEY=<your-oddsapi-key>
 You can find these values in your Supabase dashboard under Project Settings → API.
 They are required by lib/supabaseClient.ts to connect to your Supabase project.
 
