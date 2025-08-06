@@ -72,7 +72,10 @@ function Header() {
         ) : (
           <button
             onClick={() => {
-              void logUiEvent('sign_in', sessionType, session?.user?.id);
+              logUiEvent('sign_in_click', {
+                session_type: sessionType,
+                user_id: session?.user?.id ?? 'unknown',
+              });
               signIn('google');
             }}
             className="min-h-[44px] px-4 py-2 border rounded"
@@ -101,5 +104,6 @@ export default function MyApp({
     </SessionProvider>
   );
 }
+
 
 
