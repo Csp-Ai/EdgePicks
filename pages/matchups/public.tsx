@@ -40,7 +40,10 @@ const PublicMatchupsPage: React.FC = () => {
                   {children}
                 </motion.div>
               ) : (
-                <PredictionTracker onReveal={() => handleReveal(index)} />
+                <PredictionTracker
+                  revealedIndex={index}
+                  onReveal={() => handleReveal(index)}
+                />
               )}
             </AnimatePresence>
           </div>
