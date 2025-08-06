@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth/next';
 import fs from 'fs';
 import path from 'path';
 import { authOptions } from './auth/[...nextauth]';
-import { hasSportsDbKey } from '../../lib/env';
 
 interface Game {
   homeTeam: { name: string };
@@ -28,6 +27,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.setHeader('Allow', ['POST']);
     res.status(405).end('Method Not Allowed');
     return;
+  }
+
+  const missingEnv = ['SPORTS_DB_API_KEY'].filter((key) => !process.env[key]);
+  if (missingEnv.length) {
+    console.warn(`Missing required env vars: ${missingEnv.join(', ')}`);
+  }
+  if (!process.env.SPORTS_DB_API_KEY && process.env.NODE_ENV === 'development') {
+    console.warn('[Dev Warning] Using mock data. Add SPORTS_DB_API_KEY to .env.local');
   }
 
   const { league, games } = req.body || {};
@@ -55,9 +62,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const timestamp = new Date().toISOString();
 
-    if (!hasSportsDbKey) {
-      console.warn('No SPORTS_DB_API_KEY is set.');
-    }
     if ((games || []).some((g: any) => g.useFallback || g.source === 'fallback')) {
       console.warn('Mock data is being used for predictions.');
     }

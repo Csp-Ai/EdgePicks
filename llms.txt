@@ -184,3 +184,15 @@ Files:
 - pages/_app.tsx (+20/-6)
 - pages/api/run-predictions.ts (+11/-1)
 
+Timestamp: 2025-08-06T05:39:38.366Z
+Commit: 72015e84522679b160e485eefeb6236d61a5c773
+Author: Codex
+Message: chore: prep beta release
+Files:
+- README.md (+32/-1)
+- next-milestone.yaml (+7/-0)
+- package.json (+3/-2)
+- pages/api/run-predictions.ts (+8/-4)
+- pages/api/upcoming-games.ts (+7/-0)
+- scripts/testLocal.ts (+6/-0)
+

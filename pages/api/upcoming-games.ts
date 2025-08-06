@@ -15,6 +15,13 @@ import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 import { hasSportsDbKey } from '../../lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const missingEnv = ['SPORTS_DB_API_KEY'].filter((key) => !process.env[key]);
+  if (missingEnv.length) {
+    console.warn(`Missing required env vars: ${missingEnv.join(', ')}`);
+  }
+  if (!process.env.SPORTS_DB_API_KEY && process.env.NODE_ENV === 'development') {
+    console.warn('[Dev Warning] Using mock data. Add SPORTS_DB_API_KEY to .env.local');
+  }
   if (!hasSportsDbKey) {
     console.warn('Sports API key missing. Add it to `.env.local` to enable live games.');
     try {

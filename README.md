@@ -4,6 +4,20 @@ Last Updated: 2025-08-06
 
 EdgePicks is an AI-powered research assistant for Pick’em players, analysts, and fans. It combines modular agent logic and transparent reasoning to surface smart, explainable picks across matchups—whether you're tracking football, basketball, baseball, or beyond.
 
+Quick links: [codex-prompts/](codex-prompts) • [llms.txt](llms.txt)
+
+---
+
+## 🚀 Beta Launch
+
+```bash
+git clone https://github.com/edgepicks/EdgePicks.git
+cd EdgePicks
+cp .env.local.example .env.local
+npm install
+npm run dev
+```
+
 ---
 
 ## 🧾 System Changelog: llms.txt
@@ -69,7 +83,24 @@ Corresponding prompt templates reside in `lib/prompts/`.
 
 Upcoming NFL matchups are fetched from [TheSportsDB](https://www.thesportsdb.com/) and enriched with betting odds from [OddsAPI](https://the-odds-api.com/). The `/api/upcoming-games` endpoint exposes the top five games with team logos, kickoff times, and market lines.
 
-## API Endpoint
+## Available API Routes
+
+- `GET /api/upcoming-games` – list upcoming matchups (supports `?league=NFL`).
+- `POST /api/run-predictions` – run agent predictions for provided games.
+
+## Authentication
+
+EdgePicks uses [NextAuth](https://next-auth.js.org/) with Google OAuth. Users sign in with a Google account to run predictions and access protected routes.
+
+## Logging
+
+Predictions append entries to `llms.txt` using:
+
+```
+[timestamp] [league] predictions run by [username]
+```
+
+## run-agents Endpoint
 
 Run all agents for a matchup via:
 

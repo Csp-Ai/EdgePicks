@@ -8,10 +8,11 @@
     "start": "next start",
     "test": "node scripts/update-llms-log.test.js",
     "dev:local": "next dev --port 3000",
-    "test:local": "npm test",
+    "test:local": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/testLocal.ts",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
     "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "next lint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.5",
