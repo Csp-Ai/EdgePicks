@@ -216,3 +216,10 @@ Files:
 n
 
 
+Timestamp: 2025-08-06T20:35:23.287Z
+Commit: fecb806599f48c225a737aef42c3ee48ca4e0a02
+Author: Codex
+Message: Add exponential retry backoff for Supabase logging
+Files:
+- lib/logToSupabase.ts (+17/-2)
+
