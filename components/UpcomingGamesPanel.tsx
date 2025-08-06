@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import AgentCard from './AgentCard';
 import TeamBadge from './TeamBadge';
+import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
 import { AgentExecution } from '../lib/flow/runFlow';
 
 interface UpcomingGame {
-  homeTeam: string;
-  awayTeam: string;
-  league?: string;
-  time?: string;
-  edgePick: {
-    winner: string;
-    confidence: number;
-    topReasons: string[];
-    agents: AgentExecution[];
-  };
+  homeTeam: ConfidenceMeterProps['teamA'];
+  awayTeam: ConfidenceMeterProps['teamB'];
+  confidence: number;
+  history?: number[];
+  league: string;
+  time: string;
+  edgePick: AgentExecution[];
 }
 
 const UpcomingGamesPanel: React.FC = () => {
@@ -60,12 +58,10 @@ const UpcomingGamesPanel: React.FC = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {games.map((game, idx) => {
-        const agentResults = game.edgePick.agents
+        const agentResults = game.edgePick
           .filter((a) => a.result && a.name !== 'guardianAgent')
-          .sort((a, b) => (b.result!.score - a.result!.score));
-        const guardian = game.edgePick.agents.find(
-          (a) => a.name === 'guardianAgent'
-        );
+          .sort((a, b) => b.result!.score - a.result!.score);
+        const guardian = game.edgePick.find((a) => a.name === 'guardianAgent');
         return (
           <div
             key={idx}
@@ -74,19 +70,26 @@ const UpcomingGamesPanel: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <h3 className="font-semibold flex items-center gap-2">
                 <span className="flex items-center gap-2">
-                  <TeamBadge team={game.homeTeam} />
-                  {game.homeTeam}
+                  <TeamBadge team={game.homeTeam.name} />
+                  {game.homeTeam.name}
                 </span>
                 <span className="text-gray-400">vs</span>
                 <span className="flex items-center gap-2">
-                  <TeamBadge team={game.awayTeam} />
-                  {game.awayTeam}
+                  <TeamBadge team={game.awayTeam.name} />
+                  {game.awayTeam.name}
                 </span>
               </h3>
-              <time className="text-sm text-gray-500">
-                {game.time ? new Date(game.time).toLocaleString() : 'TBD'}
-              </time>
+              <div className="text-sm text-gray-500 flex flex-col items-end">
+                <time>{game.time}</time>
+                <span>{game.league}</span>
+              </div>
             </div>
+            <ConfidenceMeter
+              teamA={game.homeTeam}
+              teamB={game.awayTeam}
+              confidence={game.confidence}
+              history={game.history}
+            />
             <div className="flex flex-col gap-2">
               {agentResults.map((exec) => (
                 <AgentCard

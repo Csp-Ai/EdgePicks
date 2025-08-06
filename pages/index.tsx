@@ -99,7 +99,9 @@ const HomePage: React.FC = () => {
           >
             Powered by modular agents — more sports coming soon.
           </p>
-          <button onClick={handleSeeUpcomingGames}>🏈 See Upcoming Games</button>
+          <button onClick={handleSeeUpcomingGames}>
+            {showUpcomingGames ? 'Hide Upcoming Games' : '🏈 See Upcoming Games'}
+          </button>
         </header>
         {showUpcomingGames && <UpcomingGamesPanel />}
         <MatchupInputForm

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-interface ConfidenceMeterProps {
+export interface ConfidenceMeterProps {
   teamA: { name: string };
   teamB: { name: string };
   confidence: number;
