@@ -15,7 +15,7 @@ interface MatchupRow {
 export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
   const client = getSupabaseClient();
   const { data, error } = await client
-    .from<MatchupRow>('matchups')
+    .from<'matchups', MatchupRow>('matchups')
     .select('flow, agents, actual_winner')
     .order('created_at', { ascending: false })
     .limit(50);
@@ -24,10 +24,12 @@ export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
     throw error;
   }
 
+  const rows: MatchupRow[] = data ?? [];
+
   const flowCounts: Record<string, number> = {};
   const agentStats: Record<string, { correct: number; total: number }> = {};
 
-  (data || []).forEach((row) => {
+  rows.forEach((row) => {
     const flow = row.flow || 'unknown';
     flowCounts[flow] = (flowCounts[flow] || 0) + 1;
 
