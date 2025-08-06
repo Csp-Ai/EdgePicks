@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   await runFlow(
     flow,
-    { homeTeam: '', awayTeam: '' },
+    { homeTeam: '', awayTeam: '', time: '', league: '' },
     ({ name, result, error }) => {
       if (!error && result) {
         res.write(`data: ${JSON.stringify({ type: 'agent', name, result })}\n\n`);

@@ -32,7 +32,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // @ts-ignore - flush may not exist in some environments
   res.flushHeaders?.();
 
-  const matchup: Matchup = { homeTeam: teamA, awayTeam: teamB, matchDay: matchDayNum };
+  const matchup: Matchup = {
+    homeTeam: teamA,
+    awayTeam: teamB,
+    matchDay: matchDayNum,
+    time: '',
+    league: '',
+  };
 
   const flowName = typeof flowNameParam === 'string' ? flowNameParam : 'football-pick';
   const flow = await loadFlow(flowName);

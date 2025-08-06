@@ -2,8 +2,12 @@ export interface Matchup {
   homeTeam: string;
   awayTeam: string;
   matchDay?: number;
-  time?: string;
-  league?: string;
+  /** Local start time for the event */
+  time: string;
+  /** League or competition, e.g., NFL, NBA */
+  league: string;
+  /** Optional unique identifier from a sports API */
+  gameId?: string;
 }
 
 export interface AgentResult {

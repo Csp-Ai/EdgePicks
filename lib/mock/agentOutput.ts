@@ -4,6 +4,8 @@ export const mockMatchups: MatchupWithPick[] = [
   {
     homeTeam: 'Patriots',
     awayTeam: 'Jets',
+    time: '',
+    league: '',
     pick: 'Patriots',
     confidence: 0.72,
     reasons: [
@@ -15,6 +17,8 @@ export const mockMatchups: MatchupWithPick[] = [
   {
     homeTeam: 'Cowboys',
     awayTeam: 'Eagles',
+    time: '',
+    league: '',
     pick: 'Eagles',
     confidence: 0.61,
     reasons: [
@@ -26,6 +30,8 @@ export const mockMatchups: MatchupWithPick[] = [
   {
     homeTeam: 'Packers',
     awayTeam: 'Bears',
+    time: '',
+    league: '',
     pick: 'Packers',
     confidence: 0.67,
     reasons: [
