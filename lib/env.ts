@@ -1,9 +1,3 @@
-import { config } from 'dotenv';
-import fs from 'fs';
-
-const envFile = fs.existsSync('.env.local') ? '.env.local' : '.env';
-config({ path: envFile });
-
 const required = ['NEXTAUTH_SECRET', 'NEXTAUTH_URL'];
 const missing = required.filter((key) => !process.env[key]);
 if (missing.length) {
