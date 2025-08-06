@@ -1,5 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { fetchUpcomingGames } from '../../lib/data/liveSports';
+import {
+  fetchNbaGames,
+  fetchMlbGames,
+  fetchNflGames,
+  fetchNhlGames,
+} from '../../lib/data/liveSports';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { agents as registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
@@ -8,9 +13,16 @@ import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 
 export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
   try {
-    const leagues = ['NFL', 'MLB', 'NBA', 'NHL'] as const;
-    const allGames = await Promise.all(leagues.map((l) => fetchUpcomingGames(l)));
-    let games = allGames.flat();
+    // Fetch upcoming games for each supported league.  Each helper already
+    // annotates results with the appropriate league so we simply combine them.
+    const [nfl, mlb, nba, nhl] = await Promise.all([
+      fetchNflGames(),
+      fetchMlbGames(),
+      fetchNbaGames(),
+      fetchNhlGames(),
+    ]);
+
+    let games = [...nfl, ...mlb, ...nba, ...nhl];
     if (!games.length) {
       games = getFallbackMatchups();
     }

@@ -35,7 +35,12 @@ const NextBigGame: React.FC = () => {
         const res = await fetch('/api/upcoming-games');
         if (res.ok) {
           const data: BigGame[] = await res.json();
-          if (data.length) setGame(data[0]);
+          if (data.length) {
+            // When multiple leagues are returned pick the matchup with the
+            // highest confidence to feature as the "next big game".
+            const top = data.slice().sort((a, b) => b.confidence - a.confidence)[0];
+            setGame(top);
+          }
         }
       } catch (err) {
         console.error('Failed to load next big game', err);
