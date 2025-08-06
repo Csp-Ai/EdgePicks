@@ -8,6 +8,7 @@ import '../styles/globals.css';
 import '../styles/typography.css';
 import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
+import { ToastProvider } from '../lib/useToast';
 
 function Header() {
   const { data: session, status } = useSession();
@@ -83,11 +84,13 @@ export default function MyApp({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <Navbar />
-      <Header />
-      <div className="pt-16">
-        <Component {...pageProps} />
-      </div>
+      <ToastProvider>
+        <Navbar />
+        <Header />
+        <div className="pt-16">
+          <Component {...pageProps} />
+        </div>
+      </ToastProvider>
     </SessionProvider>
   );
 }

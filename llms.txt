@@ -343,6 +343,18 @@ Files:
 main
  main
 
+codex/create-usetoast-component-and-setup-toasts
+Timestamp: 2025-08-06T22:33:18.591Z
+Commit: bd2f94dc3a50bcc314b14965b5c08f75401ac529
+Author: Codex
+Message: feat: add toast hook and logging error handler
+Files:
+- lib/logUiEvent.test.js (+23/-0)
+- lib/logUiEvent.ts (+5/-0)
+- lib/useToast.ts (+62/-0)
+- package.json (+1/-1)
+- pages/_app.tsx (+8/-5)
+=======
 codex/implement-loadingshimmer-in-upcominggamespanel
 Timestamp: 2025-08-06T22:29:43.682Z
 Commit: 7456d593868aead2aeb6abb634990f27fa21b88a
@@ -356,4 +368,5 @@ Message: Use EmptyState for empty upcoming games
  main
 Files:
 - components/UpcomingGamesPanel.tsx (+2/-1)
+main
 

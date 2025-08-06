@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node scripts/update-llms-log.test.js",
+    "test": "node scripts/update-llms-log.test.js && node lib/logUiEvent.test.js",
     "dev:local": "next dev --port 3000",
     "test:local": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/testLocal.ts",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
