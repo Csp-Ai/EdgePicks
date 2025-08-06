@@ -30,4 +30,8 @@ trendsAgent and guardianAgent operate with a weight of 0 to handle analytics and
 
 ## Development Notes
 
+- Prompt templates for each agent live in `lib/prompts/` and are documented in `agent-prompts.md`.
+
+- All agents should return JSON using the schema `{ agent, score, reasoning, metadata? }`.
+
 - Run `npm test` before committing changes.

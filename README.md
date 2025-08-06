@@ -36,6 +36,8 @@ pickBot – orchestrator that aggregates all agent scores into a final recommend
 
 See [AGENTS.md](AGENTS.md) for detailed agent metadata.
 
+Prompt formats and guidelines are documented in [agent-prompts.md](agent-prompts.md). Corresponding prompt templates reside in `lib/prompts/`.
+
 ## Project Structure
 
 - `lib/` – core agent logic, flow helpers, and utilities
