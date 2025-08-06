@@ -1,5 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
+import LoadingShimmer from './LoadingShimmer';
+import EmptyState from './EmptyState';
 
 interface Game {
   homeTeam: { name: string; logo?: string };
@@ -23,23 +25,20 @@ const LiveGamesList: React.FC<Props> = ({
   loadingPredictions,
 }) => {
   if (loadingGames) {
-    return (
-      <ul className="space-y-2">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <li key={i} className="h-16 bg-gray-200 rounded animate-pulse" />
-        ))}
-      </ul>
-    );
+    return <LoadingShimmer lines={3} lineClassName="h-16" />;
   }
 
   if (!games.length) {
-    return <p>No games found for {league}. Try again later.</p>;
+    return <EmptyState message={`No games found for ${league}. Try again later.`} />;
   }
 
   return (
-    <ul className="space-y-4">
+    <ul
+      className={`space-y-4 ${predictions.length ? 'divide-y divide-gray-200' : ''}`}
+      aria-live="polite"
+    >
       {games.map((g, idx) => (
-        <li key={idx} className="p-4 border rounded flex flex-col gap-2">
+        <li key={idx} className="p-4 flex flex-col gap-2" aria-busy={loadingPredictions}>
           <div className="flex items-center gap-2">
             {g.homeTeam.logo && (
               <Image src={g.homeTeam.logo} alt={g.homeTeam.name} width={24} height={24} />
@@ -53,7 +52,7 @@ const LiveGamesList: React.FC<Props> = ({
             <span className="ml-auto text-sm text-gray-600">{g.time}</span>
           </div>
           {loadingPredictions ? (
-            <div className="h-4 bg-gray-200 rounded animate-pulse" />
+            <LoadingShimmer lines={1} />
           ) : (
             predictions[idx] && (
               <div className="text-sm text-gray-600">
