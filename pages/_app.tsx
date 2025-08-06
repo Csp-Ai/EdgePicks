@@ -7,14 +7,16 @@ import '../styles/globals.css';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   return (
     <header className="p-4 flex justify-end gap-4 items-center">
       <ThemeToggle />
       <Link href="/predictions" className="px-2 py-1 border rounded">
         Predictions
       </Link>
-      {session ? (
+      {status === 'loading' ? (
+        <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+      ) : session ? (
         <>
           {session.user?.image && (
             <Image
@@ -38,7 +40,7 @@ function Header() {
           onClick={() => signIn('google')}
           className="px-2 py-1 border rounded"
         >
-          Sign in
+          Sign in with Google
         </button>
       )}
     </header>

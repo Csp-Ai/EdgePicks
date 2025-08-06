@@ -1,14 +1,18 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
+const googleClientId = process.env.GOOGLE_CLIENT_ID ?? '';
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET ?? '';
+const nextAuthSecret = process.env.NEXTAUTH_SECRET ?? 'development-secret';
+
 export const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: nextAuthSecret,
   pages: {
     signIn: '/auth/signin',
   },
