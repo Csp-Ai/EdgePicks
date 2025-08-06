@@ -1,4 +1,5 @@
 import { getSupabaseClient } from './supabaseClient';
+import { triggerToast } from './useToast';
 
 export async function logUiEvent(
   uiEvent: string,
@@ -13,5 +14,9 @@ export async function logUiEvent(
     });
   } catch (err) {
     console.error('Failed to log UI event', err);
+    triggerToast({
+      message: 'Unable to log event; please sign in again',
+      type: 'error',
+    });
   }
 }
