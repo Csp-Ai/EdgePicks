@@ -4,6 +4,7 @@ import {
   AgentResult,
   Matchup,
   PickSummary,
+  AgentLifecycle,
 } from '../lib/types';
 
 interface SummaryPayload {
@@ -17,9 +18,15 @@ export type Props = {
   onStart: (info: { teamA: string; teamB: string; matchDay: number }) => void;
   onAgent: (name: string, result: AgentResult) => void;
   onComplete: (data: SummaryPayload) => void;
+  onLifecycle: (event: { name: string } & AgentLifecycle) => void;
 };
 
-const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => {
+const MatchupInputForm: React.FC<Props> = ({
+  onStart,
+  onAgent,
+  onComplete,
+  onLifecycle,
+}) => {
   const [teamA, setTeamA] = useState('');
   const [teamB, setTeamB] = useState('');
   const [matchDay, setMatchDay] = useState('');
@@ -55,6 +62,8 @@ const MatchupInputForm: React.FC<Props> = ({ onStart, onAgent, onComplete }) => 
           if (!data.error) {
             onAgent(data.name, data.result as AgentResult);
           }
+        } else if (data.type === 'lifecycle') {
+          onLifecycle(data as { name: string } & AgentLifecycle);
         } else if (data.type === 'summary') {
           onComplete(data as SummaryPayload);
           setLoading(false);
