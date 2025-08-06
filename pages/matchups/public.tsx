@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import UpcomingGamesPanel from '../../components/UpcomingGamesPanel';
 import PredictionTracker from '../../components/PredictionTracker';
 import SignInModal from '../../components/SignInModal';
+import { FADE_DURATION, EASE } from '../../lib/animations';
 
 const PublicMatchupsPage: React.FC = () => {
   const { data: session } = useSession();
@@ -34,7 +35,7 @@ const PublicMatchupsPage: React.FC = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: FADE_DURATION, ease: EASE }}
                 >
                   {children}
                 </motion.div>
