@@ -250,3 +250,10 @@ Files:
 - components/UpcomingGamesPanel.tsx (+8/-3)
 - pages/matchups/public.tsx (+13/-0)
 
+Timestamp: 2025-08-06T21:26:50.181Z
+Commit: e313b70aaa205f51963064654b3bfa2da0e24e7e
+Author: Codex
+Message: Add prediction tracker component
+Files:
+- components/PredictionTracker.tsx (+52/-0)
+
