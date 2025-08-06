@@ -11,20 +11,23 @@ const teamFallbacks: Record<string, string> = {
 
 export type TeamBadgeProps = {
   team: string;
+  logoUrl?: string;
   isWinner?: boolean;
 };
 
-const TeamBadge: React.FC<TeamBadgeProps> = ({ team, isWinner }) => {
+const TeamBadge: React.FC<TeamBadgeProps> = ({ team, logoUrl, isWinner }) => {
   const [useFallback, setUseFallback] = useState(false);
 
   const badgeClasses = `w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center overflow-hidden ${
     isWinner ? 'ring-2 ring-green-400 transition-transform hover:scale-105' : ''
   }`;
 
-  if (!useFallback) {
+  const src = logoUrl || `/logos/${team}.png`;
+
+  if (!useFallback && src) {
     return (
       <img
-        src={`/logos/${team}.png`}
+        src={src}
         alt={`${team} logo`}
         className={badgeClasses}
         onError={() => setUseFallback(true)}

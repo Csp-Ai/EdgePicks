@@ -10,19 +10,29 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
     const games = await fetchUpcomingGames();
     const agentList = ['injuryScout', 'lineWatcher', 'statCruncher', 'guardianAgent'] as const;
     const results: {
-      homeTeam: { name: string };
-      awayTeam: { name: string };
+      homeTeam: { name: string; logo?: string };
+      awayTeam: { name: string; logo?: string };
       confidence: number;
       history?: number[];
       time: string;
       league: string;
+      odds?: {
+        spread?: number;
+        overUnder?: number;
+        moneyline?: { home?: number; away?: number };
+        bookmaker?: string;
+        lastUpdate?: string;
+      };
+      source?: string;
       edgePick: AgentExecution[];
     }[] = [];
 
     for (const game of games) {
       const executions: AgentExecution[] = [];
-      const outputs = await runFlow({ name: 'upcoming', agents: [...agentList] }, game, (exec) =>
-        executions.push(exec)
+      const outputs = await runFlow(
+        { name: 'upcoming', agents: [...agentList] },
+        { ...game, isLiveData: true, source: 'beta-nfl-api' },
+        (exec) => executions.push(exec)
       );
 
       const scores: Record<string, number> = {
@@ -50,11 +60,13 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
       logToSupabase(game, outputs as AgentOutputs, pickSummary, null, 'upcoming-games', true);
 
       results.push({
-        homeTeam: { name: game.homeTeam },
-        awayTeam: { name: game.awayTeam },
+        homeTeam: { name: game.homeTeam, logo: game.homeLogo },
+        awayTeam: { name: game.awayTeam, logo: game.awayLogo },
         confidence,
         time: game.time,
         league: game.league,
+        odds: game.odds,
+        source: game.source,
         edgePick: executions,
       });
     }

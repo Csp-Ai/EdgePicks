@@ -42,3 +42,11 @@ codex:edgepicks-landing-emotional-hook-and-agent-preview
 - Added featured matchup preview (with AI agent explanations) inline
 - Introduced CTA to scroll to full predictions
 - Improved visual motion and layout polish for user engagement
+Timestamp: 2025-08-06T03:12:17Z
+codex:edgepicks-integrate-thesportsdb-oddsapi
+- Replaced dummy matchups with live NFL events from TheSportsDB
+- Fetched betting odds and logos, exposing them via `/api/upcoming-games`
+- Agents now run against real data with `isLiveData` and source flags
+Testing:
+- npm test — passed
+- npx tsc --noEmit — passed

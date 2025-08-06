@@ -8,6 +8,23 @@ export interface Matchup {
   league: string;
   /** Optional unique identifier from a sports API */
   gameId?: string;
+  /** Optional team badge URLs */
+  homeLogo?: string;
+  awayLogo?: string;
+  /** Optional betting odds */
+  odds?: {
+    spread?: number;
+    overUnder?: number;
+    moneyline?: {
+      home?: number;
+      away?: number;
+    };
+    bookmaker?: string;
+    lastUpdate?: string;
+  };
+  /** Flags to indicate real-time data */
+  isLiveData?: boolean;
+  source?: string;
 }
 
 export interface AgentResult {
