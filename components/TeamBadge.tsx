@@ -31,6 +31,7 @@ const TeamBadge: React.FC<TeamBadgeProps> = ({ team, logoUrl, isWinner }) => {
         alt={`${team} logo`}
         className={badgeClasses}
         onError={() => setUseFallback(true)}
+        loading="lazy"
       />
     );
   }
