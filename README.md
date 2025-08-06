@@ -107,10 +107,14 @@ GOOGLE_CLIENT_SECRET=<your-client-secret>
 NEXTAUTH_URL=https://your-deployed-url.com
 NEXTAUTH_SECRET=<secure-generated-secret>
 ODDS_API_KEY=<your-oddsapi-key>
+SPORTS_DB_API_KEY=<your-thesportsdb-api-key>
+NFL_LEAGUE_ID=<thesportsdb-nfl-league-id>
 ```
 
-You can find the Supabase values in your dashboard under **Project Settings → API**.  
+You can find the Supabase values in your dashboard under **Project Settings → API**.
 The NextAuth variables enable Google sign-in for protected routes.
+`SPORTS_DB_API_KEY` is required for live schedule fetching from TheSportsDB.
+`NFL_LEAGUE_ID` sets the TheSportsDB league ID for NFL (default `4391`). Configure other league ID variables for additional sports as needed.
 
 ### Development Setup
 npm install
