@@ -3,9 +3,11 @@ import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { TypographyH1, TypographyMuted } from '../components/ui/typography';
-import MatchupCard from '../components/MatchupCard';
+import dynamic from 'next/dynamic';
 import type { AgentOutputs } from '../lib/types';
 import { FADE_DURATION, EASE } from '../lib/animations';
+
+const MatchupCard = dynamic(() => import('../components/MatchupCard'), { ssr: false });
 
 const dummyAgents: AgentOutputs = {
   injuryScout: { team: 'Team A', score: 0.2, reason: 'Fewer injuries' },
