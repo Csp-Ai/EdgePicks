@@ -388,3 +388,11 @@ Files:
 - styles/typography.css (+3/-0)
 main
 
+Timestamp: 2025-08-06T22:59:53.707Z
+Commit: 1007e0b801bfe123a0ef8aa1c70e757237e303cf
+Author: Codex
+Message: feat: log UI events for navigation and auth
+Files:
+- pages/_app.tsx (+8/-1)
+- pages/index.tsx (+14/-2)
+
