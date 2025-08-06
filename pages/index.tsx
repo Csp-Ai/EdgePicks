@@ -9,6 +9,7 @@ import AgentStatusPanel, {
   AgentStatusMap,
 } from '../components/AgentStatusPanel';
 import UpcomingGamesPanel from '../components/UpcomingGamesPanel';
+import HeroSection from '../components/HeroSection';
 import {
   AgentOutputs,
   AgentResult,
@@ -96,9 +97,8 @@ const HomePage: React.FC = () => {
   return (
     <main className="min-h-screen bg-gray-50 p-6 pb-24">
       <div className="container max-w-screen-xl mx-auto space-y-8">
-        <header className="text-center space-y-2">
-          <h1 className="text-3xl font-mono font-bold">EdgePicks</h1>
-          <p className="text-gray-600">AI-Powered Pick’em Intelligence.</p>
+        <HeroSection />
+        <div className="text-center">
           <button
             onClick={handleToggleManual}
             aria-expanded={showManual}
@@ -107,8 +107,10 @@ const HomePage: React.FC = () => {
           >
             🔀 Switch to Manual Entry
           </button>
-        </header>
-        <UpcomingGamesPanel />
+        </div>
+        <section id="upcoming-games">
+          <UpcomingGamesPanel />
+        </section>
         <div
           id="manual-entry"
           className={`transition-all duration-300 overflow-hidden ${
