@@ -274,6 +274,17 @@ Files:
 - pages/matchups/public.tsx (+38/-2)
 
 
+Timestamp: 2025-08-06T22:03:21.354Z
+Commit: 8dc99b37ab282e39b510372a41be59c6f467b18d
+Author: Codex
+Message: refactor: centralize animation constants
+Files:
+- components/PredictionTracker.tsx (+2/-1)
+- lib/animations.ts (+2/-0)
+- pages/index.tsx (+13/-2)
+- pages/matchups/public.tsx (+2/-1)
+=======
+
 Timestamp: 2025-08-06T22:04:48.157Z
 Commit: 8f2a506d22c9c912e8ddc933de1dd11a693ccb7d
 Author: Codex

@@ -5,6 +5,7 @@ import { Card } from '../components/ui/card';
 import { TypographyH1, TypographyMuted } from '../components/ui/typography';
 import MatchupCard from '../components/MatchupCard';
 import type { AgentOutputs } from '../lib/types';
+import { FADE_DURATION, EASE } from '../lib/animations';
 
 const dummyAgents: AgentOutputs = {
   injuryScout: { team: 'Team A', score: 0.2, reason: 'Fewer injuries' },
@@ -26,13 +27,23 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-zinc-900 to-neutral-950 text-white">
       <div className="max-w-3xl mx-auto py-16 space-y-6 text-center">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: FADE_DURATION, ease: EASE }}
+          className="space-y-2"
+        >
           <TypographyH1>Welcome to EdgePicks</TypographyH1>
           <TypographyMuted>
             AI-powered predictions. Transparent. Competitive. Built for Pick’em players.
           </TypographyMuted>
         </motion.div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} whileHover={{ scale: 1.05 }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: FADE_DURATION, ease: EASE }}
+          whileHover={{ scale: 1.05 }}
+        >
           <Link href="/matchups/public">
             <Button variant="primaryCTA">Explore Matchups</Button>
           </Link>
