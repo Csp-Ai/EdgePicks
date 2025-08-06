@@ -5,8 +5,18 @@ import AgentDebugPanel from '../components/AgentDebugPanel';
 import AgentSummary from '../components/AgentSummary';
 import PickSummary from '../components/PickSummary';
 import Footer from '../components/Footer';
+import AgentStatusPanel, {
+  AgentStatusMap,
+} from '../components/AgentStatusPanel';
 import UpcomingGamesPanel from '../components/UpcomingGamesPanel';
-import { AgentOutputs, AgentResult, Matchup, PickSummary as PickSummaryType } from '../lib/types';
+import {
+  AgentOutputs,
+  AgentResult,
+  Matchup,
+  PickSummary as PickSummaryType,
+  AgentLifecycle,
+} from '../lib/types';
+import { agents as agentRegistry } from '../lib/agents/registry';
 
 interface ResultPayload {
   teamA: string;
@@ -23,9 +33,15 @@ const HomePage: React.FC = () => {
   const [highlightAgent, setHighlightAgent] = useState<string | null>(null);
   const [showDebug, setShowDebug] = useState(false);
   const [showUpcomingGames, setShowUpcomingGames] = useState(false);
+  const [agentStatuses, setAgentStatuses] = useState<Partial<AgentStatusMap>>({});
 
   const handleStart = ({ teamA, teamB, matchDay }: { teamA: string; teamB: string; matchDay: number }) => {
     setResult({ teamA, teamB, matchDay, agents: {} });
+    const initial: Partial<AgentStatusMap> = {};
+    agentRegistry.forEach(({ name }) => {
+      initial[name] = { status: 'idle' };
+    });
+    setAgentStatuses(initial);
   };
 
   const handleAgent = (name: string, agentResult: AgentResult) => {
@@ -45,6 +61,13 @@ const HomePage: React.FC = () => {
       pick,
       loggedAt,
     });
+  };
+
+  const handleLifecycle = (event: { name: string } & AgentLifecycle) => {
+    setAgentStatuses((prev) => ({
+      ...prev,
+      [event.name]: { status: event.status, durationMs: event.durationMs },
+    }));
   };
 
   const handleSeeUpcomingGames = () => {
@@ -79,7 +102,12 @@ const HomePage: React.FC = () => {
           <button onClick={handleSeeUpcomingGames}>🏈 See Upcoming Games</button>
         </header>
         {showUpcomingGames && <UpcomingGamesPanel />}
-        <MatchupInputForm onStart={handleStart} onAgent={handleAgent} onComplete={handleComplete} />
+        <MatchupInputForm
+          onStart={handleStart}
+          onAgent={handleAgent}
+          onComplete={handleComplete}
+          onLifecycle={handleLifecycle}
+        />
         {result && (
           <div className="space-y-6">
             {result.pick && (
@@ -101,6 +129,7 @@ const HomePage: React.FC = () => {
           />
         )}
       </div>
+      <AgentStatusPanel statuses={agentStatuses} />
       <Footer showDebug={showDebug} onToggleDebug={() => setShowDebug((d) => !d)} />
     </main>
   );
