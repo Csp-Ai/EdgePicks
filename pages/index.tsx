@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MatchupInputForm from '../components/MatchupInputForm';
 import ExplanationGlossary from '../components/ExplanationGlossary';
 import AgentDebugPanel from '../components/AgentDebugPanel';
@@ -20,6 +20,7 @@ interface ResultPayload {
 const HomePage: React.FC = () => {
   const [result, setResult] = useState<ResultPayload | null>(null);
   const [showGlossary, setShowGlossary] = useState(true);
+  const [highlightAgent, setHighlightAgent] = useState<string | null>(null);
   const [showDebug, setShowDebug] = useState(false);
   const [showUpcomingGames, setShowUpcomingGames] = useState(false);
 
@@ -50,6 +51,20 @@ const HomePage: React.FC = () => {
     setShowUpcomingGames((s) => !s);
   };
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const agent = (e as CustomEvent<string | null>).detail;
+      if (agent) {
+        setHighlightAgent(agent);
+        setShowGlossary(true);
+      } else {
+        setHighlightAgent(null);
+      }
+    };
+    window.addEventListener('glossary-hover', handler as EventListener);
+    return () => window.removeEventListener('glossary-hover', handler as EventListener);
+  }, []);
+
   return (
     <main className="min-h-screen bg-gray-50 p-6 pb-24">
       <div className="container max-w-screen-xl mx-auto space-y-8">
@@ -79,7 +94,12 @@ const HomePage: React.FC = () => {
             {showDebug && <AgentDebugPanel agents={result.agents} />}
           </div>
         )}
-        {showGlossary && <ExplanationGlossary onClose={() => setShowGlossary(false)} />}
+        {showGlossary && (
+          <ExplanationGlossary
+            onClose={() => setShowGlossary(false)}
+            highlightAgent={highlightAgent}
+          />
+        )}
       </div>
       <Footer showDebug={showDebug} onToggleDebug={() => setShowDebug((d) => !d)} />
     </main>

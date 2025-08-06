@@ -77,7 +77,20 @@ const AgentCard: React.FC<Props> = ({
       style={{ boxShadow: `0 0 8px ${glowColor}` }}
     >
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-2 font-medium" title={meta?.description}>
+        <span
+          className="flex items-center gap-2 font-medium"
+          title={meta?.description}
+          onMouseEnter={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: name })
+            )
+          }
+          onMouseLeave={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: null })
+            )
+          }
+        >
           <Icon className="w-4 h-4" />
           {formatAgentName(name)}
         </span>
