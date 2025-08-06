@@ -6,10 +6,16 @@ export interface TrendsResult extends AgentResult {
   agentHitRates: { agent: string; hitRate: number; correct: number; total: number }[];
 }
 
+interface MatchupRow {
+  flow: string | null;
+  agents: Record<string, { team: string }> | null;
+  actual_winner: string | null;
+}
+
 export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
   const client = getSupabaseClient();
   const { data, error } = await client
-    .from('matchups')
+    .from<MatchupRow>('matchups')
     .select('flow, agents, actual_winner')
     .order('created_at', { ascending: false })
     .limit(50);
@@ -21,15 +27,15 @@ export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
   const flowCounts: Record<string, number> = {};
   const agentStats: Record<string, { correct: number; total: number }> = {};
 
-  (data || []).forEach((row: any) => {
+  (data || []).forEach((row) => {
     const flow = row.flow || 'unknown';
     flowCounts[flow] = (flowCounts[flow] || 0) + 1;
 
-    const actual: string | null = row.actual_winner;
+    const actual = row.actual_winner;
     const agents = row.agents || {};
 
     if (actual) {
-      Object.entries(agents as Record<string, { team: string }>).forEach(([name, result]) => {
+      Object.entries(agents).forEach(([name, result]) => {
         if (!agentStats[name]) {
           agentStats[name] = { correct: 0, total: 0 };
         }

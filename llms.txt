@@ -196,3 +196,10 @@ Files:
 - pages/api/upcoming-games.ts (+7/-0)
 - scripts/testLocal.ts (+6/-0)
 
+Timestamp: 2025-08-06T20:27:27.868Z
+Commit: 2f40e302f0556af7cb81325bd6d2a9d2816651eb
+Author: Codex
+Message: refactor trends agent types
+Files:
+- lib/agents/trendsAgent.ts (+10/-4)
+
