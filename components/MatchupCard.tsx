@@ -9,6 +9,7 @@ import { AgentOutputs } from '../lib/types';
 import { getContribution, formatAgentName } from '../lib/utils';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { getAccuracyHistory } from '../lib/accuracy';
+import { matchupCard } from '../styles/cardStyles';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -86,7 +87,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
+    <div className={matchupCard}>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
         <h3 className="font-semibold flex items-center gap-3">
           <span className="flex items-center gap-2">
@@ -133,14 +134,14 @@ const MatchupCard: React.FC<MatchupProps> = ({
           confidence={confidencePct}
           history={accuracyHistory}
         />
-        <DisagreementBadge confidence={confidencePct} />
+        <DisagreementBadge confidence={confidencePct} className="confidenceText" />
         {confidencePct > 80 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
+          <span className="confidenceText mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
             🟢 High Confidence
           </span>
         )}
         {confidencePct < 55 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">
+          <span className="confidenceText mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">
             🟡 Toss-Up
           </span>
         )}

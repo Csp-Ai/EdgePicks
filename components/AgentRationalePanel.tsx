@@ -45,7 +45,7 @@ const AgentRationalePanel: React.FC<Props> = ({ executions, winner }) => {
               <span className="flex items-center gap-2">
                 <Icon className="w-4 h-4" /> {formatAgentName(name)}
               </span>
-              <span>{Math.round(result.score * 100)}%</span>
+              <span className="confidenceText">{Math.round(result.score * 100)}%</span>
             </div>
             <p className="text-xs text-gray-600 mt-1">{result.reason}</p>
             {disagree && (
