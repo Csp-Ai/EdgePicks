@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { FADE_DURATION, EASE } from '../lib/animations';
 
 interface Props {
   onReveal: () => void;
@@ -36,7 +37,7 @@ const PredictionTracker: React.FC<Props> = ({ onReveal, stepDuration = 1500 }) =
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: FADE_DURATION, ease: EASE }}
         className={`p-4 text-center rounded ${
           isFinal ? 'bg-blue-600 text-white cursor-pointer' : 'bg-gray-100 text-gray-700'
         }`}

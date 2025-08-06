@@ -1,10 +1,12 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app';
-import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { SessionProvider, signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import '../styles/globals.css';
+import '../styles/typography.css';
+import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
 
 function Header() {
@@ -34,7 +36,7 @@ function Header() {
       )}
       <header className={`p-4 flex justify-end gap-4 items-center ${!dismissed ? 'mt-12' : ''}`}>
         <ThemeToggle />
-        <Link href="/predictions" className="px-2 py-1 border rounded">
+        <Link href="/predictions" className="min-h-[44px] px-4 py-2 border rounded">
           Predictions
         </Link>
         {status === 'loading' ? (
@@ -57,7 +59,7 @@ function Header() {
             <span>{session.user?.name || 'Anonymous'}</span>
             <button
               onClick={() => signOut()}
-              className="px-2 py-1 border rounded"
+              className="min-h-[44px] px-4 py-2 border rounded"
             >
               Sign out
             </button>
@@ -65,7 +67,7 @@ function Header() {
         ) : (
           <button
             onClick={() => signIn('google')}
-            className="px-2 py-1 border rounded"
+            className="min-h-[44px] px-4 py-2 border rounded"
           >
             Sign in with Google
           </button>
@@ -81,8 +83,13 @@ export default function MyApp({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
+      <Navbar />
       <Header />
-      <Component {...pageProps} />
+      <div className="pt-16">
+        <Component {...pageProps} />
+      </div>
     </SessionProvider>
   );
 }
+
+

@@ -9,6 +9,7 @@ import { AgentOutputs } from '../lib/types';
 import { getContribution, formatAgentName } from '../lib/utils';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { getAccuracyHistory } from '../lib/accuracy';
+import { matchupCard } from '../styles/cardStyles';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -33,7 +34,11 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
           const contribution = getContribution(score, weight);
           const contributionPct = total > 0 ? (contribution / total) * 100 : 0;
           const display = formatAgentName(name);
-          const tooltip = `${display} scored ${score.toFixed(2)} with weight ${weight.toFixed(2)}, contributing ${contribution.toFixed(2)} (${Math.round(contributionPct)}%) to the final pick`;
+          const tooltip = `${display} scored ${score.toFixed(2)} with weight ${weight.toFixed(
+            2
+          )}, contributing ${contribution.toFixed(2)} (${Math.round(
+            contributionPct
+          )}%) to the final pick`;
 
           return (
             <li key={name} className="flex items-center gap-2 cursor-help" title={tooltip}>
@@ -86,7 +91,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
+    <div className={`${matchupCard} bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6`}>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3 sm:gap-2">
         <h3 className="font-semibold flex items-center gap-3 sm:gap-2">
           <span className="flex items-center gap-3 sm:gap-2">
@@ -102,7 +107,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <div className="flex items-center gap-3 sm:gap-2">
           {onRerun && (
             <button
-              className={`min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50`}
+              className="min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50"
               onClick={onRerun}
               disabled={loading}
             >
@@ -123,9 +128,11 @@ const MatchupCard: React.FC<MatchupProps> = ({
           </button>
         </div>
       </div>
+
       <div className="text-center mb-4">
         <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
       </div>
+
       <div className="mb-4">
         <ConfidenceMeter
           teamA={{ name: teamA }}
@@ -133,18 +140,19 @@ const MatchupCard: React.FC<MatchupProps> = ({
           confidence={confidencePct}
           history={accuracyHistory}
         />
-        <DisagreementBadge confidence={confidencePct} />
+        <DisagreementBadge confidence={confidencePct} className="confidenceText" />
         {confidencePct > 80 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
+          <span className="confidenceText mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">
             🟢 High Confidence
           </span>
         )}
         {confidencePct < 55 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">
+          <span className="confidenceText mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">
             🟡 Toss-Up
           </span>
         )}
       </div>
+
       {compare && <AgentComparePanel agents={result.agents} />}
       {open && (
         <>
@@ -160,4 +168,5 @@ const MatchupCard: React.FC<MatchupProps> = ({
 };
 
 export default MatchupCard;
+
 
