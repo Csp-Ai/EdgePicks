@@ -273,3 +273,11 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+Timestamp: 2025-08-06T22:04:08.496Z
+Commit: 6951ba0e836dd63c9c831f8486c082be1d23277f
+Author: Codex
+Message: feat: add mobile hamburger menu
+Files:
+- components/Navbar.tsx (+130/-0)
+- pages/_app.tsx (+5/-78)
+
