@@ -196,10 +196,14 @@ Files:
 - pages/api/upcoming-games.ts (+7/-0)
 - scripts/testLocal.ts (+6/-0)
 
-Timestamp: 2025-08-06T20:25:23.066Z
-Commit: ccfdad141430d20201e3dd8ec729951eea7acec5
-Author: Codex
-Message: Gracefully handle flow loading errors in run-agents
-Files:
-- pages/api/run-agents.ts (+9/-3)
+## This PR contains two Codex prompts:
+
+1. **Parallelize Game Flow Execution**
+- Changed: pages/api/upcoming-games.ts
+- Benefit: Faster prediction response time with Promise.all()
+
+2. **Graceful Flow Error Handling**
+- Changed: pages/api/run-agents.ts
+- Benefit: Returns 400 error on missing flow instead of crashing SSE
+n
 
