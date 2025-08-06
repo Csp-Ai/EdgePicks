@@ -44,9 +44,9 @@ const Leaderboard: React.FC = () => {
         {agents.length === 0 ? (
           <p className="text-center text-gray-600">No data</p>
         ) : (
-          <ol className="max-w-2xl mx-auto space-y-2">
+          <ol className="flex gap-4 overflow-x-auto snap-x snap-mandatory sm:block sm:max-w-2xl sm:mx-auto sm:space-y-2">
             {agents.map((a, idx) => (
-              <li key={a.name} className="bg-white rounded shadow p-4 flex items-center">
+              <li key={a.name} className="bg-white rounded shadow p-4 flex items-center flex-shrink-0 w-64 snap-center sm:w-full">
                 <span className="w-6 text-lg font-bold">{idx + 1}</span>
                 <span className="flex-1 font-semibold">
                   {formatAgentName(a.name)}
@@ -67,9 +67,9 @@ const Leaderboard: React.FC = () => {
         {flows.length === 0 ? (
           <p className="text-center text-gray-600">No data</p>
         ) : (
-          <ol className="max-w-2xl mx-auto space-y-2">
+          <ol className="flex gap-4 overflow-x-auto snap-x snap-mandatory sm:block sm:max-w-2xl sm:mx-auto sm:space-y-2">
             {flows.map((f, idx) => (
-              <li key={f.name} className="bg-white rounded shadow p-4 flex items-center">
+              <li key={f.name} className="bg-white rounded shadow p-4 flex items-center flex-shrink-0 w-64 snap-center sm:w-full">
                 <span className="w-6 text-lg font-bold">{idx + 1}</span>
                 <span className="flex-1 font-semibold">{f.name}</span>
                 <span className="text-sm text-gray-500 mr-2">

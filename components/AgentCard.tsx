@@ -41,6 +41,7 @@ const AgentCard: React.FC<Props> = ({
   loading = false,
 }) => {
   const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const meta = agentRegistry.find((a) => a.name === name);
 
   useEffect(() => {
@@ -63,19 +64,24 @@ const AgentCard: React.FC<Props> = ({
   const scorePct = Math.round(result.score * 100);
   const glowColor =
     result.score > 0.66
-      ? 'rgba(34,197,94,0.6)'
+      ? 'rgba(var(--color-positive),0.6)'
       : result.score > 0.33
-      ? 'rgba(250,204,21,0.6)'
-      : 'rgba(239,68,68,0.6)';
+      ? 'rgba(var(--color-neutral),0.6)'
+      : 'rgba(var(--color-negative),0.6)';
   const Icon = (agentIcons[name] || Info) as LucideIcon;
 
   return (
-    <div
-      className={`relative p-4 bg-gray-50 rounded-xl border flex flex-col gap-2 transition-all duration-500 ease-out ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-      } ${className}`}
-      style={{ boxShadow: `0 0 8px ${glowColor}` }}
-    >
+    <>
+      <button
+        type="button"
+        aria-label={`View details for ${formatAgentName(name)}`}
+        aria-expanded={open}
+        onClick={() => setOpen(true)}
+        className={`relative p-4 bg-gray-50 rounded-xl border flex flex-col text-left gap-2 transition-all duration-500 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+        } ${className}`}
+        style={{ boxShadow: `0 0 8px ${glowColor}` }}
+      >
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-2 font-medium" title={meta?.description}>
           <Icon className="w-4 h-4" />
@@ -90,7 +96,7 @@ const AgentCard: React.FC<Props> = ({
       )}
       <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 transition-[width] duration-700"
+          className="h-full bg-gradient-to-r from-positive via-blue-500 to-purple-600 transition-[width] duration-700"
           style={{ width: `${scorePct}%` }}
         />
         <div className="absolute inset-0 bg-white/20" />
@@ -107,7 +113,38 @@ const AgentCard: React.FC<Props> = ({
           ))}
         </ul>
       )}
-    </div>
+      </button>
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
+            <h2 className="text-xl font-semibold mb-4">
+              {formatAgentName(name)} Details
+            </h2>
+            <p className="mb-2"><strong>Favored:</strong> {result.team}</p>
+            <p className="mb-4 text-sm" aria-label="Agent rationale">{result.reason}</p>
+            {result.warnings && result.warnings.length > 0 && (
+              <ul className="mb-4 text-sm list-disc pl-4 text-yellow-700">
+                {result.warnings.map((w, i) => (
+                  <li key={i}>{w}</li>
+                ))}
+              </ul>
+            )}
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close agent details"
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

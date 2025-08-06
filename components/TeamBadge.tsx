@@ -18,7 +18,7 @@ const TeamBadge: React.FC<TeamBadgeProps> = ({ team, isWinner }) => {
   const [useFallback, setUseFallback] = useState(false);
 
   const badgeClasses = `w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center overflow-hidden ${
-    isWinner ? 'ring-2 ring-green-400 transition-transform hover:scale-105' : ''
+    isWinner ? 'ring-2 ring-positive transition-transform hover:scale-105' : ''
   }`;
 
   if (!useFallback) {

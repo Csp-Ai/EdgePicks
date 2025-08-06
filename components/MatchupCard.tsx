@@ -120,10 +120,10 @@ const MatchupCard: React.FC<MatchupProps> = ({
       <div className="mb-4">
         <AnimatedConfidenceBar confidence={confidencePct} />
         {confidencePct > 80 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">🟢 High Confidence</span>
+          <span className="mt-2 inline-block px-2 py-0.5 bg-positive/20 text-positive rounded text-xs">🟢 High Confidence</span>
         )}
         {confidencePct < 55 && (
-          <span className="mt-2 inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">🟡 Toss-Up</span>
+          <span className="mt-2 inline-block px-2 py-0.5 bg-neutral/20 text-neutral rounded text-xs">🟡 Toss-Up</span>
         )}
       </div>
       {compare && <AgentComparePanel agents={result.agents} />}

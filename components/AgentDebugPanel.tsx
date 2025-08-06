@@ -52,7 +52,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               <div className="mt-2">
                 <ScoreBar
                   percent={weightedPct}
-                  color="bg-green-500"
+                  color="bg-positive"
                   className="w-full"
                 />
                 <div className="mt-1 font-mono text-sm">
@@ -123,7 +123,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                   </td>
                   <td className="p-2">
                     <div className="flex items-center gap-2">
-                      <ScoreBar percent={weightedPct} color="bg-green-500" />
+                      <ScoreBar percent={weightedPct} color="bg-positive" />
                       <span className="w-20 text-right font-mono">
                         {weighted.toFixed(2)} ({Math.round(weightedPct)}%)
                       </span>

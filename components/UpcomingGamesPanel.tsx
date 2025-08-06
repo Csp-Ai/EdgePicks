@@ -87,14 +87,15 @@ const UpcomingGamesPanel: React.FC = () => {
                 {game.time ? new Date(game.time).toLocaleString() : 'TBD'}
               </time>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory sm:flex-col">
               {agentResults.map((exec) => (
-                <AgentCard
-                  key={exec.name}
-                  name={exec.name as any}
-                  result={exec.result!}
-                  showTeam
-                />
+                <div key={exec.name} className="flex-shrink-0 w-64 snap-center sm:w-auto">
+                  <AgentCard
+                    name={exec.name as any}
+                    result={exec.result!}
+                    showTeam
+                  />
+                </div>
               ))}
             </div>
             {guardian?.result?.warnings && (

@@ -42,9 +42,9 @@ const AnimatedConfidenceBar: React.FC<Props> = ({ confidence }) => {
         <span className="font-bold">{display}%</span>
       </div>
       <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-red-500 opacity-20 blur-sm animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-r from-positive to-negative opacity-20 blur-sm animate-pulse" />
         <div
-          className="relative h-full bg-gradient-to-r from-green-400 to-red-500 transition-[width] duration-700 ease-out"
+          className="relative h-full bg-gradient-to-r from-positive to-negative transition-[width] duration-700 ease-out"
           style={{ width: `${fill}%` }}
         >
           <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-gray-800 text-white text-xs px-1 py-0.5 rounded shadow">

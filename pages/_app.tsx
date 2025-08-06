@@ -9,6 +9,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ThemeToggle />
       </header>
       <Component {...pageProps} />
+      <style jsx global>{`
+        :focus-visible {
+          outline: 2px solid #3b82f6;
+          outline-offset: 2px;
+        }
+      `}</style>
     </>
   );
 }
