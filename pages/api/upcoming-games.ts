@@ -11,18 +11,25 @@ import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 
-export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    // Fetch upcoming games for each supported league.  Each helper already
-    // annotates results with the appropriate league so we simply combine them.
-    const [nfl, mlb, nba, nhl] = await Promise.all([
-      fetchNflGames(),
-      fetchMlbGames(),
-      fetchNbaGames(),
-      fetchNhlGames(),
-    ]);
+    const leagueParam =
+      typeof req.query.league === 'string' ? req.query.league.toUpperCase() : undefined;
 
-    let games = [...nfl, ...mlb, ...nba, ...nhl];
+    const fetchMap = {
+      NFL: fetchNflGames,
+      MLB: fetchMlbGames,
+      NBA: fetchNbaGames,
+      NHL: fetchNhlGames,
+    } as const;
+
+    const leaguesToFetch = leagueParam && fetchMap[leagueParam as keyof typeof fetchMap]
+      ? [leagueParam as keyof typeof fetchMap]
+      : (Object.keys(fetchMap) as (keyof typeof fetchMap)[]);
+
+    const leagueData = await Promise.all(leaguesToFetch.map((l) => fetchMap[l]()));
+
+    let games = leagueData.flat();
     if (!games.length) {
       games = getFallbackMatchups();
     }

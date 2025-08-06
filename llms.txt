@@ -115,3 +115,18 @@ Message: chore: fix post-commit hook style
 Files:
 - .husky/post-commit (+0/-3)
 
+Timestamp: 2025-08-06T04:48:12.951Z
+Commit: 86375f8ff662428e96d7291896c343f6c23f16c8
+Author: Codex
+Message: feat: add predictions panel and auth fixes
+Files:
+- components/LiveGamesList.tsx (+76/-0)
+- components/PredictionsPanel.tsx (+52/-0)
+- lib/api.ts (+17/-0)
+- package-lock.json (+1315/-17)
+- package.json (+1/-0)
+- pages/_app.tsx (+5/-3)
+- pages/api/auth/[...nextauth].ts (+7/-3)
+- pages/api/upcoming-games.ts (+17/-10)
+- pages/predictions.tsx (+19/-107)
+
