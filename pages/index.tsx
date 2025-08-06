@@ -1,4 +1,4 @@
-import { signIn, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
@@ -22,15 +22,6 @@ const dummyResult = {
 };
 
 export default function Home() {
-  const { data: session } = useSession();
-
-  const handleSignIn = async () => {
-    try {
-      await signIn('google');
-    } catch (err) {
-      console.error('Google sign-in failed', err);
-    }
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-zinc-900 to-neutral-950 text-white">
@@ -41,22 +32,17 @@ export default function Home() {
             AI-powered predictions. Transparent. Competitive. Built for Pick’em players.
           </TypographyMuted>
         </motion.div>
-        {!session && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} whileHover={{ scale: 1.05 }}>
-            <Button onClick={handleSignIn}>Sign in with Google</Button>
-          </motion.div>
-        )}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} whileHover={{ scale: 1.05 }}>
+          <Link href="/matchups/public">
+            <Button>Explore Matchups</Button>
+          </Link>
+        </motion.div>
         <div className="pt-8 space-y-4">
           <TypographyMuted>Preview our AI-powered analysis below</TypographyMuted>
           <div className="relative">
-            <Card className={!session ? 'filter blur-sm pointer-events-none' : ''}>
+            <Card>
               <MatchupCard teamA="Lakers" teamB="Warriors" result={dummyResult} />
             </Card>
-            {!session && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm">Sign in to unlock analysis</span>
-              </div>
-            )}
           </div>
         </div>
       </div>
