@@ -8,6 +8,7 @@ export interface ConfidenceMeterProps {
   spread?: number;
   publicLean?: number;
   agentDelta?: number;
+  hideValues?: boolean;
 }
 
 const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
@@ -18,6 +19,7 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
   spread,
   publicLean,
   agentDelta,
+  hideValues = false,
 }) => {
   const [fill, setFill] = useState(0);
   const [display, setDisplay] = useState(0);
@@ -56,10 +58,14 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
         className={`flex items-center mb-1 ${showTeams ? 'justify-between' : 'justify-end'}`}
       >
         {showTeams && <span className="font-semibold">{teamALabel}</span>}
-        <span className="font-bold">{display}%</span>
+        <span className="font-bold">{hideValues ? '??' : `${display}%`}</span>
         {showTeams && <span className="font-semibold">{teamBLabel}</span>}
       </div>
-      <div className="relative w-full h-3 bg-gray-200 rounded overflow-hidden">
+      <div
+        className={`relative w-full h-3 bg-gray-200 rounded overflow-hidden ${
+          hideValues ? 'blur-sm' : ''
+        }`}
+      >
         <div
           className={`absolute inset-0 bg-gradient-to-r from-green-400 to-red-500 opacity-20 blur-sm animate-pulse`}
         />
@@ -70,11 +76,15 @@ const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
       </div>
       {(history.length > 0 || spread !== undefined || publicLean !== undefined || agentDelta !== undefined) && (
         <div className="mt-1 text-xs text-gray-500 flex flex-col gap-1">
-          {history.length > 0 && <div>{history.join(', ')}</div>}
+          {history.length > 0 && <div>{hideValues ? '??' : history.join(', ')}</div>}
           <div className="flex gap-2">
-            {spread !== undefined && <span>Spread {spread}</span>}
-            {publicLean !== undefined && <span>Public {publicLean}%</span>}
-            {agentDelta !== undefined && <span>Δ {Math.round(agentDelta * 100) / 100}</span>}
+            {spread !== undefined && <span>Spread {hideValues ? '??' : spread}</span>}
+            {publicLean !== undefined && (
+              <span>Public {hideValues ? '??' : `${publicLean}%`}</span>
+            )}
+            {agentDelta !== undefined && (
+              <span>Δ {hideValues ? '??' : Math.round(agentDelta * 100) / 100}</span>
+            )}
           </div>
         </div>
       )}

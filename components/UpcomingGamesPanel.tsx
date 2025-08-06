@@ -39,9 +39,13 @@ const leagueIcons: Record<string, string> = {
 interface UpcomingGamesPanelProps {
   /** Maximum number of matchups to display. If set, the "Show More" button is hidden. */
   maxVisible?: number;
+  hideValues?: boolean;
 }
 
-const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({ maxVisible }) => {
+const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
+  maxVisible,
+  hideValues = false,
+}) => {
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -139,6 +143,7 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({ maxVisible }) =
               spread={game.odds?.spread}
               publicLean={game.publicLean}
               agentDelta={game.agentDelta}
+              hideValues={hideValues}
             />
             <div className="text-xs text-gray-500">
               Edge Δ: {Math.round(game.edgeDelta * 100)}% | Confidence Drop:{' '}
