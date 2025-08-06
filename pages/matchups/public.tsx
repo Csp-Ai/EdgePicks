@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSession } from 'next-auth/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import UpcomingGamesPanel from '../../components/UpcomingGamesPanel';
 import PredictionTracker from '../../components/PredictionTracker';
 import SignInModal from '../../components/SignInModal';
 import { FADE_DURATION, EASE } from '../../lib/animations';
+import usePredictionReveal from '../../components/hooks/usePredictionReveal';
 
 const PublicMatchupsPage: React.FC = () => {
   const { data: session } = useSession();
-  const [revealed, setRevealed] = useState<Record<number, boolean>>({});
-  const [showModal, setShowModal] = useState(false);
-
-  const handleReveal = (idx: number) => {
-    if (session) {
-      setRevealed((prev) => ({ ...prev, [idx]: true }));
-    } else {
-      setShowModal(true);
-    }
-  };
+  const { revealed, handleReveal, showModal, setShowModal } =
+    usePredictionReveal();
 
   return (
     <main className="min-h-screen bg-gray-50 p-6 space-y-4">

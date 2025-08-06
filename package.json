@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node scripts/update-llms-log.test.js && node lib/logUiEvent.test.js",
+    "test": "node scripts/update-llms-log.test.js && node lib/logUiEvent.test.js && node components/hooks/usePredictionReveal.test.js",
     "dev:local": "next dev --port 3000",
     "test:local": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/testLocal.ts",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
@@ -34,6 +34,7 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "react-test-renderer": "^18.2.0"
   }
 }
