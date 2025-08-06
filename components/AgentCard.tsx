@@ -14,7 +14,6 @@ import { AgentName, AgentResult } from '../lib/types';
 import { formatAgentName } from '../lib/utils';
 import Tooltip from './Tooltip';
 import ConfidenceMeter from './ConfidenceMeter';
-import AgentTooltip from './AgentTooltip';
 import { agentCard, agentCardSkeleton } from '../styles/cardStyles';
 
 interface Props {
@@ -79,9 +78,10 @@ const AgentCard: React.FC<Props> = ({
       style={{ boxShadow: `0 0 8px ${glowColor}` }}
     >
       <div className="flex items-center justify-between">
-        <AgentTooltip name={name}>
+        <Tooltip content={result.reason}>
           <span
-            className="flex items-center gap-2 font-medium"
+            className="flex items-center gap-2 font-medium cursor-help"
+            tabIndex={0}
             onMouseEnter={() =>
               window.dispatchEvent(
                 new CustomEvent('glossary-hover', { detail: name })
@@ -92,11 +92,21 @@ const AgentCard: React.FC<Props> = ({
                 new CustomEvent('glossary-hover', { detail: null })
               )
             }
+            onFocus={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: name })
+              )
+            }
+            onBlur={() =>
+              window.dispatchEvent(
+                new CustomEvent('glossary-hover', { detail: null })
+              )
+            }
           >
             <Icon className="w-4 h-4" />
             {formatAgentName(name)}
           </span>
-        </AgentTooltip>
+        </Tooltip>
         {showWeight && (
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}
@@ -109,11 +119,6 @@ const AgentCard: React.FC<Props> = ({
         teamB={{ name: '' }}
         confidence={scorePct}
       />
-      <div className="text-xs text-gray-600 flex items-center">
-        <Tooltip content={result.reason}>
-          <Info className="w-4 h-4 cursor-help" />
-        </Tooltip>
-      </div>
       {result.warnings && result.warnings.length > 0 && (
         <ul className="text-xs text-yellow-700 list-disc pl-4">
           {result.warnings.map((w, i) => (
