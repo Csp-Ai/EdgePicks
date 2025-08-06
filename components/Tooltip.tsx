@@ -14,6 +14,9 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, className }) => {
       className={`relative inline-block ${className || ''}`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
+      tabIndex={0}
     >
       {children}
       {open && (
