@@ -40,11 +40,18 @@ interface UpcomingGamesPanelProps {
   /** Maximum number of matchups to display. If set, the "Show More" button is hidden. */
   maxVisible?: number;
   hideValues?: boolean;
+  /** Optional wrapper for each game card, allowing custom reveal logic */
+  cardWrapper?: (args: {
+    game: UpcomingGame;
+    index: number;
+    children: React.ReactNode;
+  }) => React.ReactElement;
 }
 
 const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
   maxVisible,
   hideValues = false,
+  cardWrapper,
 }) => {
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,11 +116,8 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {games.slice(0, visibleCount).map((game, idx) => {
         const guardian = game.edgePick.find((a) => a.name === 'guardianAgent');
-        return (
-          <div
-            key={idx}
-            className="bg-white rounded shadow p-4 flex flex-col gap-4"
-          >
+        const card = (
+          <div className="bg-white rounded shadow p-4 flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <h3 className="font-semibold flex items-center gap-2">
                 <span className="flex items-center gap-2">
@@ -146,7 +150,7 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
               hideValues={hideValues}
             />
             <div className="text-xs text-gray-500">
-              Edge Δ: {Math.round(game.edgeDelta * 100)}% | Confidence Drop:{' '}
+              Edge Δ: {Math.round(game.edgeDelta * 100)}% | Confidence Drop{' '}
               {Math.round(game.confidenceDrop * 100)}%
             </div>
             <AgentRationalePanel executions={game.edgePick} winner={game.winner} />
@@ -164,6 +168,10 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
             )}
           </div>
         );
+        const element = cardWrapper
+          ? cardWrapper({ game, index: idx, children: card })
+          : card;
+        return React.cloneElement(element as React.ReactElement, { key: idx });
       })}
       {!maxVisible && visibleCount < games.length && (
         <div className="sm:col-span-2 text-center">
