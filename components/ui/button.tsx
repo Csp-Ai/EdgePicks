@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { cn } from '../../lib/utils';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'primaryCTA';
+}
+
+const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
+  default:
+    'px-4 py-2 bg-blue-600 text-white rounded-md transition-colors hover:bg-blue-500 focus:outline-none',
+  primaryCTA:
+    'px-6 py-3 rounded-md text-white shadow-md bg-gradient-to-r from-blue-600 to-indigo-600 transition-all hover:from-blue-500 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 animate-pulse hover:animate-none',
+};
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, ...props }, ref) => (
+  ({ className, variant = 'default', ...props }, ref) => (
     <button
       ref={ref}
-      className={cn(
-        'px-4 py-2 bg-blue-600 text-white rounded-md transition-colors hover:bg-blue-500 focus:outline-none',
-        className
-      )}
+      className={cn(variants[variant], className)}
       {...props}
     />
   )
