@@ -95,16 +95,24 @@ This returns the number of pending log entries and the last error encountered (i
 
 ## Environment Variables
 
-To enable Supabase integration, create a `.env` file in the project root:
+Create a `.env` file in the project root to configure Supabase, Google OAuth, and other services:
 
 ```env
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+GOOGLE_CLIENT_ID=<your-client-id>
+GOOGLE_CLIENT_SECRET=<your-client-secret>
+NEXTAUTH_URL=https://your-deployed-url.com
+NEXTAUTH_SECRET=<secure-generated-secret>
 ODDS_API_KEY=<your-oddsapi-key>
-You can find these values in your Supabase dashboard under Project Settings → API.
-They are required by lib/supabaseClient.ts to connect to your Supabase project.
+```
 
-Development Setup
+You can find the Supabase values in your dashboard under **Project Settings → API**.  
+The NextAuth variables enable Google sign-in for protected routes.
+
+### Development Setup
 npm install
 
 Copy .env.example to .env and configure values
