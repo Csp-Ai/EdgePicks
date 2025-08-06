@@ -87,19 +87,19 @@ const MatchupCard: React.FC<MatchupProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
-        <h3 className="font-semibold flex items-center gap-3">
-          <span className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3 sm:gap-2">
+        <h3 className="font-semibold flex items-center gap-3 sm:gap-2">
+          <span className="flex items-center gap-3 sm:gap-2">
             <TeamBadge team={teamA} isWinner={result.winner === teamA} />
             {teamA}
           </span>
           <span className="text-gray-400">vs</span>
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-3 sm:gap-2">
             <TeamBadge team={teamB} isWinner={result.winner === teamB} />
             {teamB}
           </span>
         </h3>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-3 sm:gap-2">
           {onRerun && (
             <button
               className={`min-h-[44px] px-3 py-1 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50 disabled:opacity-50`}

@@ -273,3 +273,11 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+Timestamp: 2025-08-06T22:04:28.622Z
+Commit: 32c454a64bf07af3162946adf37b23e04e6a5349
+Author: Codex
+Message: Ensure accessible spacing on matchup components
+Files:
+- components/MatchupCard.tsx (+5/-5)
+- components/UpcomingGamesPanel.tsx (+5/-5)
+
