@@ -250,3 +250,10 @@ Files:
 - components/UpcomingGamesPanel.tsx (+8/-3)
 - pages/matchups/public.tsx (+13/-0)
 
+Timestamp: 2025-08-06T21:26:35.121Z
+Commit: ab3321b45bc8701ba36af2be5db6490f9f3961b4
+Author: Codex
+Message: feat: add sign-in modal
+Files:
+- components/SignInModal.tsx (+39/-0)
+
