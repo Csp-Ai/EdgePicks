@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import DisagreementBadge from './DisagreementBadge';
+import { AgentOutputs } from '../lib/types';
+import { agents as agentRegistry } from '../lib/agents/registry';
+import { formatAgentName } from '../lib/utils';
 
 type Props = {
   confidence: number; // value between 0–100
+  agents?: AgentOutputs;
+  winner?: string;
 };
 
-const AnimatedConfidenceBar: React.FC<Props> = ({ confidence }) => {
+const AnimatedConfidenceBar: React.FC<Props> = ({ confidence, agents, winner }) => {
   const [fill, setFill] = useState(0);
   const [display, setDisplay] = useState(0);
+  const [showAgents, setShowAgents] = useState(false);
+
+  const agentPicks = agents ? Object.values(agents).map((a) => a.team) : [];
+  const disagreement =
+    !!winner && agentPicks.length > 0 && agentPicks.some((team) => team !== winner);
 
   useEffect(() => {
     setFill(0);
@@ -52,6 +63,37 @@ const AnimatedConfidenceBar: React.FC<Props> = ({ confidence }) => {
           </span>
         </div>
       </div>
+      {disagreement && (
+        <div className="mt-2">
+          <DisagreementBadge />
+        </div>
+      )}
+      {agents && (
+        <button
+          type="button"
+          onClick={() => setShowAgents((s) => !s)}
+          className="mt-2 text-xs text-blue-600 underline"
+        >
+          {showAgents ? 'Hide agent picks' : 'Show agent picks'}
+        </button>
+      )}
+      {showAgents && agents && (
+        <ul className="mt-2 space-y-1 text-sm">
+          {agentRegistry.map(({ name }) => {
+            const result = agents[name];
+            if (!result) return null;
+            const pct = Math.round(result.score * 100);
+            return (
+              <li key={name} className="flex justify-between">
+                <span>
+                  {formatAgentName(name)}: {result.team}
+                </span>
+                <span className="font-mono">{pct}%</span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

@@ -118,7 +118,11 @@ const MatchupCard: React.FC<MatchupProps> = ({
         <span className={`text-xl font-bold ${winnerColor}`}>{result.winner}</span>
       </div>
       <div className="mb-4">
-        <AnimatedConfidenceBar confidence={confidencePct} />
+        <AnimatedConfidenceBar
+          confidence={confidencePct}
+          agents={result.agents}
+          winner={result.winner}
+        />
         {confidencePct > 80 && (
           <span className="mt-2 inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">🟢 High Confidence</span>
         )}
