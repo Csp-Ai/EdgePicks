@@ -424,3 +424,14 @@ Files:
 - manual-qa.md (+7/-0)
 main
 
+Timestamp: 2025-08-06T23:18:42.008Z
+Commit: 91abb2db54cb3abf66ef8be2ea5b28b8c12d3cb7
+Author: Codex
+Message: test: add UpcomingGamesPanel tests
+Files:
+- __tests__/UpcomingGamesPanel.test.tsx (+54/-0)
+- jest.config.js (+12/-0)
+- jest.setup.ts (+1/-0)
+- package-lock.json (+5544/-1290)
+- package.json (+7/-2)
+
