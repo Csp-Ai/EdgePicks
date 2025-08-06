@@ -10,7 +10,7 @@ Quick links: [codex-prompts/](codex-prompts) • [llms.txt](llms.txt)
 
 ## 🚀 Beta Launch
 
-```bash
+```sh
 git clone https://github.com/edgepicks/EdgePicks.git
 cd EdgePicks
 cp .env.local.example .env.local
@@ -104,11 +104,9 @@ Predictions append entries to `llms.txt` using:
 
 Run all agents for a matchup via:
 
+```
 GET /api/run-agents?teamA=<team>&teamB=<team>&matchDay=<number>
-
-markdown
-Copy
-Edit
+```
 
 Returns:
 
@@ -119,12 +117,9 @@ Returns:
 ### Log Status Endpoint
 
 Monitor the in-memory log queue via:
-
+```
 GET /api/log-status
-
-bash
-Copy
-Edit
+```
 
 This returns the number of pending log entries and the last error encountered (if any).
 
@@ -133,7 +128,7 @@ This returns the number of pending log entries and the last error encountered (i
 Create a `.env.local` file in the project root for local development. The app
 falls back to `.env` if `.env.local` is absent. Start by copying the example:
 
-```bash
+```sh
 cp .env.local.example .env.local
 ```
 
@@ -160,46 +155,45 @@ The NextAuth variables enable Google sign-in for protected routes.
 
 ### Development Setup
 
-```bash
+```sh
 npm install
 npm run dev:local    # starts dev server at http://localhost:3000
 ```
 
 Run tests locally:
 
-```bash
+```sh
 npm run test:local
 ```
 
 ### Local API Tests
 With the server running you can verify key routes:
 
-```bash
+```sh
 curl -I http://localhost:3000/auth/signin
 curl -X GET "http://localhost:3000/api/upcoming-games?league=NFL"
 curl -X POST http://localhost:3000/api/run-agents
 ```
 
-Flow Execution
-nginx
-Copy
-Edit
+### Flow Execution
+```
 matchup → agents → logToSupabase → accuracy updates
-Database Schema Notes
+```
+
+### Database Schema Notes
 actual_winner – actual outcome recorded post-game
 
 is_auto_pick – whether a selection was auto-generated
 
 extras – JSON field for additional metadata
 
-Updating Actual Results
+### Updating Actual Results
 After games conclude, record the real-world outcome so the leaderboard can track accuracy.
-Update the actual_winner column in Supabase via the Table Editor or SQL:
+Update the `actual_winner` column in Supabase through the Table Editor or by running a query:
 
-sql
-Copy
-Edit
+```
 UPDATE matchups SET actual_winner = 'BOS' WHERE id = '<matchup-id>';
+```
 Rows without an outcome show "N/A" in the history page and are ignored in accuracy calculations.
 
 🧱 Adding New Agents or Data Sources
