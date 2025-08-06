@@ -273,3 +273,11 @@ Files:
 - components/UpcomingGamesPanel.tsx (+14/-6)
 - pages/matchups/public.tsx (+38/-2)
 
+Timestamp: 2025-08-06T22:03:35.141Z
+Commit: b39ef7ba74b4cc82a5c4ed98fc9a662eeadda5f2
+Author: Codex
+Message: feat: add navbar with scroll gradient
+Files:
+- components/Navbar.tsx (+60/-0)
+- pages/_app.tsx (+6/-75)
+
