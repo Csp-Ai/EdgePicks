@@ -9,6 +9,7 @@ import { AgentOutputs } from '../lib/types';
 import { getContribution, formatAgentName } from '../lib/utils';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { getAccuracyHistory } from '../lib/accuracy';
+import { matchupCard } from '../styles/cardStyles';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -86,7 +87,7 @@ const MatchupCard: React.FC<MatchupProps> = ({
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6">
+    <div className={matchupCard}>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
         <h3 className="font-semibold flex items-center gap-3">
           <span className="flex items-center gap-2">
