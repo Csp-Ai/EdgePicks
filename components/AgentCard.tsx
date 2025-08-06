@@ -102,8 +102,9 @@ const AgentCard: React.FC<Props> = ({
         <span className="text-sm text-gray-700">Favored: {result.team}</span>
       )}
       <ConfidenceMeter
+        teamA={{ name: '' }}
+        teamB={{ name: '' }}
         confidence={scorePct}
-        gradientClass="from-green-400 via-blue-500 to-purple-600"
       />
       <div className="text-xs text-gray-600 flex items-center">
         <Tooltip content={result.reason}>
