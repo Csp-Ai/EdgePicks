@@ -4,11 +4,16 @@ import { SessionProvider } from 'next-auth/react';
 import '../styles/globals.css';
 import Navbar from '../components/Navbar';
 
-export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps }
+}: AppProps) {
   return (
     <SessionProvider session={session}>
       <Navbar />
-      <Component {...pageProps} />
+      <div className="pt-16">
+        <Component {...pageProps} />
+      </div>
     </SessionProvider>
   );
 }
