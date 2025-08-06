@@ -26,6 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+  const flowName = typeof flowNameParam === 'string' ? flowNameParam : 'football-pick';
+  let flow;
+  try {
+    flow = await loadFlow(flowName);
+  } catch (e) {
+    res.status(500).json({ error: 'Unable to load flow' });
+    return;
+  }
+
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -39,9 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     time: '',
     league: '',
   };
-
-  const flowName = typeof flowNameParam === 'string' ? flowNameParam : 'football-pick';
-  const flow = await loadFlow(flowName);
 
   const agentsOutput: Partial<AgentOutputs> = {};
 
