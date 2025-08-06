@@ -1,7 +1,14 @@
 export const getUpcomingGames = async (league: string = 'NFL') => {
   const res = await fetch(`/api/upcoming-games?league=${league}`);
   if (!res.ok) throw new Error('Failed to fetch upcoming games');
-  return res.json();
+  if (res.headers.get('x-missing-api-key')) {
+    console.warn('No SPORTS_DB_API_KEY is set. Using mock data for games.');
+  }
+  const data = await res.json();
+  if (Array.isArray(data) && data.some((g) => g.useFallback || g.source === 'fallback')) {
+    console.warn('Mock data is being used for predictions.');
+  }
+  return data;
 };
 
 export const runPredictions = async (league: string, games: any[]) => {

@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import fs from 'fs';
 import path from 'path';
 import { authOptions } from './auth/[...nextauth]';
+import { hasSportsDbKey } from '../../lib/env';
 
 interface Game {
   homeTeam: { name: string };
@@ -54,9 +55,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const timestamp = new Date().toISOString();
 
+    if (!hasSportsDbKey) {
+      console.warn('No SPORTS_DB_API_KEY is set.');
+    }
+    if ((games || []).some((g: any) => g.useFallback || g.source === 'fallback')) {
+      console.warn('Mock data is being used for predictions.');
+    }
+
     try {
       const logPath = path.join(process.cwd(), 'llms.txt');
-      const entry = `${timestamp} - [RUN_PREDICTIONS] - ${session.user?.name || 'anonymous'} - ${league}\n`;
+      const entry = `[${timestamp}] [${league}] predictions run by ${
+        session.user?.name || 'Anonymous'
+      }\n`;
       await fs.promises.appendFile(logPath, entry);
     } catch (err) {
       console.error('failed to log prediction', err);

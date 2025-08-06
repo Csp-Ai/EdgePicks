@@ -171,3 +171,16 @@ Message: feat: implement run predictions endpoint
 Files:
 - pages/api/run-predictions.ts (+70/-0)
 
+Timestamp: 2025-08-06T05:29:39.118Z
+Commit: 7a2d855ac200ccfe0e4ed8d33b4b1b59906bbc84
+Author: Codex
+Message: refactor: polish predictions ui
+Files:
+- components/EmptyState.tsx (+18/-0)
+- components/LiveGamesList.tsx (+10/-11)
+- components/LoadingShimmer.tsx (+26/-0)
+- components/PredictionsPanel.tsx (+37/-7)
+- lib/api.ts (+8/-1)
+- pages/_app.tsx (+20/-6)
+- pages/api/run-predictions.ts (+11/-1)
+
