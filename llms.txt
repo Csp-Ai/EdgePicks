@@ -424,3 +424,14 @@ Files:
 - manual-qa.md (+7/-0)
 main
 
+Timestamp: 2025-08-06T23:24:48.808Z
+Commit: ec16794298d89c619e1ee81f09ab6c4944b6fd5d
+Author: Codex
+Message: test: add PublicMatchupsPage tests
+Files:
+- __tests__/PublicMatchupsPage.test.tsx (+138/-0)
+- jest.config.js (+16/-0)
+- jest.setup.ts (+1/-0)
+- package-lock.json (+6179/-1302)
+- package.json (+6/-1)
+
