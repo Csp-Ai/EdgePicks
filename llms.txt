@@ -446,3 +446,10 @@ Files:
 - lib/hooks/usePredictionReveal.ts (+22/-0)
 - pages/matchups/public.tsx (+5/-14)
 
+Timestamp: 2025-08-06T23:54:30.849Z
+Commit: 4ac072fc1028c52497654108644ff965304a7796
+Author: Codex
+Message: docs: clean README placeholders
+Files:
+- README.md (+19/-25)
+
