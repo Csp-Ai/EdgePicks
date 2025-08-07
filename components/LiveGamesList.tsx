@@ -55,8 +55,21 @@ const LiveGamesList: React.FC<Props> = ({
             <LoadingShimmer lines={1} />
           ) : (
             predictions[idx] && (
-              <div className="text-sm text-gray-600">
-                Predicted winner: {predictions[idx].winner}
+              <div className="text-sm text-gray-600 space-y-1">
+                <div>
+                  Predicted winner: {predictions[idx].winner} (
+                  {predictions[idx].confidence}% confidence)
+                </div>
+                <ul className="list-disc pl-5">
+                  {Object.entries(predictions[idx].agents || {}).map(
+                    ([name, result]: any) => (
+                      <li key={name}>
+                        <strong>{name}</strong>: {result.team} (
+                        {Math.round(result.score * 100)}%) – {result.reason}
+                      </li>
+                    )
+                  )}
+                </ul>
               </div>
             )
           )}

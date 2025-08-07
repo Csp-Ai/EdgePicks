@@ -114,6 +114,13 @@ Returns:
 - Overall winner and confidence
 - Logs the outcome to Supabase (if configured)
 
+Example stream snippet:
+
+```text
+data: {"type":"agent","name":"injuryScout","result":{"team":"KC","score":0.72,"reason":"Mahomes cleared"}}
+data: {"type":"summary","matchup":{"homeTeam":"KC","awayTeam":"DEN","matchDay":1,"time":"","league":""},"agents":{"injuryScout":{"team":"KC","score":0.72,"reason":"Mahomes cleared"}},"pick":{"winner":"KC","confidence":0.72,"topReasons":["Mahomes cleared"]}}
+```
+
 ### Log Status Endpoint
 
 Monitor the in-memory log queue via:
@@ -171,9 +178,14 @@ SPORTS_DB_NBA_ID=<thesportsdb-nba-league-id>
 SPORTS_DB_NHL_ID=<thesportsdb-nhl-league-id>
 ```
 
-Environment-specific files like `.env.development` and `.env.production` follow the same keys. Run `npm run validate-env` to
-verify example files contain required variables. During `npm run dev`, a `missing-env-report.txt` file lists any required keys
-that are unset in your current environment.
+Common TheSportsDB league IDs:
+
+- NFL: `4391`
+- MLB: `4424`
+- NBA: `4387`
+- NHL: `4380`
+
+Use `.env.local` for local development and `.env.production` for deployments. Both files share the same keys, but missing values in production will cause the app to throw at startup to avoid silent failures. Run `npm run validate-env` to verify example files contain required variables. During `npm run dev`, a `missing-env-report.txt` file lists any required keys that are unset in your current environment.
 
 You can find the Supabase values in your dashboard under **Project Settings → API**.
 The NextAuth variables enable Google sign-in for protected routes.

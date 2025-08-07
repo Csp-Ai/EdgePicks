@@ -546,3 +546,18 @@ Files:
 - scripts/missingEnvReport.ts (+11/-0)
 - scripts/validateEnv.ts (+22/-0)
 
+Timestamp: 2025-08-07T02:15:07.755Z
+Commit: d0b907c5d3cf8dac88cde807868a2e208fd61924
+Author: Codex
+Message: feat: integrate agent flows and env validation
+Files:
+- .gitignore (+3/-0)
+- README.md (+15/-3)
+- __tests__/runAgentsApi.test.ts (+43/-0)
+- __tests__/validateEnv.test.ts (+29/-0)
+- components/LiveGamesList.tsx (+15/-2)
+- jest.setup.ts (+7/-0)
+- lib/env.ts (+3/-3)
+- lib/logUiEvent.test.js (+7/-0)
+- pages/api/run-predictions.ts (+21/-2)
+

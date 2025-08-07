@@ -5,11 +5,12 @@ interface GetEnvOptions {
 
 export const getEnv = (
   key: string,
-  { required = true, fallback }: GetEnvOptions = {}
+  { required = true, fallback }: GetEnvOptions = {},
 ): string => {
   const value = process.env[key];
+  const isProduction = process.env.NODE_ENV === 'production';
   if (!value) {
-    if (fallback !== undefined) {
+    if (fallback !== undefined && !isProduction) {
       console.warn(`[env] ${key} is missing, using fallback: ${fallback}`);
       return fallback;
     }
@@ -39,4 +40,3 @@ export const ENV = {
   SPORTS_DB_NHL_ID: getEnv('SPORTS_DB_NHL_ID', { required: false }),
   ODDS_API_KEY: getEnv('ODDS_API_KEY', { required: false }),
 } as const;
-

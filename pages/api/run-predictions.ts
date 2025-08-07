@@ -6,7 +6,8 @@ import { authOptions } from './auth/[...nextauth]';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
 import { agents } from '../../lib/agents/registry';
-import type { Matchup } from '../../lib/types';
+import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
+import { logToSupabase } from '../../lib/logToSupabase';
 import { ENV } from '../../lib/env';
 
 interface Game {
@@ -19,6 +20,7 @@ interface Prediction {
   game: Game;
   winner: string;
   confidence: number;
+  agents: AgentOutputs;
   agentScores: Record<string, number>;
 }
 
@@ -85,7 +87,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         scores[matchup.awayTeam]
       );
 
-      predictions.push({ game: g, winner, confidence, agentScores });
+      const topReasons = flow.agents
+        .map((name) => outputs[name]?.reason)
+        .filter((r): r is string => Boolean(r));
+      const pickSummary: PickSummary = {
+        winner,
+        confidence,
+        topReasons,
+      };
+
+      logToSupabase(matchup, outputs as AgentOutputs, pickSummary, null, 'run-predictions');
+
+      predictions.push({
+        game: g,
+        winner,
+        confidence: Math.round(confidence * 100),
+        agents: outputs as AgentOutputs,
+        agentScores,
+      });
     }
 
     const agentScores: Record<string, number> = {};
