@@ -953,6 +953,7 @@ Files:
 - docs/agent-design-patterns.md (+82/-0)
 - llms.txt (+10/-0)
 
+codex/validate-agent-metadata-and-documentation
 Timestamp: 2025-08-07T10:58:40Z
 Summary:
 - Added agent metadata validation library and audit script.
@@ -960,3 +961,27 @@ Summary:
 Testing:
 - npm test — passed
 - npm run test:metadata — passed
+=======
+Timestamp: 2025-08-07T10:57:56Z
+codex:ci-snapshot-testing
+Summary:
+- Added CI workflow for lint and snapshot tests.
+- Snapshot tests cover lifecycle logs, UI, and llms log.
+Testing:
+- npm test — passed
+Timestamp: 2025-08-07T11:00:15.795Z
+Commit: ca9de7ab29501e8a1ee9ad37f07d491db7567354
+Author: Codex
+Message: test: add snapshot regression checks
+Files:
+- .github/workflows/ci-tests.yml (+18/-0)
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+17/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+3/-0)
+- __tests__/__snapshots__/uiSnapshot.test.tsx.snap (+19/-0)
+- __tests__/lifecycle.test.ts (+10/-0)
+- __tests__/llmsLog.test.ts (+12/-0)
+- __tests__/uiSnapshot.test.tsx (+19/-0)
+- docs/testing-regression-checks.md (+20/-0)
+- llms.txt (+7/-0)
+
+
