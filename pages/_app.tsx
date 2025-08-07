@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
 import { ToastProvider } from '../lib/useToast';
 import { logUiEvent } from '../lib/logUiEvent';
+import Footer from '../components/Footer';
 
 function Header() {
   const { data: session, status: sessionType } = useSession();
@@ -61,9 +62,10 @@ function Header() {
             <span>{session.user?.name || 'Anonymous'}</span>
             <button
               onClick={() => {
+                const userId = (session?.user as { id?: string })?.id;
                 void logUiEvent('sign_out', {
                   session_type: sessionType,
-                  user_id: (session?.user as any)?.id,
+                  ...(userId ? { user_id: userId } : {}),
                 });
                 signOut();
               }}
@@ -75,9 +77,10 @@ function Header() {
         ) : (
           <button
             onClick={() => {
+              const userId = (session?.user as { id?: string })?.id;
               logUiEvent('sign_in_click', {
                 session_type: sessionType,
-                user_id: (session?.user as any)?.id ?? 'unknown',
+                ...(userId ? { user_id: userId } : {}),
               });
               signIn('google');
             }}
@@ -102,6 +105,7 @@ export default function MyApp({
         <Header />
         <div className="pt-16">
           <Component {...pageProps} />
+          <Footer />
         </div>
       </ToastProvider>
     </SessionProvider>

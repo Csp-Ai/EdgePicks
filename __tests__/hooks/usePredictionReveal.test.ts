@@ -12,7 +12,7 @@ describe('usePredictionReveal', () => {
   });
 
   it('reveals index when session exists', () => {
-    (useSession as jest.Mock).mockReturnValue({ data: {} });
+    (useSession as jest.Mock).mockReturnValue({ data: {}, status: 'authenticated' });
     const { result } = renderHook(() => usePredictionReveal());
     act(() => result.current.handleReveal(1));
     expect(result.current.revealed[1]).toBe(true);
@@ -20,7 +20,7 @@ describe('usePredictionReveal', () => {
   });
 
   it('shows modal when no session', () => {
-    (useSession as jest.Mock).mockReturnValue({ data: null });
+    (useSession as jest.Mock).mockReturnValue({ data: null, status: 'unauthenticated' });
     const { result } = renderHook(() => usePredictionReveal());
     act(() => result.current.handleReveal(2));
     expect(result.current.revealed[2]).toBeUndefined();

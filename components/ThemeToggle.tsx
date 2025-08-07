@@ -6,7 +6,20 @@ const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'));
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const stored = localStorage.getItem(storageKey);
+    const initial = stored ? stored === 'dark' : mq.matches;
+    document.documentElement.classList.toggle('dark', initial);
+    setIsDark(initial);
+
+    const listener = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem(storageKey)) {
+        document.documentElement.classList.toggle('dark', e.matches);
+        setIsDark(e.matches);
+      }
+    };
+    mq.addEventListener('change', listener);
+    return () => mq.removeEventListener('change', listener);
   }, []);
 
   const toggleTheme = () => {
