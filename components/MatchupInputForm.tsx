@@ -43,24 +43,21 @@ const MatchupInputForm: React.FC<Props> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const runPrediction = (
-    home: string,
-    away: string,
-    wk: number
-  ) => {
+  const runPrediction = (home: string, away: string, wk: number) => {
     setError(null);
     setLoading(true);
     onStart({ homeTeam: home, awayTeam: away, week: wk });
 
     try {
       const es = new EventSource(
-        `/api/run-agents?homeTeam=${encodeURIComponent(
-          home
-        )}&awayTeam=${encodeURIComponent(away)}&week=${wk}`
+        `/api/run-agents?homeTeam=${encodeURIComponent(home)}&awayTeam=${encodeURIComponent(
+          away
+        )}&week=${wk}`
       );
 
       es.onmessage = (event) => {
         const data = JSON.parse(event.data);
+        console.log('SSE message', data);
         if (data.type === 'agent') {
           onAgent({ name: data.name, result: data.result, error: data.error });
         } else if (data.type === 'lifecycle') {
@@ -76,12 +73,14 @@ const MatchupInputForm: React.FC<Props> = ({
         }
       };
 
-      es.onerror = () => {
+      es.onerror = (e) => {
+        console.error('SSE connection error', e);
         setError('Failed to fetch result');
         setLoading(false);
         es.close();
       };
     } catch (e) {
+      console.error('SSE setup error', e);
       setError('Failed to fetch result');
       setLoading(false);
     }
@@ -90,7 +89,11 @@ const MatchupInputForm: React.FC<Props> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!homeTeam || !awayTeam || !week) {
-      setError('All fields are required');
+      const messages: string[] = [];
+      if (!homeTeam) messages.push('Home team is required');
+      if (!awayTeam) messages.push('Away team is required');
+      if (!week) messages.push('Week is required');
+      setError(messages.join('. '));
       return;
     }
     const weekNum = parseInt(week, 10);

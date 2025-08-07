@@ -1,12 +1,8 @@
-import dotenv from 'dotenv';
+import { ENV } from '../lib/env';
 import { REQUIRED_ENV_KEYS } from '../lib/envKeys';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: '.env.local' });
-}
-
 REQUIRED_ENV_KEYS.forEach((key) => {
-  if (!process.env[key]) {
+  if (!(key in ENV)) {
     console.error(`❌ Missing required key: ${key}`);
     process.exit(1);
   }

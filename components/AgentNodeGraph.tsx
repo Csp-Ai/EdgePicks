@@ -9,21 +9,14 @@ interface Props {
 
 const AgentNodeGraph: React.FC<Props> = ({ statuses }) => {
   const agents = agentRegistry.map((a) => a.name as AgentName);
-  const hasActivity = Object.values(statuses).some(
-    (s) => s.status && s.status !== 'idle'
-  );
-  if (!hasActivity) {
-    return (
-      <div className="text-center text-sm text-gray-400">No agent activity yet</div>
-    );
-  }
+  const hasActivity = Object.values(statuses).some((s) => s.status !== 'idle');
+  if (!hasActivity) return null;
   return (
     <div className="flex justify-center flex-wrap gap-4 py-4">
       {agents.map((name) => {
         const state = statuses[name]?.status || 'idle';
         let bg = 'bg-blue-600';
-        if (state === 'completed') bg = 'bg-green-600';
-        else if (state === 'errored') bg = 'bg-red-600';
+        if (state === 'errored') bg = 'bg-red-600';
         return (
           <motion.div
             key={name}

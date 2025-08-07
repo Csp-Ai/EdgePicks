@@ -9,12 +9,15 @@ import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
 import type { AgentExecution } from '../lib/flow/runFlow';
 
 const DashboardPage: React.FC = () => {
-  const { nodes, startTime, handleLifecycleEvent, reset, statuses } = useFlowVisualizer();
+  const { nodes, startTime, handleLifecycleEvent, reset, statuses } =
+    useFlowVisualizer();
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
+  const [flowStarted, setFlowStarted] = useState(false);
 
   const handleStart = (
     _info: { homeTeam: string; awayTeam: string; week: number }
   ) => {
+    setFlowStarted(true);
     reset();
     setLogs((prev) => [...prev, []]);
   };
@@ -45,7 +48,7 @@ const DashboardPage: React.FC = () => {
         </section>
       )}
       <AgentTimeline nodes={nodes} startTime={startTime} />
-      <AgentStatusPanel statuses={statuses} />
+      {flowStarted && <AgentStatusPanel statuses={statuses} />}
     </div>
   );
 };
