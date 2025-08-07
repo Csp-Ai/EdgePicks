@@ -6,6 +6,7 @@ import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
 import { writeAgentLog } from '../../lib/agentLogsStore';
+import { writeAgentReflection } from '../../lib/agentReflectionStore';
 
 export const config = {
   api: {
@@ -111,6 +112,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 output: result,
                 durationMs: event.durationMs,
               });
+            }
+            if (result.reflection) {
+              writeAgentReflection(event.name, result.reflection);
             }
           }
         } else if (event.status === 'errored') {

@@ -33,6 +33,13 @@ export interface AgentResult {
   score: number; // higher score favors team
   reason: string;
   warnings?: string[];
+  reflection?: AgentReflection;
+}
+
+export interface AgentReflection {
+  whatIObserved: string;
+  whatIChose: string;
+  whatCouldImprove: string;
 }
 
 import type { AgentName } from './agents/registry';

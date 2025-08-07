@@ -1,0 +1,18 @@
+.reflection-overlay {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  width: 200px;
+  font-size: 0.75rem;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.reflection-overlay p {
+  margin: 0.25rem 0;
+}
