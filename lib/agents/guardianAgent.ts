@@ -1,4 +1,6 @@
 import { AgentOutputs, AgentResult, Matchup } from '../types';
+import { logAgentReflection } from './utils';
+import { AgentReflection } from '../../types/AgentReflection';
 
 /**
  * Reviews previous agent outputs for inconsistencies or missing data
@@ -29,10 +31,18 @@ export const guardianAgent = async (
     }
   }
 
+  const reason = 'Guardian review completed';
+  const reflection: AgentReflection = {
+    whatIObserved: warnings.join('; ') || 'All clear',
+    whatIChose: 'Reported review findings',
+    whatCouldImprove: 'Add more consistency checks',
+  };
+  logAgentReflection('guardianAgent', reflection);
+
   return {
     team: matchup.homeTeam,
     score: 0,
-    reason: 'Guardian review completed',
+    reason,
     warnings: warnings.length > 0 ? warnings : undefined,
   };
 };

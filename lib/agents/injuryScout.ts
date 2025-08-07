@@ -1,6 +1,7 @@
 import { AgentResult, Matchup } from '../types';
 
-import { pseudoMetric } from './utils';
+import { pseudoMetric, logAgentReflection } from './utils';
+import { AgentReflection } from '../../types/AgentReflection';
 
 export const injuryScout = async (matchup: Matchup): Promise<AgentResult> => {
   const [homeInjuries, awayInjuries] = await Promise.all([
@@ -12,10 +13,18 @@ export const injuryScout = async (matchup: Matchup): Promise<AgentResult> => {
   const underdog = favored === matchup.homeTeam ? matchup.awayTeam : matchup.homeTeam;
   const diff = Math.abs(homeInjuries - awayInjuries);
   const score = Math.min(1, 0.5 + diff / 10);
+  const reason = `${underdog} has ${diff} more key injuries`;
+
+  const reflection: AgentReflection = {
+    whatIObserved: reason,
+    whatIChose: `Favored ${favored}`,
+    whatCouldImprove: 'Integrate real-time injury severity',
+  };
+  logAgentReflection('injuryScout', reflection);
 
   return {
     team: favored,
     score,
-    reason: `${underdog} has ${diff} more key injuries`,
+    reason,
   };
 };

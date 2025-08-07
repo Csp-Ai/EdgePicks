@@ -1,5 +1,7 @@
 import { AgentResult, Matchup } from '../types';
 import { supabase } from '../supabaseClient';
+import { logAgentReflection } from './utils';
+import { AgentReflection } from '../../types/AgentReflection';
 
 export interface TrendsResult extends AgentResult {
   flowPopularity: { flow: string; count: number }[];
@@ -60,6 +62,12 @@ export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
       hitRate: total ? correct / total : 0,
     }))
     .sort((a, b) => b.hitRate - a.hitRate);
+  const reflection: AgentReflection = {
+    whatIObserved: `Top flow ${flowPopularity[0]?.flow ?? 'none'}`,
+    whatIChose: 'Provided trends analysis',
+    whatCouldImprove: 'Broaden dataset',
+  };
+  logAgentReflection('trendsAgent', reflection);
 
   return {
     team: 'N/A',
