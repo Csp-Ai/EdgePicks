@@ -38,15 +38,16 @@ export async function runFlow(
 ): Promise<FlowRunResult> {
   const outputs: Partial<AgentOutputs> = {};
   const executions: AgentExecution[] = new Array(flow.agents.length);
+  const agents = await loadAgents();
   const limit = pLimit(2);
 
-  const getAgent = (name: AgentName) => registry.find((a) => a.name === name);
+  const getAgent = (name: AgentName) => agents.find((a) => a.name === name);
 
   let index = 0;
   while (index < flow.agents.length) {
-    const batch: { name: AgentName; idx: number; agent: typeof registry[number] }[] = [];
+    const batch: { name: AgentName; idx: number; agent: typeof agents[number] }[] = [];
 
-    // Gather consecutive agents that don't depend on previous outputs
+    // gather agents without dependencies
     while (index < flow.agents.length) {
       const name = flow.agents[index];
       const agent = getAgent(name);
@@ -58,10 +59,8 @@ export async function runFlow(
         index++;
         continue;
       }
-      // Agents with 2+ params expect previous outputs and must run later
-      if (agent.run.length >= 2) {
-        break;
-      }
+      // agents expecting previous outputs run sequentially
+      if (agent.run.length >= 2) break;
       batch.push({ name, idx: index, agent });
       index++;
     }
@@ -93,10 +92,7 @@ export async function runFlow(
               const end = Date.now();
               const duration = end - start;
               console.error(`[runFlow] ${name} error:`, err);
-              const errorInfo = {
-                message: err?.message || 'Unknown error',
-                stack: err?.stack,
-              };
+              const errorInfo = { message: err?.message || 'Unknown error', stack: err?.stack };
               const exec: AgentExecution = { name, error: true, errorInfo };
               executions[idx] = exec;
               onAgent?.(exec);
@@ -112,19 +108,9 @@ export async function runFlow(
           })
         )
       );
-=======
-  const executions: AgentExecution[] = [];
-  const agents = await loadAgents();
-
-  for (const name of flow.agents) {
-    const agent = agents.find((a) => a.name === name);
-    if (!agent) {
-      console.error(`[runFlow] Agent not found: ${name}`);
-      onAgent?.({ name, error: true });
-      continue;
-
     }
 
+    // run next dependent agent sequentially
     if (index < flow.agents.length) {
       const name = flow.agents[index];
       const agent = getAgent(name);
@@ -159,10 +145,7 @@ export async function runFlow(
         const end = Date.now();
         const duration = end - start;
         console.error(`[runFlow] ${name} error:`, err);
-        const errorInfo = {
-          message: err?.message || 'Unknown error',
-          stack: err?.stack,
-        };
+        const errorInfo = { message: err?.message || 'Unknown error', stack: err?.stack };
         const exec: AgentExecution = { name, error: true, errorInfo };
         executions[index] = exec;
         onAgent?.(exec);
@@ -181,3 +164,4 @@ export async function runFlow(
 
   return { outputs, executions };
 }
+

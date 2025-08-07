@@ -1,8 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { agents } from '../../lib/agents/registry';
-import type { AgentMeta, AgentName } from '../../lib/agents/registry';
-=======
-import { registry as agentRegistry } from '../../lib/agents/registry';
+import { registry as agentRegistry, type AgentMeta, type AgentName } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
@@ -50,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const agentMetaMap = new Map<AgentName, AgentMeta>(
-    agents.map((a) => [a.name as AgentName, a])
+    agentRegistry.map((a) => [a.name as AgentName, a])
   );
 
   res.setHeader('Content-Type', 'text/event-stream');
@@ -105,9 +102,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (event.status === 'completed') {
           const result = agentsOutput[event.name];
           if (result) {
-
-=======
-
             const scoreTotal = result.score * (meta?.weight ?? 1);
             const confidenceEstimate = result.score;
             res.write(
@@ -186,11 +180,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
   flow.agents.forEach((name) => {
-
     const meta = agentMetaMap.get(name as AgentName);
-=======
-    const meta = agentRegistry.find((a) => a.name === name);
-
     const result = agentsOutput[name];
     if (!meta || !result) return;
     scores[result.team] += result.score * meta.weight;
@@ -212,7 +202,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     matchup,
     agentsOutput as AgentOutputs,
     pickSummary,
-    null, // Optional actualWinner for future expansion
+    null,
     flowName
   );
 
@@ -228,5 +218,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
   res.end();
 }
-
 

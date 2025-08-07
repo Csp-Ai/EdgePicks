@@ -7,9 +7,10 @@ import {
 } from '../../lib/data/liveSports';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
-import type { AgentOutputs, PickSummary, Matchup } from '../../lib/types';
+import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
+import pLimit from 'p-limit';
 
 const CONCURRENCY_LIMIT = 3;
 const CACHE_TTL_MS = 60_000; // cache results for one minute
@@ -39,32 +40,8 @@ type Result = {
   edgePick: AgentExecution[];
 };
 
-type CachedResult = { result: Result; timestamp: number };
-const resultCache = new Map<string, CachedResult>();
-
-function getGameKey(game: Matchup) {
-  return game.gameId ?? `${game.homeTeam}-${game.awayTeam}-${game.time}`;
-}
-
-async function asyncPool<T, R>(
-  limit: number,
-  array: T[],
-  iteratorFn: (item: T) => Promise<R>
-): Promise<R[]> {
-  const ret: Promise<R>[] = [];
-  const executing = new Set<Promise<void>>();
-  for (const item of array) {
-    const p = Promise.resolve().then(() => iteratorFn(item));
-    ret.push(p);
-    const e = p.then(() => executing.delete(e), () => executing.delete(e));
-    executing.add(e);
-    if (executing.size >= limit) {
-      await Promise.race(executing);
-    }
-  }
-  await Promise.all(executing);
-  return Promise.all(ret);
-}
+type LeagueCacheEntry = { results: Result[]; timestamp: number };
+const leagueCache = new Map<string, LeagueCacheEntry>();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -80,105 +57,114 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const fetchFn = fetchMap[leagueParam as keyof typeof fetchMap] || fetchMap.NFL;
 
+    const cacheKey = `${leagueParam}-${Math.floor(Date.now() / CACHE_TTL_MS)}`;
+    const cached = leagueCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+      res.status(200).json(cached.results);
+      return;
+    }
+
     let games = await fetchFn();
     if (!games.length) {
       games = getFallbackMatchups();
     }
     const agentList = ['injuryScout', 'lineWatcher', 'statCruncher', 'guardianAgent'] as const;
 
+    const limit = pLimit(CONCURRENCY_LIMIT);
     const results = (
-      await asyncPool(CONCURRENCY_LIMIT, games, async (game): Promise<Result | null> => {
-        if (!game.homeTeam || !game.awayTeam) return null;
+      await Promise.all(
+        games.map((game) =>
+          limit(async (): Promise<Result | null> => {
+            if (!game.homeTeam || !game.awayTeam) return null;
+            try {
+              const { outputs, executions } = await runFlow(
+                { name: 'upcoming', agents: [...agentList] },
+                { ...game, isLiveData: game.source !== 'fallback', source: game.source }
+              );
 
-        const key = getGameKey(game);
-        const cached = resultCache.get(key);
-        if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
-          return cached.result;
-        }
+              const scores: Record<string, number> = {
+                [game.homeTeam]: 0,
+                [game.awayTeam]: 0,
+              };
 
-        try {
-          const { outputs, executions } = await runFlow(
-            { name: 'upcoming', agents: [...agentList] },
-            { ...game, isLiveData: game.source !== 'fallback', source: game.source }
-          );
+              agentList.forEach((name) => {
+                const meta = registry.find((a) => a.name === name);
+                const result = outputs[name];
+                if (!meta || !result) return;
+                scores[result.team] += result.score * meta.weight;
+              });
 
-          const scores: Record<string, number> = {
-            [game.homeTeam]: 0,
-            [game.awayTeam]: 0,
-          };
+              const winner =
+                scores[game.homeTeam] >= scores[game.awayTeam] ? game.homeTeam : game.awayTeam;
+              const confidenceRaw = Math.max(scores[game.homeTeam], scores[game.awayTeam]);
+              const confidence = Math.round(confidenceRaw * 100);
+              const edgeDelta = Math.abs(scores[game.homeTeam] - scores[game.awayTeam]);
+              const confidenceDrop = 1 - confidenceRaw;
+              const publicLean = (() => {
+                const home = game.odds?.moneyline?.home;
+                const away = game.odds?.moneyline?.away;
+                if (home !== undefined && away !== undefined) {
+                  const total = Math.abs(home) + Math.abs(away);
+                  return total ? Math.round((Math.abs(home) / total) * 100) : undefined;
+                }
+                return undefined;
+              })();
+              const agentDelta =
+                game.odds?.spread !== undefined ? edgeDelta - game.odds.spread : undefined;
+              const disagreements = executions
+                .filter((e) => e.result && e.result.team !== winner)
+                .map((e) => e.name);
+              const topReasons = agentList
+                .map((name) => outputs[name]?.reason)
+                .filter((r): r is string => Boolean(r));
 
-          agentList.forEach((name) => {
-            const meta = registry.find((a) => a.name === name);
-            const result = outputs[name];
-            if (!meta || !result) return;
-            scores[result.team] += result.score * meta.weight;
-          });
+              const pickSummary: PickSummary = { winner, confidence: confidenceRaw, topReasons };
 
-          const winner =
-            scores[game.homeTeam] >= scores[game.awayTeam] ? game.homeTeam : game.awayTeam;
-          const confidenceRaw = Math.max(scores[game.homeTeam], scores[game.awayTeam]);
-          const confidence = Math.round(confidenceRaw * 100);
-          const edgeDelta = Math.abs(scores[game.homeTeam] - scores[game.awayTeam]);
-          const confidenceDrop = 1 - confidenceRaw;
-          const publicLean = (() => {
-            const home = game.odds?.moneyline?.home;
-            const away = game.odds?.moneyline?.away;
-            if (home !== undefined && away !== undefined) {
-              const total = Math.abs(home) + Math.abs(away);
-              return total ? Math.round((Math.abs(home) / total) * 100) : undefined;
+              logToSupabase(
+                { ...game },
+                outputs as AgentOutputs,
+                pickSummary,
+                null,
+                'upcoming-games',
+                true
+              );
+
+              const result: Result = {
+                homeTeam: { name: game.homeTeam, logo: game.homeLogo },
+                awayTeam: { name: game.awayTeam, logo: game.awayLogo },
+                confidence,
+                time: game.time,
+                league: game.league,
+                odds: game.odds,
+                source: game.source,
+                useFallback: game.useFallback,
+                winner,
+                edgeDelta,
+                confidenceDrop,
+                publicLean,
+                agentDelta,
+                disagreements,
+                edgePick: executions,
+              };
+              return result;
+            } catch (err) {
+              console.error('agent run failed', err);
+              return null;
             }
-            return undefined;
-          })();
-          const agentDelta =
-            game.odds?.spread !== undefined ? edgeDelta - game.odds.spread : undefined;
-          const disagreements = executions
-            .filter((e) => e.result && e.result.team !== winner)
-            .map((e) => e.name);
-          const topReasons = agentList
-            .map((name) => outputs[name]?.reason)
-            .filter((r): r is string => Boolean(r));
-
-          const pickSummary: PickSummary = { winner, confidence: confidenceRaw, topReasons };
-
-          logToSupabase(
-            { ...game },
-            outputs as AgentOutputs,
-            pickSummary,
-            null,
-            'upcoming-games',
-            true
-          );
-
-          const result: Result = {
-            homeTeam: { name: game.homeTeam, logo: game.homeLogo },
-            awayTeam: { name: game.awayTeam, logo: game.awayLogo },
-            confidence,
-            time: game.time,
-            league: game.league,
-            odds: game.odds,
-            source: game.source,
-            useFallback: game.useFallback,
-            winner,
-            edgeDelta,
-            confidenceDrop,
-            publicLean,
-            agentDelta,
-            disagreements,
-            edgePick: executions,
-          };
-          resultCache.set(key, { result, timestamp: Date.now() });
-          return result;
-        } catch (err) {
-          console.error('agent run failed', err);
-          return null;
-        }
-      })
+          })
+        )
+      )
     ).filter((r): r is Result => Boolean(r));
 
+    leagueCache.set(cacheKey, { results, timestamp: Date.now() });
     res.status(200).json(results);
   } catch (err) {
     console.error('Error fetching upcoming games:', err);
-    res.status(500).json({ error: 'Failed to fetch upcoming games' });
+    if (err instanceof Error && err.message.includes('RATE_LIMIT')) {
+      res.status(429).json({ error: 'Upstream rate limit, please retry later' });
+    } else {
+      res.status(500).json({ error: 'Failed to fetch upcoming games' });
+    }
   }
 }
 

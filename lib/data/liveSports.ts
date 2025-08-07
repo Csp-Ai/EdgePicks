@@ -70,6 +70,24 @@ function logoCacheKey(league: League, id: string) {
   return `${league}-${id}`;
 }
 
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit = {},
+  retries = 2,
+  backoff = 500,
+  isDev = false
+): Promise<Response> {
+  let res: Response = await fetch(url, options);
+  for (let attempt = 0; attempt < retries && res.status === 429; attempt++) {
+    if (isDev) {
+      console.warn(`Rate limited for ${url}. Retrying in ${backoff * (attempt + 1)}ms`);
+    }
+    await new Promise((r) => setTimeout(r, backoff * (attempt + 1)));
+    res = await fetch(url, options);
+  }
+  return res;
+}
+
 async function fetchTeamLogo(
   league: League,
   id: string,
@@ -81,7 +99,7 @@ async function fetchTeamLogo(
     return cached.logo;
   }
   try {
-    const r = await fetch(`${SPORTSDB_TEAM_URL}${id}`);
+    const r = await fetchWithRetry(`${SPORTSDB_TEAM_URL}${id}`, {}, 2, 500, isDev);
     const d = await r.json();
     const team = d.teams && d.teams[0];
     const logo = team?.strTeamBadge;
@@ -106,9 +124,16 @@ async function fetchLeagueOdds(
   try {
     const oddsKey = ENV.ODDS_API_KEY;
     if (oddsKey) {
-      const oddsRes = await fetch(
-        `${url}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`
+      const oddsRes = await fetchWithRetry(
+        `${url}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`,
+        {},
+        2,
+        500,
+        isDev
       );
+      if (oddsRes.status === 429) {
+        throw new Error('ODDS_API_RATE_LIMIT');
+      }
       if (oddsRes.ok) {
         oddsData = await oddsRes.json();
       }
@@ -140,7 +165,10 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
   const oddsSport = ODDS_API_SPORT_MAP[league];
   const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/${oddsSport}/odds/`;
   try {
-    const res = await fetch(eventsUrl);
+    const res = await fetchWithRetry(eventsUrl, {}, 2, 500, isDev);
+    if (res.status === 429) {
+      throw new Error('SPORTS_DB_RATE_LIMIT');
+    }
     const json = await res.json();
     if (isDev) {
       console.log('TheSportsDB response', {
@@ -207,7 +235,7 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
     });
   } catch (err) {
     if (isDev) console.error('fetchUpcomingGames error', err);
-    return [];
+    throw err;
   }
 }
 
