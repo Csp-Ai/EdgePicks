@@ -11,7 +11,7 @@ const PredictionsPage: React.FC = () => {
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
   return (
-    <main className="min-h-screen bg-gray-50 p-6 space-y-6">
+    <main className="min-h-screen p-6 space-y-6 bg-neutral-100 dark:bg-neutral-900">
       <MatchupInputForm
         onStart={(
           _info: { homeTeam: string; awayTeam: string; week: number }
