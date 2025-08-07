@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { agents } from '../../lib/agents/registry';
+import { registry as agentRegistry } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (event.status === 'completed') {
           const result = agentsOutput[event.name];
           if (result) {
-            const meta = agents.find((a) => a.name === event.name);
+            const meta = agentRegistry.find((a) => a.name === event.name);
             const scoreTotal = result.score * (meta?.weight ?? 1);
             const confidenceEstimate = result.score;
             res.write(
@@ -170,7 +170,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
   flow.agents.forEach((name) => {
-    const meta = agents.find((a) => a.name === name);
+    const meta = agentRegistry.find((a) => a.name === name);
     const result = agentsOutput[name];
     if (!meta || !result) return;
     scores[result.team] += result.score * meta.weight;

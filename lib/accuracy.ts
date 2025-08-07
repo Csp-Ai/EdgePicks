@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient';
-import { agents as agentRegistry } from './agents/registry';
+import { registry as agentRegistry } from './agents/registry';
 import type { AgentName, AgentOutputs } from './types';
 
 interface MatchupRow {

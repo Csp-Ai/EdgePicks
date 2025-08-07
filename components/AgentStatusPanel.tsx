@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { agents as agentRegistry } from '../lib/agents/registry';
+import { registry as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 import type { AgentLifecycle, AgentName } from '../lib/types';
 import AgentLogsModal from './AgentLogsModal';
