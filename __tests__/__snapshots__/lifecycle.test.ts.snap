@@ -8,6 +8,7 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "designPatternsDocumented": true,
     "lifecycleDocumented": true,
     "output": "Error: supabaseUrl is required.",
+    "reflectionLogged": true,
     "syncAttemptedAt": "2025-08-07T10:25:55.847Z",
     "syncError": "supabase env missing",
     "synced": false,
