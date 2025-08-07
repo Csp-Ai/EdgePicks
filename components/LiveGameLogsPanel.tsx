@@ -23,18 +23,19 @@ const LiveGameLogsPanel: React.FC<Props> = ({ logs }) => {
           <h3 className="font-semibold mb-2">Matchup {idx + 1}</h3>
           {matchLogs && matchLogs.length > 0 ? (
             <ul className="space-y-1">
-              {matchLogs
-                .filter((log) => log.result)
-                .map(({ name, result }) => (
-                  <li key={name} className="text-sm">
-                    <span className="font-medium">{formatAgentName(name)}: </span>
+              {matchLogs.map((log) => (
+                <li key={log.name} className="text-sm">
+                  <span className="font-medium">{formatAgentName(log.name)}: </span>
+                  {log.result ? (
                     <span>
-                      {result?.team} ({Math.round((result?.score || 0) * 100)}%) -
-                      {' '}
-                      {result?.reason}
+                      {log.result.team} ({Math.round((log.result.score || 0) * 100)}%) -{' '}
+                      {log.result.reason}
                     </span>
-                  </li>
-                ))}
+                  ) : (
+                    <span className="text-red-600">Error</span>
+                  )}
+                </li>
+              ))}
             </ul>
           ) : (
             <p className="text-sm text-gray-600">No agent logs.</p>

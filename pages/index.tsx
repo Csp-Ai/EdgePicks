@@ -3,22 +3,36 @@ import MatchupInputForm from '../components/MatchupInputForm';
 import PredictionsPanel from '../components/PredictionsPanel';
 import AgentNodeGraph from '../components/AgentNodeGraph';
 import Leaderboard from '../components/Leaderboard';
+import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
+import AgentStatusPanel from '../components/AgentStatusPanel';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import type { AgentOutputs, AgentResult, PickSummary } from '../lib/types';
+import type { AgentOutputs, PickSummary } from '../lib/types';
+import type { AgentExecution } from '../lib/flow/runFlow';
 
 export default function Home() {
   const [agents, setAgents] = useState<AgentOutputs>({});
   const [pick, setPick] = useState<PickSummary | null>(null);
+  const [logs, setLogs] = useState<AgentExecution[][]>([]);
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
   const handleStart = () => {
     setAgents({});
     setPick(null);
     reset();
+    setLogs((prev) => [...prev, []]);
   };
 
-  const handleAgent = (name: string, result: AgentResult) => {
-    setAgents((prev) => ({ ...prev, [name]: result }));
+  const handleAgent = (exec: AgentExecution) => {
+    setLogs((prev) => {
+      const updated = [...prev];
+      const current = updated[updated.length - 1] || [];
+      current.push(exec);
+      updated[updated.length - 1] = current;
+      return updated;
+    });
+    if (exec.result) {
+      setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
+    }
   };
 
   const handleComplete = (data: { pick: PickSummary }) => {
@@ -37,13 +51,10 @@ export default function Home() {
         onAgent={handleAgent}
         onComplete={handleComplete}
         onLifecycle={handleLifecycleEvent}
-        defaultTeamA="BOS"
-        defaultTeamB="LAL"
-        defaultMatchDay={1}
-        autostart
       />
 
       <AgentNodeGraph statuses={statuses} />
+      <LiveGameLogsPanel logs={logs} />
 
       <PredictionsPanel agents={agents} pick={pick} statuses={statuses} />
 
@@ -51,6 +62,7 @@ export default function Home() {
         <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
         <Leaderboard />
       </section>
+      <AgentStatusPanel statuses={statuses} />
     </main>
   );
 }

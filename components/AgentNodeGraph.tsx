@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { registry as agentRegistry } from '../lib/agents/registry';
 import type { AgentName, AgentLifecycle } from '../lib/types';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const AgentNodeGraph: React.FC<Props> = ({ statuses }) => {
-  const agents = Object.keys(statuses) as AgentName[];
+  const agents = agentRegistry.map((a) => a.name as AgentName);
   if (agents.length === 0) {
     return <div className="text-center text-sm text-gray-400">No agent activity yet</div>;
   }

@@ -7,7 +7,6 @@ import AgentStatusPanel from '../components/AgentStatusPanel';
 import MatchupInputForm from '../components/MatchupInputForm';
 import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
 import type { AgentExecution } from '../lib/flow/runFlow';
-import type { AgentResult } from '../lib/types';
 
 const DashboardPage: React.FC = () => {
   const { nodes, startTime, handleLifecycleEvent, reset, statuses } = useFlowVisualizer();
@@ -18,11 +17,11 @@ const DashboardPage: React.FC = () => {
     setLogs((prev) => [...prev, []]);
   };
 
-  const handleAgent = (name: string, result: AgentResult) => {
+  const handleAgent = (exec: AgentExecution) => {
     setLogs((prev) => {
       const updated = [...prev];
       const current = updated[updated.length - 1] || [];
-      current.push({ name, result });
+      current.push(exec);
       updated[updated.length - 1] = current;
       return updated;
     });

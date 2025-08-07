@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
   AgentOutputs,
-  AgentResult,
   Matchup,
   PickSummary,
   AgentLifecycle,
 } from '../lib/types';
+import type { AgentExecution } from '../lib/flow/runFlow';
 
 interface SummaryPayload {
   matchup: Matchup;
@@ -16,7 +16,7 @@ interface SummaryPayload {
 
 export type Props = {
   onStart: (info: { teamA: string; teamB: string; matchDay: number }) => void;
-  onAgent: (name: string, result: AgentResult) => void;
+  onAgent: (exec: AgentExecution) => void;
   onComplete: (data: SummaryPayload) => void;
   onLifecycle: (event: { name: string } & AgentLifecycle) => void;
   defaultTeamA?: string;
@@ -58,9 +58,7 @@ const MatchupInputForm: React.FC<Props> = ({
       es.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.type === 'agent') {
-          if (!data.error) {
-            onAgent(data.name, data.result as AgentResult);
-          }
+          onAgent({ name: data.name, result: data.result, error: data.error });
         } else if (data.type === 'lifecycle') {
           onLifecycle(data as { name: string } & AgentLifecycle);
         } else if (data.type === 'summary') {
@@ -68,7 +66,7 @@ const MatchupInputForm: React.FC<Props> = ({
           setLoading(false);
           es.close();
         } else if (data.type === 'error') {
-          setError('Failed to fetch result');
+          setError(data.message || 'Failed to fetch result');
           setLoading(false);
           es.close();
         }
