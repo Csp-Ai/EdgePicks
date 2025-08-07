@@ -895,3 +895,26 @@ Files:
 - agentLogsStore.json (+10/-5)
 - llms.txt (+1/-0)
 
+Timestamp: 2025-08-07T10:34:27Z
+codex:prediction-flow-architecture
+Summary:
+- Documented prediction flow from MatchupInputForm through agent orchestration and UI updates.
+- Logged fallback UI spacing issue in `.github/ui-components-review.md`.
+- Marked existing logs with "architectureDocumented": true.
+Files:
+- docs/prediction-flow-architecture.md
+- .github/ui-components-review.md
+- agentLogsStore.json
+Testing:
+ - npm test — passed
+ - npx tsc --noEmit — failed (TS2352: ProcessEnv mismatch)
+Timestamp: 2025-08-07T10:36:38.248Z
+Commit: 6c9c024cf68d1c864c952e892c9d67467eae1b91
+Author: Codex
+Message: docs: document prediction flow architecture
+Files:
+- .github/ui-components-review.md (+1/-0)
+- agentLogsStore.json (+2/-1)
+- docs/prediction-flow-architecture.md (+82/-0)
+- llms.txt (+13/-0)
+

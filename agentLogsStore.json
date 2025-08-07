@@ -5,6 +5,7 @@
     "output": "Error: supabaseUrl is required.",
     "synced": false,
     "syncAttemptedAt": "2025-08-07T10:25:55.847Z",
-    "syncError": "supabase env missing"
+    "syncError": "supabase env missing",
+    "architectureDocumented": true
   }
 ]
