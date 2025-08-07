@@ -184,7 +184,7 @@ Then add your own keys:
 
 ```env
 SUPABASE_URL=<your-supabase-url>
-SUPABASE_ANON_KEY=<your-anon-key>
+SUPABASE_KEY=<your-supabase-key>
 GOOGLE_CLIENT_ID=<your-client-id>
 GOOGLE_CLIENT_SECRET=<your-client-secret>
 NEXTAUTH_URL=http://localhost:3000
