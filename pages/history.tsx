@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AgentName, AgentOutputs } from '../lib/types';
 import { formatAgentName } from '../lib/utils';
 import { supabase } from '../lib/supabaseClient';
+import EmptyState from '../components/EmptyState';
 
 interface MatchupRow {
   id: string;
@@ -49,7 +50,7 @@ const HistoryPage: React.FC = () => {
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
         </div>
       ) : matchups.length === 0 ? (
-        <p className="text-center text-gray-600">No matchups logged yet</p>
+        <EmptyState message="No data" />
       ) : (
         <div className="space-y-6 max-w-3xl mx-auto">
           {matchups.map((m) => (
