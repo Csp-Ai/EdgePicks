@@ -561,3 +561,21 @@ Files:
 - lib/logUiEvent.test.js (+7/-0)
 - pages/api/run-predictions.ts (+21/-2)
 
+Timestamp: 2025-08-07T02:35:38.824Z
+Commit: b7b2afcc50897b14bfba98f13db44434e3744a49
+Author: Codex
+Message: chore: finalize foundational infra for agent flows, env validation, and readme docs
+Files:
+- README.md (+25/-0)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+7/-0)
+- __tests__/runAgentsApi.test.ts (+28/-0)
+- components/LiveGameLogsPanel.tsx (+11/-0)
+- components/PredictionsPanel.tsx (+4/-0)
+- lib/data/liveSports.ts (+2/-2)
+- lib/env.ts (+14/-12)
+- package.json (+3/-2)
+- pages/api/run-predictions.ts (+7/-4)
+- pages/api/upcoming-games.ts (+3/-5)
+- scripts/listMissingEnv.ts (+25/-0)
+- scripts/missingEnvReport.ts (+0/-11)
+

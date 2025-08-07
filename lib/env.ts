@@ -8,19 +8,21 @@ export const getEnv = (
   { required = true, fallback }: GetEnvOptions = {},
 ): string => {
   const value = process.env[key];
-  const isProduction = process.env.NODE_ENV === 'production';
-  if (!value) {
-    if (fallback !== undefined && !isProduction) {
-      console.warn(`[env] ${key} is missing, using fallback: ${fallback}`);
-      return fallback;
-    }
-    if (!required) {
-      console.warn(`[env] ${key} is not set`);
-      return '';
-    }
-    throw new Error(`[env] Missing required environment variable: ${key}`);
+  if (value !== undefined && value !== '') {
+    return value;
   }
-  return value;
+
+  if (fallback !== undefined && !required) {
+    console.warn(`[env] ${key} is missing, using fallback: ${fallback}`);
+    return fallback;
+  }
+
+  if (!required) {
+    console.warn(`[env] ${key} is not set`);
+    return '';
+  }
+
+  throw new Error(`[env] Missing required environment variable: ${key}`);
 };
 
 export const ENV = {

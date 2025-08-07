@@ -18,6 +18,18 @@ npm install
 npm run dev
 ```
 
+### Architecture Diagram
+
+```
+Frontend (Next.js)
+    ↓
+API Route (/api/run-predictions)
+    ↓
+Agent Flow Engine
+    ↓
+Supabase Logs
+```
+
 ---
 
 ## 🧾 System Changelog: llms.txt
@@ -87,6 +99,19 @@ Upcoming NFL matchups are fetched from [TheSportsDB](https://www.thesportsdb.com
 
 - `GET /api/upcoming-games` – list upcoming matchups (supports `?league=NFL`).
 - `POST /api/run-predictions` – run agent predictions for provided games.
+ 
+### Sample Agent Output
+
+```json
+{
+  "gameId": "1234",
+  "finalConfidence": 0.86,
+  "agents": {
+    "injuryScout": { "score": 0.72, "reason": "Key WR out" },
+    "lineWatcher": { "score": 0.65, "reason": "Line moved -2.5" }
+  }
+}
+```
 
 ## Authentication
 

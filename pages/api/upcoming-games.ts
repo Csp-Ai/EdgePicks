@@ -12,13 +12,11 @@ import { agents as registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
-import { ENV } from '../../lib/env';
+import { ENV, getEnv } from '../../lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (
-    ENV.SPORTS_API_KEY === 'sports-fallback-key' &&
-    process.env.NODE_ENV === 'development'
-  ) {
+  const nodeEnv = getEnv('NODE_ENV', { required: false });
+  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && nodeEnv === 'development') {
     console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
   }
   if (ENV.SPORTS_API_KEY === 'sports-fallback-key') {

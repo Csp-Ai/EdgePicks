@@ -40,4 +40,32 @@ describe('run-agents API', () => {
     const summary = chunks.find((c) => c.includes('summary'));
     expect(summary).toBeDefined();
   });
+
+  it('matches snapshot of agent stream', async () => {
+    mockedRunFlow.mockResolvedValue({
+      outputs: {
+        injuryScout: { team: 'A', score: 0.72, reason: 'Key WR out' },
+      },
+      executions: [
+        {
+          name: 'injuryScout',
+          result: { team: 'A', score: 0.72, reason: 'Key WR out' },
+        },
+      ],
+    });
+
+    const req: any = { query: { teamA: 'A', teamB: 'B', matchDay: '1' } };
+    const chunks: string[] = [];
+    const res: any = {
+      setHeader: jest.fn(),
+      write: (c: string) => chunks.push(c),
+      end: jest.fn(),
+      flush: jest.fn(),
+      flushHeaders: jest.fn(),
+    };
+
+    await handler(req, res);
+
+    expect(chunks.join('')).toMatchSnapshot();
+  });
 });

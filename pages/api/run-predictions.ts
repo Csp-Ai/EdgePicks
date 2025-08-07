@@ -4,11 +4,11 @@ import fs from 'fs';
 import path from 'path';
 import { authOptions } from './auth/[...nextauth]';
 import { loadFlow } from '../../lib/flow/loadFlow';
-import { runFlow } from '../../lib/flow/runFlow';
+import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { agents } from '../../lib/agents/registry';
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
-import { ENV } from '../../lib/env';
+import { ENV, getEnv } from '../../lib/env';
 
 interface Game {
   homeTeam: { name: string };
@@ -22,6 +22,7 @@ interface Prediction {
   confidence: number;
   agents: AgentOutputs;
   agentScores: Record<string, number>;
+  executions: AgentExecution[];
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -37,7 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && process.env.NODE_ENV === 'development') {
+  const nodeEnv = getEnv('NODE_ENV', { required: false });
+  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && nodeEnv === 'development') {
     console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
   }
 
@@ -60,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         league,
       };
 
-      const { outputs } = await runFlow(flow, matchup);
+      const { outputs, executions } = await runFlow(flow, matchup);
 
       const scores: Record<string, number> = {
         [matchup.homeTeam]: 0,
@@ -104,6 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         confidence: Math.round(confidence * 100),
         agents: outputs as AgentOutputs,
         agentScores,
+        executions,
       });
     }
 

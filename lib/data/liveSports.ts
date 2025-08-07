@@ -1,5 +1,5 @@
 import { Matchup } from '../types';
-import { ENV } from '../env';
+import { ENV, getEnv } from '../env';
 
 // Supported league identifiers.  We expose these so callers can reference the
 // specific league types when needed but the public API of this module is via
@@ -48,7 +48,7 @@ interface OddsGame {
 // Specific league helpers simply wrap this function with the appropriate
 // league argument.
 async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = getEnv('NODE_ENV', { required: false }) === 'development';
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];
   const eventsUrl = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/eventsnextleague.php?id=${leagueId}`;
