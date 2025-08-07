@@ -767,3 +767,17 @@ Files:
 - lib/api.ts (+1/-1)
 - pages/dashboard.tsx (+28/-3)
 
+Timestamp: 2025-08-07T08:29:11.155Z
+Commit: 0e101a9ffac726d4dcdd989ea826a11105ec24f7
+Author: Codex
+Message: feat: revamp landing page with live agent predictions
+Files:
+- components/AgentNodeGraph.tsx (+36/-0)
+- components/MatchupInputForm.tsx (+45/-20)
+- components/PredictionsPanel.tsx (+37/-167)
+- lib/logUiEvent.ts (+11/-1)
+- lib/supabaseClient.ts (+8/-2)
+- pages/api/run-agents.ts (+36/-28)
+- pages/index.tsx (+47/-120)
+- pages/predictions.tsx (+26/-32)
+

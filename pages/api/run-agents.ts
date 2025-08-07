@@ -51,35 +51,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const agentsOutput: Partial<AgentOutputs> = {};
 
-  const { outputs } = await runFlow(
-    flow,
-    matchup,
-    ({ name, result, error }) => {
-      if (!error && result) {
-        agentsOutput[name] = result;
-        res.write(
-          `data: ${JSON.stringify({
-            type: 'agent',
-            name,
-            result,
-            warnings: result.warnings,
-          })}\n\n`
-        );
-      } else {
-        res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
+  try {
+    const { outputs } = await runFlow(
+      flow,
+      matchup,
+      ({ name, result, error }) => {
+        if (!error && result) {
+          agentsOutput[name] = result;
+          res.write(
+            `data: ${JSON.stringify({
+              type: 'agent',
+              name,
+              result,
+              warnings: result.warnings,
+            })}\n\n`
+          );
+        } else {
+          res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
+        }
+        // @ts-ignore - flush may not exist in some environments
+        res.flush?.();
+      },
+      (event) => {
+        lifecycleAgent(event, matchup);
+        res.write(`data: ${JSON.stringify({ type: 'lifecycle', ...event })}\n\n`);
+        // @ts-ignore - flush may not exist in some environments
+        res.flush?.();
       }
-      // @ts-ignore - flush may not exist in some environments
-      res.flush?.();
-    },
-    (event) => {
-      lifecycleAgent(event, matchup);
-      res.write(`data: ${JSON.stringify({ type: 'lifecycle', ...event })}\n\n`);
-      // @ts-ignore - flush may not exist in some environments
-      res.flush?.();
-    }
-  );
+    );
 
-  Object.assign(agentsOutput, outputs);
+    Object.assign(agentsOutput, outputs);
+  } catch (err: any) {
+    res.write(
+      `data: ${JSON.stringify({ type: 'error', message: err.message || 'runFlow failed' })}\n\n`
+    );
+    res.end();
+    return;
+  }
 
   const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
   flow.agents.forEach((name) => {

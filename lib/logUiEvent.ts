@@ -1,4 +1,3 @@
-import { supabase } from './supabaseClient';
 import { triggerToast } from './useToast';
 
 export async function logUiEvent(
@@ -8,6 +7,17 @@ export async function logUiEvent(
   try {
     const meta = metadata ?? {};
     console.log(`[UI EVENT] ${uiEvent}`, Object.keys(meta).length ? meta : '');
+
+    if (typeof window !== 'undefined') {
+      await fetch('/api/log-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: uiEvent, metadata: meta }),
+      });
+      return;
+    }
+
+    const { supabase } = await import('./supabaseClient');
     await supabase.from('ui_events').insert({
       event: uiEvent,
       metadata: meta,
