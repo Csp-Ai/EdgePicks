@@ -67,7 +67,7 @@ export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
     whatIChose: 'Provided trends analysis',
     whatCouldImprove: 'Broaden dataset',
   };
-  logAgentReflection('trendsAgent', reflection);
+  await logAgentReflection('trendsAgent', reflection);
 
   return {
     team: 'N/A',
