@@ -723,3 +723,11 @@ Message: chore: log EOD summary
 Files:
 - llms.txt (+15/-0)
 
+Timestamp: 2025-08-07T07:26:34.227Z
+Commit: 957c3b626778eddd1f5a5270703c3ffc5bb0031e
+Author: Codex
+Message: Use dynamic matchups in dashboard timeline
+Files:
+- lib/dashboard/useFlowVisualizer.ts (+8/-0)
+- pages/dashboard.tsx (+9/-13)
+
