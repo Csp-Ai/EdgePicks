@@ -7,6 +7,7 @@ import type {
 } from '../types';
 import { agents as registry } from '../agents/registry';
 import type { FlowConfig } from './loadFlow';
+import pLimit from 'p-limit';
 
 export interface AgentExecution {
   name: AgentName;
@@ -25,7 +26,8 @@ export interface FlowRunResult {
 }
 
 /**
- * Execute a flow sequentially, running each agent in order.
+ * Execute a flow, running agents without dependencies in parallel with a small
+ * concurrency limit and falling back to sequential execution when necessary.
  * Logs input and output for each agent and marks failures.
  */
 export async function runFlow(
@@ -35,54 +37,134 @@ export async function runFlow(
   onLifecycle?: (event: { name: AgentName } & AgentLifecycle) => void
 ): Promise<FlowRunResult> {
   const outputs: Partial<AgentOutputs> = {};
-  const executions: AgentExecution[] = [];
+  const executions: AgentExecution[] = new Array(flow.agents.length);
+  const limit = pLimit(2);
 
-  for (const name of flow.agents) {
-    const agent = registry.find((a) => a.name === name);
-    if (!agent) {
-      console.error(`[runFlow] Agent not found: ${name}`);
-      onAgent?.({ name, error: true });
-      continue;
+  const getAgent = (name: AgentName) => registry.find((a) => a.name === name);
+
+  let index = 0;
+  while (index < flow.agents.length) {
+    const batch: { name: AgentName; idx: number; agent: typeof registry[number] }[] = [];
+
+    // Gather consecutive agents that don't depend on previous outputs
+    while (index < flow.agents.length) {
+      const name = flow.agents[index];
+      const agent = getAgent(name);
+      if (!agent) {
+        console.error(`[runFlow] Agent not found: ${name}`);
+        const exec: AgentExecution = { name, error: true };
+        executions[index] = exec;
+        onAgent?.(exec);
+        index++;
+        continue;
+      }
+      // Agents with 2+ params expect previous outputs and must run later
+      if (agent.run.length >= 2) {
+        break;
+      }
+      batch.push({ name, idx: index, agent });
+      index++;
     }
 
-    console.log(`[runFlow] ${name} input:`, matchup);
-    const start = Date.now();
-    onLifecycle?.({ name, status: 'started', startedAt: start });
-    try {
-      const result = await agent.run(matchup, outputs);
-      const end = Date.now();
-      const duration = end - start;
-      console.log(`[runFlow] ${name} output:`, result);
-      outputs[name] = result;
-      const exec: AgentExecution = { name, result };
-      executions.push(exec);
-      onAgent?.(exec);
-      onLifecycle?.({
-        name,
-        status: 'completed',
-        startedAt: start,
-        endedAt: end,
-        durationMs: duration,
-      });
-    } catch (err: any) {
-      const end = Date.now();
-      const duration = end - start;
-      console.error(`[runFlow] ${name} error:`, err);
-      const errorInfo = {
-        message: err?.message || 'Unknown error',
-        stack: err?.stack,
-      };
-      const exec: AgentExecution = { name, error: true, errorInfo };
-      executions.push(exec);
-      onAgent?.(exec);
-      onLifecycle?.({
-        name,
-        status: 'errored',
-        startedAt: start,
-        endedAt: end,
-        durationMs: duration,
-        error: errorInfo,
-      });
+    if (batch.length > 0) {
+      await Promise.allSettled(
+        batch.map(({ name, idx, agent }) =>
+          limit(async () => {
+            console.log(`[runFlow] ${name} input:`, matchup);
+            const start = Date.now();
+            onLifecycle?.({ name, status: 'started', startedAt: start });
+            try {
+              const result = await agent.run(matchup, outputs);
+              const end = Date.now();
+              const duration = end - start;
+              console.log(`[runFlow] ${name} output:`, result);
+              outputs[name] = result;
+              const exec: AgentExecution = { name, result };
+              executions[idx] = exec;
+              onAgent?.(exec);
+              onLifecycle?.({
+                name,
+                status: 'completed',
+                startedAt: start,
+                endedAt: end,
+                durationMs: duration,
+              });
+            } catch (err: any) {
+              const end = Date.now();
+              const duration = end - start;
+              console.error(`[runFlow] ${name} error:`, err);
+              const errorInfo = {
+                message: err?.message || 'Unknown error',
+                stack: err?.stack,
+              };
+              const exec: AgentExecution = { name, error: true, errorInfo };
+              executions[idx] = exec;
+              onAgent?.(exec);
+              onLifecycle?.({
+                name,
+                status: 'errored',
+                startedAt: start,
+                endedAt: end,
+                durationMs: duration,
+                error: errorInfo,
+              });
+            }
+          })
+        )
+      );
+    }
+
+    if (index < flow.agents.length) {
+      const name = flow.agents[index];
+      const agent = getAgent(name);
+      if (!agent) {
+        console.error(`[runFlow] Agent not found: ${name}`);
+        const exec: AgentExecution = { name, error: true };
+        executions[index] = exec;
+        onAgent?.(exec);
+        index++;
+        continue;
+      }
+      console.log(`[runFlow] ${name} input:`, matchup);
+      const start = Date.now();
+      onLifecycle?.({ name, status: 'started', startedAt: start });
+      try {
+        const result = await agent.run(matchup, outputs);
+        const end = Date.now();
+        const duration = end - start;
+        console.log(`[runFlow] ${name} output:`, result);
+        outputs[name] = result;
+        const exec: AgentExecution = { name, result };
+        executions[index] = exec;
+        onAgent?.(exec);
+        onLifecycle?.({
+          name,
+          status: 'completed',
+          startedAt: start,
+          endedAt: end,
+          durationMs: duration,
+        });
+      } catch (err: any) {
+        const end = Date.now();
+        const duration = end - start;
+        console.error(`[runFlow] ${name} error:`, err);
+        const errorInfo = {
+          message: err?.message || 'Unknown error',
+          stack: err?.stack,
+        };
+        const exec: AgentExecution = { name, error: true, errorInfo };
+        executions[index] = exec;
+        onAgent?.(exec);
+        onLifecycle?.({
+          name,
+          status: 'errored',
+          startedAt: start,
+          endedAt: end,
+          durationMs: duration,
+          error: errorInfo,
+        });
+      }
+      index++;
     }
   }
 
