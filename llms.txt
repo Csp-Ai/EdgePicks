@@ -1006,3 +1006,21 @@ Files:
 
 
 
+Timestamp: 2025-08-07T11:12:47.459Z
+Commit: 29589a125193d0abf77c4d5144a159323127abe5
+Author: Codex
+Message: feat: show agent reflections overlay
+Files:
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+17/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agent-reflections.json (+27/-0)
+- agentLogsStore.json (+2/-3)
+- components/AgentNodeGraph.tsx (+42/-16)
+- docs/agent-lifecycle-overview.md (+1/-0)
+- lib/agentReflectionStore.ts (+29/-0)
+- lib/types.ts (+7/-0)
+- pages/_app.tsx (+1/-0)
+- pages/api/reflections.ts (+7/-0)
+- pages/api/run-agents.ts (+4/-0)
+- styles/intelligence.css (+18/-0)
+

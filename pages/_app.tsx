@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import '../styles/globals.css';
 import '../styles/typography.css';
+import '../styles/intelligence.css';
 import Navbar from '../components/Navbar';
 import ThemeToggle from '../components/ThemeToggle';
 import { ToastProvider } from '../lib/useToast';
