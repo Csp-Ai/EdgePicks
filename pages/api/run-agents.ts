@@ -66,17 +66,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { outputs } = await runFlow(
       flow,
       matchup,
-      ({ name, result, error, errorInfo }) => {
+      async ({ name, result, error, errorInfo }) => {
         if (!error && result) {
           agentsOutput[name] = result;
         }
         if (sessionId && typeof sessionId === 'string' && error) {
-          writeAgentLog(sessionId, name, {
-            error: errorInfo?.stack || errorInfo?.message,
-          });
+          try {
+            await writeAgentLog(sessionId, name, {
+              error: errorInfo?.stack || errorInfo?.message,
+            });
+          } catch (e) {
+            console.error('failed to write agent log', e);
+          }
         }
       },
-      (event) => {
+      async (event) => {
         console.log('lifecycle event', event);
         lifecycleAgent(event, matchup);
         res.write(
@@ -108,10 +112,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               })}\n\n`
             );
             if (sessionId && typeof sessionId === 'string') {
-              writeAgentLog(sessionId, event.name, {
-                output: result,
-                durationMs: event.durationMs,
-              });
+              try {
+                await writeAgentLog(sessionId, event.name, {
+                  output: result,
+                  durationMs: event.durationMs,
+                });
+              } catch (e) {
+                console.error('failed to write agent log', e);
+              }
             }
             if (result.reflection) {
               void writeAgentReflection(event.name, result.reflection);
@@ -131,10 +139,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             })}\n\n`
           );
           if (sessionId && typeof sessionId === 'string') {
-            writeAgentLog(sessionId, event.name, {
-              error: errMsg,
-              durationMs: event.durationMs,
-            });
+            try {
+              await writeAgentLog(sessionId, event.name, {
+                error: errMsg,
+                durationMs: event.durationMs,
+              });
+            } catch (e) {
+              console.error('failed to write agent log', e);
+            }
           }
         }
         // @ts-ignore - flush may not exist in some environments

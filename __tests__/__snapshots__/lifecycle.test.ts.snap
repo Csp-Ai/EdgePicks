@@ -1,5 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+
+exports[`agent lifecycle logs matches snapshot 1`] = `{}`;
+=======
 exports[`agent lifecycle logs matches snapshot 1`] = `
 [
   {
@@ -31,3 +34,4 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
   },
 ]
 `;
+
