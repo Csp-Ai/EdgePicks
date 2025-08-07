@@ -10,10 +10,10 @@ const SPORTS_API_KEY = ENV.SPORTS_API_KEY;
 const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/lookupteam.php?id=`;
 
 const SPORTS_DB_LEAGUE_IDS: Record<League, string | undefined> = {
-  NFL: process.env.SPORTS_DB_NFL_ID,
-  MLB: process.env.SPORTS_DB_MLB_ID,
-  NBA: process.env.SPORTS_DB_NBA_ID,
-  NHL: process.env.SPORTS_DB_NHL_ID,
+  NFL: ENV.SPORTS_DB_NFL_ID,
+  MLB: ENV.SPORTS_DB_MLB_ID,
+  NBA: ENV.SPORTS_DB_NBA_ID,
+  NHL: ENV.SPORTS_DB_NHL_ID,
 };
 
 const ODDS_API_SPORT_MAP: Record<League, string> = {
@@ -89,7 +89,7 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
 
     let oddsData: OddsGame[] = [];
     try {
-      const oddsKey = process.env.ODDS_API_KEY;
+      const oddsKey = ENV.ODDS_API_KEY;
       if (oddsKey) {
         const oddsRes = await fetch(
           `${oddsApiUrl}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`

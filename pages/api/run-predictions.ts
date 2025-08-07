@@ -35,10 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const missingEnv = ['SPORTS_API_KEY'].filter((key) => !process.env[key]);
-  if (missingEnv.length) {
-    console.warn(`Missing required env vars: ${missingEnv.join(', ')}`);
-  }
   if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && process.env.NODE_ENV === 'development') {
     console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
   }

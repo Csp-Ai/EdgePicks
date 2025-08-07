@@ -8,6 +8,8 @@ out/
 # Misc
 .env
 .env.local
+# Reports
+missing-env-report.txt
 .DS_Store
 
 # Logs

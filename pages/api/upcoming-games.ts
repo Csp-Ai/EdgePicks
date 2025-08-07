@@ -15,10 +15,6 @@ import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 import { ENV } from '../../lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const missingEnv = ['SPORTS_API_KEY'].filter((key) => !process.env[key]);
-  if (missingEnv.length) {
-    console.warn(`Missing required env vars: ${missingEnv.join(', ')}`);
-  }
   if (
     ENV.SPORTS_API_KEY === 'sports-fallback-key' &&
     process.env.NODE_ENV === 'development'
