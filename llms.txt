@@ -863,3 +863,10 @@ Files:
 - scripts/deploy-docsync-cron.sh (+9/-0)
 - scripts/docsync-agent.ts (+135/-0)
 
+Timestamp: 2025-08-07T10:04:28.292Z
+Commit: 120e885a5fad4fcb9e6db9e87ccf8736f695cb4e
+Author: Codex
+Message: docs: add UI components guide
+Files:
+- docs/ui-components-guide.md (+24/-0)
+
