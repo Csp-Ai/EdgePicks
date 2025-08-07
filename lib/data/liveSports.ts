@@ -1,5 +1,6 @@
 import { Matchup } from '../types';
 import { ENV } from '../env';
+import mockUpcoming from '../../mock/upcoming-games.json';
 
 // Supported league identifiers.  We expose these so callers can reference the
 // specific league types when needed but the public API of this module is via
@@ -158,6 +159,9 @@ async function fetchLeagueOdds(
 // Specific league helpers simply wrap this function with the appropriate
 // league argument.
 async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
+  if (ENV.LIVE_MODE !== 'on') {
+    return (mockUpcoming as Matchup[]).filter((g) => g.league === league);
+  }
   const isDev = process.env.NODE_ENV === 'development';
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];

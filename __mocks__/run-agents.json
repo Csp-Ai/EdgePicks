@@ -1,0 +1,13 @@
+{
+  "events": [
+    { "type": "start", "agentId": "injuryScout", "ts": 0 },
+    {
+      "type": "result",
+      "agentId": "injuryScout",
+      "payload": { "team": "A", "score": 0.7, "reason": "mock" },
+      "ts": 1
+    },
+    { "type": "end", "agentId": "injuryScout", "ts": 2 }
+  ],
+  "final": { "winner": "A", "confidence": 0.7 }
+}

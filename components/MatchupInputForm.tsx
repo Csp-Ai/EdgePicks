@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  AgentOutputs,
-  Matchup,
-  PickSummary,
-  AgentLifecycle,
-} from '../lib/types';
-
+import { AgentOutputs, Matchup, PickSummary, AgentLifecycle } from '../lib/types';
+import { matchupCard } from '../styles/cardStyles';
 import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
 
 interface AgentExecution extends BaseAgentExecution {
   weight?: number;
   description?: string;
 }
-=======
-import { matchupCard } from '../styles/cardStyles';
-import type { AgentExecution } from '../lib/flow/runFlow';
 
 interface SummaryPayload {
   matchup: Matchup;
@@ -46,9 +38,7 @@ const MatchupInputForm: React.FC<Props> = ({
 }) => {
   const [homeTeam, setHomeTeam] = useState(defaultHomeTeam || '');
   const [awayTeam, setAwayTeam] = useState(defaultAwayTeam || '');
-  const [week, setWeek] = useState(
-    defaultWeek !== undefined ? String(defaultWeek) : ''
-  );
+  const [week, setWeek] = useState(defaultWeek !== undefined ? String(defaultWeek) : '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState('');
@@ -60,14 +50,11 @@ const MatchupInputForm: React.FC<Props> = ({
 
     try {
       const es = new EventSource(
-        `/api/run-agents?homeTeam=${encodeURIComponent(home)}&awayTeam=${encodeURIComponent(
-          away
-        )}&week=${wk}&sessionId=${sessionId}`
+        `/api/run-agents?homeTeam=${encodeURIComponent(home)}&awayTeam=${encodeURIComponent(away)}&week=${wk}&sessionId=${sessionId}`
       );
 
       es.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log('SSE message', data);
         if (data.type === 'agent') {
           onAgent({
             name: data.name,
@@ -145,10 +132,7 @@ const MatchupInputForm: React.FC<Props> = ({
       className={`${matchupCard} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`}
     >
       <div className="flex flex-col">
-        <label
-          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
-          htmlFor="homeTeam"
-        >
+        <label className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300" htmlFor="homeTeam">
           Home Team
         </label>
         <input
@@ -162,10 +146,7 @@ const MatchupInputForm: React.FC<Props> = ({
         />
       </div>
       <div className="flex flex-col">
-        <label
-          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
-          htmlFor="awayTeam"
-        >
+        <label className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300" htmlFor="awayTeam">
           Away Team
         </label>
         <input
@@ -179,10 +160,7 @@ const MatchupInputForm: React.FC<Props> = ({
         />
       </div>
       <div className="flex flex-col">
-        <label
-          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
-          htmlFor="week"
-        >
+        <label className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300" htmlFor="week">
           Week
         </label>
         <input
@@ -204,12 +182,9 @@ const MatchupInputForm: React.FC<Props> = ({
           {loading ? 'Loading...' : 'Run'}
         </button>
       </div>
-      {error && (
-        <p className="text-red-600 text-sm sm:col-span-2 lg:col-span-4">{error}</p>
-      )}
+      {error && <p className="text-red-600 text-sm sm:col-span-2 lg:col-span-4">{error}</p>}
     </form>
   );
 };
 
 export default MatchupInputForm;
-

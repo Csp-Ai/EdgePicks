@@ -8,6 +8,7 @@ import type {
 import { loadAgents } from '../agents/loadAgents';
 import type { FlowConfig } from './loadFlow';
 import pLimit from 'p-limit';
+import { ENV } from '../env';
 
 export interface AgentExecution {
   name: AgentName;
@@ -25,31 +26,38 @@ export interface FlowRunResult {
   executions: AgentExecution[];
 }
 
-/**
- * Execute a flow, running agents without dependencies in parallel with a small
- * concurrency limit and falling back to sequential execution when necessary.
- * Logs input and output for each agent and marks failures.
- */
+const cache = new Map<string, { ts: number; result: FlowRunResult }>();
+
+function cacheKey(flow: FlowConfig, matchup: Matchup) {
+  const gameId = (matchup as any).gameId ?? '';
+  const agentsHash = flow.agents.join(',');
+  return `${flow.name}-${matchup.league}-${gameId}-${agentsHash}`;
+}
+
 export async function runFlow(
   flow: FlowConfig,
   matchup: Matchup,
   onAgent?: (exec: AgentExecution) => void,
   onLifecycle?: (event: { name: AgentName } & AgentLifecycle) => void
 ): Promise<FlowRunResult> {
+  const key = cacheKey(flow, matchup);
+  const ttl = ENV.PREDICTION_CACHE_TTL_SEC * 1000;
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.ts < ttl) {
+    console.log('cache:hit');
+    return cached.result;
+  }
+
   const outputs: Partial<AgentOutputs> = {};
   const executions: AgentExecution[] = new Array(flow.agents.length);
   const agents = await loadAgents();
-  const limit = pLimit(2);
-
-=======
-  const agents = await loadAgents();
   const getAgent = (name: AgentName) => agents.find((a) => a.name === name);
+  const limit = pLimit(ENV.MAX_FLOW_CONCURRENCY);
 
   let index = 0;
   while (index < flow.agents.length) {
     const batch: { name: AgentName; idx: number; agent: typeof agents[number] }[] = [];
 
-    // gather agents without dependencies
     while (index < flow.agents.length) {
       const name = flow.agents[index];
       const agent = getAgent(name);
@@ -61,7 +69,6 @@ export async function runFlow(
         index++;
         continue;
       }
-      // agents expecting previous outputs run sequentially
       if (agent.run.length >= 2) break;
       batch.push({ name, idx: index, agent });
       index++;
@@ -112,7 +119,6 @@ export async function runFlow(
       );
     }
 
-    // run next dependent agent sequentially
     if (index < flow.agents.length) {
       const name = flow.agents[index];
       const agent = getAgent(name);
@@ -164,6 +170,8 @@ export async function runFlow(
     }
   }
 
-  return { outputs, executions };
+  const result: FlowRunResult = { outputs, executions };
+  cache.set(key, { ts: Date.now(), result });
+  return result;
 }
 

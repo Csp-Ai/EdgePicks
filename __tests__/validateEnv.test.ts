@@ -7,7 +7,7 @@ describe('validate-env script', () => {
       env: { ...env, TS_NODE_COMPILER_OPTIONS: '{"module":"CommonJS"}' },
     });
 
-  const baseEnv = { PATH: process.env.PATH } as NodeJS.ProcessEnv;
+  const baseEnv = { PATH: process.env.PATH, NODE_ENV: 'test' } as NodeJS.ProcessEnv;
 
   it('fails when required keys are missing', () => {
     const result = run(baseEnv);
@@ -24,6 +24,9 @@ describe('validate-env script', () => {
       SUPABASE_URL: 'http://localhost',
       SUPABASE_KEY: 'key',
       SPORTS_API_KEY: 'sports',
+      LIVE_MODE: 'off',
+      PREDICTION_CACHE_TTL_SEC: '120',
+      MAX_FLOW_CONCURRENCY: '3',
     };
     const result = run(env);
     expect(result.status).toBe(0);
