@@ -758,3 +758,12 @@ Message: fix: correct reset function in PredictionsPanel
 Files:
 - components/PredictionsPanel.tsx (+2/-2)
 
+Timestamp: 2025-08-07T08:14:06.596Z
+Commit: c177aef237386dea0065dfe16eb1f3ac37242d29
+Author: Codex
+Message: feat: surface dynamic agent logs and statuses in dashboard
+Files:
+- components/PredictionsPanel.tsx (+2/-0)
+- lib/api.ts (+1/-1)
+- pages/dashboard.tsx (+28/-3)
+

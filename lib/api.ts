@@ -3,7 +3,7 @@ export const getUpcomingGames = async (league: string = 'NFL') => {
   if (!res.ok) throw new Error('Failed to fetch upcoming games');
   const data = await res.json();
   if (Array.isArray(data) && data.some((g) => g.useFallback || g.source === 'fallback')) {
-    console.warn('Mock data is being used for predictions.');
+    throw new Error('Upcoming games data unavailable');
   }
   return data;
 };
