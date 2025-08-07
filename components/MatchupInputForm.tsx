@@ -5,6 +5,7 @@ import {
   PickSummary,
   AgentLifecycle,
 } from '../lib/types';
+import { matchupCard } from '../styles/cardStyles';
 import type { AgentExecution } from '../lib/flow/runFlow';
 
 interface SummaryPayload {
@@ -131,16 +132,19 @@ const MatchupInputForm: React.FC<Props> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow p-4 sm:p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      className={`${matchupCard} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`}
     >
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="homeTeam">
+        <label
+          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
+          htmlFor="homeTeam"
+        >
           Home Team
         </label>
         <input
           id="homeTeam"
           type="text"
-          className="w-full border rounded px-3 py-2"
+          className="w-full rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-800 px-3 py-2"
           value={homeTeam}
           onChange={(e) => setHomeTeam(e.target.value)}
           disabled={loading}
@@ -148,13 +152,16 @@ const MatchupInputForm: React.FC<Props> = ({
         />
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="awayTeam">
+        <label
+          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
+          htmlFor="awayTeam"
+        >
           Away Team
         </label>
         <input
           id="awayTeam"
           type="text"
-          className="w-full border rounded px-3 py-2"
+          className="w-full rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-800 px-3 py-2"
           value={awayTeam}
           onChange={(e) => setAwayTeam(e.target.value)}
           disabled={loading}
@@ -162,13 +169,16 @@ const MatchupInputForm: React.FC<Props> = ({
         />
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="week">
+        <label
+          className="block text-sm font-medium mb-1 text-neutral-700 dark:text-neutral-300"
+          htmlFor="week"
+        >
           Week
         </label>
         <input
           id="week"
           type="number"
-          className="w-full border rounded px-3 py-2"
+          className="w-full rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-800 px-3 py-2"
           value={week}
           onChange={(e) => setWeek(e.target.value)}
           disabled={loading}
