@@ -9,6 +9,9 @@
     "architectureDocumented": true,
     "lifecycleDocumented": true,
     "designPatternsDocumented": true,
+
+    "reflectionLogged": true
+=======
     "codexRegistered": true
   },
   {
@@ -29,5 +32,6 @@
     "output": "Agent metadata is valid and docs are in sync.",
     "metadataAudited": true,
     "codexRegistered": true
+
   }
 ]
