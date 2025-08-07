@@ -20,15 +20,9 @@ npm run dev
 
 ### Architecture Diagram
 
-```
-Frontend (Next.js)
-    ↓
-API Route (/api/run-predictions)
-    ↓
-Agent Flow Engine
-    ↓
-Supabase Logs
-```
+![System Diagram](docs/system-diagram.png)
+
+> 🔁 This diagram is auto-synced on every PR via CI. Changes are tracked in `llms.txt`.
 
 ---
 

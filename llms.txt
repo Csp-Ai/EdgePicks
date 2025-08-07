@@ -579,3 +579,18 @@ Files:
 - scripts/listMissingEnv.ts (+25/-0)
 - scripts/missingEnvReport.ts (+0/-11)
 
+Timestamp: 2025-08-07T03:36:45Z
+Prompt D5d – Closed loop for system diagram sync via CI, hashing, human-visible logs, and commit traceability
+Timestamp: 2025-08-07T03:41:43.721Z
+Commit: 9b710de15367785967b67482a6e64760f44e1b76
+Author: Codex
+Message: chore: sync system diagram in CI
+Files:
+- .github/workflows/ci.yml (+6/-0)
+- .gitignore (+1/-0)
+- README.md (+3/-9)
+- llms.txt (+2/-0)
+- package.json (+2/-1)
+- scripts/hasDiagramChanged.ts (+31/-0)
+- scripts/syncSystemDiagram.ts (+21/-0)
+

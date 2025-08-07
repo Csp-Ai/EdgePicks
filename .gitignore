@@ -11,6 +11,7 @@ out/
 # Reports
 missing-env-report.txt
 .DS_Store
+.diagram-hash
 
 # Logs
 npm-debug.log*
