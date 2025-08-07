@@ -1194,3 +1194,19 @@ Files:
 - pages/api/upcoming-games.ts (+6/-0)
 - pages/index.tsx (+85/-139)
 
+Timestamp: 2025-08-07T22:48:05.447Z
+Commit: 846f1979e791ba3d89ce44941768f6ce72863108
+Author: Codex
+Message: feat: add agent visualization playground
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx (+4/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/agentEvents.schema.test.ts (+10/-0)
+- __tests__/viz.playground.test.tsx (+43/-0)
+- components/AgentVizCanvas.tsx (+55/-0)
+- docs/agent-viz-playground.md (+21/-0)
+- lib/events/agentEvents.ts (+32/-0)
+- lib/mock/agentRuns.ts (+81/-0)
+- lib/mock/streamAgentRun.ts (+48/-0)
+- pages/viz.tsx (+129/-0)
+
