@@ -6,6 +6,7 @@
     "synced": false,
     "syncAttemptedAt": "2025-08-07T10:25:55.847Z",
     "syncError": "supabase env missing",
-    "architectureDocumented": true
+    "architectureDocumented": true,
+    "lifecycleDocumented": true
   }
 ]

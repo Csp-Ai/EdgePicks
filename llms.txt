@@ -918,3 +918,19 @@ Files:
 - docs/prediction-flow-architecture.md (+82/-0)
 - llms.txt (+13/-0)
 
+Timestamp: 2025-08-07T10:42:11Z
+Prompt B: Agent Lifecycle Overview
+Summary:
+- Added agent-lifecycle-overview.md documenting lifecycle states and transitions with mermaid diagrams.
+- Marked agentLogsStore.json entries with "lifecycleDocumented": true.
+Testing:
+- npm test — passed
+Timestamp: 2025-08-07T10:43:37.921Z
+Commit: ebbd18dc82315e503da46cd14f44e53fbc1432f8
+Author: Codex
+Message: docs: overview agent lifecycle
+Files:
+- agentLogsStore.json (+2/-1)
+- docs/agent-lifecycle-overview.md (+46/-0)
+- llms.txt (+7/-0)
+
