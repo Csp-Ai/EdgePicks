@@ -44,7 +44,10 @@ describe('PredictionDrawer SSE', () => {
       time: new Date().toISOString(),
     };
     render(<PredictionDrawer game={game} isOpen={true} onClose={() => {}} />);
-    const esInstance = (global.EventSource as jest.Mock).mock.results[0].value as MockEventSource;
+    const esInstance = (
+      (global.EventSource as unknown as jest.Mock).mock.results[0]
+        .value as MockEventSource
+    );
     act(() => {
       esInstance.emit({
         type: 'agent',
