@@ -39,12 +39,12 @@ export async function runFlow(
   const outputs: Partial<AgentOutputs> = {};
   const executions: AgentExecution[] = new Array(flow.agents.length);
   const limit = pLimit(2);
-
-  const getAgent = (name: AgentName) => registry.find((a) => a.name === name);
+  const agents = await loadAgents();
+  const getAgent = (name: AgentName) => agents.find((a) => a.name === name);
 
   let index = 0;
   while (index < flow.agents.length) {
-    const batch: { name: AgentName; idx: number; agent: typeof registry[number] }[] = [];
+    const batch: { name: AgentName; idx: number; agent: typeof agents[number] }[] = [];
 
     // Gather consecutive agents that don't depend on previous outputs
     while (index < flow.agents.length) {
@@ -112,17 +112,6 @@ export async function runFlow(
           })
         )
       );
-=======
-  const executions: AgentExecution[] = [];
-  const agents = await loadAgents();
-
-  for (const name of flow.agents) {
-    const agent = agents.find((a) => a.name === name);
-    if (!agent) {
-      console.error(`[runFlow] Agent not found: ${name}`);
-      onAgent?.({ name, error: true });
-      continue;
-
     }
 
     if (index < flow.agents.length) {
@@ -181,3 +170,4 @@ export async function runFlow(
 
   return { outputs, executions };
 }
+
