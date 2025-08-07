@@ -41,6 +41,8 @@ export async function runFlow(
   const agents = await loadAgents();
   const limit = pLimit(2);
 
+=======
+  const agents = await loadAgents();
   const getAgent = (name: AgentName) => agents.find((a) => a.name === name);
 
   let index = 0;

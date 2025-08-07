@@ -62,7 +62,6 @@ codex:fix-liveMatchup-fetch-failure
 - Fixed bug causing "No upcoming games found" when APIs failed silently
 - Added logging for dev inspection and fallback data loader for resilience
 - Agent run flow now handles missing odds/logos safely
-=======
  
 Timestamp: 2025-08-06T03:39:45Z
 codex:landing-multisport-forecast-panel
@@ -203,7 +202,6 @@ Author: Codex
 Message: refactor trends agent types
 Files:
 - lib/agents/trendsAgent.ts (+10/-4)
-=======
 ## This PR contains two Codex prompts:
 
 1. **Parallelize Game Flow Execution**
@@ -256,7 +254,6 @@ Author: Codex
 Message: feat: add sign-in modal
 Files:
 - components/SignInModal.tsx (+39/-0)
-=======
 Timestamp: 2025-08-06T21:26:50.181Z
 Commit: e313b70aaa205f51963064654b3bfa2da0e24e7e
 Author: Codex
@@ -281,7 +278,6 @@ Message: Ensure accessible spacing on matchup components
 Files:
 - components/MatchupCard.tsx (+5/-5)
 - components/UpcomingGamesPanel.tsx (+5/-5)
-=======
  codex/update-header-buttons-styles
 Timestamp: 2025-08-06T22:06:01.459Z
 Commit: 3f1cf29f6b69396ef8e1ab8ab6436ba5428b1b6d
@@ -289,7 +285,6 @@ Author: Codex
 Message: style: enlarge header buttons
 Files:
 - pages/_app.tsx (+3/-3)
-=======
 
 Timestamp: 2025-08-06T22:03:21.354Z
 Commit: 8dc99b37ab282e39b510372a41be59c6f467b18d
@@ -300,7 +295,6 @@ Files:
 - lib/animations.ts (+2/-0)
 - pages/index.tsx (+13/-2)
 - pages/matchups/public.tsx (+2/-1)
-=======
 
 Timestamp: 2025-08-06T22:04:48.157Z
 Commit: 8f2a506d22c9c912e8ddc933de1dd11a693ccb7d
@@ -312,7 +306,6 @@ Files:
 - components/MatchupCard.tsx (+3/-3)
 - pages/_app.tsx (+1/-0)
 - styles/typography.css (+5/-0)
-=======
 
 Timestamp: 2025-08-06T22:02:59.752Z
 Commit: 2fc7496dd0e4b13a1f8c0bc831a7b994dd35dcb7
@@ -322,7 +315,6 @@ Files:
 - components/AgentCard.tsx (+3/-2)
 - components/MatchupCard.tsx (+2/-1)
 - styles/cardStyles.ts (+3/-0)
-=======
 Timestamp: 2025-08-06T22:04:08.496Z
 Commit: 6951ba0e836dd63c9c831f8486c082be1d23277f
 Author: Codex
@@ -330,7 +322,6 @@ Message: feat: add mobile hamburger menu
 Files:
 - components/Navbar.tsx (+130/-0)
 - pages/_app.tsx (+5/-78)
-=======
 Timestamp: 2025-08-06T22:03:35.141Z
 Commit: b39ef7ba74b4cc82a5c4ed98fc9a662eeadda5f2
 Author: Codex
@@ -354,13 +345,11 @@ Files:
 - lib/useToast.ts (+62/-0)
 - package.json (+1/-1)
 - pages/_app.tsx (+8/-5)
-=======
 codex/implement-loadingshimmer-in-upcominggamespanel
 Timestamp: 2025-08-06T22:29:43.682Z
 Commit: 7456d593868aead2aeb6abb634990f27fa21b88a
 Author: Codex
 Message: Use LoadingShimmer in upcoming games panel
-=======
 Timestamp: 2025-08-06T22:29:16.958Z
 Commit: 6bbd67491c9aca1eec5860dad30fd4216a3a12c2
 Author: Codex
@@ -377,7 +366,6 @@ Author: Codex
 Message: chore: add script to inject sports API key
 Files:
 - scripts/set-sports-api-key.js (+33/-0)
-=======
 Timestamp: 2025-08-06T22:54:21.567Z
 Commit: d6bb1dbd9a6b20baaaa4f2adcac8c352dc513bdb
 Author: Codex
@@ -413,7 +401,6 @@ Author: Codex
 Message: Wrap AgentCard in dashboard link when authenticated
 Files:
 - components/AgentCard.tsx (+12/-2)
-=======
 Timestamp: 2025-08-06T23:09:44.509Z
 Commit: ef69ff4b6c52bb8ea28c9399b7cb9befc77d082c
 Author: Codex
@@ -732,7 +719,6 @@ Files:
 - components/PredictionsPanel.tsx (+19/-0)
 - lib/dashboard/useFlowVisualizer.ts (+21/-0)
 - pages/dashboard.tsx (+3/-1)
-=======
 codex/remove-fallback-for-samplepredictions
 Timestamp: 2025-08-07T07:26:13.821Z
 Commit: 726981ad3c2837b866ffaa6e1ca63fb4bdd602ec
@@ -740,7 +726,6 @@ Author: Codex
 Message: Gate sample predictions on API errors and surface failures
 Files:
 - components/PredictionsPanel.tsx (+11/-4)
-=======
 Timestamp: 2025-08-07T07:26:34.227Z
 Commit: 957c3b626778eddd1f5a5270703c3ffc5bb0031e
 Author: Codex
@@ -972,7 +957,6 @@ Files:
 - llms.txt (+8/-0)
 - scripts/docsync-agent.ts (+75/-17)
 - scripts/retry-docsync.ts (+39/-0)
-=======
 codex/validate-agent-metadata-and-documentation
 Timestamp: 2025-08-07T10:58:40Z
 Summary:
@@ -981,7 +965,6 @@ Summary:
 Testing:
 - npm test — passed
 - npm run test:metadata — passed
-=======
 Timestamp: 2025-08-07T10:57:56Z
 codex:ci-snapshot-testing
 Summary:
@@ -1024,12 +1007,10 @@ Files:
 - pages/api/reflections.ts (+7/-0)
 - pages/api/run-agents.ts (+4/-0)
 - styles/intelligence.css (+18/-0)
-=======
 
 - Added UI snapshot recorder CLI and guide.
 Testing:
 - npm test — passed
-=======
 
 Timestamp: 2025-08-07T11:10:47.481Z
 Commit: e64830c926bf76d1980653b4bd3ac49ff5b81a67
@@ -1048,7 +1029,6 @@ Files:
 - lib/agents/utils.ts (+16/-0)
 - logs/agent-reflections.json (+9/-0)
 - types/AgentReflection.ts (+5/-0)
-=======
 
 Timestamp: 2025-08-07T11:11:12.240Z
 Commit: d9f5dbbed9f6a4606bde3cd3963dab48f3009cd6
@@ -1059,7 +1039,6 @@ Files:
 - docs/codex-prompt-registry.md (+18/-0)
 - llms-audit.json (+1/-0)
 - scripts/diff-llms-summary.ts (+96/-0)
-=======
 Timestamp: 2025-08-07T11:08:06Z
 Summary:
 - Added Codex Prompt Registry generator and dashboard.
@@ -1102,7 +1081,6 @@ Author: Codex
 Message: feat: cache team logos and odds
 Files:
 - lib/data/liveSports.ts (+88/-30)
-=======
 Timestamp: 2025-08-07T21:15:11.798Z
 Commit: 82313abae9583166d90ef52d06c356d1c6b063c3
 Author: Codex
@@ -1137,4 +1115,17 @@ Files:
 - lib/flow/runFlow.ts (+10/-26)
 - pages/api/run-agents.ts (+3/-14)
 - pages/api/upcoming-games.ts (+99/-113)
+=======
+Timestamp: 2025-08-07T21:36:11.936Z
+Commit: 3830e9079e51bd6d159aebbbee0adbd9da1a9488
+Author: Codex
+Message: Resolve merge conflict markers
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- lib/flow/runFlow.ts (+4/-14)
+- llms.txt (+0/-22)
+- pages/api/logs.ts (+2/-6)
+- pages/api/run-agents.ts (+58/-67)
+- pages/api/run-predictions.ts (+2/-6)
+
 
