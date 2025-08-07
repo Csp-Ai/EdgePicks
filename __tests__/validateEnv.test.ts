@@ -4,7 +4,7 @@ import { spawnSync } from 'child_process';
 describe('validate-env script', () => {
   const run = (env: NodeJS.ProcessEnv) =>
     spawnSync('node', ['-r', 'ts-node/register', 'scripts/validateEnv.ts'], {
-      env,
+      env: { ...env, TS_NODE_COMPILER_OPTIONS: '{"module":"CommonJS"}' },
     });
 
   const baseEnv = { PATH: process.env.PATH } as NodeJS.ProcessEnv;

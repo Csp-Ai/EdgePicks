@@ -645,3 +645,17 @@ Files:
 - package.json (+6/-6)
 - scripts/validateEnv.ts (+6/-22)
 
+Timestamp: 2025-08-07T04:42:36.685Z
+Commit: 83d878bb00a86a4c05ff84d4720f1a3916eb5b85
+Author: Codex
+Message: feat: enforce strict env usage
+Files:
+- __tests__/EnvDashboard.test.tsx (+22/-0)
+- __tests__/validateEnv.test.ts (+1/-1)
+- codex-prompts/validateEnv-prompt.md (+7/-14)
+- components/EnvDashboard.tsx (+15/-0)
+- lib/env.ts (+22/-17)
+- lib/envKeys.ts (+2/-3)
+- package.json (+1/-1)
+- scripts/validateEnv.ts (+9/-3)
+
