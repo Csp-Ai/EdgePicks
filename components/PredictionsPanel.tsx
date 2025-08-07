@@ -64,10 +64,12 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
     setLoadingPred(true);
     try {
       const res = await runPredictions(league, games);
+      if (res.error) {
+        throw new Error(res.error);
+      }
       const fetched = res.predictions || [];
-      const finalPredictions = fetched.length ? fetched : samplePredictions;
-      setPredictions(finalPredictions);
-      setAgentLogs(finalPredictions.map((p: any) => p.executions || []));
+      setPredictions(fetched);
+      setAgentLogs(fetched.map((p: any) => p.executions || []));
       setLastRun(res.timestamp);
       setToast({
         message: `Predictions generated successfully for ${league}.`,
@@ -75,7 +77,12 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       });
     } catch (err) {
       console.error(err);
-      setToast({ message: 'Something went wrong. Please try again.', type: 'error' });
+      setPredictions(samplePredictions);
+      setAgentLogs(samplePredictions.map((p: any) => p.executions || []));
+      setToast({
+        message: 'Prediction flow failed. Showing sample predictions.',
+        type: 'error',
+      });
     } finally {
       setLoadingPred(false);
       setTimeout(() => setToast(null), 3000);
