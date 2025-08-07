@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { Game, PickSummary } from '../lib/types';
 import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
 import AgentNodeGraph from './AgentNodeGraph';
@@ -6,6 +6,8 @@ import ConfidenceMeter from './ConfidenceMeter';
 import AgentRationalePanel from './AgentRationalePanel';
 import PickSummaryComp from './PickSummary';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
+import useEventSource from '../lib/hooks/useEventSource';
+import { logUiEvent } from '../lib/logUiEvent';
 
 interface Props {
   game: Game | null;
@@ -25,59 +27,71 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   const [executions, setExecutions] = useState<AgentExecution[]>([]);
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [confidence, setConfidence] = useState(0);
-  const esRef = useRef<EventSource | null>(null);
+
+  const url = useMemo(() => {
+    if (!game) return null;
+    const week = 1; // placeholder
+    const sessionId = typeof window !== 'undefined'
+      ? (localStorage.getItem('sessionId') || (() => {
+          const id = crypto.randomUUID();
+          localStorage.setItem('sessionId', id);
+          return id;
+        })())
+      : '';
+    return `/api/run-agents?homeTeam=${encodeURIComponent(
+      game.homeTeam
+    )}&awayTeam=${encodeURIComponent(game.awayTeam)}&week=${week}&sessionId=${sessionId}`;
+  }, [game]);
+
+  const { status: esStatus, lastMessage, reconnect } = useEventSource(
+    isOpen ? url : null
+  );
 
   const startRun = () => {
     if (!game) return;
-    esRef.current?.close();
     reset();
     setExecutions([]);
     setPick(null);
     setConfidence(0);
-    const week = 1; // placeholder week derivation
-    const sessionId =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('sessionId') || crypto.randomUUID()
-        : '';
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('sessionId', sessionId);
-    }
-    const es = new EventSource(
-      `/api/run-agents?homeTeam=${encodeURIComponent(
-        game.homeTeam
-      )}&awayTeam=${encodeURIComponent(game.awayTeam)}&week=${week}&sessionId=${sessionId}`
-    );
-    es.onmessage = (ev) => {
-      const data = JSON.parse(ev.data);
-      if (data.type === 'agent') {
-        setExecutions((prev) => [...prev, data]);
-        if (data.confidenceEstimate !== undefined) {
-          setConfidence(Math.round(data.confidenceEstimate * 100));
-        }
-      } else if (data.type === 'lifecycle') {
-        handleLifecycleEvent(data);
-      } else if (data.type === 'summary') {
-        setPick(data.pick);
-        setConfidence(Math.round(data.pick.confidence * 100));
-        es.close();
-      } else if (data.type === 'error') {
-        es.close();
-      }
-    };
-    es.onerror = () => {
-      es.close();
-    };
-    esRef.current = es;
+    reconnect();
+    void logUiEvent('landingRunPredictions', {
+      league: game.league,
+      gameId: game.gameId,
+      liveMode: process.env.LIVE_MODE,
+    });
   };
 
   useEffect(() => {
     if (isOpen && game) {
       startRun();
-    } else {
-      esRef.current?.close();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, game?.gameId]);
+
+  useEffect(() => {
+    if (!lastMessage) return;
+    const data = lastMessage;
+    if (data.type === 'agent') {
+      setExecutions((prev) => [...prev, data]);
+      if (data.confidenceEstimate !== undefined) {
+        setConfidence(Math.round(data.confidenceEstimate * 100));
+      }
+    } else if (data.type === 'lifecycle') {
+      handleLifecycleEvent(data);
+    } else if (data.type === 'summary') {
+      setPick(data.pick);
+      setConfidence(Math.round(data.pick.confidence * 100));
+      void logUiEvent('landingPredictionComplete', {
+        winner: data.pick.winner,
+        confidence: data.pick.confidence,
+      });
+    } else if (data.type === 'error') {
+      void logUiEvent('landingPredictionError', {
+        code: data.code,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastMessage]);
 
   if (!isOpen || !game) return null;
 
@@ -117,14 +131,31 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
             />
           )}
           {executions.length > 0 && (
-            <AgentRationalePanel executions={executions as any} winner={pick?.winner || ''} />
+            <AgentRationalePanel
+              executions={executions as any}
+              winner={pick?.winner || ''}
+            />
+          )}
+          {executions.length === 0 && !pick && (
+            <div className="space-y-2" data-testid="drawer-skeleton">
+              <div className="h-6 bg-gray-200 rounded animate-pulse" />
+              <div className="h-32 bg-gray-200 rounded animate-pulse" />
+            </div>
           )}
         </div>
         <footer className="p-4 border-t flex justify-end gap-2">
-          <button className="px-3 py-1 text-sm border rounded" onClick={startRun}>
+          <button
+            className="px-3 py-1 text-sm border rounded"
+            onClick={startRun}
+            disabled={esStatus !== 'open'}
+          >
             Run again
           </button>
-          <button className="px-3 py-1 text-sm border rounded" onClick={share}>
+          <button
+            className="px-3 py-1 text-sm border rounded"
+            onClick={share}
+            disabled={esStatus !== 'open'}
+          >
             Share
           </button>
         </footer>
