@@ -1,28 +1,36 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 
-export interface AgentReflection {
-  whatIObserved: string;
-  whatIChose: string;
-  whatCouldImprove: string;
-}
+import { AgentReflection } from '../types/AgentReflection';
 
-const filePath = path.join(process.cwd(), 'agent-reflections.json');
+const filePath = path.join(process.cwd(), 'logs', 'agent-reflections.json');
 
-export function writeAgentReflection(agent: string, reflection: AgentReflection) {
-  let data: Record<string, AgentReflection> = {};
+export async function writeAgentReflection(agent: string, reflection: AgentReflection): Promise<void> {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  let entries: Array<Record<string, any>> = [];
   try {
-    data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const existing = await fs.readFile(filePath, 'utf8');
+    entries = JSON.parse(existing);
   } catch {
-    // ignore
+    entries = [];
   }
-  data[agent] = reflection;
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  entries.push({ agent, ...reflection, timestamp: new Date().toISOString() });
+  await fs.writeFile(filePath, JSON.stringify(entries, null, 2));
 }
 
-export function readAgentReflections(): Record<string, AgentReflection> {
+export async function readAgentReflections(): Promise<Record<string, AgentReflection>> {
   try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8')) as Record<string, AgentReflection>;
+    const contents = await fs.readFile(filePath, 'utf8');
+    const entries = JSON.parse(contents) as Array<{ agent: string } & AgentReflection>;
+    const map: Record<string, AgentReflection> = {};
+    for (const entry of entries) {
+      map[entry.agent] = {
+        whatIObserved: entry.whatIObserved,
+        whatIChose: entry.whatIChose,
+        whatCouldImprove: entry.whatCouldImprove,
+      };
+    }
+    return map;
   } catch {
     return {};
   }

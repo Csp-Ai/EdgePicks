@@ -122,7 +122,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             }
             if (result.reflection) {
-              writeAgentReflection(event.name, result.reflection);
+              void writeAgentReflection(event.name, result.reflection);
             }
           }
         } else if (event.status === 'errored') {

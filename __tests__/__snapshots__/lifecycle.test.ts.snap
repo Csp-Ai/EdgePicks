@@ -1,3 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+
 exports[`agent lifecycle logs matches snapshot 1`] = `{}`;
+=======
+exports[`agent lifecycle logs matches snapshot 1`] = `
+[
+  {
+    "architectureDocumented": true,
+    "codexRegistered": true,
+    "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/docsync-agent.ts",
+    "designPatternsDocumented": true,
+    "lifecycleDocumented": true,
+    "output": "Error: supabaseUrl is required.",
+    "reflectionLogged": true,
+    "syncAttemptedAt": "2025-08-07T10:25:55.847Z",
+    "syncError": "supabase env missing",
+    "synced": false,
+    "timestamp": "2025-08-07T10:17:20Z",
+  },
+  {
+    "architectureDocumented": true,
+    "codexRegistered": true,
+    "command": "npx ts-node scripts/uiSnapshot.ts",
+    "snapshotTaken": true,
+    "timestamp": "2025-08-07T12:00:00Z",
+  },
+  {
+    "codexRegistered": true,
+    "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/audit-agent-metadata.ts",
+    "metadataAudited": true,
+    "output": "Agent metadata is valid and docs are in sync.",
+    "timestamp": "2025-08-07T10:58:40Z",
+  },
+]
+`;
+
