@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AgentStatusPanel UI renders default state 1`] = `
+<DocumentFragment>
+  <div
+    class="fixed left-0 right-0 bottom-16 mx-auto max-w-md"
+  >
+    <div
+      class="bg-white border rounded-t shadow-lg"
+    >
+      <button
+        class="w-full px-4 py-2 text-left font-medium bg-gray-100"
+      >
+        Show Agent Status
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
