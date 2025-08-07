@@ -5,10 +5,8 @@ import path from 'path';
 import { authOptions } from './auth/[...nextauth]';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
-import { agents } from '../../lib/agents/registry';
-import type { AgentMeta, AgentName } from '../../lib/agents/registry';
-=======
 import { registry } from '../../lib/agents/registry';
+import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
@@ -48,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const agentMetaMap = new Map<AgentName, AgentMeta>(
-    agents.map((a) => [a.name as AgentName, a])
+    registry.map((a) => [a.name as AgentName, a])
   );
 
   try {
@@ -75,8 +73,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       for (const name of flow.agents) {
 
         const meta = agentMetaMap.get(name as AgentName);
-=======
-        const meta = registry.find((a) => a.name === name);
 
         const result = outputs[name];
         if (!meta || !result) continue;
