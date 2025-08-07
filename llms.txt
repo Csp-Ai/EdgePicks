@@ -1228,3 +1228,33 @@ Files:
 - pages/index.tsx (+63/-6)
 
 
+
+Timestamp: 2025-08-07T23:23:43.474Z
+codex:auto-generated-llms-log
+Summary:
+
+Merge pull request #191 from Csp-Ai/codex/add-standalone-agent-visualization-playground
+
+feat: add agent visualization playground
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx
+- __tests__/agentEvents.schema.test.ts
+- __tests__/viz.playground.test.tsx
+- components/AgentVizCanvas.tsx
+- docs/agent-viz-playground.md
+- lib/events/agentEvents.ts
+- lib/mock/agentRuns.ts
+- lib/mock/streamAgentRun.ts
+- llms.txt
+- pages/viz.tsx
+Timestamp: 2025-08-07T23:28:21.291Z
+Commit: d1e78474bfe6c6fcc84bc14060a73e886fa3a61e
+Author: Csp-Ai
+Message: your message
+Files:
+- .gitignore (+-/--)
+- components/GameCard.tsx (+23/-5)
+- package-lock.json (+1410/-1450)
+- package.json (+17/-12)
+- tsconfig.json (+10/-11)
+
