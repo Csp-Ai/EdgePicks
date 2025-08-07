@@ -1,26 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { registry as agentRegistry, type AgentMeta, type AgentName } from '../../lib/agents/registry';
-=======
-import { registry as agentRegistry } from '../../lib/agents/registry';
-import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+import { registry, type AgentName } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
-import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
-import { writeAgentLog } from '../../lib/agentLogsStore';
-import { writeAgentReflection } from '../../lib/agentReflectionStore';
+import { ENV } from '../../lib/env';
+import mockData from '../../__mocks__/run-agents.json';
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { homeTeam, awayTeam, week, flow: flowNameParam, sessionId, agent: agentId } =
-    req.query;
+  if (ENV.LIVE_MODE !== 'on') {
+    res.status(200).json(mockData);
+    return;
+  }
 
+  const { homeTeam, awayTeam, week, sessionId } = req.query;
   if (
     typeof homeTeam !== 'string' ||
     typeof awayTeam !== 'string' ||
@@ -36,27 +33,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const flowName = typeof flowNameParam === 'string' ? flowNameParam : 'football-pick';
-  let flow;
-  try {
-    flow = await loadFlow(flowName);
-  } catch (e) {
-    res.status(500).json({ error: 'Unable to load flow' });
-    return;
-  }
-
-  if (agentId && typeof agentId === 'string') {
-    flow = { ...flow, agents: flow.agents.filter((a) => a === agentId) };
-  }
-
-  const agentMetaMap = new Map<AgentName, AgentMeta>(
-    agentRegistry.map((a) => [a.name as AgentName, a])
-  );
+  const flow = await loadFlow('football-pick');
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
-  // @ts-ignore - flush may not exist in some environments
+  // @ts-ignore
   res.flushHeaders?.();
 
   const matchup: Matchup = {
@@ -67,163 +49,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     league: '',
   };
 
-  const agentsOutput: Partial<AgentOutputs> = {};
-
+  let outputs: Partial<AgentOutputs>;
   try {
-    const { outputs } = await runFlow(
-      flow,
-      matchup,
-      async ({ name, result, error, errorInfo }) => {
-        if (!error && result) {
-          agentsOutput[name] = result;
-        }
-        if (sessionId && typeof sessionId === 'string' && error) {
-          try {
-            await writeAgentLog(sessionId, name, {
-              error: errorInfo?.stack || errorInfo?.message,
-            });
-          } catch (e) {
-            console.error('failed to write agent log', e);
-          }
-        }
-      },
-      async (event) => {
-        console.log('lifecycle event', event);
-
-        const meta = agentMetaMap.get(event.name as AgentName);
-        lifecycleAgent(event, matchup);
-        res.write(
-          `data: ${JSON.stringify({
-            type: 'lifecycle',
-            sessionId,
-            agentId: event.name,
-            weight: meta?.weight,
-            description: meta?.description,
-            ...event,
-          })}\n\n`
-        );
-
-        if (event.status === 'completed') {
-          const result = agentsOutput[event.name];
-          if (result) {
-            const scoreTotal = result.score * (meta?.weight ?? 1);
-            const confidenceEstimate = result.score;
-=======
-          const meta = agentMetaMap.get(event.name as AgentName);
-          lifecycleAgent(event, matchup);
-          res.write(
-            `data: ${JSON.stringify({
-              type: 'lifecycle',
-              sessionId,
-              agentId: event.name,
-              weight: meta?.weight,
-              description: meta?.description,
-              ...event,
-            })}\n\n`
-          );
-
-          if (event.status === 'completed') {
-            const result = agentsOutput[event.name];
-            if (result) {
-              const scoreTotal = result.score * (meta?.weight ?? 1);
-              const confidenceEstimate = result.score;
-              res.write(
-                `data: ${JSON.stringify({
-                  type: 'agent',
-                  sessionId,
-                  agentId: event.name,
-                  name: event.name,
-                  description: meta?.description,
-                  weight: meta?.weight,
-                  result,
-                  scoreTotal,
-                  confidenceEstimate,
-                  agentDurationMs: event.durationMs,
-                  warnings: result.warnings,
-                })}\n\n`
-              );
-              if (sessionId && typeof sessionId === 'string') {
-                try {
-                  await writeAgentLog(sessionId, event.name, {
-                    output: result,
-                    durationMs: event.durationMs,
-                  });
-                } catch (e) {
-                  console.error('failed to write agent log', e);
-                }
-              }
-              if (result.reflection) {
-                void writeAgentReflection(event.name, result.reflection);
-              }
-            }
-          } else if (event.status === 'errored') {
-            const errMsg = event.error?.stack || event.error?.message || 'Agent failed';
-
-            res.write(
-              `data: ${JSON.stringify({
-                type: 'agent',
-                sessionId,
-              agentId: event.name,
-              name: event.name,
-              description: meta?.description,
-              weight: meta?.weight,
-              error: true,
-              errorStack: errMsg,
-              agentDurationMs: event.durationMs,
-            })}\n\n`
-          );
-          if (sessionId && typeof sessionId === 'string') {
-            try {
-              await writeAgentLog(sessionId, event.name, {
-                error: errMsg,
-                durationMs: event.durationMs,
-              });
-            } catch (e) {
-              console.error('failed to write agent log', e);
-            }
-          }
-        }
-        // @ts-ignore - flush may not exist in some environments
-        res.flush?.();
-      }
-    );
-
-    Object.assign(agentsOutput, outputs);
+    const result = await runFlow(flow, matchup);
+    outputs = result.outputs;
   } catch (err: any) {
-    console.error('runFlow failed', err);
     res.write(
-      `data: ${JSON.stringify({
-        type: 'error',
-        sessionId,
-        message: err.message || 'runFlow failed',
-      })}\n\n`
+      `data: ${JSON.stringify({ type: 'error', message: err.message || 'runFlow failed' })}\n\n`
     );
     res.end();
     return;
   }
 
-
   const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
   flow.agents.forEach((name) => {
-    const meta = agentMetaMap.get(name as AgentName);
-    const result = agentsOutput[name];
+    const meta = registry.find((a) => a.name === (name as AgentName));
+    const result = outputs[name];
     if (!meta || !result) return;
     scores[result.team] += result.score * meta.weight;
   });
-=======
-    const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
-    flow.agents.forEach((name) => {
-      const meta = agentMetaMap.get(name as AgentName);
-      const result = agentsOutput[name];
-      if (!meta || !result) return;
-      scores[result.team] += result.score * meta.weight;
-    });
-
 
   const winner = scores[homeTeam] >= scores[awayTeam] ? homeTeam : awayTeam;
   const confidence = Math.max(scores[homeTeam], scores[awayTeam]);
   const topReasons = flow.agents
-    .map((name) => agentsOutput[name]?.reason)
+    .map((name) => outputs[name]?.reason)
     .filter((r): r is string => Boolean(r));
 
   const pickSummary: PickSummary = {
@@ -232,20 +81,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  const loggedAt = logToSupabase(
-    matchup,
-    agentsOutput as AgentOutputs,
-    pickSummary,
-    null,
-    flowName
-  );
+  const loggedAt = logToSupabase(matchup, outputs as AgentOutputs, pickSummary, null, flow.name);
 
   res.write(
     `data: ${JSON.stringify({
       type: 'summary',
       sessionId,
       matchup,
-      agents: agentsOutput,
+      agents: outputs,
       pick: pickSummary,
       loggedAt,
     })}\n\n`

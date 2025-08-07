@@ -1159,3 +1159,22 @@ Files:
 - styles/cardStyles.ts (+6/-3)
 
 
+Timestamp: 2025-08-07T22:13:03.250Z
+Commit: dbf0a09315e058e775025d71fcc8e7117d615bd5
+Author: Codex
+Message: feat: add live mode switch and caching
+Files:
+- README.md (+4/-0)
+- __mocks__/run-agents.json (+13/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/env.liveMockSwitch.test.ts (+29/-0)
+- __tests__/validateEnv.test.ts (+4/-1)
+- components/AgentLeaderboardPanel.tsx (+2/-13)
+- components/MatchupInputForm.tsx (+8/-33)
+- jest.setup.ts (+3/-0)
+- lib/data/liveSports.ts (+4/-0)
+- lib/env.ts (+3/-0)
+- lib/envKeys.ts (+3/-0)
+- lib/flow/runFlow.ts (+21/-13)
+- pages/api/run-agents.ts (+20/-177)
+

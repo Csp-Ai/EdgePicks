@@ -24,6 +24,10 @@ Verify environment variables:
 
 npm run validate-env
 
+### Live vs Mock
+
+EdgePicks can run entirely from local mocks to avoid external API calls. Set `LIVE_MODE=off` to use bundled fixtures and skip network requests. When `LIVE_MODE=on`, the app fetches live data.
+
 🧱 Architecture Overview
 
 

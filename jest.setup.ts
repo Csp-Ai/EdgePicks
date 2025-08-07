@@ -7,3 +7,6 @@ process.env.NEXTAUTH_SECRET = 'secret';
 process.env.GOOGLE_CLIENT_ID = 'google-id';
 process.env.GOOGLE_CLIENT_SECRET = 'google-secret';
 process.env.SPORTS_API_KEY = 'sports-key';
+process.env.LIVE_MODE = 'on';
+process.env.PREDICTION_CACHE_TTL_SEC = '120';
+process.env.MAX_FLOW_CONCURRENCY = '3';
