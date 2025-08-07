@@ -34,6 +34,10 @@ export interface AgentResult {
   reason: string;
   warnings?: string[];
   reflection?: AgentReflection;
+  weight?: number;
+  scoreTotal?: number;
+  confidenceEstimate?: number;
+  description?: string;
 }
 
 export interface AgentReflection {
