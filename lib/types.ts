@@ -64,4 +64,5 @@ export interface AgentLifecycle {
   startedAt: number;
   endedAt?: number;
   durationMs?: number;
+  error?: { message?: string; stack?: string };
 }

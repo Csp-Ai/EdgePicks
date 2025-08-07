@@ -837,3 +837,18 @@ Files:
 - pages/index.tsx (+87/-7)
 - scripts/validateEnv.ts (+1/-7)
 
+Timestamp: 2025-08-07T09:46:05.782Z
+Commit: 5b1a28eedfd1a1733051f8132d3f3b40bd5f9efa
+Author: Codex
+Message: feat: add agent logs modal and error insights
+Files:
+- components/AgentLogsModal.tsx (+114/-0)
+- components/AgentStatusPanel.tsx (+24/-4)
+- lib/agentLogsStore.ts (+19/-0)
+- lib/flow/runFlow.ts (+8/-2)
+- lib/types.ts (+1/-0)
+- pages/api/logs.ts (+25/-0)
+- pages/api/run-agents.ts (+22/-1)
+- pages/dashboard.tsx (+8/-2)
+- pages/index.tsx (+8/-2)
+

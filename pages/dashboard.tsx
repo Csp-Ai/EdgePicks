@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import AgentTimeline from '../lib/dashboard/AgentTimeline';
@@ -13,6 +13,7 @@ const DashboardPage: React.FC = () => {
     useFlowVisualizer();
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
   const [flowStarted, setFlowStarted] = useState(false);
+  const [sessionId, setSessionId] = useState('');
 
   const handleStart = (
     _info: { homeTeam: string; awayTeam: string; week: number }
@@ -32,6 +33,11 @@ const DashboardPage: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    const sid = typeof window !== 'undefined' ? localStorage.getItem('sessionId') || '' : '';
+    setSessionId(sid);
+  }, []);
+
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Agent Dashboard</h1>
@@ -48,7 +54,7 @@ const DashboardPage: React.FC = () => {
         </section>
       )}
       <AgentTimeline nodes={nodes} startTime={startTime} />
-      {flowStarted && <AgentStatusPanel statuses={statuses} />}
+      {flowStarted && <AgentStatusPanel statuses={statuses} sessionId={sessionId} />}
     </div>
   );
 };

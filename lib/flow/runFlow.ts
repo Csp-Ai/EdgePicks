@@ -12,6 +12,7 @@ export interface AgentExecution {
   name: AgentName;
   result?: AgentResult;
   error?: true;
+  errorInfo?: { message?: string; stack?: string };
   scoreTotal?: number;
   confidenceEstimate?: number;
   agentDurationMs?: number;
@@ -63,11 +64,15 @@ export async function runFlow(
         endedAt: end,
         durationMs: duration,
       });
-    } catch (err) {
+    } catch (err: any) {
       const end = Date.now();
       const duration = end - start;
       console.error(`[runFlow] ${name} error:`, err);
-      const exec: AgentExecution = { name, error: true };
+      const errorInfo = {
+        message: err?.message || 'Unknown error',
+        stack: err?.stack,
+      };
+      const exec: AgentExecution = { name, error: true, errorInfo };
       executions.push(exec);
       onAgent?.(exec);
       onLifecycle?.({
@@ -76,6 +81,7 @@ export async function runFlow(
         startedAt: start,
         endedAt: end,
         durationMs: duration,
+        error: errorInfo,
       });
     }
   }
