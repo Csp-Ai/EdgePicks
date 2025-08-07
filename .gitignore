@@ -16,3 +16,6 @@ missing-env-report.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Test artifacts
+a.txt
