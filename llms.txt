@@ -852,3 +852,14 @@ Files:
 - pages/dashboard.tsx (+8/-2)
 - pages/index.tsx (+8/-2)
 
+Timestamp: 2025-08-07T09:57:16.468Z
+Commit: 0c9d8eb5fd5bf0269d4cbdd6adb158054a8d32d1
+Author: Codex
+Message: feat: add docsync agent
+Files:
+- __tests__/docsync-agent.test.ts (+70/-0)
+- package-lock.json (+174/-2)
+- package.json (+2/-1)
+- scripts/deploy-docsync-cron.sh (+9/-0)
+- scripts/docsync-agent.ts (+135/-0)
+
