@@ -4,7 +4,7 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
 [
   {
     "architectureDocumented": true,
-    "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/docsync-agent.ts",
+    "command": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/docsync-agent.ts",
     "designPatternsDocumented": true,
     "lifecycleDocumented": true,
     "output": "Error: supabaseUrl is required.",
@@ -12,6 +12,29 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "syncError": "supabase env missing",
     "synced": false,
     "timestamp": "2025-08-07T10:17:20Z",
+  },
+  {
+    "architectureDocumented": true,
+    "command": "npx ts-node scripts/docsync-agent.ts",
+    "designPatternsDocumented": true,
+    "lifecycleDocumented": true,
+    "output": "GH_PAT is required.",
+    "syncAttemptedAt": "2025-08-07T11:05:00Z",
+    "syncError": "GH_PAT is required.",
+    "synced": false,
+    "timestamp": "2025-08-07T11:05:00Z",
+  },
+  {
+    "architectureDocumented": true,
+    "command": "npx ts-node scripts/docsync-agent.ts --fail-open",
+    "designPatternsDocumented": true,
+    "issueUrl": "https://github.com/owner/repo/issues/1",
+    "lifecycleDocumented": true,
+    "output": "log #123 failed: network error",
+    "syncAttemptedAt": "2025-08-08T00:00:00Z",
+    "syncError": "network error",
+    "synced": false,
+    "timestamp": "2025-08-08T00:00:00Z",
   },
 ]
 `;

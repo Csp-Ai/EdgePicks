@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import fs from "fs";
+import { createIssue } from "../github/api";
 
 export interface CodexLog {
   id: string;
@@ -110,12 +111,16 @@ export async function syncLogRecord(
 
 export async function run() {
   const dryRun = process.argv.includes("--dry-run");
+  const failOpen = process.argv.includes("--fail-open");
   if (dryRun) {
     console.log("DocSync running in dry-run mode. No external calls will be made.");
+    if (failOpen) {
+      console.warn("Fail-open mode is ignored during dry-run.");
+    }
     return;
   }
 
-  const logFailure = (message: string) => {
+  const logFailure = (message: string, issueUrl?: string) => {
     try {
       const path = "agentLogsStore.json";
       const existing = fs.existsSync(path)
@@ -128,6 +133,7 @@ export async function run() {
         synced: false,
         syncAttemptedAt: new Date().toISOString(),
         syncError: message,
+        issueUrl,
         architectureDocumented: true,
         lifecycleDocumented: true,
         designPatternsDocumented: true,
@@ -138,6 +144,7 @@ export async function run() {
     }
   };
 
+  const errors: string[] = [];
   const requiredEnv = [
     "SUPABASE_URL",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -145,6 +152,9 @@ export async function run() {
     "GH_OWNER",
     "GH_REPO",
   ];
+  if (failOpen) {
+    requiredEnv.push("GITHUB_TOKEN");
+  }
   for (const key of requiredEnv) {
     if (!process.env[key]) {
       const msg = `${key} is required.`;
@@ -153,6 +163,28 @@ export async function run() {
       return;
     }
   }
+
+  const createIssueIfNeeded = async (
+    message: string,
+    logId?: string
+  ): Promise<string | undefined> => {
+    if (!failOpen) return undefined;
+    try {
+      const timestamp = new Date().toISOString();
+      const title = logId
+        ? `DocSync failure for log #${logId}: ${timestamp}`
+        : `DocSync failure: ${timestamp}`;
+      return await createIssue(
+        process.env.GITHUB_TOKEN!,
+        process.env.GH_OWNER!,
+        process.env.GH_REPO!,
+        title,
+        message
+      );
+    } catch (err) {
+      console.warn("Failed to create GitHub issue", err);
+    }
+  };
 
   try {
     const { createClient } = await import("@supabase/supabase-js");
@@ -177,14 +209,26 @@ export async function run() {
         } catch (err: any) {
           const msg = `log #${log.id} failed: ${err?.message || err}`;
           console.error(msg);
-          logFailure(msg);
+          const issueUrl = await createIssueIfNeeded(msg, log.id);
+          logFailure(msg, issueUrl);
+          if (!failOpen) {
+            errors.push(msg);
+          }
         }
       }
     }
   } catch (err: any) {
     const msg = err?.message || String(err);
     console.error(msg);
-    logFailure(msg);
+    const issueUrl = await createIssueIfNeeded(msg);
+    logFailure(msg, issueUrl);
+    if (!failOpen) {
+      errors.push(msg);
+    }
+  }
+
+  if (errors.length && !failOpen) {
+    throw new Error("DocSync failed");
   }
 }
 

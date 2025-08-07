@@ -1006,3 +1006,99 @@ Files:
 
 
 
+Timestamp: 2025-08-07T11:12:08.873Z
+Commit: 7cb95e20339c54084f82ff233733c7914dbc6219
+Author: Codex
+Message: feat: create issue on docsync failures
+Files:
+- .env.development (+1/-0)
+- .env.local.example (+1/-0)
+- .env.production (+1/-0)
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+24/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agentLogsStore.json (+12/-7)
+- docs/docsync-strategy.md (+7/-0)
+- github/api.ts (+13/-0)
+- scripts/docsync-agent.ts (+40/-3)
+
+Timestamp: 2025-08-07T11:37:53.453Z
+Commit: aa26dcb5a91c1b59f748d0bfe4950819f81e56fd
+Author: Codex
+Message: Applying previous commit.
+Files:
+- .env.development (+1/-0)
+- .env.local.example (+1/-0)
+- .env.production (+1/-0)
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+24/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agentLogsStore.json (+12/-7)
+- docs/docsync-strategy.md (+7/-0)
+- github/api.ts (+13/-0)
+- llms.txt (+15/-0)
+- scripts/docsync-agent.ts (+40/-3)
+
+Timestamp: 2025-08-07T11:43:27.840Z
+Commit: d90cc65a44014a4434f2d56440bbe1b8399e617b
+Author: Codex
+Message: fix: include log id in fail-open issue title
+Files:
+- .env.development (+1/-0)
+- .env.local.example (+1/-0)
+- .env.production (+1/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- docs/docsync-strategy.md (+4/-2)
+- scripts/docsync-agent.ts (+10/-3)
+
+Timestamp: 2025-08-07T11:54:00.274Z
+Commit: fcd11b8902106bad1b66be25cd97d7ca47bcb8ea
+Author: Codex
+Message: Applying previous commit.
+Files:
+- .env.development (+2/-0)
+- .env.local.example (+2/-0)
+- .env.production (+2/-0)
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+24/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agentLogsStore.json (+12/-7)
+- docs/docsync-strategy.md (+9/-0)
+- github/api.ts (+13/-0)
+- llms.txt (+43/-0)
+- scripts/docsync-agent.ts (+47/-3)
+
+Timestamp: 2025-08-07T11:55:38.402Z
+Commit: d0a893845361af8feaa334d51337778ebdf8f48a
+Author: Codex
+Message: test: update llms log snapshot
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+
+Timestamp: 2025-08-07T11:57:40.026Z
+Commit: a19a1754b5b41dbd607efd69ab6d9d6e944c5b60
+Author: Codex
+Message: test: update llms log snapshot
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+
+Timestamp: 2025-08-07T12:17:01.659Z
+Commit: 5229c45246c4341353b85ed21145c51db6e94949
+Author: Codex
+Message: Applying previous commit.
+Files:
+- .env.development (+2/-0)
+- .env.local.example (+2/-0)
+- .env.production (+2/-0)
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+24/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agentLogsStore.json (+12/-7)
+- docs/docsync-strategy.md (+9/-0)
+- github/api.ts (+13/-0)
+- llms.txt (+73/-0)
+- scripts/docsync-agent.ts (+47/-3)
+
+Timestamp: 2025-08-07T12:19:14.840Z
+Commit: 090f8dce546da16369cc3e93e4ece6f64aaff113
+Author: Codex
+Message: test: update llms log snapshot
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+
