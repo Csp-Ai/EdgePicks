@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`llms.txt log matches content hash snapshot 1`] = `"b45d41f86470059b8364295fb27162c0e5f44792e2646786427d758bea6ecd4d"`;
+exports[`llms.txt log matches content hash snapshot 1`] = `"2f63bd248fe78985c01fb947032240e3cd53ad6739a3f92c8a5f0e95de38f66a"`;

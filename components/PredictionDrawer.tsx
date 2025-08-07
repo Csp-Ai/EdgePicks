@@ -1,0 +1,139 @@
+import React, { useEffect, useRef, useState } from 'react';
+import type { Game, PickSummary } from '../lib/types';
+import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+import AgentNodeGraph from './AgentNodeGraph';
+import ConfidenceMeter from './ConfidenceMeter';
+import AgentRationalePanel from './AgentRationalePanel';
+import PickSummaryComp from './PickSummary';
+import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
+
+interface Props {
+  game: Game | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+interface AgentExecution extends BaseAgentExecution {
+  weight?: number;
+  description?: string;
+  scoreTotal?: number;
+  confidenceEstimate?: number;
+}
+
+const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
+  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
+  const [executions, setExecutions] = useState<AgentExecution[]>([]);
+  const [pick, setPick] = useState<PickSummary | null>(null);
+  const [confidence, setConfidence] = useState(0);
+  const esRef = useRef<EventSource | null>(null);
+
+  const startRun = () => {
+    if (!game) return;
+    esRef.current?.close();
+    reset();
+    setExecutions([]);
+    setPick(null);
+    setConfidence(0);
+    const week = 1; // placeholder week derivation
+    const sessionId =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('sessionId') || crypto.randomUUID()
+        : '';
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sessionId', sessionId);
+    }
+    const es = new EventSource(
+      `/api/run-agents?homeTeam=${encodeURIComponent(
+        game.homeTeam
+      )}&awayTeam=${encodeURIComponent(game.awayTeam)}&week=${week}&sessionId=${sessionId}`
+    );
+    es.onmessage = (ev) => {
+      const data = JSON.parse(ev.data);
+      if (data.type === 'agent') {
+        setExecutions((prev) => [...prev, data]);
+        if (data.confidenceEstimate !== undefined) {
+          setConfidence(Math.round(data.confidenceEstimate * 100));
+        }
+      } else if (data.type === 'lifecycle') {
+        handleLifecycleEvent(data);
+      } else if (data.type === 'summary') {
+        setPick(data.pick);
+        setConfidence(Math.round(data.pick.confidence * 100));
+        es.close();
+      } else if (data.type === 'error') {
+        es.close();
+      }
+    };
+    es.onerror = () => {
+      es.close();
+    };
+    esRef.current = es;
+  };
+
+  useEffect(() => {
+    if (isOpen && game) {
+      startRun();
+    } else {
+      esRef.current?.close();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, game?.gameId]);
+
+  if (!isOpen || !game) return null;
+
+  const share = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard?.writeText(window.location.href);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 flex justify-end z-50">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="relative w-full max-w-md h-full bg-white flex flex-col">
+        <header className="p-4 border-b sticky top-0 bg-white">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold">
+              {game.homeTeam} vs {game.awayTeam}
+            </h2>
+            <button onClick={onClose} aria-label="Close" className="text-sm">✕</button>
+          </div>
+          <div className="text-xs text-gray-500">{new Date(game.time).toLocaleString()}</div>
+        </header>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <AgentNodeGraph statuses={statuses} />
+          {pick ? (
+            <PickSummaryComp
+              teamA={game.homeTeam}
+              teamB={game.awayTeam}
+              winner={pick.winner}
+              confidence={pick.confidence}
+            />
+          ) : (
+            <ConfidenceMeter
+              teamA={{ name: game.homeTeam }}
+              teamB={{ name: game.awayTeam }}
+              confidence={confidence}
+            />
+          )}
+          {executions.length > 0 && (
+            <AgentRationalePanel executions={executions as any} winner={pick?.winner || ''} />
+          )}
+        </div>
+        <footer className="p-4 border-t flex justify-end gap-2">
+          <button className="px-3 py-1 text-sm border rounded" onClick={startRun}>
+            Run again
+          </button>
+          <button className="px-3 py-1 text-sm border rounded" onClick={share}>
+            Share
+          </button>
+        </footer>
+        <div aria-live="polite" data-testid="a11y-result" className="sr-only">
+          {pick ? `${pick.winner} ${Math.round(pick.confidence * 100)}%` : ''}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PredictionDrawer;
