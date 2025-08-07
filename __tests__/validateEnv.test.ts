@@ -1,29 +1,31 @@
 /** @jest-environment node */
-import { readFileSync, writeFileSync } from 'fs';
 import { spawnSync } from 'child_process';
 
 describe('validate-env script', () => {
-  const file = '.env.local.example';
-  const original = readFileSync(file, 'utf8');
+  const run = (env: NodeJS.ProcessEnv) =>
+    spawnSync('node', ['-r', 'ts-node/register', 'scripts/validateEnv.ts'], {
+      env,
+    });
 
-  afterAll(() => {
-    writeFileSync(file, original);
-  });
+  const baseEnv = { PATH: process.env.PATH } as NodeJS.ProcessEnv;
 
   it('fails when required keys are missing', () => {
-    // remove SUPABASE_URL line
-    const modified = original
-      .split('\n')
-      .filter((line) => !line.startsWith('SUPABASE_URL'))
-      .join('\n');
-    writeFileSync(file, modified);
-    const result = spawnSync('npm', ['run', '--silent', 'validate-env']);
+    const result = run(baseEnv);
     expect(result.status).not.toBe(0);
   });
 
   it('passes when all required keys exist', () => {
-    writeFileSync(file, original);
-    const result = spawnSync('npm', ['run', '--silent', 'validate-env']);
+    const env = {
+      ...baseEnv,
+      GOOGLE_CLIENT_ID: 'gid',
+      GOOGLE_CLIENT_SECRET: 'gsecret',
+      NEXTAUTH_SECRET: 'secret',
+      NEXTAUTH_URL: 'http://localhost',
+      SUPABASE_URL: 'http://localhost',
+      SUPABASE_KEY: 'key',
+      SPORTS_API_KEY: 'sports',
+    };
+    const result = run(env);
     expect(result.status).toBe(0);
   });
 });

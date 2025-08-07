@@ -625,3 +625,23 @@ Message: chore(env): add validateEnv codex prompt
 Files:
 - codex-prompts/validateEnv-prompt.md (+16/-0)
 
+Timestamp: 2025-08-07T04:27:36.474Z
+Commit: 7b72c377a054d1918f2eab3f754cc43debc2e505
+Author: Codex
+Message: feat: enforce required env vars
+Files:
+- .env.development (+1/-1)
+- .env.local.example (+1/-1)
+- .env.production (+1/-1)
+- README.md (+1/-1)
+- __tests__/validateEnv.test.ts (+17/-15)
+- codex-prompts/envKeys-dashboard-prompt.md (+16/-0)
+- codex-prompts/validateEnv-prompt.md (+5/-5)
+- jest.setup.ts (+1/-1)
+- lib/env.ts (+9/-55)
+- lib/envKeys.ts (+4/-4)
+- lib/logUiEvent.test.js (+1/-1)
+- lib/supabaseClient.ts (+1/-1)
+- package.json (+6/-6)
+- scripts/validateEnv.ts (+6/-22)
+

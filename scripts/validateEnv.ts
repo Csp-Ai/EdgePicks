@@ -1,25 +1,9 @@
-import fs from 'fs';
-import dotenv from 'dotenv';
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config({ path: '.env.local' });
-}
-import { REQUIRED_ENV_KEYS } from '../lib/envKeys';
+const { REQUIRED_ENV_KEYS } = require('../lib/envKeys');
 
-const files = ['.env.local.example', '.env.development', '.env.production'];
-let hasErrors = false;
-
-for (const file of files) {
-  if (!fs.existsSync(file)) continue;
-  const parsed = dotenv.parse(fs.readFileSync(file));
-  const missing = REQUIRED_ENV_KEYS.filter((k) => !(k in parsed));
-  if (missing.length) {
-    console.error(`${file} is missing required keys: ${missing.join(', ')}`);
-    hasErrors = true;
+for (const key of REQUIRED_ENV_KEYS) {
+  if (!process.env[key]) {
+    console.error(`❌ Missing required key: ${key}`);
+    process.exit(1);
   }
 }
-
-if (hasErrors) {
-  process.exit(1);
-} else {
-  console.log('All env files contain required keys.');
-}
+console.log('✅ All env files contain required keys.');
