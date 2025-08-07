@@ -1,37 +1,31 @@
-import React from 'react';
-import type { GetServerSideProps } from 'next';
-import type { Session } from 'next-auth';
-import { getServerSession } from 'next-auth/next';
-import fs from 'fs';
-import path from 'path';
+import React, { useState } from 'react';
+import MatchupInputForm from '../components/MatchupInputForm';
 import PredictionsPanel from '../components/PredictionsPanel';
-import { authOptions } from './api/auth/[...nextauth]';
+import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
+import type { AgentOutputs, AgentResult, PickSummary } from '../lib/types';
 
-interface Props {
-  session: Session;
-}
+const PredictionsPage: React.FC = () => {
+  const [agents, setAgents] = useState<AgentOutputs>({});
+  const [pick, setPick] = useState<PickSummary | null>(null);
+  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
-const PredictionsPage: React.FC<Props> = ({ session }) => (
-  <main className="min-h-screen bg-gray-50 p-6">
-    <PredictionsPanel session={session} />
-  </main>
-);
+  return (
+    <main className="min-h-screen bg-gray-50 p-6 space-y-6">
+      <MatchupInputForm
+        onStart={() => {
+          setAgents({});
+          setPick(null);
+          reset();
+        }}
+        onAgent={(name: string, result: AgentResult) =>
+          setAgents((prev) => ({ ...prev, [name]: result }))
+        }
+        onComplete={(data: { pick: PickSummary }) => setPick(data.pick)}
+        onLifecycle={handleLifecycleEvent}
+      />
+      <PredictionsPanel agents={agents} pick={pick} statuses={statuses} />
+    </main>
+  );
+};
 
 export default PredictionsPage;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  if (!session) {
-    return { redirect: { destination: '/auth/signin', permanent: false } };
-  }
-  try {
-    const logPath = path.join(process.cwd(), 'llms.txt');
-    const entry = `${new Date().toISOString()} - [PREDICTIONS] - ${
-      session.user?.name || 'anonymous'
-    }\n`;
-    await fs.promises.appendFile(logPath, entry);
-  } catch (err) {
-    console.error('failed to log visit', err);
-  }
-  return { props: { session } };
-};

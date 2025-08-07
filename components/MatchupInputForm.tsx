@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AgentOutputs,
   AgentResult,
@@ -19,6 +19,10 @@ export type Props = {
   onAgent: (name: string, result: AgentResult) => void;
   onComplete: (data: SummaryPayload) => void;
   onLifecycle: (event: { name: string } & AgentLifecycle) => void;
+  defaultTeamA?: string;
+  defaultTeamB?: string;
+  defaultMatchDay?: number;
+  autostart?: boolean;
 };
 
 const MatchupInputForm: React.FC<Props> = ({
@@ -26,34 +30,29 @@ const MatchupInputForm: React.FC<Props> = ({
   onAgent,
   onComplete,
   onLifecycle,
+  defaultTeamA,
+  defaultTeamB,
+  defaultMatchDay,
+  autostart,
 }) => {
-  const [teamA, setTeamA] = useState('');
-  const [teamB, setTeamB] = useState('');
-  const [matchDay, setMatchDay] = useState('');
+  const [teamA, setTeamA] = useState(defaultTeamA || '');
+  const [teamB, setTeamB] = useState(defaultTeamB || '');
+  const [matchDay, setMatchDay] = useState(
+    defaultMatchDay !== undefined ? String(defaultMatchDay) : ''
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!teamA || !teamB || !matchDay) {
-      setError('All fields are required');
-      return;
-    }
-    const matchDayNum = parseInt(matchDay, 10);
-    if (isNaN(matchDayNum)) {
-      setError('Match day must be a number');
-      return;
-    }
-
+  const runPrediction = (teamAVal: string, teamBVal: string, md: number) => {
     setError(null);
     setLoading(true);
-    onStart({ teamA, teamB, matchDay: matchDayNum });
+    onStart({ teamA: teamAVal, teamB: teamBVal, matchDay: md });
 
     try {
       const es = new EventSource(
-        `/api/run-agents?teamA=${encodeURIComponent(teamA)}&teamB=${encodeURIComponent(
-          teamB
-        )}&matchDay=${matchDayNum}`
+        `/api/run-agents?teamA=${encodeURIComponent(teamAVal)}&teamB=${encodeURIComponent(
+          teamBVal
+        )}&matchDay=${md}`
       );
 
       es.onmessage = (event) => {
@@ -66,6 +65,10 @@ const MatchupInputForm: React.FC<Props> = ({
           onLifecycle(data as { name: string } & AgentLifecycle);
         } else if (data.type === 'summary') {
           onComplete(data as SummaryPayload);
+          setLoading(false);
+          es.close();
+        } else if (data.type === 'error') {
+          setError('Failed to fetch result');
           setLoading(false);
           es.close();
         }
@@ -81,6 +84,28 @@ const MatchupInputForm: React.FC<Props> = ({
       setLoading(false);
     }
   };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!teamA || !teamB || !matchDay) {
+      setError('All fields are required');
+      return;
+    }
+    const matchDayNum = parseInt(matchDay, 10);
+    if (isNaN(matchDayNum)) {
+      setError('Match day must be a number');
+      return;
+    }
+    runPrediction(teamA, teamB, matchDayNum);
+  };
+
+  useEffect(() => {
+    if (autostart && defaultTeamA && defaultTeamB) {
+      const md = defaultMatchDay ?? 1;
+      runPrediction(defaultTeamA, defaultTeamB, md);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autostart, defaultTeamA, defaultTeamB, defaultMatchDay]);
 
   return (
     <form
