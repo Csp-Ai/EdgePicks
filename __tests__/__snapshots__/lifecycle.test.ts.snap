@@ -4,6 +4,7 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
 [
   {
     "architectureDocumented": true,
+    "codexRegistered": true,
     "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/docsync-agent.ts",
     "designPatternsDocumented": true,
     "lifecycleDocumented": true,
@@ -12,6 +13,25 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "syncError": "supabase env missing",
     "synced": false,
     "timestamp": "2025-08-07T10:17:20Z",
+  },
+  {
+    "architectureDocumented": true,
+    "codexRegistered": true,
+    "command": "npx ts-node scripts/docsync-agent.ts",
+    "designPatternsDocumented": true,
+    "lifecycleDocumented": true,
+    "output": "GH_PAT is required.",
+    "syncAttemptedAt": "2025-08-07T11:05:00Z",
+    "syncError": "GH_PAT is required.",
+    "synced": false,
+    "timestamp": "2025-08-07T11:05:00Z",
+  },
+  {
+    "codexRegistered": true,
+    "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/audit-agent-metadata.ts",
+    "metadataAudited": true,
+    "output": "Agent metadata is valid and docs are in sync.",
+    "timestamp": "2025-08-07T10:58:40Z",
   },
 ]
 `;

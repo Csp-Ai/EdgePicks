@@ -1006,3 +1006,25 @@ Files:
 
 
 
+Timestamp: 2025-08-07T11:08:06Z
+Summary:
+- Added Codex Prompt Registry generator and dashboard.
+- Marked agent logs with codexRegistered and documented registry structure.
+Testing:
+- npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/generatePromptRegistry.ts — passed
+- npm test — passed
+Timestamp: 2025-08-07T11:09:58.338Z
+Commit: 486691b8235fa0308ccd6fa4337c8d9da1ace40a
+Author: Codex
+Message: feat: add codex prompt registry
+Files:
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+20/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- agentLogsStore.json (+8/-6)
+- components/PromptDashboard.tsx (+47/-0)
+- data/prompt-registry.json (+596/-0)
+- docs/codex-prompt-registry.md (+21/-0)
+- llms.txt (+7/-0)
+- pages/codex/prompts.tsx (+8/-0)
+- scripts/generatePromptRegistry.ts (+87/-0)
+
