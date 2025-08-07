@@ -17,10 +17,12 @@ export default function Home() {
   const [leaderboard, setLeaderboard] = useState<Record<string, { totalConfidence: number; totalScore: number; count: number }>>({});
   const [currentParams, setCurrentParams] = useState<{ homeTeam: string; awayTeam: string; week: number } | null>(null);
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
+  const [sessionId, setSessionId] = useState('');
 
   useEffect(() => {
     const sid = typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
     if (sid) {
+      setSessionId(sid);
       const stored = localStorage.getItem(`leaderboard:${sid}`);
       if (stored) {
         try {
@@ -142,10 +144,14 @@ export default function Home() {
 
       <section className="pt-8">
         <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
-        <AgentLeaderboardPanel stats={leaderboard} />
+      <AgentLeaderboardPanel stats={leaderboard} />
       </section>
       {flowStarted && (
-        <AgentStatusPanel statuses={statuses} onRetry={handleRetryAgent} />
+        <AgentStatusPanel
+          statuses={statuses}
+          onRetry={handleRetryAgent}
+          sessionId={sessionId}
+        />
       )}
     </main>
   );

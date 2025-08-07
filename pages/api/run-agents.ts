@@ -5,6 +5,7 @@ import { logToSupabase } from '../../lib/logToSupabase';
 import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
+import { writeAgentLog } from '../../lib/agentLogsStore';
 
 export const config = {
   api: {
@@ -64,9 +65,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { outputs } = await runFlow(
       flow,
       matchup,
-      ({ name, result, error }) => {
+      ({ name, result, error, errorInfo }) => {
         if (!error && result) {
           agentsOutput[name] = result;
+        }
+        if (sessionId && typeof sessionId === 'string' && error) {
+          writeAgentLog(sessionId, name, {
+            error: errorInfo?.stack || errorInfo?.message,
+          });
         }
       },
       (event) => {
@@ -100,8 +106,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 warnings: result.warnings,
               })}\n\n`
             );
+            if (sessionId && typeof sessionId === 'string') {
+              writeAgentLog(sessionId, event.name, {
+                output: result,
+                durationMs: event.durationMs,
+              });
+            }
           }
         } else if (event.status === 'errored') {
+          const errMsg = event.error?.stack || event.error?.message || 'Agent failed';
           res.write(
             `data: ${JSON.stringify({
               type: 'agent',
@@ -109,8 +122,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               agentId: event.name,
               name: event.name,
               error: true,
+              errorStack: errMsg,
+              agentDurationMs: event.durationMs,
             })}\n\n`
           );
+          if (sessionId && typeof sessionId === 'string') {
+            writeAgentLog(sessionId, event.name, {
+              error: errMsg,
+              durationMs: event.durationMs,
+            });
+          }
         }
         // @ts-ignore - flush may not exist in some environments
         res.flush?.();

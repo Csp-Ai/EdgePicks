@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { agents as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 import type { AgentLifecycle, AgentName } from '../lib/types';
+import AgentLogsModal from './AgentLogsModal';
 
 export type AgentStatusMap = Record<
   AgentName,
@@ -11,10 +12,12 @@ export type AgentStatusMap = Record<
 interface Props {
   statuses: Partial<AgentStatusMap>;
   onRetry?: (agent: AgentName) => void;
+  sessionId: string;
 }
 
-const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry }) => {
+const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry, sessionId }) => {
   const [open, setOpen] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<AgentName | null>(null);
 
   return (
     <div className="fixed left-0 right-0 bottom-16 mx-auto max-w-md">
@@ -39,12 +42,21 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry }) => {
                   key={name}
                   className="flex items-center justify-between px-4 py-2 text-sm"
                 >
-                  <span className="flex-1">{formatAgentName(name)}</span>
+                  <span
+                    className="flex-1 cursor-pointer"
+                    onClick={() => setSelectedAgent(name)}
+                  >
+                    {formatAgentName(name)}
+                  </span>
                   {errored ? (
                     <span className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 text-xs rounded bg-red-100 text-red-700">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedAgent(name)}
+                        className="px-2 py-0.5 text-xs rounded bg-red-100 text-red-700"
+                      >
                         Error
-                      </span>
+                      </button>
                       {onRetry && (
                         <button
                           type="button"
@@ -64,6 +76,14 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry }) => {
           </ul>
         )}
       </div>
+      {selectedAgent && (
+        <AgentLogsModal
+          isOpen={true}
+          agentId={selectedAgent}
+          sessionId={sessionId}
+          onClose={() => setSelectedAgent(null)}
+        />
+      )}
     </div>
   );
 };
