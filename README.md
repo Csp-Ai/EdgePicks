@@ -185,7 +185,15 @@ npm install
 npm run dev:local    # starts dev server at http://localhost:3000
 ```
 
-Run tests locally:
+### Testing
+
+Run the default test suite with the pre-commit command:
+
+```sh
+npm test
+```
+
+For local development runs:
 
 ```sh
 npm run test:local

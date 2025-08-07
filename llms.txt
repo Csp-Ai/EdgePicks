@@ -474,3 +474,10 @@ Message: feat: integrate flow into predictions
 Files:
 - pages/api/run-predictions.ts (+52/-15)
 
+Timestamp: 2025-08-07T00:26:31.440Z
+Commit: c57fc5d84b5fcbb5b49dca4343f5610944f8b213
+Author: Codex
+Message: docs: clarify testing commands
+Files:
+- README.md (+9/-1)
+
