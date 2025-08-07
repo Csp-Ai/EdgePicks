@@ -99,9 +99,9 @@ export async function syncLogRecord(
     await updateWikiPage(
       octokit,
       repo,
-      "UI Components Guide",
+      "ui-components-guide",
       section,
-      `Update UI Components Guide from Codex log #${log.id}`
+      `Update ui-components-guide from Codex log #${log.id}`
     );
   }
   await supabase.from("codex_logs").update({ synced: true }).eq("id", log.id);
