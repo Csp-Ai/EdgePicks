@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { agents } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+=======
+import { registry as agentRegistry } from '../../lib/agents/registry';
+
 import {
   readAgentLog,
   getAllAgentLogs,
@@ -20,7 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(404).json({ error: 'Log not found' });
         return;
       }
+
       const meta = agentMetaMap.get(agentId as AgentName);
+=======
+      const meta = agentRegistry.find((a) => a.name === agentId);
+
       const weightedScore = data.output?.score * (meta?.weight ?? 1);
       res.status(200).json({
         output: data.output || null,

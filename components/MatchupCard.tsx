@@ -7,7 +7,7 @@ import AgentComparePanel from './AgentComparePanel';
 import ScoreBar from './ScoreBar';
 import { AgentOutputs } from '../lib/types';
 import { getContribution, formatAgentName } from '../lib/utils';
-import { agents as agentRegistry } from '../lib/agents/registry';
+import { registry as agentRegistry } from '../lib/agents/registry';
 import { getAccuracyHistory } from '../lib/accuracy';
 import { matchupCard } from '../styles/cardStyles';
 

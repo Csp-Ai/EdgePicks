@@ -5,7 +5,7 @@ import type {
   AgentName,
   AgentLifecycle,
 } from '../types';
-import { agents as registry } from '../agents/registry';
+import { loadAgents } from '../agents/loadAgents';
 import type { FlowConfig } from './loadFlow';
 
 export interface AgentExecution {
@@ -36,9 +36,10 @@ export async function runFlow(
 ): Promise<FlowRunResult> {
   const outputs: Partial<AgentOutputs> = {};
   const executions: AgentExecution[] = [];
+  const agents = await loadAgents();
 
   for (const name of flow.agents) {
-    const agent = registry.find((a) => a.name === name);
+    const agent = agents.find((a) => a.name === name);
     if (!agent) {
       console.error(`[runFlow] Agent not found: ${name}`);
       onAgent?.({ name, error: true });
