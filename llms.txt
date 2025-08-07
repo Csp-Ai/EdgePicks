@@ -701,3 +701,25 @@ Message: feat: add audit agent script
 Files:
 - audit-agent.ts (+69/-0)
 
+Timestamp: 2025-08-07T07:09:01Z
+Summary:
+- Rewrote README.md to reflect modular architecture, Codex governance, and API documentation for beta launch.
+- Validated Supabase environment variables using `scripts/validateEnv.ts` to ensure required settings.
+- Ran `audit-agent.ts` to capture current audit findings and roadmap.
+- Verified Vercel build logs and resolved Edge Runtime warnings.
+- Committed README.md update ("docs: rewrite README for beta launch with architecture, API, and Codex audit details").
+Testing:
+- npm test — passed
+TODOs:
+- Enforce rate limiting and RLS policies.
+- Replace all `any` types with explicit interfaces.
+- Add agent-specific test files.
+- Push scaffold generator CLI for new agents.
+- Integrate audit-agent into weekly GitHub Actions CI.
+Timestamp: 2025-08-07T07:09:59.022Z
+Commit: 481b53bc03d4579b54b1be200a95dff8dfcc7d69
+Author: Codex
+Message: chore: log EOD summary
+Files:
+- llms.txt (+15/-0)
+
