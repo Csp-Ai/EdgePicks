@@ -8,7 +8,6 @@ import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { agents } from '../../lib/agents/registry';
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
-import { ENV, getEnv } from '../../lib/env';
 
 interface Game {
   homeTeam: { name: string };
@@ -36,11 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.setHeader('Allow', ['POST']);
     res.status(405).end('Method Not Allowed');
     return;
-  }
-
-  const nodeEnv = getEnv('NODE_ENV', { required: false });
-  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && nodeEnv === 'development') {
-    console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
   }
 
   const { league, games } = req.body || {};

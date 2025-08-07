@@ -2,47 +2,66 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config({ path: '.env.local' });
 }
 
-interface GetEnvOptions {
-  required?: boolean;
-  fallback?: string;
-}
+export const SUPABASE_URL = (() => {
+  const v = process.env.SUPABASE_URL;
+  if (!v) throw new Error('Missing SUPABASE_URL in environment variables.');
+  return v;
+})();
 
-export const getEnv = (
-  key: string,
-  { required = true, fallback }: GetEnvOptions = {},
-): string => {
-  const value = process.env[key];
-  if (value !== undefined && value !== '') {
-    return value;
-  }
+export const SUPABASE_ANON_KEY = (() => {
+  const v = process.env.SUPABASE_ANON_KEY;
+  if (!v) throw new Error('Missing SUPABASE_ANON_KEY in environment variables.');
+  return v;
+})();
 
-  if (fallback !== undefined && !required) {
-    console.warn(`[env] ${key} is missing, using fallback: ${fallback}`);
-    return fallback;
-  }
+export const NEXTAUTH_URL = (() => {
+  const v = process.env.NEXTAUTH_URL;
+  if (!v) throw new Error('Missing NEXTAUTH_URL in environment variables.');
+  return v;
+})();
 
-  if (!required) {
-    console.warn(`[env] ${key} is not set`);
-    return '';
-  }
+export const NEXTAUTH_SECRET = (() => {
+  const v = process.env.NEXTAUTH_SECRET;
+  if (!v) throw new Error('Missing NEXTAUTH_SECRET in environment variables.');
+  return v;
+})();
 
-  throw new Error(`[env] Missing required environment variable: ${key}`);
-};
+export const GOOGLE_CLIENT_ID = (() => {
+  const v = process.env.GOOGLE_CLIENT_ID;
+  if (!v) throw new Error('Missing GOOGLE_CLIENT_ID in environment variables.');
+  return v;
+})();
+
+export const GOOGLE_CLIENT_SECRET = (() => {
+  const v = process.env.GOOGLE_CLIENT_SECRET;
+  if (!v) throw new Error('Missing GOOGLE_CLIENT_SECRET in environment variables.');
+  return v;
+})();
+
+export const SPORTS_API_KEY = (() => {
+  const v = process.env.SPORTS_API_KEY;
+  if (!v) throw new Error('Missing SPORTS_API_KEY in environment variables.');
+  return v;
+})();
+
+export const SPORTS_DB_NFL_ID = process.env.SPORTS_DB_NFL_ID;
+export const SPORTS_DB_MLB_ID = process.env.SPORTS_DB_MLB_ID;
+export const SPORTS_DB_NBA_ID = process.env.SPORTS_DB_NBA_ID;
+export const SPORTS_DB_NHL_ID = process.env.SPORTS_DB_NHL_ID;
+export const ODDS_API_KEY = process.env.ODDS_API_KEY;
 
 export const ENV = {
-  SUPABASE_URL: getEnv('SUPABASE_URL'),
-  SUPABASE_ANON_KEY: getEnv('SUPABASE_ANON_KEY'),
-  NEXTAUTH_URL: getEnv('NEXTAUTH_URL'),
-  NEXTAUTH_SECRET: getEnv('NEXTAUTH_SECRET'),
-  GOOGLE_CLIENT_ID: getEnv('GOOGLE_CLIENT_ID'),
-  GOOGLE_CLIENT_SECRET: getEnv('GOOGLE_CLIENT_SECRET'),
-  SPORTS_API_KEY: getEnv('SPORTS_API_KEY', {
-    required: false,
-    fallback: 'sports-fallback-key',
-  }),
-  SPORTS_DB_NFL_ID: getEnv('SPORTS_DB_NFL_ID', { required: false }),
-  SPORTS_DB_MLB_ID: getEnv('SPORTS_DB_MLB_ID', { required: false }),
-  SPORTS_DB_NBA_ID: getEnv('SPORTS_DB_NBA_ID', { required: false }),
-  SPORTS_DB_NHL_ID: getEnv('SPORTS_DB_NHL_ID', { required: false }),
-  ODDS_API_KEY: getEnv('ODDS_API_KEY', { required: false }),
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  NEXTAUTH_URL,
+  NEXTAUTH_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  SPORTS_API_KEY,
+  SPORTS_DB_NFL_ID,
+  SPORTS_DB_MLB_ID,
+  SPORTS_DB_NBA_ID,
+  SPORTS_DB_NHL_ID,
+  ODDS_API_KEY,
 } as const;
+

@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import fs from 'fs';
-import path from 'path';
 import {
   fetchNbaGames,
   fetchMlbGames,
@@ -12,27 +10,8 @@ import { agents as registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
-import { ENV, getEnv } from '../../lib/env';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const nodeEnv = getEnv('NODE_ENV', { required: false });
-  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && nodeEnv === 'development') {
-    console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
-  }
-  if (ENV.SPORTS_API_KEY === 'sports-fallback-key') {
-    console.warn('Sports API key missing. Add it to `.env.local` to enable live games.');
-    try {
-      const mockPath = path.join(process.cwd(), 'mock', 'upcoming-games.json');
-      const raw = await fs.promises.readFile(mockPath, 'utf-8');
-      const mock = JSON.parse(raw);
-      res.setHeader('x-missing-api-key', '1');
-      res.status(200).json(mock);
-    } catch (err) {
-      res.setHeader('x-missing-api-key', '1');
-      res.status(200).json(getFallbackMatchups());
-    }
-    return;
-  }
   try {
     const leagueParam =
       typeof req.query.league === 'string' ? req.query.league.toUpperCase() : 'NFL';
