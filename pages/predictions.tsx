@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import MatchupInputForm from '../components/MatchupInputForm';
 import PredictionsPanel from '../components/PredictionsPanel';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import type { AgentOutputs, AgentResult, PickSummary } from '../lib/types';
+import type { AgentOutputs, PickSummary } from '../lib/types';
+import type { AgentExecution } from '../lib/flow/runFlow';
 
 const PredictionsPage: React.FC = () => {
   const [agents, setAgents] = useState<AgentOutputs>({});
@@ -17,9 +18,11 @@ const PredictionsPage: React.FC = () => {
           setPick(null);
           reset();
         }}
-        onAgent={(name: string, result: AgentResult) =>
-          setAgents((prev) => ({ ...prev, [name]: result }))
-        }
+        onAgent={(exec: AgentExecution) => {
+          if (exec.result) {
+            setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
+          }
+        }}
         onComplete={(data: { pick: PickSummary }) => setPick(data.pick)}
         onLifecycle={handleLifecycleEvent}
       />
