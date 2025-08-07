@@ -13,32 +13,16 @@ interface Props {
 
 const leagues = ['NFL', 'NBA', 'MLB', 'NHL'];
 
-const samplePredictions = [
-  {
-    game: {
-      homeTeam: { name: 'Dallas Cowboys' },
-      awayTeam: { name: 'New York Giants' },
-      time: 'Week 1',
-    },
-    winner: 'Dallas Cowboys',
-    confidence: 55,
-    agents: {},
-    executions: [],
-  },
-];
-
 const PredictionsPanel: React.FC<Props> = ({ session }) => {
   const [league, setLeague] = useState('NFL');
   const [games, setGames] = useState<any[]>([]);
   const [loadingGames, setLoadingGames] = useState(true);
   const [predictions, setPredictions] = useState<any[]>([]);
   const [loadingPred, setLoadingPred] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(
-    null
-  );
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [lastRun, setLastRun] = useState<string | null>(null);
   const [agentLogs, setAgentLogs] = useState<any[]>([]);
-  const { statuses, handleLifecycleEvent } = useFlowVisualizer();
+  const { statuses, handleLifecycleEvent, resetTimeline } = useFlowVisualizer();
 
   useEffect(() => {
     setLoadingGames(true);
@@ -47,6 +31,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
         setGames(data);
         setLoadingGames(false);
         setPredictions([]);
+        setAgentLogs([]);
       })
       .catch((err) => {
         console.error('Error fetching upcoming games', err);
@@ -64,27 +49,34 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       setToast({ message: `No games found for ${league}.`, type: 'error' });
       return;
     }
+
     setLoadingPred(true);
+    resetTimeline();
     let es: EventSource | null = null;
+
     try {
-      if (games.length) {
-        const g = games[0];
-        es = new EventSource(
-          `/api/run-agents?teamA=${encodeURIComponent(g.homeTeam.name)}&teamB=${encodeURIComponent(g.awayTeam.name)}&matchDay=1`
-        );
-        es.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          if (data.type === 'lifecycle') {
-            handleLifecycleEvent(data);
-          }
-        };
-      }
+      const g = games[0];
+      es = new EventSource(
+        `/api/run-agents?teamA=${encodeURIComponent(g.homeTeam.name)}&teamB=${encodeURIComponent(
+          g.awayTeam.name
+        )}&matchDay=1`
+      );
+
+      es.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'lifecycle') {
+          handleLifecycleEvent(data);
+        }
+      };
 
       const res = await runPredictions(league, games);
+      if (res.error) {
+        throw new Error(res.error);
+      }
+
       const fetched = res.predictions || [];
-      const finalPredictions = fetched.length ? fetched : samplePredictions;
-      setPredictions(finalPredictions);
-      setAgentLogs(finalPredictions.map((p: any) => p.executions || []));
+      setPredictions(fetched);
+      setAgentLogs(fetched.flatMap((p: any) => p.executions || []));
       setLastRun(res.timestamp);
       setToast({
         message: `Predictions generated successfully for ${league}.`,
@@ -92,7 +84,12 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       });
     } catch (err) {
       console.error(err);
-      setToast({ message: 'Something went wrong. Please try again.', type: 'error' });
+      setPredictions([]);
+      setAgentLogs([]);
+      setToast({
+        message: 'Prediction flow failed. Please try again.',
+        type: 'error',
+      });
     } finally {
       setLoadingPred(false);
       es?.close();
@@ -129,12 +126,14 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
           <span className="text-sm text-gray-600">Sign in to run personalized predictions</span>
         )}
       </div>
+
       {lastRun && (
         <p className="text-sm text-gray-600" aria-live="polite">
           {league} predictions generated at{' '}
           {new Date(lastRun).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
         </p>
       )}
+
       <LiveGamesList
         league={league}
         games={games}
@@ -142,9 +141,25 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
         loadingGames={loadingGames}
         loadingPredictions={loadingPred}
       />
+
       {!loadingPred && !predictions.length && (
         <EmptyState message="Pick a league and hit Run Predictions to get started!" />
       )}
+
+      {agentLogs.length > 0 && (
+        <section className="space-y-2">
+          <h2 className="text-xl font-semibold">Agent Logs</h2>
+          <LiveGameLogsPanel logs={agentLogs} />
+        </section>
+      )}
+
+      {statuses && Object.keys(statuses).length > 0 && (
+        <section className="space-y-2">
+          <h2 className="text-xl font-semibold">Agent Status</h2>
+          <AgentStatusPanel statuses={statuses} />
+        </section>
+      )}
+
       {toast && (
         <div
           role="alert"
@@ -155,10 +170,9 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
           {toast.message}
         </div>
       )}
-      <LiveGameLogsPanel logs={agentLogs} />
-      <AgentStatusPanel statuses={statuses} />
     </div>
   );
 };
 
 export default PredictionsPanel;
+

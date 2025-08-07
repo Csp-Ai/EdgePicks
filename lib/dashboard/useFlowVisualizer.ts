@@ -34,6 +34,14 @@ export default function useFlowVisualizer() {
   const flowStartRef = useRef<number | null>(null);
   const lastNodeRef = useRef<AgentName | null>(null);
 
+  const reset = useCallback(() => {
+    setNodes({});
+    setEdges([]);
+    setStatuses({});
+    flowStartRef.current = null;
+    lastNodeRef.current = null;
+  }, []);
+
   const handleLifecycleEvent = useCallback(
     (event: { name: AgentName } & AgentLifecycle) => {
       setNodes((prev) => {
@@ -52,13 +60,12 @@ export default function useFlowVisualizer() {
           if (flowStartRef.current === null || event.startedAt < flowStartRef.current) {
             flowStartRef.current = event.startedAt;
           }
-          // Link to previous node to form a simple chain/DAG
           if (lastNodeRef.current) {
             setEdges((es) => [
               ...es,
               {
                 id: `${lastNodeRef.current}-${event.name}`,
-                source: lastNodeRef.current as AgentName,
+                source: lastNodeRef.current,
                 target: event.name,
               },
             ]);
@@ -104,6 +111,8 @@ export default function useFlowVisualizer() {
     startTime: flowStartRef.current,
     handleLifecycleEvent,
     statuses,
+    reset,
   };
 }
+
 
