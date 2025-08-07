@@ -1,5 +1,8 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config({ path: '.env.local' });
+}
 import { REQUIRED_ENV_KEYS } from '../lib/envKeys';
 
 const files = ['.env.local.example', '.env.development', '.env.production'];

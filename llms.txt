@@ -594,3 +594,11 @@ Files:
 - scripts/hasDiagramChanged.ts (+31/-0)
 - scripts/syncSystemDiagram.ts (+21/-0)
 
+Timestamp: 2025-08-07T04:00:19.811Z
+Commit: bac3620ed348a8068a8ec13727237a394c3e5c14
+Author: Codex
+Message: fix: ensure .env.local only used in development
+Files:
+- lib/env.ts (+4/-0)
+- scripts/validateEnv.ts (+3/-0)
+
