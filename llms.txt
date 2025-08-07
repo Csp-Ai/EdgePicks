@@ -1006,6 +1006,17 @@ Files:
 
 
 
+
+Timestamp: 2025-08-07T11:11:12.240Z
+Commit: d9f5dbbed9f6a4606bde3cd3963dab48f3009cd6
+Author: Codex
+Message: feat: add codex summary diff audit
+Files:
+- .github/workflows/codex-diff.yml (+14/-0)
+- docs/codex-prompt-registry.md (+18/-0)
+- llms-audit.json (+1/-0)
+- scripts/diff-llms-summary.ts (+96/-0)
+=======
 Timestamp: 2025-08-07T11:08:06Z
 Summary:
 - Added Codex Prompt Registry generator and dashboard.
