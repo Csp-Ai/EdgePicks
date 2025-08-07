@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-08-07T10:17:20Z",
+  "command": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/docsync-agent.ts",
+  "output": "Error: supabaseUrl is required."
+}

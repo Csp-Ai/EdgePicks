@@ -66,5 +66,7 @@ describe("syncLogRecord", () => {
     expect(createOrUpdateFileContents).toHaveBeenCalled();
     expect(from).toHaveBeenCalledWith("codex_logs");
     expect(eq).toHaveBeenCalledWith("id", "2");
+    const paths = createOrUpdateFileContents.mock.calls.map((c) => c[0].path);
+    expect(paths).toContain("ui-components-guide.md");
   });
 });
