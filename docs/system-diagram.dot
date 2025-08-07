@@ -1,0 +1,19 @@
+digraph G {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightblue];
+
+    MatchupInputForm -> FlowOrchestrator;
+    FlowOrchestrator -> InjuryScout;
+    FlowOrchestrator -> LineWatcher;
+    FlowOrchestrator -> StatCruncher;
+    FlowOrchestrator -> CoachWhisperer;
+    FlowOrchestrator -> WeatherEye;
+
+    InjuryScout -> AgentDebugPanel;
+    LineWatcher -> AgentDebugPanel;
+    StatCruncher -> AgentDebugPanel;
+    CoachWhisperer -> AgentDebugPanel;
+    WeatherEye -> AgentDebugPanel;
+
+    FlowOrchestrator -> MatchupInsightsPanel;
+}
