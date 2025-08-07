@@ -11,6 +11,7 @@
     "test:local": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/testLocal.ts",
     "validate-env": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/validateEnv.ts",
     "list-missing-env": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts",
+    "test:metadata": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/audit-agent-metadata.ts",
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
     "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
     "prepare": "husky",
