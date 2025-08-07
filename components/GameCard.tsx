@@ -20,14 +20,18 @@ function formatRelative(time: string): string {
 
 const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
   const kickoff = formatRelative(game.time);
-  const hoverRef = useRef<NodeJS.Timeout>();
+  // Fix: use browser-safe timeout type
+  const hoverRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleEnter = () => {
     hoverRef.current = setTimeout(() => onHover?.(), 200);
   };
 
   const handleLeave = () => {
-    if (hoverRef.current) clearTimeout(hoverRef.current);
+    if (hoverRef.current) {
+      clearTimeout(hoverRef.current);
+      hoverRef.current = null;
+    }
   };
 
   const kickoffLabel = new Date(game.time).toLocaleTimeString([], {
@@ -48,21 +52,35 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           {game.homeLogo && (
-            <Image src={game.homeLogo} alt="" width={24} height={24} />
+            <Image
+              src={game.homeLogo}
+              alt={`${game.homeTeam} logo`}
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
           )}
           <span>{game.homeTeam}</span>
         </div>
         <span className="text-gray-500">vs</span>
         <div className="flex items-center gap-2">
           {game.awayLogo && (
-            <Image src={game.awayLogo} alt="" width={24} height={24} />
+            <Image
+              src={game.awayLogo}
+              alt={`${game.awayTeam} logo`}
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
           )}
           <span>{game.awayTeam}</span>
         </div>
       </div>
+
       <div className="text-sm text-gray-600">{kickoff}</div>
+
       {game.odds ? (
-        <div className="text-xs text-gray-600 mt-1 flex gap-2">
+        <div className="text-xs text-gray-600 mt-1 flex flex-wrap gap-2">
           {game.odds.spread !== undefined && (
             <span className="px-1 bg-gray-100 rounded" title="Spread">
               {game.homeTeam.slice(0, 3).toUpperCase()} {game.odds.spread}

@@ -3,28 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run validate-env && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts && next dev",
+    "dev": "npm run validate-env && npm run list-missing-env && next dev",
     "build": "npm run validate-env && next build",
     "start": "npm run validate-env && next start",
+    "dev:local": "npm run validate-env && npm run list-missing-env && next dev --port 3000",
+
     "test": "node scripts/update-llms-log.test.js && node lib/logUiEvent.test.js && jest",
-    "dev:local": "npm run validate-env && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts && next dev --port 3000",
-    "test:local": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/testLocal.ts",
-    "validate-env": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/validateEnv.ts",
-    "list-missing-env": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts",
-    "test:metadata": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/audit-agent-metadata.ts",
+    "test:local": "tsx scripts/testLocal.ts",
+
+    "validate-env": "tsx scripts/validateEnv.ts",
+    "list-missing-env": "tsx scripts/listMissingEnv.ts",
+    "test:metadata": "tsx scripts/audit-agent-metadata.ts",
+    "sync-system-diagram": "tsx scripts/syncSystemDiagram.ts",
+    "snap:test": "tsx scripts/uiSnapshot.ts",
+    "postpush": "tsx scripts/log-llms-entry.ts",
+
     "postinstall": "node -e \"try{require.resolve('@types/react')}catch(e){console.warn('@types/react not found')}\"",
-    "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
     "prepare": "husky",
-    "lint": "next lint",
-    "sync-system-diagram": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/syncSystemDiagram.ts",
-    "snap:test": "ts-node scripts/uiSnapshot.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
     "@supabase/supabase-js": "^2.39.5",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.536.0",
-    "next": "^14.1.0",
+    "next": "^14.2.31",
     "next-auth": "^4.24.11",
     "p-limit": "^3.1.0",
     "react": "^18.2.0",
@@ -38,7 +41,8 @@
     "@types/jest": "^29.5.12",
     "@types/next-auth": "^3.13.0",
     "@types/node": "^24.2.0",
-    "@types/react": "^19.1.9",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.4.6",
@@ -48,6 +52,7 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.9.2"
   }
 }
