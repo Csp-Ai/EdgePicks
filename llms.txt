@@ -460,3 +460,10 @@ Message: docs: update sports db league env vars
 Files:
 - README.md (+5/-2)
 
+Timestamp: 2025-08-07T00:10:56.863Z
+Commit: 1d91af3fdb3cfc8be43777e641e5497b06caefe9
+Author: Codex
+Message: docs: document flows and sse examples
+Files:
+- README.md (+22/-0)
+

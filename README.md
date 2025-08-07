@@ -123,6 +123,28 @@ GET /api/log-status
 
 This returns the number of pending log entries and the last error encountered (if any).
 
+## Flow Configurations
+
+Flow presets live in the `flows/` directory as simple JSON files that list which agents should run for a request. Each config includes a human-friendly name and an ordered array of agent IDs:
+
+```json
+{
+  "name": "Default NFL Flow",
+  "agents": ["injuryScout", "statCruncher", "lineWatcher", "guardianAgent"]
+}
+```
+
+Streaming endpoints accept a `flow` query parameter so you can select one of these configs. If omitted, `/api/run-agents` defaults to `football-pick` and `/api/trends` defaults to `trends`.
+
+### SSE Examples
+
+Use `curl` with `-N` to watch Server-Sent Events as they arrive:
+
+```sh
+curl -N -H "Accept: text/event-stream" "http://localhost:3000/api/run-agents?teamA=KC&teamB=DEN&matchDay=1&flow=football-pick"
+curl -N -H "Accept: text/event-stream" "http://localhost:3000/api/trends?flow=trends"
+```
+
 ## Environment Variables
 
 Create a `.env.local` file in the project root for local development. The app
