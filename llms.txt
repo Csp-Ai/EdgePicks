@@ -659,3 +659,16 @@ Files:
 - package.json (+1/-1)
 - scripts/validateEnv.ts (+9/-3)
 
+Timestamp: 2025-08-07T04:49:17Z
+[codex] Injected AIML_OVERVIEW.md as AI/ML Constitution for all agent-based governance
+Timestamp: 2025-08-07T04:55:15.897Z
+Commit: 02529ab2952c8577ff06f3fb3896d3f870bded5b
+Author: Codex
+Message: docs: add AIML_OVERVIEW.md [constitutional-injection]
+Files:
+- AIML_OVERVIEW.md (+100/-0)
+- README.md (+4/-0)
+- codex-prompts/inject-aiml-constitution.md (+136/-0)
+- codex-prompts/validateEnv-prompt.md (+2/-0)
+- llms.txt (+2/-0)
+

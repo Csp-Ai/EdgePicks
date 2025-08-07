@@ -39,6 +39,10 @@ This file serves as the **Codex constitution** and **single source of truth** fo
 **All future agents and developers must reference `llms.txt` before executing changes.**  
 The README reflects system-level intent. The `llms.txt` file reflects execution history, behavior shifts, and rationale.
 
+## 📘 AI/ML Constitution
+
+See [AIML_OVERVIEW.md](AIML_OVERVIEW.md) for the constitutional AI/ML architecture and governance.
+
 ## Git Hooks
 
 This project uses [Husky](https://typicode.github.io/husky) to manage Git hooks. A pre-push hook runs `npm run postpush`, which executes `scripts/log-llms-entry.ts` and appends the latest commit details to `llms.txt`.
