@@ -24,14 +24,14 @@ describe('PublicMatchupsPage', () => {
   });
 
   it('shows sign-in modal when revealing without session', () => {
-    (useSession as jest.Mock).mockReturnValue({ data: null });
+    (useSession as jest.Mock).mockReturnValue({ data: null, status: 'unauthenticated' });
     render(<PublicMatchupsPage />);
     fireEvent.click(screen.getByText('Reveal'));
     expect(screen.getByTestId('sign-in-modal')).toBeInTheDocument();
   });
 
   it('reveals predictions when session exists', () => {
-    (useSession as jest.Mock).mockReturnValue({ data: {} });
+    (useSession as jest.Mock).mockReturnValue({ data: {}, status: 'authenticated' });
     render(<PublicMatchupsPage />);
     fireEvent.click(screen.getByText('Reveal'));
     expect(screen.getByTestId('game')).toBeInTheDocument();

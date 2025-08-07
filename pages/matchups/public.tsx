@@ -3,12 +3,21 @@ import { AnimatePresence, motion } from 'framer-motion';
 import UpcomingGamesPanel from '../../components/UpcomingGamesPanel';
 import PredictionTracker from '../../components/PredictionTracker';
 import SignInModal from '../../components/SignInModal';
+import LoadingShimmer from '../../components/LoadingShimmer';
 import { FADE_DURATION, EASE } from '../../lib/animations';
 import usePredictionReveal from '../../lib/hooks/usePredictionReveal';
 
 const PublicMatchupsPage: React.FC = () => {
-  const { revealed, showModal, handleReveal, closeModal, session } =
+  const { revealed, showModal, handleReveal, closeModal, session, status } =
     usePredictionReveal();
+
+  if (status === 'loading') {
+    return (
+      <main className="min-h-screen p-6">
+        <LoadingShimmer lines={4} />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 p-6 space-y-4">

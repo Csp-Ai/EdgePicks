@@ -3,7 +3,7 @@ import { triggerToast } from './useToast';
 
 export async function logUiEvent(
   uiEvent: string,
-  metadata?: Record<string, any>,
+  metadata?: Record<string, unknown>,
 ): Promise<void> {
   try {
     const meta = metadata ?? {};

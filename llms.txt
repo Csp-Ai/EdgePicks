@@ -481,3 +481,25 @@ Message: docs: clarify testing commands
 Files:
 - README.md (+9/-1)
 
+Timestamp: 2025-08-07T01:06:26.514Z
+Commit: 3c3bd2e584f155b2d3409377954641b0c661eb59
+Author: Codex
+Message: feat: dynamic landing and public matchup fixes
+Files:
+- .eslintrc.json (+3/-0)
+- __tests__/PublicMatchupsPage.test.tsx (+2/-2)
+- __tests__/hooks/usePredictionReveal.test.ts (+2/-2)
+- components/Footer.tsx (+8/-49)
+- components/ThemeToggle.tsx (+14/-1)
+- lib/env.ts (+1/-1)
+- lib/hooks/usePredictionReveal.ts (+2/-2)
+- lib/logUiEvent.ts (+1/-1)
+- lib/supabaseClient.ts (+1/-0)
+- middleware.ts (+21/-0)
+- package-lock.json (+4552/-1043)
+- package.json (+10/-8)
+- pages/_app.tsx (+6/-2)
+- pages/api/dev-login.ts (+5/-0)
+- pages/index.tsx (+83/-32)
+- pages/matchups/public.tsx (+10/-1)
+
