@@ -3,6 +3,10 @@ import { getServerSession } from 'next-auth/next';
 import fs from 'fs';
 import path from 'path';
 import { authOptions } from './auth/[...nextauth]';
+import { loadFlow } from '../../lib/flow/loadFlow';
+import { runFlow } from '../../lib/flow/runFlow';
+import { agents } from '../../lib/agents/registry';
+import type { Matchup } from '../../lib/types';
 
 interface Game {
   homeTeam: { name: string };
@@ -13,6 +17,7 @@ interface Game {
 interface Prediction {
   game: Game;
   winner: string;
+  confidence: number;
   agentScores: Record<string, number>;
 }
 
@@ -44,21 +49,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const predictions: Prediction[] = (games || []).map((g: Game) => ({
-      game: g,
-      winner: g.homeTeam.name,
-      agentScores: {
-        injuryScout: Math.random(),
-        lineWatcher: Math.random(),
-        statCruncher: Math.random(),
-      },
-    }));
+    const flow = await loadFlow('football-pick');
+    const predictions: Prediction[] = [];
+    const aggregatedAgentScores: Record<string, number> = {};
 
-    const agentScores: Record<string, number> = {
-      injuryScout: Math.random(),
-      lineWatcher: Math.random(),
-      statCruncher: Math.random(),
-    };
+    for (const g of games || []) {
+      const matchup: Matchup = {
+        homeTeam: g.homeTeam.name,
+        awayTeam: g.awayTeam.name,
+        time: g.time,
+        league,
+      };
+
+      const { outputs } = await runFlow(flow, matchup);
+
+      const scores: Record<string, number> = {
+        [matchup.homeTeam]: 0,
+        [matchup.awayTeam]: 0,
+      };
+
+      const agentScores: Record<string, number> = {};
+      for (const name of flow.agents) {
+        const meta = agents.find((a) => a.name === name);
+        const result = outputs[name];
+        if (!meta || !result) continue;
+        scores[result.team] += result.score * meta.weight;
+        agentScores[name] = result.score;
+        aggregatedAgentScores[name] =
+          (aggregatedAgentScores[name] || 0) + result.score;
+      }
+
+      const winner =
+        scores[matchup.homeTeam] >= scores[matchup.awayTeam]
+          ? matchup.homeTeam
+          : matchup.awayTeam;
+      const confidence = Math.max(
+        scores[matchup.homeTeam],
+        scores[matchup.awayTeam]
+      );
+
+      predictions.push({ game: g, winner, confidence, agentScores });
+    }
+
+    const agentScores: Record<string, number> = {};
+    const total = predictions.length || 1;
+    Object.entries(aggregatedAgentScores).forEach(([name, score]) => {
+      agentScores[name] = score / total;
+    });
 
     const timestamp = new Date().toISOString();
 

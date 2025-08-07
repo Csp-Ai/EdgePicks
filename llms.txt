@@ -467,3 +467,10 @@ Message: docs: document flows and sse examples
 Files:
 - README.md (+22/-0)
 
+Timestamp: 2025-08-07T00:22:01.562Z
+Commit: c9399439ed07cdc3c39d3ad8dbf652263f6694db
+Author: Codex
+Message: feat: integrate flow into predictions
+Files:
+- pages/api/run-predictions.ts (+52/-15)
+
