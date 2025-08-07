@@ -751,3 +751,10 @@ Files:
  main
  main
 
+Timestamp: 2025-08-07T07:42:26.340Z
+Commit: 26ef5fe471e664b39c699201984c16b04b15df55
+Author: Codex
+Message: fix: correct reset function in PredictionsPanel
+Files:
+- components/PredictionsPanel.tsx (+2/-2)
+

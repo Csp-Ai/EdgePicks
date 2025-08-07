@@ -22,7 +22,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [lastRun, setLastRun] = useState<string | null>(null);
   const [agentLogs, setAgentLogs] = useState<any[]>([]);
-  const { statuses, handleLifecycleEvent, resetTimeline } = useFlowVisualizer();
+  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
   useEffect(() => {
     setLoadingGames(true);
@@ -51,7 +51,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
     }
 
     setLoadingPred(true);
-    resetTimeline();
+    reset();
     let es: EventSource | null = null;
 
     try {
