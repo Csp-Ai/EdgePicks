@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { agents } from '../../lib/agents/registry';
+import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 import {
   readAgentLog,
   getAllAgentLogs,
@@ -7,6 +8,10 @@ import {
 } from '../../lib/agentLogsStore';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const agentMetaMap = new Map<AgentName, AgentMeta>(
+    agents.map((a) => [a.name as AgentName, a])
+  );
+
   if (req.method === 'GET') {
     const { sessionId, agentId } = req.query;
     if (typeof sessionId === 'string' && typeof agentId === 'string') {
@@ -15,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(404).json({ error: 'Log not found' });
         return;
       }
-      const meta = agents.find((a) => a.name === agentId);
+      const meta = agentMetaMap.get(agentId as AgentName);
       const weightedScore = data.output?.score * (meta?.weight ?? 1);
       res.status(200).json({
         output: data.output || null,
