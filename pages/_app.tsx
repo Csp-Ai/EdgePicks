@@ -61,7 +61,10 @@ function Header() {
             <span>{session.user?.name || 'Anonymous'}</span>
             <button
               onClick={() => {
-                void logUiEvent('sign_out', sessionType, session?.user?.id);
+                void logUiEvent('sign_out', {
+                  session_type: sessionType,
+                  user_id: (session?.user as any)?.id,
+                });
                 signOut();
               }}
               className="min-h-[44px] px-4 py-2 border rounded"
@@ -74,7 +77,7 @@ function Header() {
             onClick={() => {
               logUiEvent('sign_in_click', {
                 session_type: sessionType,
-                user_id: session?.user?.id ?? 'unknown',
+                user_id: (session?.user as any)?.id ?? 'unknown',
               });
               signIn('google');
             }}
