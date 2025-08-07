@@ -1,5 +1,5 @@
 import { AgentResult, Matchup } from '../types';
-import { getSupabaseClient } from '../supabaseClient';
+import { supabase } from '../supabaseClient';
 
 export interface TrendsResult extends AgentResult {
   flowPopularity: { flow: string; count: number }[];
@@ -13,8 +13,7 @@ interface MatchupRow {
 }
 
 export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
-  const client = getSupabaseClient();
-  const { data, error } = await client
+  const { data, error } = await supabase
     .from<'matchups', MatchupRow>('matchups')
     .select('flow, agents, actual_winner')
     .order('created_at', { ascending: false })

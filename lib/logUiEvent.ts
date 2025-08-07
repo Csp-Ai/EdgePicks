@@ -1,4 +1,4 @@
-import { getSupabaseClient } from './supabaseClient';
+import { supabase } from './supabaseClient';
 import { triggerToast } from './useToast';
 
 export async function logUiEvent(
@@ -8,8 +8,7 @@ export async function logUiEvent(
   try {
     const meta = metadata ?? {};
     console.log(`[UI EVENT] ${uiEvent}`, Object.keys(meta).length ? meta : '');
-    const client = getSupabaseClient();
-    await client.from('ui_events').insert({
+    await supabase.from('ui_events').insert({
       event: uiEvent,
       metadata: meta,
       created_at: new Date().toISOString(),

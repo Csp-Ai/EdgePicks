@@ -1,10 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSupabaseClient } from '../../lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient';
 import { recomputeAccuracy } from '../../lib/accuracy';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const client = getSupabaseClient();
-
   if (req.method === 'POST') {
     const { matchupId, actualWinner } = req.body as {
       matchupId?: string;
@@ -15,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    const { error } = await client
+    const { error } = await supabase
       .from('matchups')
       .update({ actual_winner: actualWinner })
       .eq('id', matchupId);
@@ -35,11 +33,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'GET') {
-    const { data: agentRows, error: agentError } = await client
+    const { data: agentRows, error: agentError } = await supabase
       .from('agent_stats')
       .select('*')
       .order('accuracy', { ascending: false });
-    const { data: flowRows, error: flowError } = await client
+    const { data: flowRows, error: flowError } = await supabase
       .from('flow_stats')
       .select('*')
       .order('accuracy', { ascending: false });

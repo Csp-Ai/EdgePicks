@@ -1,12 +1,13 @@
 import { Matchup } from '../types';
+import { ENV } from '../env';
 
 // Supported league identifiers.  We expose these so callers can reference the
 // specific league types when needed but the public API of this module is via
 // the dedicated fetch helpers defined at the bottom of the file.
 export type League = 'NFL' | 'MLB' | 'NBA' | 'NHL';
 
-const SPORTS_DB_API_KEY = process.env.SPORTS_DB_API_KEY ?? '1';
-const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_DB_API_KEY}/lookupteam.php?id=`;
+const SPORTS_API_KEY = ENV.SPORTS_API_KEY;
+const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/lookupteam.php?id=`;
 
 const SPORTS_DB_LEAGUE_IDS: Record<League, string | undefined> = {
   NFL: process.env.SPORTS_DB_NFL_ID,
@@ -50,7 +51,7 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
   const isDev = process.env.NODE_ENV === 'development';
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];
-  const eventsUrl = `https://www.thesportsdb.com/api/v1/json/${SPORTS_DB_API_KEY}/eventsnextleague.php?id=${leagueId}`;
+  const eventsUrl = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/eventsnextleague.php?id=${leagueId}`;
   const oddsSport = ODDS_API_SPORT_MAP[league];
   const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/${oddsSport}/odds/`;
   try {

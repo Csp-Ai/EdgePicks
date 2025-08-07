@@ -1,4 +1,4 @@
-import { getSupabaseClient } from './supabaseClient';
+import { supabase } from './supabaseClient';
 import { agents as agentRegistry } from './agents/registry';
 import type { AgentName, AgentOutputs } from './types';
 
@@ -17,8 +17,7 @@ export interface AccuracyStat {
 }
 
 export async function recomputeAccuracy() {
-  const client = getSupabaseClient();
-  const { data, error } = await client
+  const { data, error } = await supabase
     .from('matchups')
     .select('agents, pick, actual_winner, flow');
   if (error || !data) {
@@ -73,8 +72,8 @@ export async function recomputeAccuracy() {
     accuracy: t.wins + t.losses > 0 ? t.wins / (t.wins + t.losses) : 0,
   }));
 
-  await client.from('agent_stats').upsert(agentStats, { onConflict: 'agent' });
-  await client.from('flow_stats').upsert(flowStats, { onConflict: 'flow' });
+  await supabase.from('agent_stats').upsert(agentStats, { onConflict: 'agent' });
+  await supabase.from('flow_stats').upsert(flowStats, { onConflict: 'flow' });
 
   return { agentStats, flowStats };
 }

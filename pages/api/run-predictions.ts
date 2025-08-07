@@ -7,6 +7,7 @@ import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
 import { agents } from '../../lib/agents/registry';
 import type { Matchup } from '../../lib/types';
+import { ENV } from '../../lib/env';
 
 interface Game {
   homeTeam: { name: string };
@@ -34,12 +35,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const missingEnv = ['SPORTS_DB_API_KEY'].filter((key) => !process.env[key]);
+  const missingEnv = ['SPORTS_API_KEY'].filter((key) => !process.env[key]);
   if (missingEnv.length) {
     console.warn(`Missing required env vars: ${missingEnv.join(', ')}`);
   }
-  if (!process.env.SPORTS_DB_API_KEY && process.env.NODE_ENV === 'development') {
-    console.warn('[Dev Warning] Using mock data. Add SPORTS_DB_API_KEY to .env.local');
+  if (ENV.SPORTS_API_KEY === 'sports-fallback-key' && process.env.NODE_ENV === 'development') {
+    console.warn('[Dev Warning] Using mock data. Add SPORTS_API_KEY to .env.local');
   }
 
   const { league, games } = req.body || {};
