@@ -1006,3 +1006,8 @@ Files:
 
 
 
+- Added UI snapshot recorder CLI and guide.
+Testing:
+- npm test — passed
+
+

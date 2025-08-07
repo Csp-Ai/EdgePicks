@@ -4,7 +4,7 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
 [
   {
     "architectureDocumented": true,
-    "command": "npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/docsync-agent.ts",
+    "command": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/docsync-agent.ts",
     "designPatternsDocumented": true,
     "lifecycleDocumented": true,
     "output": "Error: supabaseUrl is required.",
@@ -13,5 +13,11 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "synced": false,
     "timestamp": "2025-08-07T10:17:20Z",
   },
+  {
+    "command": "npx ts-node scripts/uiSnapshot.ts",
+    "snapshotTaken": true,
+    "timestamp": "2025-08-07T12:00:00Z",
+  },
 ]
 `;
+
