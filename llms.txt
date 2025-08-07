@@ -953,6 +953,26 @@ Files:
 - docs/agent-design-patterns.md (+82/-0)
 - llms.txt (+10/-0)
 
+
+Timestamp: 2025-08-07T11:10:00Z
+Summary:
+- Added docsync dry-run, failure logging, and retry script
+- Documented DocSync failover strategy
+Testing:
+- npm test — passed
+- npx ts-node scripts/docsync-agent.ts --dry-run — passed
+- npx ts-node scripts/retry-docsync.ts — ERR_UNKNOWN_FILE_EXTENSION
+Timestamp: 2025-08-07T11:01:43.073Z
+Commit: 0429ba4861195e5c718e095aa12c137737545b19
+Author: Codex
+Message: feat: add docsync retry and failover
+Files:
+- agentLogsStore.json (+11/-0)
+- docs/docsync-strategy.md (+19/-0)
+- llms.txt (+8/-0)
+- scripts/docsync-agent.ts (+75/-17)
+- scripts/retry-docsync.ts (+39/-0)
+=======
 codex/validate-agent-metadata-and-documentation
 Timestamp: 2025-08-07T10:58:40Z
 Summary:
@@ -983,5 +1003,6 @@ Files:
 - __tests__/uiSnapshot.test.tsx (+19/-0)
 - docs/testing-regression-checks.md (+20/-0)
 - llms.txt (+7/-0)
+
 
 
