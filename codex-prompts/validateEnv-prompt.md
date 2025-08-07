@@ -1,5 +1,7 @@
 ## Codex Prompt Summary
 
+> Note: This prompt interoperates with `AIML_OVERVIEW.md`, the constitutional file for agent structure and environment governance.
+
 Create a strict environment variable enforcement system:
 
 - Only load `.env.local` in development
