@@ -1,27 +1,37 @@
 import React from 'react';
 import { formatAgentName } from '../lib/utils';
 
-export interface AgentLeaderboardEntry {
-  totalConfidence: number;
-  totalScore: number;
-  count: number;
+export interface AgentAccuracyEntry {
+  name: string;
+  wins: number;
+  losses: number;
+  accuracy: number;
 }
 
 interface Props {
-  stats: Record<string, AgentLeaderboardEntry>;
+  agents?: AgentAccuracyEntry[];
+  isLoading: boolean;
+  error?: Error;
 }
 
-const AgentLeaderboardPanel: React.FC<Props> = ({ stats }) => {
-  const rows = Object.entries(stats).map(([name, s]) => ({
-    name,
-    avgConfidence: s.count ? s.totalConfidence / s.count : 0,
-    totalScore: s.totalScore,
-    count: s.count,
-  }));
+const AgentLeaderboardPanel: React.FC<Props> = ({ agents, isLoading, error }) => {
+  if (isLoading) {
+    return (
+      <div className="p-4 bg-white rounded shadow text-center text-gray-600">
+        Loading...
+      </div>
+    );
+  }
 
-  rows.sort((a, b) => b.totalScore - a.totalScore);
+  if (error) {
+    return (
+      <div className="p-4 bg-white rounded shadow text-center text-red-600">
+        Failed to load leaderboard
+      </div>
+    );
+  }
 
-  if (rows.length === 0) {
+  if (!agents || agents.length === 0) {
     return (
       <div className="p-4 bg-white rounded shadow text-center text-gray-600">
         No data yet
@@ -31,14 +41,15 @@ const AgentLeaderboardPanel: React.FC<Props> = ({ stats }) => {
 
   return (
     <div className="bg-white rounded shadow divide-y">
-      {rows.map((r, idx) => (
+      {agents.map((r, idx) => (
         <div key={r.name} className="flex items-center justify-between p-2 text-sm">
           <span className="font-medium flex-1">
             {idx + 1}. {formatAgentName(r.name)}
           </span>
-          <span className="w-24 text-right">{(r.avgConfidence * 100).toFixed(1)}%</span>
-          <span className="w-24 text-right">{r.totalScore.toFixed(2)}</span>
-          <span className="w-16 text-right text-gray-500">{r.count}</span>
+          <span className="w-24 text-right">{(r.accuracy * 100).toFixed(1)}%</span>
+          <span className="w-24 text-right text-gray-500">
+            {r.wins}-{r.losses}
+          </span>
         </div>
       ))}
     </div>

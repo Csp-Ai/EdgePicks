@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import MatchupInputForm from '../components/MatchupInputForm';
 import PredictionsPanel from '../components/PredictionsPanel';
 import AgentNodeGraph from '../components/AgentNodeGraph';
-import AgentLeaderboardPanel from '../components/AgentLeaderboardPanel';
+import AgentLeaderboardPanel, { type AgentAccuracyEntry } from '../components/AgentLeaderboardPanel';
 import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
 import AgentStatusPanel from '../components/AgentStatusPanel';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
@@ -14,23 +15,29 @@ export default function Home() {
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
   const [flowStarted, setFlowStarted] = useState(false);
-  const [leaderboard, setLeaderboard] = useState<Record<string, { totalConfidence: number; totalScore: number; count: number }>>({});
-  const [currentParams, setCurrentParams] = useState<{ homeTeam: string; awayTeam: string; week: number } | null>(null);
+  const [currentParams, setCurrentParams] = useState<{
+    homeTeam: string;
+    awayTeam: string;
+    week: number;
+  } | null>(null);
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
   const [sessionId, setSessionId] = useState('');
 
+  interface AccuracyResponse {
+    agents: AgentAccuracyEntry[];
+  }
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data: accuracy, error: accuracyError } = useSWR<AccuracyResponse>(
+    '/api/accuracy',
+    fetcher
+  );
+
   useEffect(() => {
-    const sid = typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
+    const sid =
+      typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
     if (sid) {
       setSessionId(sid);
-      const stored = localStorage.getItem(`leaderboard:${sid}`);
-      if (stored) {
-        try {
-          setLeaderboard(JSON.parse(stored));
-        } catch (e) {
-          // ignore malformed
-        }
-      }
     }
   }, []);
 
@@ -57,30 +64,6 @@ export default function Home() {
     });
     if (exec.result) {
       setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
-    }
-    if (exec.sessionId) {
-      setLeaderboard((prev) => {
-        const stat = prev[exec.name] || {
-          totalConfidence: 0,
-          totalScore: 0,
-          count: 0,
-        };
-        const updated = {
-          ...prev,
-          [exec.name]: {
-            totalConfidence: stat.totalConfidence + (exec.confidenceEstimate || 0),
-            totalScore: stat.totalScore + (exec.scoreTotal || 0),
-            count: stat.count + 1,
-          },
-        };
-        if (typeof window !== 'undefined') {
-          localStorage.setItem(
-            `leaderboard:${exec.sessionId}`,
-            JSON.stringify(updated)
-          );
-        }
-        return updated;
-      });
     }
   };
 
@@ -144,7 +127,11 @@ export default function Home() {
 
       <section className="pt-8">
         <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
-      <AgentLeaderboardPanel stats={leaderboard} />
+        <AgentLeaderboardPanel
+          agents={accuracy?.agents}
+          isLoading={!accuracy && !accuracyError}
+          error={accuracyError}
+        />
       </section>
       {flowStarted && (
         <AgentStatusPanel

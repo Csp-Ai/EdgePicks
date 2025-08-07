@@ -1129,3 +1129,11 @@ Files:
 - pages/api/run-predictions.ts (+2/-6)
 
 
+Timestamp: 2025-08-07T21:53:54.442Z
+Commit: abc8a8d2f81b5d1ab686729a4b2a6e3459c1b8e8
+Author: Codex
+Message: feat: load leaderboard from api
+Files:
+- components/AgentLeaderboardPanel.tsx (+29/-18)
+- pages/index.tsx (+24/-37)
+
