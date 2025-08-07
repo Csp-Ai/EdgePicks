@@ -1007,6 +1007,11 @@ Files:
 
 
 
+- Added UI snapshot recorder CLI and guide.
+Testing:
+- npm test — passed
+=======
+
 Timestamp: 2025-08-07T11:10:47.481Z
 Commit: e64830c926bf76d1980653b4bd3ac49ff5b81a67
 Author: Codex
@@ -1057,5 +1062,6 @@ Files:
 - llms.txt (+7/-0)
 - pages/codex/prompts.tsx (+8/-0)
 - scripts/generatePromptRegistry.ts (+87/-0)
+
 
 
