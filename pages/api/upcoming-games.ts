@@ -130,9 +130,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 true
               );
 
+              const sanitize = (s: string) => s.replace(/\s+/g, '-');
               const derivedId =
                 game.gameId ||
-                `${game.league}:${game.homeTeam}:${game.awayTeam}:${game.time}`;
+                `${sanitize(game.league)}:${sanitize(game.homeTeam)}:${sanitize(
+                  game.awayTeam
+                )}:${new Date(game.time).getTime()}`;
 
               const result: Result = {
                 gameId: derivedId,

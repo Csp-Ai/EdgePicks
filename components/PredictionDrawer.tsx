@@ -43,9 +43,9 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
     )}&awayTeam=${encodeURIComponent(game.awayTeam)}&week=${week}&sessionId=${sessionId}`;
   }, [game]);
 
-  const { status: esStatus, lastMessage, reconnect } = useEventSource(
-    isOpen ? url : null
-  );
+  const { status: esStatus, lastMessage, reconnect } = useEventSource(url, {
+    enabled: isOpen,
+  });
 
   const startRun = () => {
     if (!game) return;

@@ -1228,3 +1228,21 @@ Files:
 - pages/index.tsx (+63/-6)
 
 
+Timestamp: 2025-08-07T23:24:17.986Z
+Commit: 4d482017c0ab5769f13d1e6ab9487a684ae2df97
+Author: Codex
+Message: feat: improve landing sse and config
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/PredictionDrawer.tsx (+3/-3)
+- lib/hooks/useEventSource.ts (+31/-11)
+- next.config.js (+6/-1)
+- pages/api/upcoming-games.ts (+4/-1)
+
+Timestamp: 2025-08-07T23:25:07.934Z
+Commit: 84d2c8677f18c2597e4275481a43b9b61c8c1e9f
+Author: Codex
+Message: test: update llms log snapshot
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+
