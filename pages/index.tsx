@@ -13,9 +13,13 @@ export default function Home() {
   const [agents, setAgents] = useState<AgentOutputs>({});
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
+  const [flowStarted, setFlowStarted] = useState(false);
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
-  const handleStart = () => {
+  const handleStart = (
+    _info: { homeTeam: string; awayTeam: string; week: number }
+  ) => {
+    setFlowStarted(true);
     setAgents({});
     setPick(null);
     reset();
@@ -62,7 +66,7 @@ export default function Home() {
         <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
         <Leaderboard />
       </section>
-      <AgentStatusPanel statuses={statuses} />
+      {flowStarted && <AgentStatusPanel statuses={statuses} />}
     </main>
   );
 }

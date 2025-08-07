@@ -790,3 +790,17 @@ Files:
 - components/TeamBadge.tsx (+12/-8)
 - pages/index.tsx (+1/-1)
 
+Timestamp: 2025-08-07T09:07:43.252Z
+Commit: d7733bcd130a5cb7b7dbc8972adc5501bb47082a
+Author: Codex
+Message: feat: enable live prediction flow on landing
+Files:
+- __tests__/runAgentsApi.test.ts (+2/-2)
+- components/AgentNodeGraph.tsx (+17/-5)
+- components/MatchupInputForm.tsx (+44/-40)
+- lib/env.ts (+3/-3)
+- pages/api/run-agents.ts (+17/-13)
+- pages/dashboard.tsx (+3/-1)
+- pages/index.tsx (+6/-2)
+- pages/predictions.tsx (+3/-1)
+

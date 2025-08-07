@@ -13,16 +13,20 @@ export const config = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { teamA, teamB, matchDay, flow: flowNameParam } = req.query;
+  const { homeTeam, awayTeam, week, flow: flowNameParam } = req.query;
 
-  if (typeof teamA !== 'string' || typeof teamB !== 'string' || typeof matchDay !== 'string') {
-    res.status(400).json({ error: 'teamA, teamB, and matchDay query params are required' });
+  if (
+    typeof homeTeam !== 'string' ||
+    typeof awayTeam !== 'string' ||
+    typeof week !== 'string'
+  ) {
+    res.status(400).json({ error: 'homeTeam, awayTeam, and week query params are required' });
     return;
   }
 
-  const matchDayNum = parseInt(matchDay, 10);
-  if (isNaN(matchDayNum)) {
-    res.status(400).json({ error: 'matchDay must be a number' });
+  const weekNum = parseInt(week, 10);
+  if (isNaN(weekNum)) {
+    res.status(400).json({ error: 'week must be a number' });
     return;
   }
 
@@ -42,9 +46,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.flushHeaders?.();
 
   const matchup: Matchup = {
-    homeTeam: teamA,
-    awayTeam: teamB,
-    matchDay: matchDayNum,
+    homeTeam,
+    awayTeam,
+    matchDay: weekNum,
     time: '',
     league: '',
   };
@@ -89,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const scores: Record<string, number> = { [teamA]: 0, [teamB]: 0 };
+  const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
   flow.agents.forEach((name) => {
     const meta = agents.find((a) => a.name === name);
     const result = agentsOutput[name];
@@ -97,8 +101,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     scores[result.team] += result.score * meta.weight;
   });
 
-  const winner = scores[teamA] >= scores[teamB] ? teamA : teamB;
-  const confidence = Math.max(scores[teamA], scores[teamB]);
+  const winner = scores[homeTeam] >= scores[awayTeam] ? homeTeam : awayTeam;
+  const confidence = Math.max(scores[homeTeam], scores[awayTeam]);
   const topReasons = flow.agents
     .map((name) => agentsOutput[name]?.reason)
     .filter((r): r is string => Boolean(r));

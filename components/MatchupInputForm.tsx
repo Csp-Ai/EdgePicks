@@ -15,13 +15,13 @@ interface SummaryPayload {
 }
 
 export type Props = {
-  onStart: (info: { teamA: string; teamB: string; matchDay: number }) => void;
+  onStart: (info: { homeTeam: string; awayTeam: string; week: number }) => void;
   onAgent: (exec: AgentExecution) => void;
   onComplete: (data: SummaryPayload) => void;
   onLifecycle: (event: { name: string } & AgentLifecycle) => void;
-  defaultTeamA?: string;
-  defaultTeamB?: string;
-  defaultMatchDay?: number;
+  defaultHomeTeam?: string;
+  defaultAwayTeam?: string;
+  defaultWeek?: number;
   autostart?: boolean;
 };
 
@@ -30,29 +30,33 @@ const MatchupInputForm: React.FC<Props> = ({
   onAgent,
   onComplete,
   onLifecycle,
-  defaultTeamA,
-  defaultTeamB,
-  defaultMatchDay,
+  defaultHomeTeam,
+  defaultAwayTeam,
+  defaultWeek,
   autostart,
 }) => {
-  const [teamA, setTeamA] = useState(defaultTeamA || '');
-  const [teamB, setTeamB] = useState(defaultTeamB || '');
-  const [matchDay, setMatchDay] = useState(
-    defaultMatchDay !== undefined ? String(defaultMatchDay) : ''
+  const [homeTeam, setHomeTeam] = useState(defaultHomeTeam || '');
+  const [awayTeam, setAwayTeam] = useState(defaultAwayTeam || '');
+  const [week, setWeek] = useState(
+    defaultWeek !== undefined ? String(defaultWeek) : ''
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const runPrediction = (teamAVal: string, teamBVal: string, md: number) => {
+  const runPrediction = (
+    home: string,
+    away: string,
+    wk: number
+  ) => {
     setError(null);
     setLoading(true);
-    onStart({ teamA: teamAVal, teamB: teamBVal, matchDay: md });
+    onStart({ homeTeam: home, awayTeam: away, week: wk });
 
     try {
       const es = new EventSource(
-        `/api/run-agents?teamA=${encodeURIComponent(teamAVal)}&teamB=${encodeURIComponent(
-          teamBVal
-        )}&matchDay=${md}`
+        `/api/run-agents?homeTeam=${encodeURIComponent(
+          home
+        )}&awayTeam=${encodeURIComponent(away)}&week=${wk}`
       );
 
       es.onmessage = (event) => {
@@ -85,25 +89,25 @@ const MatchupInputForm: React.FC<Props> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!teamA || !teamB || !matchDay) {
+    if (!homeTeam || !awayTeam || !week) {
       setError('All fields are required');
       return;
     }
-    const matchDayNum = parseInt(matchDay, 10);
-    if (isNaN(matchDayNum)) {
-      setError('Match day must be a number');
+    const weekNum = parseInt(week, 10);
+    if (isNaN(weekNum)) {
+      setError('Week must be a number');
       return;
     }
-    runPrediction(teamA, teamB, matchDayNum);
+    runPrediction(homeTeam, awayTeam, weekNum);
   };
 
   useEffect(() => {
-    if (autostart && defaultTeamA && defaultTeamB) {
-      const md = defaultMatchDay ?? 1;
-      runPrediction(defaultTeamA, defaultTeamB, md);
+    if (autostart && defaultHomeTeam && defaultAwayTeam) {
+      const wk = defaultWeek ?? 1;
+      runPrediction(defaultHomeTeam, defaultAwayTeam, wk);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autostart, defaultTeamA, defaultTeamB, defaultMatchDay]);
+  }, [autostart, defaultHomeTeam, defaultAwayTeam, defaultWeek]);
 
   return (
     <form
@@ -111,43 +115,43 @@ const MatchupInputForm: React.FC<Props> = ({
       className="bg-white rounded-lg shadow p-4 sm:p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="teamA">
-          Team/Player A
+        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="homeTeam">
+          Home Team
         </label>
         <input
-          id="teamA"
+          id="homeTeam"
           type="text"
           className="w-full border rounded px-3 py-2"
-          value={teamA}
-          onChange={(e) => setTeamA(e.target.value)}
+          value={homeTeam}
+          onChange={(e) => setHomeTeam(e.target.value)}
           disabled={loading}
           placeholder="e.g., BOS or Federer"
         />
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="teamB">
-          Team/Player B
+        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="awayTeam">
+          Away Team
         </label>
         <input
-          id="teamB"
+          id="awayTeam"
           type="text"
           className="w-full border rounded px-3 py-2"
-          value={teamB}
-          onChange={(e) => setTeamB(e.target.value)}
+          value={awayTeam}
+          onChange={(e) => setAwayTeam(e.target.value)}
           disabled={loading}
           placeholder="e.g., LAL or Nadal"
         />
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="matchDay">
-          Match Day
+        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="week">
+          Week
         </label>
         <input
-          id="matchDay"
+          id="week"
           type="number"
           className="w-full border rounded px-3 py-2"
-          value={matchDay}
-          onChange={(e) => setMatchDay(e.target.value)}
+          value={week}
+          onChange={(e) => setWeek(e.target.value)}
           disabled={loading}
           placeholder="e.g., 1"
         />
