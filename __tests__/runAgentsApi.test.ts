@@ -23,7 +23,9 @@ describe('run-agents API', () => {
       ],
     });
 
-    const req: any = { query: { homeTeam: 'A', awayTeam: 'B', week: '1' } };
+    const req: any = {
+      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
+    };
     const chunks: string[] = [];
     const res: any = {
       setHeader: jest.fn(),
@@ -54,7 +56,9 @@ describe('run-agents API', () => {
       ],
     });
 
-    const req: any = { query: { homeTeam: 'A', awayTeam: 'B', week: '1' } };
+    const req: any = {
+      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
+    };
     const chunks: string[] = [];
     const res: any = {
       setHeader: jest.fn(),

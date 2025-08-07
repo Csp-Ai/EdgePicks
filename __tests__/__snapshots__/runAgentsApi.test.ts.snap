@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`run-agents API matches snapshot of agent stream 1`] = `
-"data: {"type":"summary","matchup":{"homeTeam":"A","awayTeam":"B","matchDay":1,"time":"","league":""},"agents":{"injuryScout":{"team":"A","score":0.72,"reason":"Key WR out"}},"pick":{"winner":"A","confidence":0.36,"topReasons":["Key WR out"]}}
+"data: {"type":"summary","sessionId":"test-session","matchup":{"homeTeam":"A","awayTeam":"B","matchDay":1,"time":"","league":""},"agents":{"injuryScout":{"team":"A","score":0.72,"reason":"Key WR out"}},"pick":{"winner":"A","confidence":0.36,"topReasons":["Key WR out"]}}
 
 "
 `;

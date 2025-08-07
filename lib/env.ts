@@ -1,10 +1,5 @@
 import { z } from 'zod';
 
-if (typeof window === 'undefined' && process.env.NODE_ENV === 'development') {
-  // eslint-disable-next-line global-require
-  require('dotenv').config({ path: '.env.local' });
-}
-
 const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string().nonempty(),
   GOOGLE_CLIENT_SECRET: z.string().nonempty(),

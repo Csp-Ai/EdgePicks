@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MatchupInputForm from '../components/MatchupInputForm';
 import PredictionsPanel from '../components/PredictionsPanel';
 import AgentNodeGraph from '../components/AgentNodeGraph';
-import Leaderboard from '../components/Leaderboard';
+import AgentLeaderboardPanel from '../components/AgentLeaderboardPanel';
 import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
 import AgentStatusPanel from '../components/AgentStatusPanel';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
@@ -14,16 +14,35 @@ export default function Home() {
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
   const [flowStarted, setFlowStarted] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<Record<string, { totalConfidence: number; totalScore: number; count: number }>>({});
+  const [currentParams, setCurrentParams] = useState<{ homeTeam: string; awayTeam: string; week: number } | null>(null);
   const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
 
-  const handleStart = (
-    _info: { homeTeam: string; awayTeam: string; week: number }
-  ) => {
+  useEffect(() => {
+    const sid = typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
+    if (sid) {
+      const stored = localStorage.getItem(`leaderboard:${sid}`);
+      if (stored) {
+        try {
+          setLeaderboard(JSON.parse(stored));
+        } catch (e) {
+          // ignore malformed
+        }
+      }
+    }
+  }, []);
+
+  const handleStart = (info: {
+    homeTeam: string;
+    awayTeam: string;
+    week: number;
+  }) => {
     setFlowStarted(true);
     setAgents({});
     setPick(null);
     reset();
     setLogs((prev) => [...prev, []]);
+    setCurrentParams(info);
   };
 
   const handleAgent = (exec: AgentExecution) => {
@@ -37,10 +56,69 @@ export default function Home() {
     if (exec.result) {
       setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
     }
+    if (exec.sessionId) {
+      setLeaderboard((prev) => {
+        const stat = prev[exec.name] || {
+          totalConfidence: 0,
+          totalScore: 0,
+          count: 0,
+        };
+        const updated = {
+          ...prev,
+          [exec.name]: {
+            totalConfidence: stat.totalConfidence + (exec.confidenceEstimate || 0),
+            totalScore: stat.totalScore + (exec.scoreTotal || 0),
+            count: stat.count + 1,
+          },
+        };
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(
+            `leaderboard:${exec.sessionId}`,
+            JSON.stringify(updated)
+          );
+        }
+        return updated;
+      });
+    }
   };
 
   const handleComplete = (data: { pick: PickSummary }) => {
     setPick(data.pick);
+  };
+
+  const handleRetryAgent = (agentName: string) => {
+    if (!currentParams) return;
+    const sid =
+      typeof window !== 'undefined' ? localStorage.getItem('sessionId') || '' : '';
+    const { homeTeam, awayTeam, week } = currentParams;
+    try {
+      const es = new EventSource(
+        `/api/run-agents?homeTeam=${encodeURIComponent(
+          homeTeam
+        )}&awayTeam=${encodeURIComponent(awayTeam)}&week=${week}&agent=${agentName}&sessionId=${sid}`
+      );
+      es.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'agent') {
+          handleAgent({
+            name: data.name,
+            result: data.result,
+            error: data.error,
+            scoreTotal: data.scoreTotal,
+            confidenceEstimate: data.confidenceEstimate,
+            agentDurationMs: data.agentDurationMs,
+            sessionId: data.sessionId,
+          });
+        } else if (data.type === 'lifecycle') {
+          handleLifecycleEvent(data);
+        } else if (data.type === 'summary' || data.type === 'error') {
+          es.close();
+        }
+      };
+      es.onerror = () => es.close();
+    } catch (e) {
+      console.error('retry agent error', e);
+    }
   };
 
   return (
@@ -64,9 +142,11 @@ export default function Home() {
 
       <section className="pt-8">
         <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
-        <Leaderboard />
+        <AgentLeaderboardPanel stats={leaderboard} />
       </section>
-      {flowStarted && <AgentStatusPanel statuses={statuses} />}
+      {flowStarted && (
+        <AgentStatusPanel statuses={statuses} onRetry={handleRetryAgent} />
+      )}
     </main>
   );
 }
