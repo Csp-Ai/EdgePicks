@@ -1138,4 +1138,24 @@ Files:
 - components/PredictionsPanel.tsx (+19/-1)
 - lib/types.ts (+4/-0)
 - pages/index.tsx (+18/-2)
+=======
+
+Timestamp: 2025-08-07T21:53:54.442Z
+Commit: abc8a8d2f81b5d1ab686729a4b2a6e3459c1b8e8
+Author: Codex
+Message: feat: load leaderboard from api
+Files:
+- components/AgentLeaderboardPanel.tsx (+29/-18)
+- pages/index.tsx (+24/-37)
+=======
+Timestamp: 2025-08-07T21:51:59.705Z
+Commit: 832b79200e3d86bd9e7f8af22549b75223fbd993
+Author: Codex
+Message: feat: improve dark mode styling
+Files:
+- components/AgentLeaderboardPanel.tsx (+3/-3)
+- components/MatchupInputForm.tsx (+17/-7)
+- pages/predictions.tsx (+1/-1)
+- styles/cardStyles.ts (+6/-3)
+
 
