@@ -1,4 +1,4 @@
-import { getSupabaseClient } from './supabaseClient';
+import { supabase } from './supabaseClient';
 import { AgentOutputs, Matchup, PickSummary } from './types';
 import { recomputeAccuracy } from './accuracy';
 
@@ -28,8 +28,7 @@ async function processQueue() {
   const entry = queue.shift()!;
   let retryDelay: number | null = null;
   try {
-    const client = getSupabaseClient();
-    const { error } = await client.from('matchups').insert({
+    const { error } = await supabase.from('matchups').insert({
       team_a: entry.matchup.homeTeam,
       team_b: entry.matchup.awayTeam,
       match_day: entry.matchup.matchDay,

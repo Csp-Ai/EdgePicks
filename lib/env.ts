@@ -1,12 +1,19 @@
-const required = ['NEXTAUTH_SECRET', 'NEXTAUTH_URL', 'SUPABASE_ANON_KEY'];
-const missing = required.filter((key) => !process.env[key]);
-if (missing.length) {
-  throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
-}
+export const getEnv = (key: string, fallback?: string): string => {
+  const value = process.env[key];
+  if (!value) {
+    if (fallback !== undefined) {
+      console.warn(`[env] Warning: Missing ${key}, using fallback: ${fallback}`);
+      return fallback;
+    }
+    throw new Error(`[env] Missing required environment variable: ${key}`);
+  }
+  return value;
+};
 
-export const hasSportsDbKey =
-  !!process.env.SPORTS_DB_API_KEY && process.env.SPORTS_DB_API_KEY !== '1';
+export const ENV = {
+  SUPABASE_URL: getEnv('SUPABASE_URL', 'https://fallback.supabase.co'),
+  SUPABASE_ANON_KEY: getEnv('SUPABASE_ANON_KEY', 'anon-fallback'),
+  NEXTAUTH_URL: getEnv('NEXTAUTH_URL', 'http://localhost:3000'),
+  SPORTS_API_KEY: getEnv('SPORTS_API_KEY', 'sports-fallback-key'),
+};
 
-if (!hasSportsDbKey) {
-  console.warn('Sports API key missing. Add it to `.env.local` to enable live games.');
-}

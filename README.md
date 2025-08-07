@@ -166,7 +166,7 @@ GOOGLE_CLIENT_SECRET=<your-client-secret>
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=<secure-generated-secret>
 ODDS_API_KEY=<your-oddsapi-key>
-SPORTS_DB_API_KEY=<your-thesportsdb-api-key>
+SPORTS_API_KEY=<your-thesportsdb-api-key>
 SPORTS_DB_NFL_ID=<thesportsdb-nfl-league-id>
 SPORTS_DB_MLB_ID=<thesportsdb-mlb-league-id>
 SPORTS_DB_NBA_ID=<thesportsdb-nba-league-id>
@@ -175,7 +175,7 @@ SPORTS_DB_NHL_ID=<thesportsdb-nhl-league-id>
 
 You can find the Supabase values in your dashboard under **Project Settings → API**.
 The NextAuth variables enable Google sign-in for protected routes.
-`SPORTS_DB_API_KEY` is required for live schedule fetching from TheSportsDB.
+`SPORTS_API_KEY` is required for live schedule fetching from TheSportsDB.
 `SPORTS_DB_NFL_ID` sets the TheSportsDB league ID for NFL (default `4391`). Use `SPORTS_DB_MLB_ID`, `SPORTS_DB_NBA_ID`, and `SPORTS_DB_NHL_ID` to configure other leagues. These values populate the `SPORTS_DB_LEAGUE_IDS` map in `lib/data/liveSports.ts`.
 
 ### Development Setup

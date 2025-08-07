@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AgentName, AgentOutputs } from '../lib/types';
 import { formatAgentName } from '../lib/utils';
-import { getSupabaseClient } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 
 interface MatchupRow {
   id: string;
@@ -21,8 +21,7 @@ const HistoryPage: React.FC = () => {
 
   useEffect(() => {
     const fetchMatchups = async () => {
-      const client = getSupabaseClient();
-      const { data, error } = await client
+      const { data, error } = await supabase
         .from('matchups')
         .select('id, team_a, team_b, agents, pick, actual_winner')
         .order('created_at', { ascending: false });
