@@ -5,7 +5,12 @@ import {
   PickSummary,
   AgentLifecycle,
 } from '../lib/types';
-import type { AgentExecution } from '../lib/flow/runFlow';
+import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+
+interface AgentExecution extends BaseAgentExecution {
+  weight?: number;
+  description?: string;
+}
 
 interface SummaryPayload {
   matchup: Matchup;
@@ -64,10 +69,12 @@ const MatchupInputForm: React.FC<Props> = ({
             name: data.name,
             result: data.result,
             error: data.error,
+            weight: data.weight,
             scoreTotal: data.scoreTotal,
             confidenceEstimate: data.confidenceEstimate,
             agentDurationMs: data.agentDurationMs,
             sessionId: data.sessionId,
+            description: data.description,
           });
         } else if (data.type === 'lifecycle') {
           onLifecycle(data as { name: string } & AgentLifecycle);

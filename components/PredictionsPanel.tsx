@@ -37,7 +37,25 @@ const PredictionsPanel: React.FC<Props> = ({ agents, pick, statuses }) => {
                   <span className="font-medium">{name}</span>
                   <span className="text-xs text-gray-400">{status}</span>
                 </div>
-                <p className="text-sm text-gray-300">{result.reason}</p>
+                {result.description && (
+                  <p className="text-xs text-gray-400 mb-1">
+                    {result.description}
+                  </p>
+                )}
+                <p className="text-sm text-gray-300 mb-1">{result.reason}</p>
+                <div className="text-xs text-gray-400 flex flex-wrap gap-2">
+                  {typeof result.weight !== 'undefined' && (
+                    <span>Weight: {result.weight}</span>
+                  )}
+                  {typeof result.scoreTotal !== 'undefined' && (
+                    <span>Score: {result.scoreTotal.toFixed(2)}</span>
+                  )}
+                  {typeof result.confidenceEstimate !== 'undefined' && (
+                    <span>
+                      Confidence: {(result.confidenceEstimate * 100).toFixed(0)}%
+                    </span>
+                  )}
+                </div>
               </li>
             );
           })}

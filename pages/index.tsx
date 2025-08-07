@@ -7,7 +7,12 @@ import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
 import AgentStatusPanel from '../components/AgentStatusPanel';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
 import type { AgentOutputs, PickSummary } from '../lib/types';
-import type { AgentExecution } from '../lib/flow/runFlow';
+import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+
+interface AgentExecution extends BaseAgentExecution {
+  weight?: number;
+  description?: string;
+}
 
 export default function Home() {
   const [agents, setAgents] = useState<AgentOutputs>({});
@@ -56,7 +61,16 @@ export default function Home() {
       return updated;
     });
     if (exec.result) {
-      setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
+      setAgents((prev) => ({
+        ...prev,
+        [exec.name]: {
+          ...exec.result,
+          weight: exec.weight,
+          scoreTotal: exec.scoreTotal,
+          confidenceEstimate: exec.confidenceEstimate,
+          description: exec.description,
+        },
+      }));
     }
     if (exec.sessionId) {
       setLeaderboard((prev) => {
@@ -106,10 +120,12 @@ export default function Home() {
             name: data.name,
             result: data.result,
             error: data.error,
+            weight: data.weight,
             scoreTotal: data.scoreTotal,
             confidenceEstimate: data.confidenceEstimate,
             agentDurationMs: data.agentDurationMs,
             sessionId: data.sessionId,
+            description: data.description,
           });
         } else if (data.type === 'lifecycle') {
           handleLifecycleEvent(data);
