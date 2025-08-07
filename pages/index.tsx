@@ -1,18 +1,36 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
-import PredictionDrawer from '../components/PredictionDrawer';
 import type { Game } from '../lib/types';
+
+const PredictionDrawer = dynamic(() => import('../components/PredictionDrawer'), {
+  ssr: false,
+});
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const LEAGUES = ['NFL', 'NBA', 'MLB', 'NHL'];
 
 export default function Home() {
   const router = useRouter();
-  const league =
-    typeof router.query.league === 'string' ? router.query.league : 'NFL';
-  const { data } = useSWR<any[]>(
+  const queryLeague = typeof router.query.league === 'string' ? router.query.league : null;
+  const [league, setLeague] = useState(queryLeague || 'NFL');
+
+  useEffect(() => {
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('league') : null;
+    if (!queryLeague && stored) {
+      setLeague(stored);
+      router.replace({ query: { ...router.query, league: stored } }, undefined, { shallow: true });
+    } else if (queryLeague) {
+      setLeague(queryLeague);
+      if (typeof window !== 'undefined') localStorage.setItem('league', queryLeague);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryLeague]);
+
+  const { data, error, isLoading, mutate } = useSWR<any[]>(
     `/api/upcoming-games?league=${league}`,
     fetcher,
     { revalidateOnFocus: false, dedupingInterval: 30000 }
@@ -31,6 +49,8 @@ export default function Home() {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Game | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
+
+  const preloadDrawer = () => PredictionDrawer.preload?.();
 
   // handle deep link
   useEffect(() => {
@@ -77,8 +97,20 @@ export default function Home() {
   };
 
 
+  const headTitle = selected
+    ? `Win more pick'em: ${selected.homeTeam} vs ${selected.awayTeam} live AI prediction`
+    : 'Win more pick\'em picks';
+  const headDesc = selected
+    ? `Live prediction for ${selected.homeTeam} vs ${selected.awayTeam}.`
+    : 'AI-powered predictions for upcoming games.';
+
   return (
-    <main className="min-h-screen p-4 space-y-4">
+    <>
+      <Head>
+        <title>{headTitle}</title>
+        <meta name="description" content={headDesc} />
+      </Head>
+      <main className="min-h-screen p-4 space-y-4">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex gap-2">
           {LEAGUES.map((l) => (
@@ -100,8 +132,33 @@ export default function Home() {
           className="border px-2 py-1 rounded"
         />
       </header>
-      <UpcomingGamesGrid games={games} search={search} onSelect={handleSelect} />
+      {pendingId && !games.find((g) => g.gameId === pendingId) && !isLoading ? (
+        <div className="p-4 text-center">
+          <p>Game not found.</p>
+          <button
+            className="mt-2 px-3 py-1 border rounded"
+            onClick={() => {
+              setPendingId(null);
+              const { gameId, ...rest } = router.query;
+              router.push({ query: rest }, undefined, { shallow: true });
+            }}
+          >
+            Back
+          </button>
+        </div>
+      ) : (
+        <UpcomingGamesGrid
+          games={games}
+          search={search}
+          onSelect={handleSelect}
+          isLoading={isLoading}
+          isError={!!error}
+          onRetry={() => mutate()}
+          preload={preloadDrawer}
+        />
+      )}
       <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
     </main>
+    </>
   );
 }

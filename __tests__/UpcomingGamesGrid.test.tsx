@@ -21,6 +21,13 @@ const games: Game[] = [
 ];
 
 describe('UpcomingGamesGrid', () => {
+  it('shows skeletons', () => {
+    render(
+      <UpcomingGamesGrid games={[]} isLoading onSelect={jest.fn()} />
+    );
+    expect(screen.getAllByTestId('game-skeleton').length).toBe(6);
+  });
+
   it('filters by search and handles click', () => {
     const onSelect = jest.fn();
     render(<UpcomingGamesGrid games={games} search="lake" onSelect={onSelect} />);
@@ -28,5 +35,19 @@ describe('UpcomingGamesGrid', () => {
     expect(screen.queryByText('Bulls')).not.toBeInTheDocument();
     fireEvent.click(screen.getByText('Lakers'));
     expect(onSelect).toHaveBeenCalled();
+  });
+
+  it('error retry calls fetch again', () => {
+    const onRetry = jest.fn();
+    render(
+      <UpcomingGamesGrid
+        games={[]}
+        isError
+        onRetry={onRetry}
+        onSelect={jest.fn()}
+      />
+    );
+    fireEvent.click(screen.getByText('Retry'));
+    expect(onRetry).toHaveBeenCalled();
   });
 });

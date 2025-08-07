@@ -46,4 +46,12 @@ describe('Landing deep link', () => {
     await waitFor(() => expect(global.EventSource).toHaveBeenCalled());
     expect(await screen.findByText('A vs B')).toBeInTheDocument();
   });
+
+  it('deep link with unknown gameId shows not found state', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({ json: async () => [] });
+    render(<Home />);
+    expect(
+      await screen.findByText('Game not found.')
+    ).toBeInTheDocument();
+  });
 });
