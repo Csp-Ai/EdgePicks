@@ -26,12 +26,12 @@ function Header() {
   return (
     <>
       {!dismissed && (
-        <div className="fixed top-0 left-0 w-full z-50 bg-green-100 border-b border-green-400 text-green-800 text-sm px-4 py-2 flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
-          <span className="text-center w-full">🎉 Welcome to EdgePicks Beta</span>
+        <div className="fixed top-0 left-0 w-full z-50 bg-green-100 border-b border-green-400 text-green-800 text-sm px-4 py-2 flex items-center justify-between">
+          <span>🎉 Welcome to EdgePicks Beta</span>
           <button
             onClick={() => setDismissed(true)}
             aria-label="Dismiss"
-            className="self-end sm:self-auto"
+            className="ml-4"
           >
             ×
           </button>

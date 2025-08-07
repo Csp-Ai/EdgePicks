@@ -684,3 +684,13 @@ Files:
 - package-lock.json (+11/-1)
 - package.json (+3/-2)
 
+Timestamp: 2025-08-07T06:13:26.737Z
+Commit: b185188bb2b34835ecc7818185030e0a642e0a25
+Author: Codex
+Message: Handle empty UI data and dismissable banner
+Files:
+- components/Leaderboard.tsx (+14/-2)
+- components/PredictionsPanel.tsx (+23/-6)
+- pages/_app.tsx (+3/-3)
+- pages/history.tsx (+2/-1)
+

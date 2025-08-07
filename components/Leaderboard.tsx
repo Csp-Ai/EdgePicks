@@ -8,6 +8,15 @@ interface Stat {
   accuracy: number; // 0-1
 }
 
+const sampleAgents: Stat[] = [
+  { name: 'injuryScout', wins: 3, losses: 1, accuracy: 0.75 },
+  { name: 'lineWatcher', wins: 2, losses: 2, accuracy: 0.5 },
+];
+
+const sampleFlows: Stat[] = [
+  { name: 'football-pick', wins: 5, losses: 3, accuracy: 0.625 },
+];
+
 const Leaderboard: React.FC = () => {
   const [agents, setAgents] = useState<Stat[]>([]);
   const [flows, setFlows] = useState<Stat[]>([]);
@@ -17,11 +26,14 @@ const Leaderboard: React.FC = () => {
     const load = async () => {
       try {
         const res = await fetch('/api/accuracy');
+        if (!res.ok) throw new Error('Request failed');
         const data = await res.json();
-        setAgents(data.agents || []);
-        setFlows(data.flows || []);
+        setAgents((data.agents && data.agents.length) ? data.agents : sampleAgents);
+        setFlows((data.flows && data.flows.length) ? data.flows : sampleFlows);
       } catch (err) {
         console.error('Error fetching accuracy data', err);
+        setAgents(sampleAgents);
+        setFlows(sampleFlows);
       } finally {
         setLoading(false);
       }
