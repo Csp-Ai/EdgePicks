@@ -10,3 +10,4 @@ process.env.SPORTS_API_KEY = 'sports-key';
 process.env.LIVE_MODE = 'on';
 process.env.PREDICTION_CACHE_TTL_SEC = '120';
 process.env.MAX_FLOW_CONCURRENCY = '3';
+process.env.GITHUB_REPOSITORY = 'owner/repo';
