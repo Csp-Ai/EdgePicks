@@ -19,6 +19,7 @@ class MockEventSource {
 
 describe('PredictionDrawer SSE', () => {
   const originalES = global.EventSource;
+  const originalFetch = global.fetch;
 
   beforeEach(() => {
     Object.defineProperty(global, 'crypto', {
@@ -26,10 +27,12 @@ describe('PredictionDrawer SSE', () => {
       configurable: true,
     });
     (global as any).EventSource = jest.fn(() => new MockEventSource());
+    global.fetch = jest.fn().mockResolvedValue({});
   });
 
   afterEach(() => {
     (global as any).EventSource = originalES;
+    global.fetch = originalFetch as any;
   });
 
   it('processes events and announces final pick', () => {

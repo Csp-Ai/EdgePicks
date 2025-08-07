@@ -1209,4 +1209,22 @@ Files:
 - lib/mock/agentRuns.ts (+81/-0)
 - lib/mock/streamAgentRun.ts (+48/-0)
 - pages/viz.tsx (+129/-0)
+=======
+Timestamp: 2025-08-07T22:46:58.981Z
+Commit: 31f4dffae486f5b692a96277bb0a799d11083d5b
+Author: Codex
+Message: feat: polish landing journey with dynamic drawer and sse hook
+Files:
+- __tests__/LandingDeepLink.test.tsx (+8/-0)
+- __tests__/PredictionDrawer.sse.test.tsx (+3/-0)
+- __tests__/UpcomingGamesGrid.test.tsx (+21/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/useEventSource.test.ts (+32/-0)
+- components/GameCard.tsx (+50/-11)
+- components/PredictionDrawer.tsx (+73/-42)
+- components/UpcomingGamesGrid.tsx (+52/-2)
+- lib/hooks/useEventSource.ts (+62/-0)
+- next.config.js (+5/-0)
+- pages/index.tsx (+63/-6)
+
 

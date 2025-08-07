@@ -17,3 +17,24 @@ external services are unavailable. Failed sync attempts are written to
 2. Run `npx ts-node scripts/docsync-agent.ts` for a real sync.
 3. If a sync fails, execute `npx ts-node scripts/retry-docsync.ts` once the
    environment is fixed to replay missed jobs.
+
+## Fail-Open Mode
+
+Running DocSync with `--fail-open` allows pipelines to continue even when
+syncing fails. The script opens a GitHub issue and exits with code 0 instead of
+halting.
+
+```bash
+npx ts-node scripts/docsync-agent.ts --fail-open
+```
+
+- `--dry-run` skips the actual GitHub API call and prints the issue it would
+  create.
+- `--repo owner/name` overrides `GITHUB_REPOSITORY` for issue creation.
+
+The issue title follows `[DocSync Failure] <logId> @ <timestamp>` and the body
+includes the error stack, commit SHA, and log ID. Set `GITHUB_TOKEN` and
+`GITHUB_REPOSITORY` in the environment when using fail-open.
+
+> **Security:** The token only needs `repo` scope to create issues. Keep it
+> secret and scoped to the target repository.
