@@ -1,0 +1,218 @@
+[33m280265a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mprod-ux-polish-clean[m[33m, [m[1;31morigin/prod-ux-polish[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mprod-ux-polish[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #140 from Csp-Ai/codex/fix-missing-nextauth_url-in-env-config
+[33ma8de8aa[m[33m ([m[1;31morigin/codex/fix-missing-nextauth_url-in-env-config[m[33m)[m chore: update llms log [skip-llms]
+[33m13d5a80[m Merge pull request #139 from Csp-Ai/codex/inject-ai/ml-constitution-into-edgepicks
+[33m03ad9d3[m[33m ([m[1;31morigin/codex/inject-ai/ml-constitution-into-edgepicks[m[33m)[m chore: update llms log [skip-llms]
+[33m81f01a1[m Merge pull request #138 from Csp-Ai/codex/enforce-strict-env-variable-usage
+[33m0345ae5[m[33m ([m[1;31morigin/codex/enforce-strict-env-variable-usage[m[33m)[m chore: update llms log [skip-llms]
+[33m41b4c42[m Merge pull request #137 from Csp-Ai/codex/enforce-required-environment-variables-validation
+[33m1ef4acf[m[33m ([m[1;31morigin/codex/enforce-required-environment-variables-validation[m[33m)[m chore: update llms log [skip-llms]
+[33m49d930e[m Merge pull request #136 from Csp-Ai/codex/enforce-strict-environment-variable-checks
+[33m5cd88ef[m[33m ([m[1;31morigin/codex/enforce-strict-environment-variable-checks[m[33m)[m chore: update llms log [skip-llms]
+[33m577d81f[m Merge pull request #135 from Csp-Ai/codex/disable-.env.local-in-production
+[33m9fcf330[m[33m ([m[1;31morigin/codex/disable-.env.local-in-production[m[33m)[m chore: update llms log [skip-llms]
+[33mf919456[m Merge pull request #134 from Csp-Ai/codex/close-architecture-loop-with-ci-validation
+[33me1221c2[m[33m ([m[1;31morigin/codex/close-architecture-loop-with-ci-validation[m[33m)[m Merge branch 'main' into codex/close-architecture-loop-with-ci-validation
+[33m412ca2c[m chore: update llms log [skip-llms]
+[33m179ef5a[m sure
+[33md2d9eaf[m Add system architecture diagram
+[33m5f8a169[m Merge pull request #133 from Csp-Ai/codex/finalize-edgepicks-foundation-infrastructure
+[33m76df300[m[33m ([m[1;31morigin/codex/finalize-edgepicks-foundation-infrastructure[m[33m)[m chore: update llms log [skip-llms]
+[33mb23768a[m Merge pull request #132 from Csp-Ai/codex/finalize-edgepicks-foundational-infrastructure
+[33me981bf6[m[33m ([m[1;31morigin/codex/finalize-edgepicks-foundational-infrastructure[m[33m)[m chore: update llms log [skip-llms]
+[33mb0d6371[m Merge pull request #131 from Csp-Ai/codex/refactor-environment-variable-handling-system
+[33mbc14cf9[m[33m ([m[1;31morigin/codex/refactor-environment-variable-handling-system[m[33m)[m chore: update llms log [skip-llms]
+[33me96a015[m Merge pull request #130 from Csp-Ai/codex/add-safe-.env-injection-and-logging
+[33mc08499d[m[33m ([m[1;31morigin/codex/add-safe-.env-injection-and-logging[m[33m)[m chore: update llms log [skip-llms]
+[33m13a6f83[m Merge pull request #129 from Csp-Ai/codex/add-github-actions-ci/cd-pipeline
+[33m15a8e17[m[33m ([m[1;31morigin/codex/add-github-actions-ci/cd-pipeline[m[33m)[m ci: add GitHub Actions pipeline for lint, test, and deploy
+[33m41aa09f[m Merge pull request #128 from Csp-Ai/codex/upgrade-landing-page-and-fix-crashes
+[33me001218[m[33m ([m[1;31morigin/codex/upgrade-landing-page-and-fix-crashes[m[33m)[m chore: update llms log [skip-llms]
+[33mc27e414[m Merge pull request #127 from Csp-Ai/codex/fix-typescript-error-in-loguievent
+[33m8aa2244[m[33m ([m[1;31morigin/codex/fix-typescript-error-in-loguievent[m[33m)[m feat: allow structured metadata in logUiEvent
+[33m6e31a37[m Merge pull request #126 from Csp-Ai/codex/update-testing-section-in-readme
+[33m9fb3764[m[33m ([m[1;31morigin/codex/update-testing-section-in-readme[m[33m)[m chore: update llms log [skip-llms]
+[33mc51f358[m Merge pull request #125 from Csp-Ai/codex/replace-random-placeholders-with-runflow-or-pickbot
+[33mbe14d67[m[33m ([m[1;31morigin/codex/replace-random-placeholders-with-runflow-or-pickbot[m[33m)[m chore: update llms log [skip-llms]
+[33m12df863[m Merge pull request #124 from Csp-Ai/codex/add-flows-configuration-section-to-readme
+[33m405008d[m[33m ([m[1;31morigin/codex/add-flows-configuration-section-to-readme[m[33m)[m chore: update llms log [skip-llms]
+[33m6bd2ccf[m Merge pull request #123 from Csp-Ai/codex/update-readme-with-sports_db-ids
+[33mb86837f[m[33m ([m[1;31morigin/codex/update-readme-with-sports_db-ids[m[33m)[m chore: update llms log [skip-llms]
+[33mfa54cda[m Merge pull request #122 from Csp-Ai/codex/clean-up-readme.md-and-format-sections
+[33m39b6a65[m[33m ([m[1;31morigin/codex/clean-up-readme.md-and-format-sections[m[33m)[m chore: update llms log [skip-llms]
+[33mb35606d[m Merge pull request #121 from Csp-Ai/codex/merge-overlapping-test-logic-from-prs
+[33m682344b[m[33m ([m[1;31morigin/codex/merge-overlapping-test-logic-from-prs[m[33m)[m chore: update llms log [skip-llms]
+[33m1663e00[m Merge pull request #118 from Csp-Ai/codex/create-tests-for-upcominggamespanel
+[33m5207fc7[m[33m ([m[1;31morigin/codex/create-tests-for-upcominggamespanel[m[33m)[m chore: update llms log [skip-llms]
+[33m4464ce4[m Merge pull request #117 from Csp-Ai/codex/wrap-agentcard-in-link-for-authenticated-users
+[33mb203062[m[33m ([m[1;31morigin/codex/wrap-agentcard-in-link-for-authenticated-users[m[33m)[m Merge branch 'main' into codex/wrap-agentcard-in-link-for-authenticated-users
+[33m3268df9[m chore: update llms log [skip-llms]
+[33m393f383[m Merge pull request #116 from Csp-Ai/codex/wrap-agent-name-with-tooltip
+[33mc3dd81d[m[33m ([m[1;31morigin/codex/wrap-agent-name-with-tooltip[m[33m)[m chore: update llms log [skip-llms]
+[33me1622a8[m Merge pull request #115 from Csp-Ai/codex/modify-loguievent-to-add-sessiontype-and-userid
+[33m10e822c[m[33m ([m[1;31morigin/codex/modify-loguievent-to-add-sessiontype-and-userid[m[33m)[m Merge branch 'main' into codex/modify-loguievent-to-add-sessiontype-and-userid
+[33m1ac39fa[m chore: update llms log [skip-llms]
+[33m288240a[m Merge pull request #114 from Csp-Ai/codex/add-logging-for-prediction-completion-event
+[33m58bb1bf[m[33m ([m[1;31morigin/codex/add-logging-for-prediction-completion-event[m[33m)[m log prediction tracker completion
+[33me9305e6[m Merge pull request #113 from Csp-Ai/codex/add-logging-to-ui-events
+[33m881444e[m[33m ([m[1;31morigin/codex/add-logging-to-ui-events[m[33m)[m chore: update llms log [skip-llms]
+[33ma4b96aa[m Merge pull request #112 from Csp-Ai/codex/inject-sportsdataio-api-key-into-.env.local
+[33m220a2bb[m[33m ([m[1;31morigin/codex/inject-sportsdataio-api-key-into-.env.local[m[33m)[m Merge branch 'main' into codex/inject-sportsdataio-api-key-into-.env.local
+[33mde0faed[m chore: update llms log [skip-llms]
+[33ma787195[m Merge pull request #111 from Csp-Ai/codex/dynamically-import-matchupcard-with-ssr-false
+[33mc360d54[m[33m ([m[1;31morigin/codex/dynamically-import-matchupcard-with-ssr-false[m[33m)[m chore: update llms log [skip-llms]
+[33m6f01dc2[m Merge pull request #110 from Csp-Ai/codex/create-usetoast-component-and-setup-toasts
+[33mcedc52f[m[33m ([m[1;31morigin/codex/create-usetoast-component-and-setup-toasts[m[33m)[m Merge branch 'main' into codex/create-usetoast-component-and-setup-toasts
+[33mf65a07f[m chore: update llms log [skip-llms]
+[33mc7f65a1[m Merge pull request #109 from Csp-Ai/codex/implement-loadingshimmer-in-upcominggamespanel
+[33md8b0b4b[m[33m ([m[1;31morigin/codex/implement-loadingshimmer-in-upcominggamespanel[m[33m)[m Merge branch 'main' into codex/implement-loadingshimmer-in-upcominggamespanel
+[33med5fac0[m chore: update llms log [skip-llms]
+[33m6f76784[m Merge pull request #108 from Csp-Ai/codex/import-emptystate-in-upcominggamespanel
+[33m111ca8c[m[33m ([m[1;31morigin/codex/import-emptystate-in-upcominggamespanel[m[33m)[m chore: update llms log [skip-llms]
+[33m88a91a0[m Merge pull request #107 from Csp-Ai/codex/ensure-responsive-styles-for-components
+[33m088f544[m[33m ([m[1;31morigin/codex/ensure-responsive-styles-for-components[m[33m)[m Merge branch 'main' into codex/ensure-responsive-styles-for-components
+[33m492df65[m chore: update llms log [skip-llms]
+[33m4b2b701[m Merge pull request #106 from Csp-Ai/codex/update-header-buttons-styles
+[33ma8e4041[m[33m ([m[1;31morigin/codex/update-header-buttons-styles[m[33m)[m Merge branch 'main' into codex/update-header-buttons-styles
+[33mf3599a7[m chore: update llms log [skip-llms]
+[33m1637afe[m Merge pull request #105 from Csp-Ai/codex/create-animations-constants-and-update-components
+[33m8a90e34[m[33m ([m[1;31morigin/codex/create-animations-constants-and-update-components[m[33m)[m Merge branch 'main' into codex/create-animations-constants-and-update-components
+[33mdab611b[m chore: update llms log [skip-llms]
+[33m5825f52[m Merge pull request #104 from Csp-Ai/codex/define-confidencetext-utility-class
+[33mb5cb13f[m[33m ([m[1;31morigin/codex/define-confidencetext-utility-class[m[33m)[m Merge branch 'main' into codex/define-confidencetext-utility-class
+[33m7f91a60[m chore: update llms log [skip-llms]
+[33m8ea4658[m Merge pull request #103 from Csp-Ai/codex/create-shared-styles-for-card-components
+[33m7fa104d[m[33m ([m[1;31morigin/codex/create-shared-styles-for-card-components[m[33m)[m Merge branch 'main' into codex/create-shared-styles-for-card-components
+[33m52fbd0a[m chore: update llms log [skip-llms]
+[33mad45e3e[m Merge pull request #102 from Csp-Ai/codex/add-primarycta-variant-to-button
+[33mdd86f36[m[33m ([m[1;31morigin/codex/add-primarycta-variant-to-button[m[33m)[m feat: add primary CTA button variant
+[33mdcd4cfd[m Merge pull request #101 from Csp-Ai/codex/add-hamburger-button-to-navbar
+[33mce12a49[m[33m ([m[1;31morigin/codex/add-hamburger-button-to-navbar[m[33m)[m Merge branch 'main' into codex/add-hamburger-button-to-navbar
+[33m3e1159d[m chore: update llms log [skip-llms]
+[33m7298a38[m Merge pull request #100 from Csp-Ai/codex/create-navbar-component-with-scroll-effects
+[33ma5978af[m[33m ([m[1;31morigin/codex/create-navbar-component-with-scroll-effects[m[33m)[m chore: update llms log [skip-llms]
+[33m5493244[m Merge pull request #99 from Csp-Ai/codex/wrap-game-cards-in-predictiontracker
+[33m93ac446[m[33m ([m[1;31morigin/codex/wrap-game-cards-in-predictiontracker[m[33m)[m chore: update llms log [skip-llms]
+[33m9e1efd0[m Merge pull request #98 from Csp-Ai/codex/add-hidevalues-prop-to-confidencemeter
+[33m6be5a02[m[33m ([m[1;31morigin/codex/add-hidevalues-prop-to-confidencemeter[m[33m)[m feat: hide confidence values for unauthenticated users
+[33me1c2b2c[m Merge pull request #97 from Csp-Ai/codex/create-signinmodal-component
+[33m8b5ebe8[m[33m ([m[1;31morigin/codex/create-signinmodal-component[m[33m)[m Merge branch 'main' into codex/create-signinmodal-component
+[33m371cafc[m chore: update llms log [skip-llms]
+[33m7a8dea2[m Merge pull request #96 from Csp-Ai/codex/add-predictiontracker-component-with-animations
+[33m63f6b2a[m[33m ([m[1;31morigin/codex/add-predictiontracker-component-with-animations[m[33m)[m chore: update llms log [skip-llms]
+[33m2b19fba[m Merge pull request #95 from Csp-Ai/codex/create-public-matchups-page
+[33mb3f55df[m[33m ([m[1;31morigin/codex/create-public-matchups-page[m[33m)[m chore: update llms log [skip-llms]
+[33m726f37c[m Merge pull request #94 from Csp-Ai/codex/replace-google-sign-in-with-explore-matchups-button
+[33m002cbe1[m[33m ([m[1;31morigin/codex/replace-google-sign-in-with-explore-matchups-button[m[33m)[m feat: add explore matchups button
+[33m29c3689[m Merge pull request #93 from Csp-Ai/codex/fix-vercel-build-crash-for-fs-import
+[33m18946cd[m[33m ([m[1;31morigin/codex/fix-vercel-build-crash-for-fs-import[m[33m)[m fix: remove fs import from lib/env.ts to restore Vercel build compatibility
+[33m546bae3[m Merge pull request #92 from Csp-Ai/codex/fix-supabase-typing-error-in-trendsagent.ts
+[33m326061d[m[33m ([m[1;31morigin/codex/fix-supabase-typing-error-in-trendsagent.ts[m[33m)[m chore: update llms log [skip-llms]
+[33me3e7adb[m Merge pull request #91 from Csp-Ai/codex/fix-google-sign-in-and-redesign-landing-page
+[33m82176e3[m[33m ([m[1;31morigin/codex/fix-google-sign-in-and-redesign-landing-page[m[33m)[m chore: update llms log [skip-llms]
+[33mc61d0fd[m Merge pull request #90 from Csp-Ai/codex/track-retry-attempts-for-logentry
+[33mb145f53[m[33m ([m[1;31morigin/codex/track-retry-attempts-for-logentry[m[33m)[m chore: update llms log [skip-llms]
+[33m6b857da[m Merge pull request #89 from Csp-Ai/codex/define-matchuprow-interface-in-trendsagent
+[33m6650062[m[33m ([m[1;31morigin/codex/define-matchuprow-interface-in-trendsagent[m[33m)[m Merge branch 'main' into codex/define-matchuprow-interface-in-trendsagent
+[33mb0bd8ba[m chore: update llms log [skip-llms]
+[33m7312920[m Merge pull request #88 from Csp-Ai/codex/refactor-upcoming-games-to-use-promise.all
+[33m7af9d4a[m[33m ([m[1;31morigin/codex/refactor-upcoming-games-to-use-promise.all[m[33m)[m Merge branch 'main' into codex/refactor-upcoming-games-to-use-promise.all
+[33m6b5cc71[m chore: update llms log [skip-llms]
+[33m8e6653f[m Merge pull request #87 from Csp-Ai/codex/wrap-loadflow-in-try/catch
+[33ma48c861[m[33m ([m[1;31morigin/codex/wrap-loadflow-in-try/catch[m[33m)[m chore: update llms log [skip-llms]
+[33mc19abf4[m Merge pull request #86 from Csp-Ai/codex/finalize-beta-release-and-onboarding-prep
+[33md950a5a[m[33m ([m[1;31morigin/codex/finalize-beta-release-and-onboarding-prep[m[33m)[m chore: update llms log [skip-llms]
+[33m7b9d24c[m Merge pull request #85 from Csp-Ai/codex/finalize-beta-with-ux-improvements
+[33mca94cec[m[33m ([m[1;31morigin/codex/finalize-beta-with-ux-improvements[m[33m)[m chore: update llms log [skip-llms]
+[33mae6e628[m Merge pull request #84 from Csp-Ai/codex/finalize-edgepicks-frontend-for-beta
+[33ma74aebc[m[33m ([m[1;31morigin/codex/finalize-edgepicks-frontend-for-beta[m[33m)[m chore: update llms log [skip-llms]
+[33m39d4970[m Merge pull request #83 from Csp-Ai/codex/add-local-run-support-for-edgepicks
+[33m51ce2dd[m[33m ([m[1;31morigin/codex/add-local-run-support-for-edgepicks[m[33m)[m chore: update llms log [skip-llms]
+[33m8b604b0[m Merge pull request #82 from Csp-Ai/codex/finalize-and-lock-beta-milestone-for-edgepicks
+[33m36c7b44[m[33m ([m[1;31morigin/codex/finalize-and-lock-beta-milestone-for-edgepicks[m[33m)[m chore: update llms log [skip-llms]
+[33mbd27cba[m Merge pull request #81 from Csp-Ai/codex/finalize-edgepicks-authentication-and-frontend
+[33m96f6448[m[33m ([m[1;31morigin/codex/finalize-edgepicks-authentication-and-frontend[m[33m)[m chore: update llms log [skip-llms]
+[33mea06519[m update
+[33m385d0cc[m Merge pull request #80 from Csp-Ai/codex/automate-llms.txt-updates-on-commits
+[33ma1d5c2d[m[33m ([m[1;31morigin/codex/automate-llms.txt-updates-on-commits[m[33m)[m chore: update llms log [skip-llms]
+[33m8986fa2[m Merge pull request #79 from Csp-Ai/codex/implement-league-specific-fetch-helpers
+[33mc6a795a[m[33m ([m[1;31morigin/codex/implement-league-specific-fetch-helpers[m[33m)[m Add league-specific fetch helpers and cross-league support
+[33mc982901[m Merge pull request #78 from Csp-Ai/codex/modify-header-to-render-user-avatar
+[33m340ee9a[m[33m ([m[1;31morigin/codex/modify-header-to-render-user-avatar[m[33m)[m Merge branch 'main' into codex/modify-header-to-render-user-avatar
+[33m335265f[m Display user avatar in header
+[33mf88079d[m Merge pull request #77 from Csp-Ai/codex/create-predictions-page-with-authentication
+[33m5ff1f60[m[33m ([m[1;31morigin/codex/create-predictions-page-with-authentication[m[33m)[m Add predictions page and link
+[33mf83262d[m Merge pull request #76 from Csp-Ai/codex/set-up-husky-pre-commit-hook
+[33me44fe4f[m[33m ([m[1;31morigin/codex/set-up-husky-pre-commit-hook[m[33m)[m docs: log husky hook setup
+[33m2cecefb[m Merge pull request #75 from Csp-Ai/codex/update-.env.example-and-readme.md
+[33m6482fb0[m[33m ([m[1;31morigin/codex/update-.env.example-and-readme.md[m[33m)[m docs: document SportsDB API key
+[33m64249f4[m Merge pull request #74 from Csp-Ai/codex/refactor-upcoming-games-api-for-env-variables
+[33m16b6b88[m[33m ([m[1;31morigin/codex/refactor-upcoming-games-api-for-env-variables[m[33m)[m feat: support multi-league upcoming games
+[33md943430[m Merge pull request #73 from Csp-Ai/codex/add-google-authentication-via-nextauth.js
+[33m3a78a49[m[33m ([m[1;31morigin/codex/add-google-authentication-via-nextauth.js[m[33m)[m docs: document NextAuth env vars
+[33m5cce62d[m Merge pull request #72 from Csp-Ai/codex/implement-google-oauth-with-nextauth.js
+[33mfce58b9[m[33m ([m[1;31morigin/codex/implement-google-oauth-with-nextauth.js[m[33m)[m feat: add Google OAuth with NextAuth
+[33m66ad738[m Merge pull request #71 from Csp-Ai/codex/fix-livematchup-fetch-failure
+[33m040792b[m[33m ([m[1;31morigin/codex/fix-livematchup-fetch-failure[m[33m)[m Merge branch 'main' into codex/fix-livematchup-fetch-failure
+[33me19b149[m fix: add fallback matchups and dev logging
+[33mbd312f7[m Merge pull request #70 from Csp-Ai/codex/add-nextbiggame-component-to-homepage
+[33m3a3f130[m[33m ([m[1;31morigin/codex/add-nextbiggame-component-to-homepage[m[33m)[m feat: add cross-sport NextBigGame panel
+[33mcb071f1[m Merge pull request #69 from Csp-Ai/codex/refactor-agent-evaluation-logic-for-live-data
+[33mebbc164[m[33m ([m[1;31morigin/codex/refactor-agent-evaluation-logic-for-live-data[m[33m)[m feat: expose agent rationales and live data insights
+[33m6d4ba19[m Merge pull request #68 from Csp-Ai/codex/integrate-thesportsdb-and-oddsapi
+[33ma29f9b0[m[33m ([m[1;31morigin/codex/integrate-thesportsdb-and-oddsapi[m[33m)[m feat: integrate live nfl data
+[33md63b90e[m Merge pull request #67 from Csp-Ai/codex/add-automatic-entry-logging-to-llms.txt
+[33m43bbf86[m[33m ([m[1;31morigin/codex/add-automatic-entry-logging-to-llms.txt[m[33m)[m chore: log commits to llms post-push
+[33mb06b018[m Merge pull request #66 from Csp-Ai/codex/create-hero-component-and-integrate-updates
+[33m58de8ae[m[33m ([m[1;31morigin/codex/create-hero-component-and-integrate-updates[m[33m)[m feat: add hero section with featured matchup
+[33mca6873a[m checkpoint
+[33me5c5497[m updating llms.txt
+[33ma074115[m Merge pull request #65 from Csp-Ai/codex/redesign-edgepicks-landing-page
+[33mf993118[m[33m ([m[1;31morigin/codex/redesign-edgepicks-landing-page[m[33m)[m feat: default upcoming games with manual toggle
+[33mb6c1351[m Merge pull request #64 from Csp-Ai/codex/capture-interaction-feedback-and-adjust-learning
+[33m9e97a37[m[33m ([m[1;31morigin/codex/capture-interaction-feedback-and-adjust-learning[m[33m)[m Add prompt for agent reflection protocol
+[33me314c7d[m Merge pull request #63 from Csp-Ai/codex/create-and-update-llms.txt-log
+[33m908dc26[m[33m ([m[1;31morigin/codex/create-and-update-llms.txt-log[m[33m)[m docs: log ai-driven commit
+[33m5df2cb9[m Merge pull request #62 from Csp-Ai/codex/enhance-prompts-for-game-flow-agents
+[33mede3948[m[33m ([m[1;31morigin/codex/enhance-prompts-for-game-flow-agents[m[33m)[m feat: add prompt templates for upcoming games agents
+[33m2147de8[m Merge pull request #61 from Csp-Ai/codex/redesign-landing-page-for-dynamic-predictions
+[33m509b4a4[m[33m ([m[1;31morigin/codex/redesign-landing-page-for-dynamic-predictions[m[33m)[m Add upcoming games flow and landing enhancements
+[33m54a5d11[m Merge pull request #60 from Csp-Ai/codex/fix-confidencemeter-props-validation
+[33mfa87a21[m[33m ([m[1;31morigin/codex/fix-confidencemeter-props-validation[m[33m)[m refactor: update ConfidenceMeter props
+[33m7d50d96[m Merge pull request #59 from Csp-Ai/codex/update-confidencemeter-props-and-rendering
+[33mba1a81a[m[33m ([m[1;31morigin/codex/update-confidencemeter-props-and-rendering[m[33m)[m feat: enhance confidence meter props
+[33mdaf62b0[m Merge pull request #58 from Csp-Ai/codex/implement-agent-status-panel-with-real-time-updates
+[33m5431a78[m[33m ([m[1;31morigin/codex/implement-agent-status-panel-with-real-time-updates[m[33m)[m feat: add agent status panel
+[33m3cd6d1a[m Merge pull request #57 from Csp-Ai/codex/centralize-agent-presentation-and-refactor-components
+[33m3cb3998[m[33m ([m[1;31morigin/codex/centralize-agent-presentation-and-refactor-components[m[33m)[m Merge branch 'main' into codex/centralize-agent-presentation-and-refactor-components
+[33m363c5a9[m feat: add shared confidence meter, badge, and agent tooltip
+[33m349023b[m Merge pull request #55 from Csp-Ai/codex/replace-modal-with-slideover-panel
+[33m59143cf[m[33m ([m[1;31morigin/codex/replace-modal-with-slideover-panel[m[33m)[m refactor: replace glossary modal with slideover
+[33m4852f03[m Merge pull request #53 from Csp-Ai/codex/create-confidencemeter-component
+[33m9ab0acb[m[33m ([m[1;31morigin/codex/create-confidencemeter-component[m[33m)[m feat: add confidence meter
+[33m4e11383[m Merge pull request #52 from Csp-Ai/codex/redesign-agentcard-layout-and-visuals
+[33mb634976[m[33m ([m[1;31morigin/codex/redesign-agentcard-layout-and-visuals[m[33m)[m feat: redesign agent card with icons and tooltip
+[33mad4345c[m Merge pull request #51 from Csp-Ai/codex/update-documentation-with-agent-references-and-sections
+[33m4b3affa[m[33m ([m[1;31morigin/codex/update-documentation-with-agent-references-and-sections[m[33m)[m Merge branch 'main' into codex/update-documentation-with-agent-references-and-sections
+[33mcf29e9d[m docs: refresh agent metadata and developer guide
+[33mbd35305[m Merge pull request #50 from Csp-Ai/codex/create-agents.md-with-agent-documentation
+[33m4e6c760[m[33m ([m[1;31morigin/codex/create-agents.md-with-agent-documentation[m[33m)[m docs: add agent documentation
+[33m20c0dc9[m Merge pull request #49 from Csp-Ai/e1awsu-codex/update-logtosupabase-to-support-isautopick
+[33mf062d07[m[33m ([m[1;31morigin/e1awsu-codex/update-logtosupabase-to-support-isautopick[m[33m)[m feat: track autopicks in supabase logs
+[33mb99cf21[m[33m ([m[1;31morigin/codex/update-logtosupabase-to-support-isautopick[m[33m)[m Merge pull request #48 from Csp-Ai/codex/add-toggle-for-upcominggamespanel
+[33m0769099[m[33m ([m[1;31morigin/codex/add-toggle-for-upcominggamespanel[m[33m)[m feat: add upcoming games toggle
+[33me12120b[m Merge pull request #47 from Csp-Ai/codex/create-upcominggamespanel-component
+[33m7843571[m[33m ([m[1;31morigin/codex/create-upcominggamespanel-component[m[33m)[m Add upcoming games panel component
+[33m711bf6f[m Merge pull request #46 from Csp-Ai/codex/add-upcoming-games-api-endpoint
+[33md3ee911[m[33m ([m[1;31morigin/codex/add-upcoming-games-api-endpoint[m[33m)[m feat: add upcoming games API and autopick logging
+[33m19b787e[m Merge pull request #45 from Csp-Ai/codex/create-livesports.ts-to-fetch-upcoming-games
+[33ma71aef8[m[33m ([m[1;31morigin/codex/create-livesports.ts-to-fetch-upcoming-games[m[33m)[m Add placeholder live sports data fetcher
+[33m14883ef[m Merge pull request #44 from Csp-Ai/codex/add-optional-fields-to-matchup-interface
+[33m99e5973[m[33m ([m[1;31morigin/codex/add-optional-fields-to-matchup-interface[m[33m)[m feat(types): add time and league to Matchup
+[33m8a8c453[m Merge pull request #43 from Csp-Ai/codex/add-api-for-matchup-accuracy-updates
+[33md9ab4d7[m[33m ([m[1;31morigin/codex/add-api-for-matchup-accuracy-updates[m[33m)[m Add accuracy tracking and leaderboard
+[33mee62903[m Merge pull request #42 from Csp-Ai/codex/implement-flow-visualizer-and-timeline
+[33m2b22287[m[33m ([m[1;31morigin/codex/implement-flow-visualizer-and-timeline[m[33m)[m Add agent flow visualizer and dashboard timeline
+[33m3cd7c26[m Merge pull request #41 from Csp-Ai/codex/add-trends-agent-and-api-route
+[33m129a0fd[m[33m ([m[1;31morigin/codex/add-trends-agent-and-api-route[m[33m)[m Merge branch 'main' into codex/add-trends-agent-and-api-route
+[33m92d3aa4[m feat: add trends analysis agent
+[33mae2af19[m Merge pull request #40 from Csp-Ai/codex/implement-guardian-agent-for-ou
