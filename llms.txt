@@ -672,3 +672,15 @@ Files:
 - codex-prompts/validateEnv-prompt.md (+2/-0)
 - llms.txt (+2/-0)
 
+Timestamp: 2025-08-07T05:09:00Z
+Codex injected NEXTAUTH_URL into environment validation
+Timestamp: 2025-08-07T05:13:20.775Z
+Commit: 2e606c32dccad8c5c6b9cd8b7ed45fcb9f3db3d3
+Author: Codex
+Message: fix(env): include NEXTAUTH_URL in validation
+Files:
+- lib/env.ts (+16/-19)
+- llms.txt (+2/-0)
+- package-lock.json (+11/-1)
+- package.json (+3/-2)
+
