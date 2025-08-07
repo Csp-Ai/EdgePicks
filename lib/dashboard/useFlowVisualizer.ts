@@ -18,6 +18,11 @@ export interface FlowEdge {
   target: AgentName;
 }
 
+export interface AgentStatus {
+  status: AgentLifecycle['status'] | 'idle';
+  durationMs?: number;
+}
+
 /**
  * Hook that translates agent lifecycle events from the SSE stream into
  * structures that are easier to visualize (nodes, edges, timestamps).
@@ -25,12 +30,14 @@ export interface FlowEdge {
 export default function useFlowVisualizer() {
   const [nodes, setNodes] = useState<Record<AgentName, FlowNode>>({});
   const [edges, setEdges] = useState<FlowEdge[]>([]);
+  const [statuses, setStatuses] = useState<Record<AgentName, AgentStatus>>({});
   const flowStartRef = useRef<number | null>(null);
   const lastNodeRef = useRef<AgentName | null>(null);
 
   const reset = useCallback(() => {
     setNodes({});
     setEdges([]);
+    setStatuses({});
     flowStartRef.current = null;
     lastNodeRef.current = null;
   }, []);
@@ -53,13 +60,12 @@ export default function useFlowVisualizer() {
           if (flowStartRef.current === null || event.startedAt < flowStartRef.current) {
             flowStartRef.current = event.startedAt;
           }
-          // Link to previous node to form a simple chain/DAG
           if (lastNodeRef.current) {
             setEdges((es) => [
               ...es,
               {
                 id: `${lastNodeRef.current}-${event.name}`,
-                source: lastNodeRef.current as AgentName,
+                source: lastNodeRef.current,
                 target: event.name,
               },
             ]);
@@ -77,6 +83,20 @@ export default function useFlowVisualizer() {
 
         return { ...prev, [event.name]: updated };
       });
+
+      setStatuses((prev) => {
+        if (event.status === 'started') {
+          return { ...prev, [event.name]: { status: 'started' } };
+        }
+
+        return {
+          ...prev,
+          [event.name]: {
+            status: event.status,
+            durationMs: event.durationMs,
+          },
+        };
+      });
     },
     []
   );
@@ -90,7 +110,9 @@ export default function useFlowVisualizer() {
     edges,
     startTime: flowStartRef.current,
     handleLifecycleEvent,
+    statuses,
     reset,
   };
 }
+
 

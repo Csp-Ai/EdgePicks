@@ -723,6 +723,16 @@ Message: chore: log EOD summary
 Files:
 - llms.txt (+15/-0)
 
+codex/import-agentstatuspanel-into-dashboard
+Timestamp: 2025-08-07T07:26:48.336Z
+Commit: f1a7c33e25854363ccb7d0e60486f5beb301511e
+Author: Codex
+Message: feat: surface live agent status
+Files:
+- components/PredictionsPanel.tsx (+19/-0)
+- lib/dashboard/useFlowVisualizer.ts (+21/-0)
+- pages/dashboard.tsx (+3/-1)
+=======
 codex/remove-fallback-for-samplepredictions
 Timestamp: 2025-08-07T07:26:13.821Z
 Commit: 726981ad3c2837b866ffaa6e1ca63fb4bdd602ec
@@ -738,5 +748,6 @@ Message: Use dynamic matchups in dashboard timeline
 Files:
 - lib/dashboard/useFlowVisualizer.ts (+8/-0)
 - pages/dashboard.tsx (+9/-13)
+ main
  main
 
