@@ -1,0 +1,596 @@
+[
+  {
+    "timestamp": "2025-08-06T01:35:19Z",
+    "summary": "Repository docs synced (README + AGENTS.md) AgentStatusPanel added for real-time visibility ConfidenceMeter refactored to accept structured team objects and history UpcomingGamesPanel now fetches live matchups via `/api/upcoming-games`",
+    "source": "llms",
+    "header": "Repository docs synced (README + AGENTS.md) AgentStatusPanel"
+  },
+  {
+    "timestamp": "2025-08-06T02:16:43Z",
+    "summary": "Landing page features UpcomingGamesPanel with hero heading and manual entry toggle. Toggle logs `uiEvent: 'toggleManualEntry'` to Supabase and reveals MatchupInputForm with animation. UpcomingGamesPanel shows three matchups by default, mobile agent accordions, and \"Show More Matchups\" loader.",
+    "source": "llms",
+    "header": "Landing page features UpcomingGamesPanel with hero heading a"
+  },
+  {
+    "timestamp": "2025-08-06T19:42:00Z",
+    "summary": "Codex audit `codex:edgepicks-prep-beta-ux-polish` completed for public beta readiness. Evaluated visual hierarchy, clarity, toggle logic, confidence meter labels, glossary usage, and first-load UX. Logged improvements needed for mobile responsiveness, tooltip accessibility, keyboard navigation, and color contrast. Recommends glossary CTA, better toggle labels, confidence meter text, and layout polish for ADHD-friendliness. Treats llms.txt and README.md as living documents for agent state alignment.",
+    "source": "llms",
+    "header": "Codex audit `codex:edgepicks-prep-beta-ux-polish` completed "
+  },
+  {
+    "timestamp": "2025-08-06T02:56:23Z",
+    "header": "codex:edgepicks-landing-emotional-hook-and-agent-preview",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T03:12:17Z",
+    "header": "codex:edgepicks-integrate-thesportsdb-oddsapi",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T03:28:19Z",
+    "header": "codex:edgepicks-agent-beta-sweep",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T03:38:12Z",
+    "header": "codex:fix-liveMatchup-fetch-failure",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T03:39:45Z",
+    "header": "codex:landing-multisport-forecast-panel",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T03:55:25Z",
+    "summary": "Integrated NextAuth Google OAuth with `/api/auth/[...nextauth]`. Wrapped app in SessionProvider and added header sign-in/out buttons with user name display. Protected index and dashboard pages via server-side session checks redirecting unauthenticated users.",
+    "source": "llms",
+    "header": "Integrated NextAuth Google OAuth with `/api/auth/[...nextaut"
+  },
+  {
+    "timestamp": "2025-08-06T04:01:38Z",
+    "summary": "Documented NextAuth environment variables in README and `.env.example` for Google sign-in configuration.",
+    "source": "llms",
+    "header": "Documented NextAuth environment variables in README and `.en"
+  },
+  {
+    "timestamp": "2025-08-06T04:16:02.317Z",
+    "header": "codex:auto-generated-llms-log",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-06T04:35:34.940Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T04:36:27.171Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T04:48:12.951Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T04:56:44.608Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T05:08:06.703Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T05:08:26.996Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T05:18:52.490Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T05:29:39.118Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T05:39:38.366Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T20:27:27.868Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T20:35:23.287Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T20:50:58.528Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T20:59:29.308Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T21:22:24.804Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T21:26:35.121Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T21:26:50.181Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T21:38:18.700Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:04:28.622Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:06:01.459Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:03:21.354Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:04:48.157Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:02:59.752Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:04:08.496Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:03:35.141Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:33:18.591Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:29:43.682Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:29:16.958Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:54:10.476Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:54:21.567Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T22:59:53.707Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:00:17.712Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:10:29.798Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:09:44.509Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:18:42.008Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:39:07.226Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:54:30.849Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-06T23:58:36.103Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T00:10:56.863Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T00:22:01.562Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T00:26:31.440Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T01:06:26.514Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T01:18:44.402Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T01:44:52.111Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T02:15:07.755Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T02:35:38.824Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T03:36:45Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T03:41:43.721Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:00:19.811Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:13:35.181Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:13:53.864Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:27:36.474Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:42:36.685Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:49:17Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T04:55:15.897Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T05:09:00Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T05:13:20.775Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T06:13:26.737Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T06:57:01.656Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T07:09:01Z",
+    "summary": "Rewrote README.md to reflect modular architecture, Codex governance, and API documentation for beta launch. Validated Supabase environment variables using `scripts/validateEnv.ts` to ensure required settings. Ran `audit-agent.ts` to capture current audit findings and roadmap. Verified Vercel build logs and resolved Edge Runtime warnings. Committed README.md update (\"docs: rewrite README for beta launch with architecture, API, and Codex audit details\").",
+    "source": "llms",
+    "header": "Rewrote README.md to reflect modular architecture, Codex gov"
+  },
+  {
+    "timestamp": "2025-08-07T07:09:59.022Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T07:26:48.336Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T07:26:13.821Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T07:26:34.227Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T07:42:26.340Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T08:14:06.596Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T08:29:11.155Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T08:41:47.559Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T09:07:43.252Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T09:23:25.358Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T09:36:32.394Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T09:46:05.782Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T09:57:16.468Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:04:28.292Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:17:20Z",
+    "header": "codex:ui-components-docsync-update",
+    "summary": "",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-07T10:18:51.107Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:28:03.553Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:34:27Z",
+    "header": "codex:prediction-flow-architecture",
+    "summary": "Documented prediction flow from MatchupInputForm through agent orchestration and UI updates. Logged fallback UI spacing issue in `.github/ui-components-review.md`. Marked existing logs with \"architectureDocumented\": true.",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-07T10:36:38.248Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:42:11Z",
+    "summary": "Added agent-lifecycle-overview.md documenting lifecycle states and transitions with mermaid diagrams. Marked agentLogsStore.json entries with \"lifecycleDocumented\": true.",
+    "source": "llms",
+    "header": "Added agent-lifecycle-overview.md documenting lifecycle stat"
+  },
+  {
+    "timestamp": "2025-08-07T10:43:37.921Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:49:16Z",
+    "summary": "Documented agent design patterns to guide modular, reliable agent development.",
+    "source": "llms",
+    "header": "Documented agent design patterns to guide modular, reliable "
+  },
+  {
+    "timestamp": "2025-08-07T10:50:20.777Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T11:10:00Z",
+    "summary": "Added docsync dry-run, failure logging, and retry script Documented DocSync failover strategy",
+    "source": "llms",
+    "header": "Added docsync dry-run, failure logging, and retry script Doc"
+  },
+  {
+    "timestamp": "2025-08-07T11:01:43.073Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T10:58:40Z",
+    "summary": "Added agent metadata validation library and audit script. Created per-agent documentation to enforce registry governance.",
+    "source": "llms",
+    "header": "Added agent metadata validation library and audit script. Cr"
+  },
+  {
+    "timestamp": "2025-08-07T10:57:56Z",
+    "header": "codex:ci-snapshot-testing",
+    "summary": "Added CI workflow for lint and snapshot tests. Snapshot tests cover lifecycle logs, UI, and llms log.",
+    "source": "llms"
+  },
+  {
+    "timestamp": "2025-08-07T11:00:15.795Z",
+    "summary": "",
+    "source": "llms",
+    "header": ""
+  },
+  {
+    "timestamp": "2025-08-07T11:08:06Z",
+    "summary": "Added Codex Prompt Registry generator and dashboard. Marked agent logs with codexRegistered and documented registry structure.",
+    "source": "llms",
+    "header": "Added Codex Prompt Registry generator and dashboard. Marked "
+  }
+]

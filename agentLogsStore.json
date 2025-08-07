@@ -8,9 +8,21 @@
     "syncError": "supabase env missing",
     "architectureDocumented": true,
     "lifecycleDocumented": true,
-    "designPatternsDocumented": true
+    "designPatternsDocumented": true,
+
+    "reflectionLogged": true
+=======
+    "codexRegistered": true
   },
   {
+
+=======
+
+    "timestamp": "2025-08-07T12:00:00Z",
+    "command": "npx ts-node scripts/uiSnapshot.ts",
+    "snapshotTaken": true
+=======
+
     "timestamp": "2025-08-07T11:05:00Z",
     "command": "npx ts-node scripts/docsync-agent.ts",
     "output": "GH_PAT is required.",
@@ -19,12 +31,25 @@
     "syncError": "GH_PAT is required.",
     "architectureDocumented": true,
     "lifecycleDocumented": true,
+
     "designPatternsDocumented": true
+=======
+    "designPatternsDocumented": true,
+    "codexRegistered": true
+
   },
   {
     "timestamp": "2025-08-07T10:58:40Z",
     "command": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/audit-agent-metadata.ts",
     "output": "Agent metadata is valid and docs are in sync.",
+
     "metadataAudited": true
+=======
+    "metadataAudited": true,
+    "codexRegistered": true
+
+
+
   }
 ]
+
