@@ -6,7 +6,7 @@ import {
   fetchNhlGames,
 } from '../../lib/data/liveSports';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
-import { agents as registry } from '../../lib/agents/registry';
+import { registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary, Matchup } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';

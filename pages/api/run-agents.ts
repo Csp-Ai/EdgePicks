@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { agents } from '../../lib/agents/registry';
+import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+=======
+import { registry as agentRegistry } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { lifecycleAgent } from '../../lib/agents/lifecycleAgent';
@@ -46,6 +49,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     flow = { ...flow, agents: flow.agents.filter((a) => a === agentId) };
   }
 
+  const agentMetaMap = new Map<AgentName, AgentMeta>(
+    agents.map((a) => [a.name as AgentName, a])
+  );
+
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -82,12 +89,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
       async (event) => {
         console.log('lifecycle event', event);
+        const meta = agentMetaMap.get(event.name as AgentName);
         lifecycleAgent(event, matchup);
         res.write(
           `data: ${JSON.stringify({
             type: 'lifecycle',
             sessionId,
             agentId: event.name,
+            weight: meta?.weight,
+            description: meta?.description,
             ...event,
           })}\n\n`
         );
@@ -95,7 +105,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (event.status === 'completed') {
           const result = agentsOutput[event.name];
           if (result) {
-            const meta = agents.find((a) => a.name === event.name);
+
+=======
+
             const scoreTotal = result.score * (meta?.weight ?? 1);
             const confidenceEstimate = result.score;
             res.write(
@@ -104,6 +116,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 sessionId,
                 agentId: event.name,
                 name: event.name,
+                description: meta?.description,
+                weight: meta?.weight,
                 result,
                 scoreTotal,
                 confidenceEstimate,
@@ -133,6 +147,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               sessionId,
               agentId: event.name,
               name: event.name,
+              description: meta?.description,
+              weight: meta?.weight,
               error: true,
               errorStack: errMsg,
               agentDurationMs: event.durationMs,
@@ -170,7 +186,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
   flow.agents.forEach((name) => {
-    const meta = agents.find((a) => a.name === name);
+
+    const meta = agentMetaMap.get(name as AgentName);
+=======
+    const meta = agentRegistry.find((a) => a.name === name);
+
     const result = agentsOutput[name];
     if (!meta || !result) return;
     scores[result.team] += result.score * meta.weight;

@@ -6,6 +6,10 @@ import { authOptions } from './auth/[...nextauth]';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { agents } from '../../lib/agents/registry';
+import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+=======
+import { registry } from '../../lib/agents/registry';
+
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 
@@ -43,6 +47,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+  const agentMetaMap = new Map<AgentName, AgentMeta>(
+    agents.map((a) => [a.name as AgentName, a])
+  );
+
   try {
     const flow = await loadFlow('football-pick');
     const predictions: Prediction[] = [];
@@ -65,7 +73,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const agentScores: Record<string, number> = {};
       for (const name of flow.agents) {
-        const meta = agents.find((a) => a.name === name);
+
+        const meta = agentMetaMap.get(name as AgentName);
+=======
+        const meta = registry.find((a) => a.name === name);
+
         const result = outputs[name];
         if (!meta || !result) continue;
         scores[result.team] += result.score * meta.weight;

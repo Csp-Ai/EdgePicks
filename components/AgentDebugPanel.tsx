@@ -2,7 +2,7 @@ import React from 'react';
 import ScoreBar from './ScoreBar';
 import AgentTooltip from './AgentTooltip';
 import { AgentOutputs } from '../lib/types';
-import { agents as agentRegistry } from '../lib/agents/registry';
+import { registry as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
 const typeBadge: Record<string, string> = {

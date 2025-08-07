@@ -23,6 +23,29 @@ const ODDS_API_SPORT_MAP: Record<League, string> = {
   NHL: 'icehockey_nhl',
 };
 
+// ---------------------------------------------------------------------------
+// In-memory caches
+// ---------------------------------------------------------------------------
+
+interface LogoCacheEntry {
+  logo?: string;
+  timestamp: number;
+}
+
+interface OddsCacheEntry {
+  data: OddsGame[];
+  timestamp: number;
+}
+
+// Module-level caches scoped by league/team so they can be shared across
+// requests while the server remains warm.
+const logoCache = new Map<string, LogoCacheEntry>();
+const oddsCache = new Map<League, OddsCacheEntry>();
+
+// Logos rarely change so cache longer than odds.
+const LOGO_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const ODDS_TTL = 60 * 1000; // 1 minute
+
 interface SportsDbEvent {
   idEvent: string;
   strHomeTeam: string | null;
@@ -41,6 +64,68 @@ interface OddsGame {
     last_update: string;
     markets: { key: string; outcomes: { name: string; price?: number; point?: number }[] }[];
   }[];
+}
+
+function logoCacheKey(league: League, id: string) {
+  return `${league}-${id}`;
+}
+
+async function fetchTeamLogo(
+  league: League,
+  id: string,
+  isDev: boolean
+): Promise<string | undefined> {
+  const key = logoCacheKey(league, id);
+  const cached = logoCache.get(key);
+  if (cached && Date.now() - cached.timestamp < LOGO_TTL) {
+    return cached.logo;
+  }
+  try {
+    const r = await fetch(`${SPORTSDB_TEAM_URL}${id}`);
+    const d = await r.json();
+    const team = d.teams && d.teams[0];
+    const logo = team?.strTeamBadge;
+    logoCache.set(key, { logo, timestamp: Date.now() });
+    return logo;
+  } catch (err) {
+    if (isDev) console.error('team lookup failed', err);
+    return undefined;
+  }
+}
+
+async function fetchLeagueOdds(
+  league: League,
+  url: string,
+  isDev: boolean
+): Promise<OddsGame[]> {
+  const cached = oddsCache.get(league);
+  if (cached && Date.now() - cached.timestamp < ODDS_TTL) {
+    return cached.data;
+  }
+  let oddsData: OddsGame[] = [];
+  try {
+    const oddsKey = ENV.ODDS_API_KEY;
+    if (oddsKey) {
+      const oddsRes = await fetch(
+        `${url}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`
+      );
+      if (oddsRes.ok) {
+        oddsData = await oddsRes.json();
+      }
+      if (isDev) {
+        console.log('OddsAPI response', {
+          status: oddsRes.status,
+          error: oddsRes.ok ? undefined : oddsRes.statusText,
+          dataLength: oddsData.length,
+          data: oddsData,
+        });
+      }
+    }
+  } catch (err) {
+    if (isDev) console.error('odds fetch failed', err);
+  }
+  oddsCache.set(league, { data: oddsData, timestamp: Date.now() });
+  return oddsData;
 }
 
 // Generic fetcher used internally.  Given a league identifier it will fetch
@@ -76,39 +161,12 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
     const logoMap: Record<string, string> = {};
     await Promise.all(
       teamIds.map(async (id) => {
-        try {
-          const r = await fetch(`${SPORTSDB_TEAM_URL}${id}`);
-          const d = await r.json();
-          const team = d.teams && d.teams[0];
-          if (team?.strTeamBadge) logoMap[id] = team.strTeamBadge;
-        } catch (err) {
-          if (isDev) console.error('team lookup failed', err);
-        }
+        const logo = await fetchTeamLogo(league, id, isDev);
+        if (logo) logoMap[id] = logo;
       })
     );
 
-    let oddsData: OddsGame[] = [];
-    try {
-      const oddsKey = ENV.ODDS_API_KEY;
-      if (oddsKey) {
-        const oddsRes = await fetch(
-          `${oddsApiUrl}?regions=us&markets=h2h,spreads,totals&apiKey=${oddsKey}`
-        );
-        if (oddsRes.ok) {
-          oddsData = await oddsRes.json();
-        }
-        if (isDev) {
-          console.log('OddsAPI response', {
-            status: oddsRes.status,
-            error: oddsRes.ok ? undefined : oddsRes.statusText,
-            dataLength: oddsData.length,
-            data: oddsData,
-          });
-        }
-      }
-    } catch (err) {
-      if (isDev) console.error('odds fetch failed', err);
-    }
+    const oddsData = await fetchLeagueOdds(league, oddsApiUrl, isDev);
 
     return events.map((e) => {
       const home = e.strHomeTeam ?? '';
