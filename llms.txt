@@ -934,3 +934,22 @@ Files:
 - docs/agent-lifecycle-overview.md (+46/-0)
 - llms.txt (+7/-0)
 
+Timestamp: 2025-08-07T10:49:16Z
+Summary:
+- Documented agent design patterns to guide modular, reliable agent development.
+Files:
+- docs/agent-design-patterns.md
+- agentLogsStore.json
+- llms.txt
+Patterns documented: 7
+Testing:
+- npm test — passed
+Timestamp: 2025-08-07T10:50:20.777Z
+Commit: d35e717415290dd2c89ca7aa5bbd82eaa340daa9
+Author: Codex
+Message: docs: document agent design patterns
+Files:
+- agentLogsStore.json (+3/-2)
+- docs/agent-design-patterns.md (+82/-0)
+- llms.txt (+10/-0)
+
