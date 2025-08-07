@@ -17,7 +17,7 @@ export const statCruncher = async (matchup: Matchup): Promise<AgentResult> => {
     whatIChose: `Favored ${favored}`,
     whatCouldImprove: 'Consider strength of schedule',
   };
-  logAgentReflection('statCruncher', reflection);
+  await logAgentReflection('statCruncher', reflection);
 
   return {
     team: favored,

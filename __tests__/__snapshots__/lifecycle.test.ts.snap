@@ -1,5 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+
+exports[`agent lifecycle logs matches snapshot 1`] = `{}`;
+=======
 exports[`agent lifecycle logs matches snapshot 1`] = `
 [
   {
@@ -16,6 +19,7 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "timestamp": "2025-08-07T10:17:20Z",
   },
   {
+
     "command": "npx ts-node scripts/uiSnapshot.ts",
     "snapshotTaken": true,
     "timestamp": "2025-08-07T12:00:00Z",
@@ -31,6 +35,13 @@ exports[`agent lifecycle logs matches snapshot 1`] = `
     "syncError": "GH_PAT is required.",
     "synced": false,
     "timestamp": "2025-08-07T11:05:00Z",
+=======
+    "architectureDocumented": true,
+    "codexRegistered": true,
+    "command": "npx ts-node scripts/uiSnapshot.ts",
+    "snapshotTaken": true,
+    "timestamp": "2025-08-07T12:00:00Z",
+
   },
   {
     "codexRegistered": true,

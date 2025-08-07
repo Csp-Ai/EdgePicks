@@ -37,7 +37,7 @@ export const guardianAgent = async (
     whatIChose: 'Reported review findings',
     whatCouldImprove: 'Add more consistency checks',
   };
-  logAgentReflection('guardianAgent', reflection);
+  await logAgentReflection('guardianAgent', reflection);
 
   return {
     team: matchup.homeTeam,

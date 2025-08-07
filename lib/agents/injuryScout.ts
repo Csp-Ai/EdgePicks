@@ -20,7 +20,7 @@ export const injuryScout = async (matchup: Matchup): Promise<AgentResult> => {
     whatIChose: `Favored ${favored}`,
     whatCouldImprove: 'Integrate real-time injury severity',
   };
-  logAgentReflection('injuryScout', reflection);
+  await logAgentReflection('injuryScout', reflection);
 
   return {
     team: favored,
