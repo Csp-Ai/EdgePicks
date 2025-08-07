@@ -453,3 +453,10 @@ Message: docs: clean README placeholders
 Files:
 - README.md (+19/-25)
 
+Timestamp: 2025-08-06T23:58:36.103Z
+Commit: 922847935b14aca548777c2ede0b645fbb878344
+Author: Codex
+Message: docs: update sports db league env vars
+Files:
+- README.md (+5/-2)
+
