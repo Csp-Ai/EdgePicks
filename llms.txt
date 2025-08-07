@@ -953,6 +953,15 @@ Files:
 - docs/agent-design-patterns.md (+82/-0)
 - llms.txt (+10/-0)
 
+codex/validate-agent-metadata-and-documentation
+Timestamp: 2025-08-07T10:58:40Z
+Summary:
+- Added agent metadata validation library and audit script.
+- Created per-agent documentation to enforce registry governance.
+Testing:
+- npm test — passed
+- npm run test:metadata — passed
+=======
 Timestamp: 2025-08-07T10:57:56Z
 codex:ci-snapshot-testing
 Summary:
@@ -974,4 +983,5 @@ Files:
 - __tests__/uiSnapshot.test.tsx (+19/-0)
 - docs/testing-regression-checks.md (+20/-0)
 - llms.txt (+7/-0)
+
 
