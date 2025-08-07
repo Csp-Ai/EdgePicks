@@ -12,6 +12,10 @@ export interface AgentExecution {
   name: AgentName;
   result?: AgentResult;
   error?: true;
+  scoreTotal?: number;
+  confidenceEstimate?: number;
+  agentDurationMs?: number;
+  sessionId?: string;
 }
 
 export interface FlowRunResult {

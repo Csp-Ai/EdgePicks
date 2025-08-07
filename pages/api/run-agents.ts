@@ -13,7 +13,8 @@ export const config = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { homeTeam, awayTeam, week, flow: flowNameParam } = req.query;
+  const { homeTeam, awayTeam, week, flow: flowNameParam, sessionId, agent: agentId } =
+    req.query;
 
   if (
     typeof homeTeam !== 'string' ||
@@ -39,6 +40,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+  if (agentId && typeof agentId === 'string') {
+    flow = { ...flow, agents: flow.agents.filter((a) => a === agentId) };
+  }
+
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -60,27 +65,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       flow,
       matchup,
       ({ name, result, error }) => {
-        console.log('agent event', { name, error: !!error });
         if (!error && result) {
           agentsOutput[name] = result;
-          res.write(
-            `data: ${JSON.stringify({
-              type: 'agent',
-              name,
-              result,
-              warnings: result.warnings,
-            })}\n\n`
-          );
-        } else {
-          res.write(`data: ${JSON.stringify({ type: 'agent', name, error: true })}\n\n`);
         }
-        // @ts-ignore - flush may not exist in some environments
-        res.flush?.();
       },
       (event) => {
         console.log('lifecycle event', event);
         lifecycleAgent(event, matchup);
-        res.write(`data: ${JSON.stringify({ type: 'lifecycle', ...event })}\n\n`);
+        res.write(
+          `data: ${JSON.stringify({
+            type: 'lifecycle',
+            sessionId,
+            agentId: event.name,
+            ...event,
+          })}\n\n`
+        );
+
+        if (event.status === 'completed') {
+          const result = agentsOutput[event.name];
+          if (result) {
+            const meta = agents.find((a) => a.name === event.name);
+            const scoreTotal = result.score * (meta?.weight ?? 1);
+            const confidenceEstimate = result.score;
+            res.write(
+              `data: ${JSON.stringify({
+                type: 'agent',
+                sessionId,
+                agentId: event.name,
+                name: event.name,
+                result,
+                scoreTotal,
+                confidenceEstimate,
+                agentDurationMs: event.durationMs,
+                warnings: result.warnings,
+              })}\n\n`
+            );
+          }
+        } else if (event.status === 'errored') {
+          res.write(
+            `data: ${JSON.stringify({
+              type: 'agent',
+              sessionId,
+              agentId: event.name,
+              name: event.name,
+              error: true,
+            })}\n\n`
+          );
+        }
         // @ts-ignore - flush may not exist in some environments
         res.flush?.();
       }
@@ -90,7 +121,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (err: any) {
     console.error('runFlow failed', err);
     res.write(
-      `data: ${JSON.stringify({ type: 'error', message: err.message || 'runFlow failed' })}\n\n`
+      `data: ${JSON.stringify({
+        type: 'error',
+        sessionId,
+        message: err.message || 'runFlow failed',
+      })}\n\n`
     );
     res.end();
     return;
@@ -127,6 +162,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.write(
     `data: ${JSON.stringify({
       type: 'summary',
+      sessionId,
       matchup,
       agents: agentsOutput,
       pick: pickSummary,

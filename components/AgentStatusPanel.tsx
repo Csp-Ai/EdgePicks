@@ -10,9 +10,10 @@ export type AgentStatusMap = Record<
 
 interface Props {
   statuses: Partial<AgentStatusMap>;
+  onRetry?: (agent: AgentName) => void;
 }
 
-const AgentStatusPanel: React.FC<Props> = ({ statuses }) => {
+const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,14 +33,31 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses }) => {
               if (info?.status === 'started') label = 'Running…';
               else if (info?.status === 'completed')
                 label = `Completed in ${info.durationMs ?? 0}ms`;
-              else if (info?.status === 'errored') label = 'Error';
+              const errored = info?.status === 'errored';
               return (
                 <li
                   key={name}
                   className="flex items-center justify-between px-4 py-2 text-sm"
                 >
-                  <span>{formatAgentName(name)}</span>
-                  <span>{label}</span>
+                  <span className="flex-1">{formatAgentName(name)}</span>
+                  {errored ? (
+                    <span className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 text-xs rounded bg-red-100 text-red-700">
+                        Error
+                      </span>
+                      {onRetry && (
+                        <button
+                          type="button"
+                          onClick={() => onRetry(name)}
+                          className="text-xs text-blue-600 underline"
+                        >
+                          Re-run Agent
+                        </button>
+                      )}
+                    </span>
+                  ) : (
+                    <span>{label}</span>
+                  )}
                 </li>
               );
             })}

@@ -819,3 +819,21 @@ Files:
 - pages/dashboard.tsx (+5/-2)
 - scripts/validateEnv.ts (+2/-6)
 
+Timestamp: 2025-08-07T09:36:32.394Z
+Commit: ae1380ad661f4dc38db6993c32ee12258f054bd0
+Author: Codex
+Message: feat: add session-based agent leaderboard
+Files:
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+1/-1)
+- __tests__/runAgentsApi.test.ts (+6/-2)
+- components/AgentLeaderboardPanel.tsx (+48/-0)
+- components/AgentStatusPanel.tsx (+22/-4)
+- components/MatchupInputForm.tsx (+18/-2)
+- lib/env.ts (+0/-5)
+- lib/flow/runFlow.ts (+4/-0)
+- package-lock.json (+0/-13)
+- package.json (+0/-1)
+- pages/api/run-agents.ts (+51/-15)
+- pages/index.tsx (+87/-7)
+- scripts/validateEnv.ts (+1/-7)
+

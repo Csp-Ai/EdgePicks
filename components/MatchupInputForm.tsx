@@ -42,6 +42,7 @@ const MatchupInputForm: React.FC<Props> = ({
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState('');
 
   const runPrediction = (home: string, away: string, wk: number) => {
     setError(null);
@@ -52,14 +53,22 @@ const MatchupInputForm: React.FC<Props> = ({
       const es = new EventSource(
         `/api/run-agents?homeTeam=${encodeURIComponent(home)}&awayTeam=${encodeURIComponent(
           away
-        )}&week=${wk}`
+        )}&week=${wk}&sessionId=${sessionId}`
       );
 
       es.onmessage = (event) => {
         const data = JSON.parse(event.data);
         console.log('SSE message', data);
         if (data.type === 'agent') {
-          onAgent({ name: data.name, result: data.result, error: data.error });
+          onAgent({
+            name: data.name,
+            result: data.result,
+            error: data.error,
+            scoreTotal: data.scoreTotal,
+            confidenceEstimate: data.confidenceEstimate,
+            agentDurationMs: data.agentDurationMs,
+            sessionId: data.sessionId,
+          });
         } else if (data.type === 'lifecycle') {
           onLifecycle(data as { name: string } & AgentLifecycle);
         } else if (data.type === 'summary') {
@@ -105,6 +114,13 @@ const MatchupInputForm: React.FC<Props> = ({
   };
 
   useEffect(() => {
+    let sid = localStorage.getItem('sessionId');
+    if (!sid) {
+      sid = crypto.randomUUID();
+      localStorage.setItem('sessionId', sid);
+    }
+    setSessionId(sid);
+
     if (autostart && defaultHomeTeam && defaultAwayTeam) {
       const wk = defaultWeek ?? 1;
       runPrediction(defaultHomeTeam, defaultAwayTeam, wk);
