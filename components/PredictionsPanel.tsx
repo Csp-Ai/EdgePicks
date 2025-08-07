@@ -37,6 +37,8 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
         console.error('Error fetching upcoming games', err);
         setGames([]);
         setLoadingGames(false);
+        setToast({ message: 'Failed to load upcoming games.', type: 'error' });
+        setTimeout(() => setToast(null), 3000);
       });
   }, [league]);
 
