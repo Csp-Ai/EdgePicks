@@ -60,6 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       flow,
       matchup,
       ({ name, result, error }) => {
+        console.log('agent event', { name, error: !!error });
         if (!error && result) {
           agentsOutput[name] = result;
           res.write(
@@ -77,6 +78,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.flush?.();
       },
       (event) => {
+        console.log('lifecycle event', event);
         lifecycleAgent(event, matchup);
         res.write(`data: ${JSON.stringify({ type: 'lifecycle', ...event })}\n\n`);
         // @ts-ignore - flush may not exist in some environments
@@ -86,6 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     Object.assign(agentsOutput, outputs);
   } catch (err: any) {
+    console.error('runFlow failed', err);
     res.write(
       `data: ${JSON.stringify({ type: 'error', message: err.message || 'runFlow failed' })}\n\n`
     );

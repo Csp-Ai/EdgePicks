@@ -804,3 +804,18 @@ Files:
 - pages/index.tsx (+6/-2)
 - pages/predictions.tsx (+3/-1)
 
+Timestamp: 2025-08-07T09:23:25.358Z
+Commit: 2c17c254191e931b5a67ea08a4165d0db1d43e0e
+Author: Codex
+Message: feat: enable full bettor flow with agent animation and error handling
+Files:
+- __tests__/EnvDashboard.test.tsx (+0/-22)
+- components/AgentNodeGraph.tsx (+3/-10)
+- components/EnvDashboard.tsx (+0/-15)
+- components/MatchupInputForm.tsx (+13/-10)
+- lib/supabaseClient.ts (+2/-4)
+- middleware.ts (+2/-1)
+- pages/api/run-agents.ts (+3/-0)
+- pages/dashboard.tsx (+5/-2)
+- scripts/validateEnv.ts (+2/-6)
+
