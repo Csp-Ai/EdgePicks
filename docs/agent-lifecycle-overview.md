@@ -26,7 +26,7 @@ Within `runFlow`, agents begin in `idle` until the orchestrator fires a `started
 - `AgentNodeGraph.tsx` animates nodes: pulsing on `started`, dimming on `errored`, and hiding when all agents remain `idle`.
 - `AgentStatusPanel.tsx` lists agents with status text, error badges, and **Re-run Agent** buttons for recovery.
 - Panels collapse when inactive, providing a fallback when no lifecycle state is active.
-- Hovering on a node reveals the agent's latest reflection (`whatIObserved`, `whatIChose`, `whatCouldImprove`) pulled from `agent-reflections.json`.
+- Hovering on a node reveals the agent's latest reflection (`whatIObserved`, `whatIChose`, `whatCouldImprove`) pulled from `logs/agent-reflections.json`.
 
 ## Log Emission
 - Server‑Sent Events stream `status`, `score`, `error`, and `duration` per agent.

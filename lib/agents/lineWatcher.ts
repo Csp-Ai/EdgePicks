@@ -13,7 +13,7 @@ export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
       whatIChose: `Favored ${favored}`,
       whatCouldImprove: 'Track live line movement',
     };
-    logAgentReflection('lineWatcher', reflection);
+    await logAgentReflection('lineWatcher', reflection);
     return {
       team: favored,
       score,
@@ -36,7 +36,7 @@ export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
     whatIChose: `Favored ${favored}`,
     whatCouldImprove: 'Obtain bookmaker data',
   };
-  logAgentReflection('lineWatcher', reflection);
+  await logAgentReflection('lineWatcher', reflection);
 
   return {
     team: favored,
