@@ -781,3 +781,12 @@ Files:
 - pages/index.tsx (+47/-120)
 - pages/predictions.tsx (+26/-32)
 
+Timestamp: 2025-08-07T08:41:47.559Z
+Commit: d56da5913a2efe5cf64b12a07486e185350a7217
+Author: Codex
+Message: fix: escape apostrophe and optimize badge component
+Files:
+- components/AgentNodeGraph.tsx (+1/-1)
+- components/TeamBadge.tsx (+12/-8)
+- pages/index.tsx (+1/-1)
+

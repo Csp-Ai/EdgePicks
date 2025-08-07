@@ -22,7 +22,7 @@ const AgentNodeGraph: React.FC<Props> = ({ statuses }) => {
               scale: state === 'completed' ? 1 : 1.1,
               opacity: state === 'errored' ? 0.4 : 1,
             }}
-            transition={{ repeat: state === 'running' ? Infinity : 0, duration: 0.8, yoyo: true }}
+            transition={{ repeat: state === 'started' ? Infinity : 0, duration: 0.8, yoyo: true }}
             className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-xs"
           >
             {name}

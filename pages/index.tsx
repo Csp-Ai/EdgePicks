@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-zinc-900 to-neutral-950 text-white p-6 space-y-8">
       <section className="text-center space-y-4 max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold">Win more pick'em contests with live AI predictions</h1>
+        <h1 className="text-4xl font-bold">Win more pick&apos;em contests with live AI predictions</h1>
         <p className="text-gray-300">Agents scour news, lines and stats in real time so you lock the sharp side first.</p>
       </section>
 

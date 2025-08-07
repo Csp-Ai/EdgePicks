@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 const teamFallbacks: Record<string, string> = {
   "49ers": "🟥 SF",
@@ -18,7 +19,7 @@ export type TeamBadgeProps = {
 const TeamBadge: React.FC<TeamBadgeProps> = ({ team, logoUrl, isWinner }) => {
   const [useFallback, setUseFallback] = useState(false);
 
-  const badgeClasses = `w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center overflow-hidden ${
+  const badgeClasses = `relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center overflow-hidden ${
     isWinner ? 'ring-2 ring-green-400 transition-transform hover:scale-105' : ''
   }`;
 
@@ -26,13 +27,16 @@ const TeamBadge: React.FC<TeamBadgeProps> = ({ team, logoUrl, isWinner }) => {
 
   if (!useFallback && src) {
     return (
-      <img
-        src={src}
-        alt={`${team} logo`}
-        className={badgeClasses}
-        onError={() => setUseFallback(true)}
-        loading="lazy"
-      />
+      <div className={badgeClasses}>
+        <Image
+          src={src}
+          alt={`${team} logo`}
+          fill
+          sizes="(min-width: 640px) 2.5rem, 2rem"
+          className="object-cover"
+          onError={() => setUseFallback(true)}
+        />
+      </div>
     );
   }
 
