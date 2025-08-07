@@ -1,16 +1,9 @@
-# validateEnv
+## Codex Prompt Summary
 
-Validate environment variables at startup to prevent misconfiguration.
+Create a strict environment variable enforcement system:
 
-Run `npm run validate-env` before starting the application or building to ensure the following variables are present:
-
-- GOOGLE_CLIENT_ID
-- GOOGLE_CLIENT_SECRET
-- NEXTAUTH_SECRET
-- NEXTAUTH_URL
-- SUPABASE_URL
-- SUPABASE_KEY
-- SPORTS_API_KEY
-
-If any key is missing, the script should exit with an error and list missing variables.
-
+- Only load `.env.local` in development
+- Export a single ENV object with validated keys
+- Use a shared REQUIRED_ENV_KEYS array for both runtime and build
+- Build fails if required variables are missing
+- Add a `validate-env` script to pre-check .env files before deploy
