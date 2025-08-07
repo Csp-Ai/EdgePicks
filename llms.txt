@@ -723,3 +723,10 @@ Message: chore: log EOD summary
 Files:
 - llms.txt (+15/-0)
 
+Timestamp: 2025-08-07T07:26:13.821Z
+Commit: 726981ad3c2837b866ffaa6e1ca63fb4bdd602ec
+Author: Codex
+Message: Gate sample predictions on API errors and surface failures
+Files:
+- components/PredictionsPanel.tsx (+11/-4)
+
