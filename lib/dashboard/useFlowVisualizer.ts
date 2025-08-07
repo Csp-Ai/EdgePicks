@@ -28,6 +28,13 @@ export default function useFlowVisualizer() {
   const flowStartRef = useRef<number | null>(null);
   const lastNodeRef = useRef<AgentName | null>(null);
 
+  const reset = useCallback(() => {
+    setNodes({});
+    setEdges([]);
+    flowStartRef.current = null;
+    lastNodeRef.current = null;
+  }, []);
+
   const handleLifecycleEvent = useCallback(
     (event: { name: AgentName } & AgentLifecycle) => {
       setNodes((prev) => {
@@ -83,6 +90,7 @@ export default function useFlowVisualizer() {
     edges,
     startTime: flowStartRef.current,
     handleLifecycleEvent,
+    reset,
   };
 }
 

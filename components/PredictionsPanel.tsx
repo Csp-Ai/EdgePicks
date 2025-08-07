@@ -134,6 +134,12 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       {!loadingPred && !predictions.length && (
         <EmptyState message="Pick a league and hit Run Predictions to get started!" />
       )}
+      {agentLogs.length > 0 && (
+        <section className="space-y-2">
+          <h2 className="text-xl font-semibold">Agent Logs</h2>
+          <LiveGameLogsPanel logs={agentLogs} />
+        </section>
+      )}
       {toast && (
         <div
           role="alert"
@@ -144,7 +150,6 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
           {toast.message}
         </div>
       )}
-      <LiveGameLogsPanel logs={agentLogs} />
     </div>
   );
 };
