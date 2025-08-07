@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { Session } from 'next-auth';
 import LiveGamesList from './LiveGamesList';
 import EmptyState from './EmptyState';
+import LiveGameLogsPanel from './LiveGameLogsPanel';
 import { getUpcomingGames, runPredictions } from '../lib/api';
 
 interface Props {
@@ -20,6 +21,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
     null
   );
   const [lastRun, setLastRun] = useState<string | null>(null);
+  const [agentLogs, setAgentLogs] = useState<any[]>([]);
 
   useEffect(() => {
     setLoadingGames(true);
@@ -48,6 +50,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
     try {
       const res = await runPredictions(league, games);
       setPredictions(res.predictions || []);
+      setAgentLogs((res.predictions || []).map((p: any) => p.executions));
       setLastRun(res.timestamp);
       setToast({
         message: `Predictions generated successfully for ${league}.`,
@@ -117,6 +120,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
           {toast.message}
         </div>
       )}
+      <LiveGameLogsPanel logs={agentLogs} />
     </div>
   );
 };
