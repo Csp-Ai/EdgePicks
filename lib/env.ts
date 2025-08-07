@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
 import { z } from 'zod';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: '.env.local' });
+if (typeof window === 'undefined' && process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
+  require('dotenv').config({ path: '.env.local' });
 }
 
 const envSchema = z.object({

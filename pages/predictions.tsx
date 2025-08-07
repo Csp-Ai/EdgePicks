@@ -13,7 +13,9 @@ const PredictionsPage: React.FC = () => {
   return (
     <main className="min-h-screen bg-gray-50 p-6 space-y-6">
       <MatchupInputForm
-        onStart={() => {
+        onStart={(
+          _info: { homeTeam: string; awayTeam: string; week: number }
+        ) => {
           setAgents({});
           setPick(null);
           reset();

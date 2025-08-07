@@ -12,7 +12,9 @@ const DashboardPage: React.FC = () => {
   const { nodes, startTime, handleLifecycleEvent, reset, statuses } = useFlowVisualizer();
   const [logs, setLogs] = useState<AgentExecution[][]>([]);
 
-  const handleStart = () => {
+  const handleStart = (
+    _info: { homeTeam: string; awayTeam: string; week: number }
+  ) => {
     reset();
     setLogs((prev) => [...prev, []]);
   };

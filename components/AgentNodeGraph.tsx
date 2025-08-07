@@ -9,22 +9,34 @@ interface Props {
 
 const AgentNodeGraph: React.FC<Props> = ({ statuses }) => {
   const agents = agentRegistry.map((a) => a.name as AgentName);
-  if (agents.length === 0) {
-    return <div className="text-center text-sm text-gray-400">No agent activity yet</div>;
+  const hasActivity = Object.values(statuses).some(
+    (s) => s.status && s.status !== 'idle'
+  );
+  if (!hasActivity) {
+    return (
+      <div className="text-center text-sm text-gray-400">No agent activity yet</div>
+    );
   }
   return (
     <div className="flex justify-center flex-wrap gap-4 py-4">
       {agents.map((name) => {
         const state = statuses[name]?.status || 'idle';
+        let bg = 'bg-blue-600';
+        if (state === 'completed') bg = 'bg-green-600';
+        else if (state === 'errored') bg = 'bg-red-600';
         return (
           <motion.div
             key={name}
             animate={{
-              scale: state === 'completed' ? 1 : 1.1,
+              scale: state === 'started' ? 1.1 : 1,
               opacity: state === 'errored' ? 0.4 : 1,
             }}
-            transition={{ repeat: state === 'started' ? Infinity : 0, duration: 0.8, yoyo: true }}
-            className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-xs"
+            transition={{
+              repeat: state === 'started' ? Infinity : 0,
+              repeatType: 'reverse',
+              duration: 0.8,
+            }}
+            className={`w-16 h-16 rounded-full ${bg} flex items-center justify-center text-xs`}
           >
             {name}
           </motion.div>
