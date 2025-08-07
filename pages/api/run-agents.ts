@@ -1,4 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { registry as agentRegistry, type AgentMeta, type AgentName } from '../../lib/agents/registry';
+=======
 import { registry as agentRegistry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
@@ -87,6 +89,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
       async (event) => {
         console.log('lifecycle event', event);
+
+        const meta = agentMetaMap.get(event.name as AgentName);
+        lifecycleAgent(event, matchup);
+        res.write(
+          `data: ${JSON.stringify({
+            type: 'lifecycle',
+            sessionId,
+            agentId: event.name,
+            weight: meta?.weight,
+            description: meta?.description,
+            ...event,
+          })}\n\n`
+        );
+
+        if (event.status === 'completed') {
+          const result = agentsOutput[event.name];
+          if (result) {
+            const scoreTotal = result.score * (meta?.weight ?? 1);
+            const confidenceEstimate = result.score;
+=======
           const meta = agentMetaMap.get(event.name as AgentName);
           lifecycleAgent(event, matchup);
           res.write(
@@ -136,6 +158,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
           } else if (event.status === 'errored') {
             const errMsg = event.error?.stack || event.error?.message || 'Agent failed';
+
             res.write(
               `data: ${JSON.stringify({
                 type: 'agent',
@@ -179,6 +202,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+
+  const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
+  flow.agents.forEach((name) => {
+    const meta = agentMetaMap.get(name as AgentName);
+    const result = agentsOutput[name];
+    if (!meta || !result) return;
+    scores[result.team] += result.score * meta.weight;
+  });
+=======
     const scores: Record<string, number> = { [homeTeam]: 0, [awayTeam]: 0 };
     flow.agents.forEach((name) => {
       const meta = agentMetaMap.get(name as AgentName);
@@ -186,6 +218,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (!meta || !result) return;
       scores[result.team] += result.score * meta.weight;
     });
+
 
   const winner = scores[homeTeam] >= scores[awayTeam] ? homeTeam : awayTeam;
   const confidence = Math.max(scores[homeTeam], scores[awayTeam]);
@@ -203,7 +236,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     matchup,
     agentsOutput as AgentOutputs,
     pickSummary,
-    null, // Optional actualWinner for future expansion
+    null,
     flowName
   );
 
@@ -219,5 +252,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
   res.end();
 }
-
 
