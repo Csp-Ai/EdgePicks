@@ -16,6 +16,7 @@ const CONCURRENCY_LIMIT = 3;
 const CACHE_TTL_MS = 60_000; // cache results for one minute
 
 type Result = {
+  gameId: string;
   homeTeam: { name: string; logo?: string };
   awayTeam: { name: string; logo?: string };
   confidence: number;
@@ -129,7 +130,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 true
               );
 
+              const derivedId =
+                game.gameId ||
+                `${game.league}:${game.homeTeam}:${game.awayTeam}:${game.time}`;
+
               const result: Result = {
+                gameId: derivedId,
                 homeTeam: { name: game.homeTeam, logo: game.homeLogo },
                 awayTeam: { name: game.awayTeam, logo: game.awayLogo },
                 confidence,

@@ -1,161 +1,107 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import MatchupInputForm from '../components/MatchupInputForm';
-import PredictionsPanel from '../components/PredictionsPanel';
-import AgentNodeGraph from '../components/AgentNodeGraph';
-import AgentLeaderboardPanel, { type AgentAccuracyEntry } from '../components/AgentLeaderboardPanel';
-import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
-import AgentStatusPanel from '../components/AgentStatusPanel';
-import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import type { AgentOutputs, PickSummary } from '../lib/types';
-import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
+import PredictionDrawer from '../components/PredictionDrawer';
+import type { Game } from '../lib/types';
 
-interface AgentExecution extends BaseAgentExecution {
-  weight?: number;
-  description?: string;
-}
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const LEAGUES = ['NFL', 'NBA', 'MLB', 'NHL'];
 
 export default function Home() {
-  const [agents, setAgents] = useState<AgentOutputs>({});
-  const [pick, setPick] = useState<PickSummary | null>(null);
-  const [logs, setLogs] = useState<AgentExecution[][]>([]);
-  const [flowStarted, setFlowStarted] = useState(false);
-  const [currentParams, setCurrentParams] = useState<{
-    homeTeam: string;
-    awayTeam: string;
-    week: number;
-  } | null>(null);
-  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
-  const [sessionId, setSessionId] = useState('');
-
-  interface AccuracyResponse {
-    agents: AgentAccuracyEntry[];
-  }
-
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: accuracy, error: accuracyError } = useSWR<AccuracyResponse>(
-    '/api/accuracy',
-    fetcher
+  const router = useRouter();
+  const league =
+    typeof router.query.league === 'string' ? router.query.league : 'NFL';
+  const { data } = useSWR<any[]>(
+    `/api/upcoming-games?league=${league}`,
+    fetcher,
+    { revalidateOnFocus: false, dedupingInterval: 30000 }
   );
+  const games: Game[] = (data || []).map((g: any) => ({
+    gameId: g.gameId,
+    league: g.league,
+    homeTeam: g.homeTeam?.name || g.homeTeam,
+    awayTeam: g.awayTeam?.name || g.awayTeam,
+    time: g.time,
+    homeLogo: g.homeTeam?.logo,
+    awayLogo: g.awayTeam?.logo,
+    odds: g.odds,
+    source: g.source,
+  }));
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<Game | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
+
+  // handle deep link
+  useEffect(() => {
+    const gameId = typeof router.query.gameId === 'string' ? router.query.gameId : null;
+    if (gameId && games.length) {
+      const found = games.find((g) => g.gameId === gameId);
+      if (found) {
+        setSelected(found);
+      } else {
+        setPendingId(gameId);
+      }
+    }
+  }, [router.query.gameId, games]);
 
   useEffect(() => {
-    const sid =
-      typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
-    if (sid) {
-      setSessionId(sid);
+    if (pendingId && games.length) {
+      const found = games.find((g) => g.gameId === pendingId);
+      if (found) {
+        setSelected(found);
+        setPendingId(null);
+      }
     }
-  }, []);
+  }, [pendingId, games]);
 
-  const handleStart = (info: {
-    homeTeam: string;
-    awayTeam: string;
-    week: number;
-  }) => {
-    setFlowStarted(true);
-    setAgents({});
-    setPick(null);
-    reset();
-    setLogs((prev) => [...prev, []]);
-    setCurrentParams(info);
+  const handleSelect = (game: Game) => {
+    setSelected(game);
+    router.push(
+      { query: { ...router.query, league, gameId: game.gameId } },
+      undefined,
+      { shallow: true }
+    );
   };
 
-  const handleAgent = (exec: AgentExecution) => {
-    setLogs((prev) => {
-      const updated = [...prev];
-      const current = updated[updated.length - 1] || [];
-      current.push(exec);
-      updated[updated.length - 1] = current;
-      return updated;
+  const handleClose = () => {
+    setSelected(null);
+    const { gameId, ...rest } = router.query;
+    router.push({ query: rest }, undefined, { shallow: true });
+  };
+
+  const changeLeague = (l: string) => {
+    router.push({ query: { ...router.query, league: l } }, undefined, {
+      shallow: true,
     });
-    if (exec.result) {
-      setAgents((prev) => ({
-        ...prev,
-        [exec.name]: {
-          ...exec.result,
-          weight: exec.weight,
-          scoreTotal: exec.scoreTotal,
-          confidenceEstimate: exec.confidenceEstimate,
-          description: exec.description,
-        },
-      }));
-    }
   };
 
-  const handleComplete = (data: { pick: PickSummary }) => {
-    setPick(data.pick);
-  };
-
-  const handleRetryAgent = (agentName: string) => {
-    if (!currentParams) return;
-    const sid =
-      typeof window !== 'undefined' ? localStorage.getItem('sessionId') || '' : '';
-    const { homeTeam, awayTeam, week } = currentParams;
-    try {
-      const es = new EventSource(
-        `/api/run-agents?homeTeam=${encodeURIComponent(
-          homeTeam
-        )}&awayTeam=${encodeURIComponent(awayTeam)}&week=${week}&agent=${agentName}&sessionId=${sid}`
-      );
-      es.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === 'agent') {
-          handleAgent({
-            name: data.name,
-            result: data.result,
-            error: data.error,
-            weight: data.weight,
-            scoreTotal: data.scoreTotal,
-            confidenceEstimate: data.confidenceEstimate,
-            agentDurationMs: data.agentDurationMs,
-            sessionId: data.sessionId,
-            description: data.description,
-          });
-        } else if (data.type === 'lifecycle') {
-          handleLifecycleEvent(data);
-        } else if (data.type === 'summary' || data.type === 'error') {
-          es.close();
-        }
-      };
-      es.onerror = () => es.close();
-    } catch (e) {
-      console.error('retry agent error', e);
-    }
-  };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-zinc-900 to-neutral-950 text-white p-6 space-y-8">
-      <section className="text-center space-y-4 max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold">Win more pick&apos;em contests with live AI predictions</h1>
-        <p className="text-gray-300">Agents scour news, lines and stats in real time so you lock the sharp side first.</p>
-      </section>
-
-      <MatchupInputForm
-        onStart={handleStart}
-        onAgent={handleAgent}
-        onComplete={handleComplete}
-        onLifecycle={handleLifecycleEvent}
-      />
-
-      <AgentNodeGraph statuses={statuses} />
-      <LiveGameLogsPanel logs={logs} />
-
-      <PredictionsPanel agents={agents} pick={pick} statuses={statuses} />
-
-      <section className="pt-8">
-        <h2 className="text-center text-2xl font-semibold mb-4">Agent Leaderboard Snapshot</h2>
-        <AgentLeaderboardPanel
-          agents={accuracy?.agents}
-          isLoading={!accuracy && !accuracyError}
-          error={accuracyError}
+    <main className="min-h-screen p-4 space-y-4">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex gap-2">
+          {LEAGUES.map((l) => (
+            <button
+              key={l}
+              onClick={() => changeLeague(l)}
+              className={`px-3 py-1 rounded border ${
+                l === league ? 'bg-blue-600 text-white' : 'bg-white'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search"
+          className="border px-2 py-1 rounded"
         />
-      </section>
-      {flowStarted && (
-        <AgentStatusPanel
-          statuses={statuses}
-          onRetry={handleRetryAgent}
-          sessionId={sessionId}
-        />
-      )}
+      </header>
+      <UpcomingGamesGrid games={games} search={search} onSelect={handleSelect} />
+      <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
     </main>
   );
 }

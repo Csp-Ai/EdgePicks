@@ -1178,3 +1178,19 @@ Files:
 - lib/flow/runFlow.ts (+21/-13)
 - pages/api/run-agents.ts (+20/-177)
 
+Timestamp: 2025-08-07T22:30:19.786Z
+Commit: 48daa7411a456d31ae427258b95c5e15b41eea09
+Author: Codex
+Message: feat: add upcoming games flow with prediction drawer
+Files:
+- __tests__/LandingDeepLink.test.tsx (+49/-0)
+- __tests__/PredictionDrawer.sse.test.tsx (+59/-0)
+- __tests__/UpcomingGamesGrid.test.tsx (+32/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/GameCard.tsx (+52/-0)
+- components/PredictionDrawer.tsx (+139/-0)
+- components/UpcomingGamesGrid.tsx (+28/-0)
+- lib/types.ts (+18/-0)
+- pages/api/upcoming-games.ts (+6/-0)
+- pages/index.tsx (+85/-139)
+

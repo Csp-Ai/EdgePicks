@@ -1,3 +1,21 @@
+export interface Game {
+  gameId: string;
+  league: 'NFL' | 'NBA' | 'MLB' | 'NHL';
+  homeTeam: string;
+  awayTeam: string;
+  time: string; // ISO
+  homeLogo?: string;
+  awayLogo?: string;
+  odds?: {
+    spread?: number;
+    overUnder?: number;
+    moneyline?: { home?: number; away?: number };
+    bookmaker?: string;
+    lastUpdate?: string;
+  };
+  source?: 'live-nfl-api' | 'live-nba-api' | 'fallback' | 'mock';
+}
+
 export interface Matchup {
   homeTeam: string;
   awayTeam: string;
