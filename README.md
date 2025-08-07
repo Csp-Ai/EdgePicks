@@ -159,8 +159,6 @@ Then add your own keys:
 ```env
 SUPABASE_URL=<your-supabase-url>
 SUPABASE_ANON_KEY=<your-anon-key>
-NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 GOOGLE_CLIENT_ID=<your-client-id>
 GOOGLE_CLIENT_SECRET=<your-client-secret>
 NEXTAUTH_URL=http://localhost:3000
@@ -172,6 +170,10 @@ SPORTS_DB_MLB_ID=<thesportsdb-mlb-league-id>
 SPORTS_DB_NBA_ID=<thesportsdb-nba-league-id>
 SPORTS_DB_NHL_ID=<thesportsdb-nhl-league-id>
 ```
+
+Environment-specific files like `.env.development` and `.env.production` follow the same keys. Run `npm run validate-env` to
+verify example files contain required variables. During `npm run dev`, a `missing-env-report.txt` file lists any required keys
+that are unset in your current environment.
 
 You can find the Supabase values in your dashboard under **Project Settings → API**.
 The NextAuth variables enable Google sign-in for protected routes.

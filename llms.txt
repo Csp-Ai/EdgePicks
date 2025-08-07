@@ -523,3 +523,26 @@ Files:
 - pages/api/upcoming-games.ts (+8/-5)
 - pages/history.tsx (+2/-3)
 
+Timestamp: 2025-08-07T01:44:52.111Z
+Commit: afc7940e4f4784476155d37d7d01265bc1139c47
+Author: Codex
+Message: refactor: centralize environment config
+Files:
+- .env.development (+12/-0)
+- .env.example (+0/-12)
+- .env.local.example (+11/-10)
+- .env.production (+12/-0)
+- .github/workflows/ci.yml (+3/-0)
+- .gitignore (+2/-0)
+- README.md (+4/-2)
+- lib/data/liveSports.ts (+5/-5)
+- lib/env.ts (+30/-7)
+- lib/envKeys.ts (+8/-0)
+- middleware.ts (+2/-1)
+- package.json (+3/-2)
+- pages/api/auth/[...nextauth].ts (+11/-7)
+- pages/api/run-predictions.ts (+0/-4)
+- pages/api/upcoming-games.ts (+0/-4)
+- scripts/missingEnvReport.ts (+11/-0)
+- scripts/validateEnv.ts (+22/-0)
+
