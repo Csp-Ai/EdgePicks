@@ -56,7 +56,6 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
   const [games, setGames] = useState<UpcomingGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [warning, setWarning] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(maxVisible ?? 3);
 
   useEffect(() => {
@@ -69,12 +68,6 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
         if (!cancelled) {
           setGames(data);
           setLoading(false);
-          if (res.headers.get('x-missing-api-key')) {
-            const msg =
-              'Sports API key missing. Add it to `.env.local` to enable live games.';
-            console.warn(msg);
-            setWarning(msg);
-          }
         }
       } catch (err) {
         if (!cancelled) {
@@ -98,21 +91,11 @@ const UpcomingGamesPanel: React.FC<UpcomingGamesPanelProps> = ({
   }
 
   if (!games.length) {
-    return (
-      <>
-        {warning && (
-          <p className="text-center text-yellow-600 mb-2">{warning}</p>
-        )}
-        <EmptyState message="No matchups available right now. Check back later." />
-      </>
-    );
+    return <EmptyState message="No matchups available right now. Check back later." />;
   }
 
   return (
     <>
-      {warning && (
-        <p className="text-center text-yellow-600 mb-2">{warning}</p>
-      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {games.slice(0, visibleCount).map((game, idx) => {
           const guardian = game.edgePick.find((a) => a.name === 'guardianAgent');

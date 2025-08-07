@@ -5,4 +5,5 @@ export const REQUIRED_ENV_KEYS = [
   'NEXTAUTH_SECRET',
   'GOOGLE_CLIENT_ID',
   'GOOGLE_CLIENT_SECRET',
+  'SPORTS_API_KEY',
 ] as const;
