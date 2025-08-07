@@ -9,5 +9,11 @@
     "architectureDocumented": true,
     "lifecycleDocumented": true,
     "designPatternsDocumented": true
+  },
+  {
+    "timestamp": "2025-08-07T10:58:40Z",
+    "command": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/audit-agent-metadata.ts",
+    "output": "Agent metadata is valid and docs are in sync.",
+    "metadataAudited": true
   }
 ]
