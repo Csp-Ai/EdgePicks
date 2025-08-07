@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import AgentTooltip from './AgentTooltip';
-import { agents as agentRegistry } from '../lib/agents/registry';
+import { registry as agentRegistry } from '../lib/agents/registry';
 import { formatAgentName } from '../lib/utils';
 
 type Props = {

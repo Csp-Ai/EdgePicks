@@ -1,7 +1,7 @@
 import React from 'react';
 import AgentCard from './AgentCard';
 import { AgentOutputs } from '../lib/types';
-import { agents as agentRegistry } from '../lib/agents/registry';
+import { registry as agentRegistry } from '../lib/agents/registry';
 
 interface Props {
   agents: Partial<AgentOutputs>;

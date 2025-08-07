@@ -1095,10 +1095,36 @@ Files:
 - agentLogsStore.json (+3/-19)
 - components/AgentNodeGraph.tsx (+32/-13)
 
+
 Timestamp: 2025-08-07T21:20:42.665Z
 Commit: 609b6aff9c3764c27f3a621433bef2fb99c45f39
 Author: Codex
 Message: feat: cache team logos and odds
 Files:
 - lib/data/liveSports.ts (+88/-30)
+=======
+Timestamp: 2025-08-07T21:15:11.798Z
+Commit: 82313abae9583166d90ef52d06c356d1c6b063c3
+Author: Codex
+Message: fix: adjust agent registry for browser build
+Files:
+- __tests__/__snapshots__/lifecycle.test.ts.snap (+0/-51)
+- agentLogsStore.json (+1/-47)
+- components/AgentDebugPanel.tsx (+1/-1)
+- components/AgentStatusPanel.tsx (+1/-1)
+- components/AgentSummary.tsx (+1/-1)
+- components/AgentTooltip.tsx (+1/-1)
+- components/ExplanationGlossary.tsx (+1/-1)
+- components/MatchupCard.tsx (+1/-1)
+- lib/accuracy.ts (+1/-1)
+- lib/agents/loadAgents.ts (+27/-0)
+- lib/agents/pickBot.ts (+2/-1)
+- lib/agents/registry.ts (+2/-20)
+- lib/flow/runFlow.ts (+3/-2)
+- pages/api/logs.ts (+2/-2)
+- pages/api/run-agents.ts (+3/-3)
+- pages/api/run-predictions.ts (+2/-2)
+- pages/api/upcoming-games.ts (+1/-1)
+- tsconfig.json (+1/-1)
+
 
