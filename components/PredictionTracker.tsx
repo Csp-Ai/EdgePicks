@@ -41,8 +41,10 @@ const PredictionTracker: React.FC<Props> = ({
 
   useEffect(() => {
     if (isFinal) {
-      const extras = revealedIndex !== undefined ? { revealedIndex } : undefined;
-      logUiEvent('prediction_tracker_complete', extras);
+      logUiEvent(
+        'prediction_tracker_complete',
+        revealedIndex !== undefined ? { revealedIndex } : undefined,
+      );
     }
   }, [isFinal, revealedIndex]);
 

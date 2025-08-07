@@ -54,7 +54,9 @@ export default function Home() {
               onClick={() =>
                 logUiEvent(
                   'explore_matchups_click',
-                  session?.user?.id ? { user_id: session.user.id } : {},
+                  (session?.user as any)?.id
+                    ? { user_id: (session.user as any).id }
+                    : undefined,
                 )
               }
             >

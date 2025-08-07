@@ -3,17 +3,15 @@ import { triggerToast } from './useToast';
 
 export async function logUiEvent(
   uiEvent: string,
-  sessionType: string,
-  userId?: string,
-  extras: Record<string, any> = {}
+  metadata?: Record<string, any>,
 ): Promise<void> {
   try {
+    const meta = metadata ?? {};
+    console.log(`[UI EVENT] ${uiEvent}`, Object.keys(meta).length ? meta : '');
     const client = getSupabaseClient();
     await client.from('ui_events').insert({
       event: uiEvent,
-      session_type: sessionType,
-      user_id: userId,
-      extras,
+      metadata: meta,
       created_at: new Date().toISOString(),
     });
   } catch (err) {
