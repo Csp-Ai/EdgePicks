@@ -723,3 +723,12 @@ Message: chore: log EOD summary
 Files:
 - llms.txt (+15/-0)
 
+Timestamp: 2025-08-07T07:26:48.336Z
+Commit: f1a7c33e25854363ccb7d0e60486f5beb301511e
+Author: Codex
+Message: feat: surface live agent status
+Files:
+- components/PredictionsPanel.tsx (+19/-0)
+- lib/dashboard/useFlowVisualizer.ts (+21/-0)
+- pages/dashboard.tsx (+3/-1)
+

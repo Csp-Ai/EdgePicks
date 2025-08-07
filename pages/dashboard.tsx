@@ -3,9 +3,10 @@ import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import AgentTimeline from '../lib/dashboard/AgentTimeline';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
+import AgentStatusPanel from '../components/AgentStatusPanel';
 
 const DashboardPage: React.FC = () => {
-  const { nodes, startTime, handleLifecycleEvent } = useFlowVisualizer();
+  const { nodes, startTime, handleLifecycleEvent, statuses } = useFlowVisualizer();
 
   useEffect(() => {
     const es = new EventSource('/api/run-agents?teamA=LAL&teamB=BOS&matchDay=1');
@@ -22,6 +23,7 @@ const DashboardPage: React.FC = () => {
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Agent Dashboard</h1>
       <AgentTimeline nodes={nodes} startTime={startTime} />
+      <AgentStatusPanel statuses={statuses} />
     </div>
   );
 };

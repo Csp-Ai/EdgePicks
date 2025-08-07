@@ -3,7 +3,9 @@ import type { Session } from 'next-auth';
 import LiveGamesList from './LiveGamesList';
 import EmptyState from './EmptyState';
 import LiveGameLogsPanel from './LiveGameLogsPanel';
+import AgentStatusPanel from './AgentStatusPanel';
 import { getUpcomingGames, runPredictions } from '../lib/api';
+import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
 
 interface Props {
   session: Session | null;
@@ -36,6 +38,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
   );
   const [lastRun, setLastRun] = useState<string | null>(null);
   const [agentLogs, setAgentLogs] = useState<any[]>([]);
+  const { statuses, handleLifecycleEvent } = useFlowVisualizer();
 
   useEffect(() => {
     setLoadingGames(true);
@@ -62,7 +65,21 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       return;
     }
     setLoadingPred(true);
+    let es: EventSource | null = null;
     try {
+      if (games.length) {
+        const g = games[0];
+        es = new EventSource(
+          `/api/run-agents?teamA=${encodeURIComponent(g.homeTeam.name)}&teamB=${encodeURIComponent(g.awayTeam.name)}&matchDay=1`
+        );
+        es.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          if (data.type === 'lifecycle') {
+            handleLifecycleEvent(data);
+          }
+        };
+      }
+
       const res = await runPredictions(league, games);
       const fetched = res.predictions || [];
       const finalPredictions = fetched.length ? fetched : samplePredictions;
@@ -78,6 +95,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
       setToast({ message: 'Something went wrong. Please try again.', type: 'error' });
     } finally {
       setLoadingPred(false);
+      es?.close();
       setTimeout(() => setToast(null), 3000);
     }
   };
@@ -138,6 +156,7 @@ const PredictionsPanel: React.FC<Props> = ({ session }) => {
         </div>
       )}
       <LiveGameLogsPanel logs={agentLogs} />
+      <AgentStatusPanel statuses={statuses} />
     </div>
   );
 };
