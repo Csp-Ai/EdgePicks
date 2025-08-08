@@ -156,7 +156,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 agentDelta,
                 disagreements,
                 edgePick: executions,
-                kickoffDisplay: formatKickoff(game.time),
+                kickoffDisplay: game.kickoffDisplay ?? formatKickoff(game.time),
               };
               return result;
             } catch (err) {

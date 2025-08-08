@@ -1303,7 +1303,17 @@ Files:
 - lib/utils/formatKickoff.ts (+29/-0)
 
 
-
+Timestamp: 2025-08-08T03:21:15.768Z
+Commit: 9180324d29126de3a284c06685ee8a5bf5ec4e97
+Author: Codex
+Message: Add kickoff formatter and integrate kickoffDisplay
+Files:
+- __tests__/formatKickoff.test.ts (+15/-23)
+- components/GameCard.tsx (+2/-20)
+- lib/types.ts (+4/-0)
+- lib/utils/formatKickoff.ts (+20/-27)
+- pages/api/upcoming-games.ts (+1/-1)
+=======
 Timestamp: 2025-08-08T03:18:06.846Z
 Commit: eb7592856ecb2a10156f06f61b99a6c0b2b31c14
 Author: Codex
@@ -1322,5 +1332,6 @@ Files:
 - __tests__/llmsLog.test.ts (+5/-2)
 - __tests__/utils/freezeTime.ts (+5/-0)
 - jest.setup.ts (+4/-0)
+
 
 
