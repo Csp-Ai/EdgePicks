@@ -1828,6 +1828,7 @@ Files:
 - pages/_app.tsx (+13/-0)
 - scripts/dev/commit-helper.ts (+27/-0)
 
+
 Timestamp: 2025-08-08T08:23:33.830Z
 Commit: 1a0cee181dec62e1b6b5b90412a6437a91c9bbf7
 Author: Codex
@@ -1835,4 +1836,13 @@ Message: feat: add weight calibration script
 Files:
 - package.json (+2/-1)
 - scripts/calibrateWeights.ts (+54/-0)
+=======
+Timestamp: 2025-08-08T08:17:37.426Z
+Commit: 64702a5916578d5d107bedbeb3ab9af2f32289b9
+Author: Codex
+Message: test: stabilise agent docs snapshot
+Files:
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+41/-10)
+- __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
+
 

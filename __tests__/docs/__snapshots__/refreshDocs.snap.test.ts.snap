@@ -16,16 +16,47 @@ exports[`docs refresh snapshots generates docs 1`] = `
 `;
 
 exports[`docs refresh snapshots generates docs 2`] = `
-"# Agents
-
-| Name | Weight |
-| --- | --- |
-| injuryScout | 0.5 |
-| lineWatcher | 0.3 |
-| statCruncher | 0.2 |
-| trendsAgent | 0 |
-| guardianAgent | 0 |
-"
+[
+  {
+    "id": "guardianAgent",
+    "name": "guardianAgent",
+    "purpose": "Reviews outputs for inconsistent or incomplete reasoning.",
+    "tools": [],
+  },
+  {
+    "id": "injuryScout",
+    "name": "injuryScout",
+    "purpose": "Tracks player injuries and availability.",
+    "tools": [
+      "espn",
+      "teamReports",
+    ],
+  },
+  {
+    "id": "lineWatcher",
+    "name": "lineWatcher",
+    "purpose": "Monitors betting line movement and market signals.",
+    "tools": [
+      "marketData",
+    ],
+  },
+  {
+    "id": "statCruncher",
+    "name": "statCruncher",
+    "purpose": "Crunches historical statistics for trends.",
+    "tools": [
+      "statsApi",
+    ],
+  },
+  {
+    "id": "trendsAgent",
+    "name": "trendsAgent",
+    "purpose": "Analyzes recent matchups for flow popularity and agent hit rates.",
+    "tools": [
+      "supabase",
+    ],
+  },
+]
 `;
 
 exports[`docs refresh snapshots generates docs 3`] = `
