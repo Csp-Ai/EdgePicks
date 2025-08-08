@@ -1897,3 +1897,20 @@ Files:
 
 
 
+Timestamp: 2025-08-08T08:57:39.268Z
+Commit: 3311552a202e83adf54ba7007eb9d8a117badd87
+Author: Codex
+Message: feat: add sports webhook HMAC verification
+Files:
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+1/-0)
+- lib/env.ts (+1/-0)
+
+Timestamp: 2025-08-08T08:58:09.636Z
+Commit: 67241f0551102c14b6f40c391ab31e43791d478c
+Author: Codex
+Message: test: add sports webhook signature tests
+Files:
+- __tests__/sportsWebhook.hmac.test.ts (+53/-0)
+- lib/utils/verifyWebhookSignature.ts (+8/-0)
+- pages/api/sports-webhook.ts (+46/-0)
+
