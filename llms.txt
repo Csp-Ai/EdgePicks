@@ -1971,3 +1971,12 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:49:09.752Z
+Commit: 20e831f174cd0dd1e0e8a9249853cc42ac26bea5
+Author: Codex
+Message: feat(demo): Matchup carousel with tracker and compact predictions
+Files:
+- __tests__/DemoMatchupCarousel.test.tsx (+33/-0)
+- components/DemoMatchupCarousel.tsx (+89/-0)
+- mock/demo-matchups.json (+17/-0)
+
