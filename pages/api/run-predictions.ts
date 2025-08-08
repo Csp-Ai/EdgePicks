@@ -7,6 +7,7 @@ import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 import { ENV } from '../../lib/env';
+import { getDynamicWeights } from '../../lib/weights';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
@@ -52,6 +53,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const flow = await loadFlow('football-pick');
+    const baseWeights = Object.fromEntries(registry.map((a) => [a.name, a.weight]));
+    const weights =
+      ENV.WEIGHTS_DYNAMIC === 'on'
+        ? { ...baseWeights, ...(await getDynamicWeights()) }
+        : baseWeights;
     const predictions: Prediction[] = [];
     const aggregatedAgentScores: Record<string, number> = {};
 
@@ -72,12 +78,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const agentScores: Record<string, number> = {};
       for (const name of flow.agents) {
-
         const meta = agentMetaMap.get(name as AgentName);
-
         const result = outputs[name];
         if (!meta || !result) continue;
-        scores[result.team] += result.score * meta.weight;
+        const weight = weights[name] ?? meta.weight;
+        scores[result.team] += result.score * weight;
         agentScores[name] = result.score;
         aggregatedAgentScores[name] =
           (aggregatedAgentScores[name] || 0) + result.score;
@@ -134,7 +139,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     );
 
-    res.status(200).json({ predictions, agentScores, timestamp, cacheVersion: ENV.FLOW_CACHE_VERSION });
+    res.status(200).json({ predictions, agentScores, weights, timestamp, cacheVersion: ENV.FLOW_CACHE_VERSION });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to run predictions' });

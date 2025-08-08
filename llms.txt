@@ -1475,7 +1475,19 @@ Files:
 - lib/data/stats.ts (+36/-0)
 =======
 
-
+Timestamp: 2025-08-08T05:00:16.687Z
+Commit: c6d87a12380e3189f14c3f5468d3f7d903197030
+Author: Codex
+Message: feat: add dynamic agent weights
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/runPredictions.weights.test.ts (+88/-0)
+- __tests__/weights.test.ts (+20/-0)
+- lib/env.ts (+1/-0)
+- lib/weights/index.ts (+44/-0)
+- pages/api/run-agents.ts (+0/-40)
+- pages/api/run-predictions.ts (+9/-4)
+=======
 Timestamp: 2025-08-08T04:59:28.223Z
 Commit: 132db6b1138e362404d370f001c195e189b27a67
 Author: Codex
@@ -1490,4 +1502,5 @@ Files:
 - scripts/backfillAgentOutcomes.ts (+24/-0)
 - supabase/migrations/20240808090000_create_agent_outcomes_table.sql (+9/-0)
 - supabase/schema.sql (+10/-0)
+
 
