@@ -1,0 +1,20 @@
+name: Accessibility
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npx -p @playwright/test playwright install --with-deps
+      - run: npm run build
+      - run: npx next start & npx wait-on http://localhost:3000
+      - run: npx -p @playwright/test -p @axe-core/playwright playwright test tests/a11y
