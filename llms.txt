@@ -2158,3 +2158,13 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:11:29.359Z
+Commit: 15887453a2ab063e50fe11a9863deff16be227d8
+Author: Codex
+Message: feat: add agent gallery
+Files:
+- __tests__/AgentTile.test.tsx (+24/-0)
+- __tests__/AgentsPage.test.tsx (+36/-0)
+- components/agents/AgentTile.tsx (+42/-0)
+- pages/agents/index.tsx (+45/-0)
+
