@@ -2158,3 +2158,11 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:14:01.445Z
+Commit: 01b8756f27e2e0c625701e32ae748e95946c6027
+Author: Codex
+Message: feat: add agent trust score widget
+Files:
+- __tests__/AgentTrustScore.test.tsx (+27/-0)
+- components/agents/AgentTrustScore.tsx (+28/-0)
+
