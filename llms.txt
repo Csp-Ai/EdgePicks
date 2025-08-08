@@ -2764,3 +2764,22 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:52:48.741Z
+Commit: 2f6adc0a68b875b6767bf232a1a859f41f12e043
+Author: Codex
+Message: test: stabilize deterministic tests
+Files:
+- __tests__/Onboarding.goal.test.tsx (+25/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-14)
+- __tests__/__snapshots__/uiSnapshot.test.tsx.snap (+2/-1)
+- __tests__/cache.test.ts (+1/-1)
+- __tests__/llmsLog.test.ts (+0/-15)
+- __tests__/supabaseRegistry.test.ts (+3/-1)
+- __tests__/telemetry.events.test.ts (+7/-4)
+- __tests__/useProfiler.test.tsx (+2/-4)
+- __tests__/utils/freezeTime.ts (+0/-5)
+- jest.setup.ts (+40/-0)
+- package.json (+2/-1)
+- test/utils/freezeRandom.ts (+14/-0)
+- test/utils/freezeTime.ts (+26/-0)
+

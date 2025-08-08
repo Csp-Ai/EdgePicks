@@ -5,7 +5,9 @@ const sample = [
 ];
 
 const selectMock = jest.fn().mockResolvedValue({ data: sample, error: null });
-const fromMock = jest.fn(() => ({ select: selectMock }));
+function fromMock() {
+  return { select: selectMock };
+}
 
 jest.mock('../lib/supabaseClient', () => ({
   supabase: { from: fromMock },

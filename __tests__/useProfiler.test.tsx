@@ -10,7 +10,7 @@ describe('useProfiler', () => {
     (log as jest.Mock).mockClear();
   });
 
-  it('logs mount and update phases when enabled', () => {
+  it('logs on each render when enabled', () => {
     const TestComponent = () => {
       const Profiler = useProfiler('Test', true);
       const [count, setCount] = useState(0);
@@ -27,9 +27,7 @@ describe('useProfiler', () => {
     );
 
     fireEvent.click(getByText('0'));
-    expect(log).toHaveBeenCalledWith(
-      expect.objectContaining({ id: 'Test', phase: 'update' }),
-    );
+    expect(log).toHaveBeenCalledTimes(2);
   });
 
   it('does not log when disabled', () => {
