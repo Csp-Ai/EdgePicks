@@ -28,9 +28,10 @@ const UpcomingGamesGrid: React.FC<Props> = ({
       g.awayTeam.toLowerCase().includes(q)
     );
   });
+
   if (isError) {
     return (
-      <div className="p-4 text-center" data-testid="error-panel">
+      <div className="col-span-full text-center" data-testid="error-panel">
         <p className="mb-2">Failed to load games.</p>
         <button className="px-3 py-1 border rounded" onClick={onRetry}>
           Retry
@@ -41,28 +42,31 @@ const UpcomingGamesGrid: React.FC<Props> = ({
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <>
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="h-24 bg-gray-200 rounded animate-pulse"
+            className="h-24 rounded-xl bg-slate-800/40 animate-pulse"
             data-testid="game-skeleton"
           />
         ))}
-      </div>
+      </>
     );
   }
 
   if (filtered.length === 0) {
     return (
-      <div className="p-4 text-center text-gray-500" data-testid="empty-state">
-        No games found
+      <div
+        className="col-span-full text-center text-slate-400"
+        data-testid="empty-state"
+      >
+        No games match your search
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <>
       {filtered.map((game) => (
         <GameCard
           key={game.gameId}
@@ -71,8 +75,9 @@ const UpcomingGamesGrid: React.FC<Props> = ({
           onHover={preload}
         />
       ))}
-    </div>
+    </>
   );
 };
 
 export default UpcomingGamesGrid;
+
