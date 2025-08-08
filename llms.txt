@@ -2840,6 +2840,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:29:34.158Z
+Commit: a3310c5cc80c3dd8e944fef7413cb8700659d71a
+Author: Codex
+Message: feat: add agent mini-cards and demo grid
+Files:
+- components/agents/MiniCard.tsx (+27/-0)
+- fixtures/demo/agent-metrics.json (+7/-0)
+- stories/agents/AgentMini.stories.tsx (+19/-103)
+=======
 
 Timestamp: 2025-08-08T13:29:24.150Z
 Commit: 42467cb70fc736fdce584571c0a56eab39bc4f9c
