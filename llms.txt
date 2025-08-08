@@ -2159,12 +2159,26 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+
 Timestamp: 2025-08-08T11:12:58.755Z
 Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
 Author: Codex
 Message: feat: improve AgentStatusPanel accessibility
 Files:
 - components/AgentStatusPanel.tsx (+17/-8)
+=======
+Timestamp: 2025-08-08T11:20:31.007Z
+Commit: bdf022d1b33ecb1aabf3ea4f894595e26e930e91
+Author: Codex
+Message: feat(trust): add read-only Trust & Transparency hub with accuracy, audit, and agent explainers
+Files:
+- __tests__/trust.page.test.tsx (+28/-0)
+- components/trust/AgentExplainers.tsx (+55/-0)
+- components/trust/AgreementMeter.tsx (+46/-0)
+- components/trust/AuditActivity.tsx (+58/-0)
+- components/trust/TrustSummary.tsx (+79/-0)
+- pages/trust/index.tsx (+73/-0)
+
 =======
 
 Timestamp: 2025-08-08T11:13:28.411Z
