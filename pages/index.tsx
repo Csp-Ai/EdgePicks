@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import HeroStrip from '../components/HeroStrip';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
+import PredictionMarquee from '../components/marketing/PredictionMarquee';
 import type { Game } from '../lib/types';
 
 const PredictionDrawer = dynamic(() => import('../components/PredictionDrawer'), {
@@ -97,6 +98,10 @@ export default function Home() {
     });
   };
 
+  const openDemo = () => {
+    router.push('/codex/prompts');
+  };
+
 
   const headTitle = selected
     ? `Win more pick'em: ${selected.homeTeam} vs ${selected.awayTeam} live AI prediction`
@@ -111,6 +116,7 @@ export default function Home() {
         <title>{headTitle}</title>
         <meta name="description" content={headDesc} />
       </Head>
+      <PredictionMarquee onTryDemo={openDemo} />
       <HeroStrip />
       <main className="min-h-screen px-4 sm:px-6 lg:px-8 py-4 space-y-4 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
