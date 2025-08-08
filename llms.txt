@@ -2562,3 +2562,14 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:42:40.391Z
+Commit: 8d38970754b35a808833c8dea2e0900b63da4113
+Author: Codex
+Message: feat(a11y): add accessibility helpers and lint rule
+Files:
+- .eslintrc.json (+4/-1)
+- components/a11y/AriaButton.tsx (+31/-0)
+- components/a11y/FocusRing.tsx (+17/-0)
+- components/a11y/FocusTrap.tsx (+41/-0)
+- components/a11y/SkipLink.tsx (+15/-0)
+
