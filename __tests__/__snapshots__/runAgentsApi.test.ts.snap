@@ -4,12 +4,12 @@ exports[`run-agents API matches snapshot 1`] = `
 {
   "agents": {
     "injuryScout": {
-      "reason": "Key WR out",
-      "score": 0.72,
+      "reason": "healthy",
+      "score": 0.7,
       "team": "A",
     },
   },
-  "finalConfidence": 0.36,
+  "finalConfidence": 0.35,
   "pick": "A",
 }
 `;

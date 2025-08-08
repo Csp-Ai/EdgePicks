@@ -1751,6 +1751,23 @@ Files:
 - styles/globals.css (+5/-0)
 - styles/typography.css (+8/-0)
 
+
+Timestamp: 2025-08-08T07:23:39.732Z
+Commit: 0471eb9dc52ffcc3f3a3ff32d5cf0bdbf074eb3b
+Author: Codex
+Message: feat: cache run-agents responses
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+3/-3)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+7/-0)
+- __tests__/runAgents.cache.test.ts (+105/-0)
+- __tests__/upcomingGamesApi.joinOdds.test.ts (+1/-1)
+- jest.setup.ts (+13/-7)
+- lib/hooks/useEventSource.ts (+2/-0)
+- pages/api/run-agents.ts (+61/-1)
+- supabase/migrations/20241001000000_create_prediction_cache_table.sql (+6/-0)
+- supabase/schema.sql (+7/-0)
+=======
 Timestamp: 2025-08-08T07:11:22.947Z
 Commit: a4aa3e5dc4e6f338de732b9124c23bba3e027dd3
 Author: Codex
@@ -1763,4 +1780,5 @@ Files:
 - components/PredictionsPanel.tsx (+23/-2)
 - lib/hooks/useEventSource.ts (+1/-7)
 - pages/predictions.tsx (+9/-2)
+
 
