@@ -2149,3 +2149,56 @@ Files:
 - .github/workflows/percy.yml (+32/-0)
 - tests/visual/percy.spec.ts (+17/-0)
 
+Timestamp: 2025-08-08T10:45:38.825Z
+Commit: 8cb5f25e2deed6a3895edcb32c3b9b9091ea8ba6
+Author: Codex
+Message: feat(cli): add cache purge/inspect script
+Files:
+- __tests__/purge-cache.test.ts (+39/-0)
+- package.json (+1/-1)
+- scripts/purge-cache.ts (+51/-0)
+
+
+Timestamp: 2025-08-08T11:12:32.836Z
+Commit: 36a824f069c3c55c68d2e530a8aa614bae3d3482
+Author: Codex
+Message: feat: add onboarding progress with resume
+Files:
+- __tests__/ProgressStepper.test.tsx (+12/-0)
+- __tests__/onboarding.progress.test.ts (+20/-0)
+- components/Onboarding.tsx (+17/-4)
+- components/onboarding/ProgressStepper.tsx (+19/-0)
+- lib/onboarding/progress.ts (+22/-0)
+=======
+
+Timestamp: 2025-08-08T11:13:14.884Z
+Commit: f5994c41cafcf7b93c715285d944b6ce1d2e0452
+Author: Codex
+Message: feat: add onboarding goal capture
+Files:
+- __tests__/Onboarding.goal.test.tsx (+25/-0)
+- components/Onboarding.tsx (+25/-1)
+- components/onboarding/GoalPicker.tsx (+22/-0)
+=======
+
+Timestamp: 2025-08-08T11:11:05.639Z
+Commit: 9d28656713e70bddd795495936152f2f40aedbb5
+Author: Codex
+Message: feat: add agent node popover
+Files:
+- components/AgentVizCanvas.tsx (+75/-2)
+- components/agents/AgentNodePopover.tsx (+67/-0)
+=======
+Timestamp: 2025-08-08T11:10:12.452Z
+Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
+Author: Codex
+Message: feat: add fuzzy game search
+Files:
+- __tests__/GameFuzzySearch.test.tsx (+40/-0)
+- __tests__/fuzzy.test.ts (+33/-0)
+- components/search/GameFuzzySearch.tsx (+61/-0)
+- lib/search/fuzzy.ts (+42/-0)
+
+
+
+
