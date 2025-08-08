@@ -11,7 +11,10 @@ jest.mock('../lib/data/odds', () => ({
 jest.mock('../lib/flow/runFlow', () => ({
   runFlow: jest.fn().mockResolvedValue({ outputs: {}, executions: [] }),
 }));
+
 jest.mock('../lib/logToSupabase', () => ({ logMatchup: jest.fn() }));
+=======
+jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn(), logMatchup: jest.fn() }));
 jest.mock('../lib/utils/fallbackMatchups', () => ({ getFallbackMatchups: jest.fn(() => []) }));
 jest.mock('../lib/utils/formatKickoff', () => ({ formatKickoff: () => '' }));
 jest.mock('../lib/agents/registry', () => ({ registry: [] }));

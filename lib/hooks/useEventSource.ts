@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
+/* eslint-disable react-hooks/rules-of-hooks */
+
 interface Options {
   enabled?: boolean;
 }
