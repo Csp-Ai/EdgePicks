@@ -2158,6 +2158,15 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+
+Timestamp: 2025-08-08T11:11:05.639Z
+Commit: 9d28656713e70bddd795495936152f2f40aedbb5
+Author: Codex
+Message: feat: add agent node popover
+Files:
+- components/AgentVizCanvas.tsx (+75/-2)
+- components/agents/AgentNodePopover.tsx (+67/-0)
+=======
 Timestamp: 2025-08-08T11:10:12.452Z
 Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
 Author: Codex
@@ -2167,4 +2176,5 @@ Files:
 - __tests__/fuzzy.test.ts (+33/-0)
 - components/search/GameFuzzySearch.tsx (+61/-0)
 - lib/search/fuzzy.ts (+42/-0)
+
 
