@@ -1979,3 +1979,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:49:54.019Z
+Commit: 0ea587e571b4f3037132c25b6b91a4fcb38875f9
+Author: Codex
+Message: feat: add prediction marquee component
+Files:
+- __tests__/marketing/PredictionMarquee.test.tsx (+19/-0)
+- components/marketing/PredictionMarquee.tsx (+44/-0)
+
