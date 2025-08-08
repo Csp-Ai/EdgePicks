@@ -8,7 +8,6 @@ jest.mock('../components/AgentNodeGraph', () => () => <div />);
 jest.mock('../components/AgentRationalePanel', () => () => <div />);
 jest.mock('../components/ConfidenceMeter', () => () => <div />);
 jest.mock('next/router', () => ({
-
   useRouter: () => ({
     push: jest.fn(),
     replace: jest.fn(),
@@ -17,9 +16,6 @@ jest.mock('next/router', () => ({
     query: {},
     asPath: '/',
   }),
-=======
-  useRouter: () => ({ replace: jest.fn(), prefetch: jest.fn(), push: jest.fn() }),
-
 }));
 
 class MockEventSource {
