@@ -1897,3 +1897,16 @@ Files:
 
 
 
+Timestamp: 2025-08-08T08:50:48.190Z
+Commit: 6afcf0ab259d1f8edbe0a21995047aa708b5fc9d
+Author: Codex
+Message: Improve accessibility and add axe tests
+Files:
+- __tests__/__snapshots__/GameCard.test.tsx.snap (+2/-2)
+- __tests__/a11y.test.tsx (+39/-0)
+- components/GameCard.tsx (+12/-2)
+- components/Navbar.tsx (+7/-1)
+- package-lock.json (+71/-0)
+- package.json (+2/-0)
+- pages/index.tsx (+2/-0)
+

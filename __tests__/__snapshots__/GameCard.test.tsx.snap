@@ -12,7 +12,7 @@ exports[`GameCard matches contrast snapshot 1`] = `
       class="flex items-center gap-2"
     >
       <img
-        alt=""
+        alt="Lakers logo"
         height="24"
         src="/home.png"
         width="24"
@@ -30,7 +30,7 @@ exports[`GameCard matches contrast snapshot 1`] = `
       class="flex items-center gap-2"
     >
       <img
-        alt=""
+        alt="Celtics logo"
         height="24"
         src="/away.png"
         width="24"

@@ -119,6 +119,7 @@ export default function Home() {
               <button
                 key={l}
                 onClick={() => changeLeague(l)}
+                aria-pressed={l === league}
                 className={`px-3 py-1 rounded border ${
                   l === league ? 'bg-blue-600 text-white' : ''
                 }`}
@@ -131,6 +132,7 @@ export default function Home() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search"
+            aria-label="Search games"
             className="border px-2 py-1 rounded w-full sm:w-auto"
           />
         </div>

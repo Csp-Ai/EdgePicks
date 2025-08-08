@@ -55,7 +55,10 @@ export default function Navbar() {
           </button>
         </div>
       )}
-      <nav className={`p-4 flex items-center justify-between ${!dismissed ? 'mt-12' : ''} relative fixed top-0 left-0 w-full z-40 h-16`}>
+      <nav
+        aria-label="Main navigation"
+        className={`p-4 flex items-center justify-between ${!dismissed ? 'mt-12' : ''} relative fixed top-0 left-0 w-full z-40 h-16`}
+      >
         {/* Gradient Scroll Fade */}
         <div
           className={`pointer-events-none absolute inset-0 bg-gradient-to-b from-white/80 to-transparent dark:from-gray-900/80 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
@@ -66,6 +69,8 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(o => !o)}
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
             className="sm:hidden flex flex-col gap-1"
           >
             <span className="w-6 h-0.5 bg-current"></span>
@@ -123,6 +128,7 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, x: '-100%' }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '-100%' }}
