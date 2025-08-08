@@ -3020,3 +3020,10 @@ Files:
 - app/demo-rtl/page.tsx (+15/-0)
 - styles/rtl.css (+17/-0)
 
+Timestamp: 2025-08-08T13:32:27.851Z
+Commit: 927a084783912cea7cfabf943766d60964d540c4
+Author: Codex
+Message: feat: add accessible data table
+Files:
+- components/ui/Table.tsx (+108/-0)
+
