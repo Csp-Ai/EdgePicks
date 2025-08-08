@@ -8,6 +8,7 @@ import PickSummaryComp from './PickSummary';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
 import useEventSource from '../lib/hooks/useEventSource';
 import { logUiEvent } from '../lib/logUiEvent';
+import { Share2 } from 'lucide-react';
 
 interface Props {
   game: Game | null;
@@ -69,6 +70,16 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   }, [isOpen, game?.gameId]);
 
   useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleKey);
+    }
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
     if (!lastMessage) return;
     const data = lastMessage;
     if (data.type === 'agent') {
@@ -101,18 +112,22 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
     }
   };
 
+  const pendingAgents = Object.keys(statuses).filter(
+    (name) => !executions.some((e) => e.name === name)
+  );
+
   return (
     <div className="fixed inset-0 flex justify-end z-50">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative w-full max-w-md h-full bg-white flex flex-col">
-        <header className="p-4 border-b sticky top-0 bg-white">
+      <div className="relative w-full max-w-md h-full bg-slate-900 text-white flex flex-col rounded-xl overflow-hidden">
+        <header className="p-4 sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">
               {game.homeTeam} vs {game.awayTeam}
             </h2>
             <button onClick={onClose} aria-label="Close" className="text-sm">✕</button>
           </div>
-          <div className="text-xs text-gray-500">{new Date(game.time).toLocaleString()}</div>
+          <div className="text-xs text-gray-400">{new Date(game.time).toLocaleString()}</div>
         </header>
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           <AgentNodeGraph statuses={statuses} />
@@ -136,27 +151,33 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
               winner={pick?.winner || ''}
             />
           )}
-          {executions.length === 0 && !pick && (
+          {pendingAgents.map((name) => (
+            <div
+              key={name}
+              className="h-24 bg-slate-800 rounded-xl animate-pulse"
+            />
+          ))}
+          {executions.length === 0 && pendingAgents.length === 0 && !pick && (
             <div className="space-y-2" data-testid="drawer-skeleton">
-              <div className="h-6 bg-gray-200 rounded animate-pulse" />
-              <div className="h-32 bg-gray-200 rounded animate-pulse" />
+              <div className="h-6 bg-slate-800 rounded animate-pulse" />
+              <div className="h-32 bg-slate-800 rounded animate-pulse" />
             </div>
           )}
         </div>
-        <footer className="p-4 border-t flex justify-end gap-2">
+        <footer className="p-4 border-t border-slate-800 flex justify-end gap-2">
           <button
-            className="px-3 py-1 text-sm border rounded"
+            className="px-3 py-1 text-sm border border-slate-700 rounded"
             onClick={startRun}
             disabled={esStatus !== 'open'}
           >
             Run again
           </button>
           <button
-            className="px-3 py-1 text-sm border rounded"
+            className="flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-slate-700 hover:bg-slate-700"
             onClick={share}
             disabled={esStatus !== 'open'}
           >
-            Share
+            <Share2 className="w-4 h-4" /> Share
           </button>
         </footer>
         <div aria-live="polite" data-testid="a11y-result" className="sr-only">
