@@ -1,0 +1,31 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "./out",
+      "settings": {
+        "budgets": [
+          {
+            "path": "/",
+            "resourceSizes": [
+              { "resourceType": "script", "budget": 250 },
+              { "resourceType": "total", "budget": 1500 }
+            ],
+            "resourceCounts": [
+              { "resourceType": "script", "budget": 50 },
+              { "resourceType": "total", "budget": 200 }
+            ]
+          }
+        ]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
