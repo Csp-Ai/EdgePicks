@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { registry, type AgentName } from '../../lib/agents/registry';
 import { AgentOutputs, Matchup, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
@@ -6,6 +7,7 @@ import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow } from '../../lib/flow/runFlow';
 import { ENV } from '../../lib/env';
 import mockData from '../../__mocks__/run-agents.json';
+import { authOptions } from './auth/[...nextauth]';
 
 export const config = {
   api: { bodyParser: false },
@@ -15,6 +17,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (ENV.LIVE_MODE !== 'on') {
     res.status(200).json(mockData);
     return;
+  }
+
+  if (process.env.NEXT_PUBLIC_MOCK_AUTH !== '1') {
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
   }
 
   const { homeTeam, awayTeam, week, sessionId } = req.query;

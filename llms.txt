@@ -1335,3 +1335,13 @@ Files:
 
 
 
+Timestamp: 2025-08-08T03:40:43.944Z
+Commit: 35426a767f0c53df96d1d1296e7c134f8ace1e9a
+Author: Codex
+Message: require auth for run-agents
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/runAgents.auth.test.ts (+78/-0)
+- __tests__/runAgentsApi.test.ts (+2/-0)
+- pages/api/run-agents.ts (+10/-0)
+

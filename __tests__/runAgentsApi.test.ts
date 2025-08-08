@@ -9,6 +9,8 @@ jest.mock('../lib/logToSupabase');
 const mockedRunFlow = runFlow as jest.Mock;
 const mockedLog = logToSupabase as jest.Mock;
 
+process.env.NEXT_PUBLIC_MOCK_AUTH = '1';
+
 describe('run-agents API', () => {
   it('streams agent results and logs summary', async () => {
     mockedRunFlow.mockResolvedValue({
