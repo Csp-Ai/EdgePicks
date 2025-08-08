@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import AgentExecutionTracker, {
   LifecycleEvent,
   AgentMeta,
@@ -11,6 +11,16 @@ const agents: AgentMeta[] = [
 ];
 
 describe('AgentExecutionTracker', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   it('updates status based on events and handles out-of-order and missing agents', () => {
     const { rerender } = render(
       <AgentExecutionTracker agents={agents} events={[]} mode="live" />,
@@ -53,6 +63,14 @@ describe('AgentExecutionTracker', () => {
       'data-status',
       'error',
     );
+  });
+
+  it('completes flow in demo mode', async () => {
+    render(<AgentExecutionTracker agents={agents} events={[]} mode="demo" />);
+    await act(async () => {
+      jest.advanceTimersByTime(3000);
+    });
+    await screen.findByTestId('flow-complete');
   });
 
   it('matches initial snapshot', () => {
