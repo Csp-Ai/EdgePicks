@@ -9,6 +9,8 @@ import { loadAgents } from '../agents/loadAgents';
 import type { FlowConfig } from './loadFlow';
 import pLimit from 'p-limit';
 import { ENV } from '../env';
+import crypto from 'crypto';
+import { getCacheDriver } from '../infra/cache';
 
 export interface AgentExecution {
   name: AgentName;
@@ -26,12 +28,17 @@ export interface FlowRunResult {
   executions: AgentExecution[];
 }
 
-const cache = new Map<string, { ts: number; result: FlowRunResult }>();
-
 function cacheKey(flow: FlowConfig, matchup: Matchup) {
-  const gameId = (matchup as any).gameId ?? '';
-  const agentsHash = flow.agents.join(',');
-  return `${flow.name}-${matchup.league}-${gameId}-${agentsHash}`;
+  const version = ENV.FLOW_CACHE_VERSION;
+  const inputHash = crypto
+    .createHash('sha1')
+    .update(JSON.stringify(matchup))
+    .digest('hex');
+  const agentsHash = crypto
+    .createHash('sha1')
+    .update(flow.agents.join(','))
+    .digest('hex');
+  return `flow:${flow.name}:${version}:${agentsHash}:${inputHash}`;
 }
 
 export async function runFlow(
@@ -41,11 +48,11 @@ export async function runFlow(
   onLifecycle?: (event: { name: AgentName } & AgentLifecycle) => void
 ): Promise<FlowRunResult> {
   const key = cacheKey(flow, matchup);
-  const ttl = ENV.PREDICTION_CACHE_TTL_SEC * 1000;
-  const cached = cache.get(key);
-  if (cached && Date.now() - cached.ts < ttl) {
+  const cacheDriver = getCacheDriver();
+  const cached = await cacheDriver.get<FlowRunResult>(key);
+  if (cached) {
     console.log('cache:hit');
-    return cached.result;
+    return cached;
   }
 
   const outputs: Partial<AgentOutputs> = {};
@@ -171,7 +178,7 @@ export async function runFlow(
   }
 
   const result: FlowRunResult = { outputs, executions };
-  cache.set(key, { ts: Date.now(), result });
+  await cacheDriver.set(key, result, ENV.PREDICTION_CACHE_TTL_SEC);
   return result;
 }
 
