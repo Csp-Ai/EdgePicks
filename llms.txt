@@ -2393,6 +2393,15 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:53:10.506Z
+Commit: 5681e6b42f921e8781df6f946559aae96bc689e1
+Author: Codex
+Message: Add agent heatmap component
+Files:
+- __tests__/Heatmap.test.tsx (+27/-0)
+- __tests__/fixtures/heatmap.json (+8/-0)
+- components/agents/Heatmap.tsx (+98/-0)
+=======
 
 
 

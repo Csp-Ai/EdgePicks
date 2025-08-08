@@ -1,0 +1,8 @@
+{
+  "agents": ["injuryScout", "lineWatcher"],
+  "signals": ["injuries", "lines"],
+  "values": [
+    [0.8, 0.2],
+    [0.4, 0.9]
+  ]
+}
