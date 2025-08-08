@@ -1648,4 +1648,19 @@ Files:
 - pages/api/logs.ts (+9/-0)
 - pages/api/run-agents.ts (+2/-3)
 - pages/api/run-predictions.ts (+10/-5)
+=======
+Timestamp: 2025-08-08T05:57:18.828Z
+Commit: 2ac3632c371cee1fc090894dbd77fa6afb52c0ce
+Author: Codex
+Message: feat: harden live data adapters with caching and circuit breaker
+Files:
+- __tests__/adapters.circuit.test.ts (+26/-0)
+- __tests__/adapters.contract.test.ts (+42/-0)
+- __tests__/llmsLog.test.ts (+0/-1)
+- docs/api.md (+8/-0)
+- lib/analytics/logUiEvent.ts (+9/-0)
+- lib/data/injuries.ts (+65/-12)
+- lib/data/odds.ts (+87/-30)
+- lib/data/stats.ts (+60/-11)
+
 
