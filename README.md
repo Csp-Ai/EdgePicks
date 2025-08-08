@@ -1,8 +1,7 @@
 🧠 EdgePicks
 
-EdgePicks is a modular, explainable AI research assistant for Pick'em players, sports analysts, and data-driven fans. It aggregates insights from lightweight agents to generate confident, transparent recommendations for NFL matchups and beyond.
-
-Last Updated: 2025-08-07
+EdgePicks is an AI assistant for pick’em players. It streams agent reasoning for upcoming games and lets you share deep links to specific matchups.  
+**This repo is actively moving toward “sports bettor → click live game → watch agents run”.**
 
 Quick access:
 
@@ -14,7 +13,7 @@ AI Constitution
 
 🚀 Local Setup
 
-git clone https://github.com/edgepicks/EdgePicks.git
+git clone https://github.com/Csp-Ai/EdgePicks.git
 cd EdgePicks
 cp .env.local.example .env.local
 npm install
@@ -22,11 +21,15 @@ npm run dev
 
 Verify environment variables:
 
+# If you have Vercel envs, you can also:
+# vercel login && vercel env pull .env.local
+# then:
 npm run validate-env
 
 ### Live vs Mock
 
-EdgePicks can run entirely from local mocks to avoid external API calls. Set `LIVE_MODE=off` to use bundled fixtures and skip network requests. When `LIVE_MODE=on`, the app fetches live data.
+Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.  
+Provide real keys later to test full OAuth + live data.
 
 🧱 Architecture Overview
 
