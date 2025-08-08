@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T14:02:21.429Z
+Commit: a0c3978312a4726a3776270b60027c7396edc9d0
+Author: Codex
+Message: feat: add client guard component
+Files:
+- components/system/Guard.tsx (+41/-0)
+- stories/system/Guard.stories.tsx (+38/-0)
+
