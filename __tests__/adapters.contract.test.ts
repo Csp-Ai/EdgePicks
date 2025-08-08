@@ -39,4 +39,20 @@ describe('adapters contract', () => {
     },
     15000,
   );
+
+  test('odds outage uses last cached data', async () => {
+    const sample = require('./fixtures/odds.json');
+    const { fetchOdds } = await import('../lib/data/odds');
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 200,
+      json: async () => sample,
+    }) as any;
+    await fetchOdds('NFL' as any);
+    const { getCacheDriver } = require('../lib/infra/cache');
+    const cache = getCacheDriver();
+    await cache.set('odds:americanfootball_nfl', sample, 0);
+    global.fetch = jest.fn().mockRejectedValue(new Error('fail')) as any;
+    const fallback = await fetchOdds('NFL' as any);
+    expect(fallback).toEqual(sample);
+  });
 });

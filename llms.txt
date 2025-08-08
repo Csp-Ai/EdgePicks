@@ -1846,3 +1846,11 @@ Files:
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
 
+Timestamp: 2025-08-08T08:35:52.343Z
+Commit: 69f387b9024230bf41f6bed279148f083d7aa60b
+Author: Codex
+Message: feat: add odds fallback
+Files:
+- __tests__/adapters.contract.test.ts (+16/-0)
+- lib/data/odds.ts (+5/-1)
+
