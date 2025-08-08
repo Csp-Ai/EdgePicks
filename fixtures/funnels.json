@@ -1,0 +1,7 @@
+[
+  { "name": "Demo", "value": 120 },
+  { "name": "Replay", "value": 90 },
+  { "name": "Onboarding 1", "value": 50 },
+  { "name": "Onboarding 2", "value": 30 },
+  { "name": "Onboarding 3", "value": 15 }
+]
