@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:45:29.736Z
+Commit: 93730c799c14db6c8ddfc039f36dd2148a2601d5
+Author: Codex
+Message: feat: add referral link generator
+Files:
+- __tests__/referral.link.test.ts (+32/-0)
+- lib/referral/link.ts (+26/-0)
+
