@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:43:08.923Z
+Commit: 8960b5d3983941c137c0120d515583c58f9581ef
+Author: Codex
+Message: feat: add confidence explainer
+Files:
+- __tests__/ConfidenceExplainer.test.tsx (+18/-0)
+- components/predictions/ConfidenceExplainer.tsx (+35/-0)
+
