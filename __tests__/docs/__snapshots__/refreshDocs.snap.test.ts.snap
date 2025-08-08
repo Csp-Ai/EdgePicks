@@ -3,6 +3,7 @@
 exports[`docs refresh snapshots generates docs 1`] = `
 "# API Routes
 
+- /api/accuracy-history
 - /api/accuracy
 - /api/dev-login
 - /api/log-status
