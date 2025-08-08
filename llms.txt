@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:57:04.845Z
+Commit: 9e5c9915bd47a71dc1d20eff853f73418dfcc706
+Author: Codex
+Message: Add prediction provenance tag component
+Files:
+- __tests__/ProvenanceTag.test.tsx (+14/-0)
+- components/predictions/ProvenanceTag.tsx (+29/-0)
+
