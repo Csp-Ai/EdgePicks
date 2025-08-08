@@ -2159,6 +2159,16 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:13:14.884Z
+Commit: f5994c41cafcf7b93c715285d944b6ce1d2e0452
+Author: Codex
+Message: feat: add onboarding goal capture
+Files:
+- __tests__/Onboarding.goal.test.tsx (+25/-0)
+- components/Onboarding.tsx (+25/-1)
+- components/onboarding/GoalPicker.tsx (+22/-0)
+=======
+
 Timestamp: 2025-08-08T11:11:05.639Z
 Commit: 9d28656713e70bddd795495936152f2f40aedbb5
 Author: Codex
@@ -2176,5 +2186,6 @@ Files:
 - __tests__/fuzzy.test.ts (+33/-0)
 - components/search/GameFuzzySearch.tsx (+61/-0)
 - lib/search/fuzzy.ts (+42/-0)
+
 
 
