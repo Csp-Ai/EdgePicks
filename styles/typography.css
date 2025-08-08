@@ -1,5 +1,11 @@
 @tailwind components;
 
+:root {
+  --type-base: 1rem;
+  --type-scale: 1.25;
+  --baseline: 0.25rem;
+}
+
 @layer components {
   .confidenceText {
     @apply font-semibold;
@@ -11,6 +17,49 @@
   }
   .beta-h2 {
     @apply text-xl sm:text-2xl font-semibold;
+  }
+
+  /* Typographic scale */
+  .type-h1 {
+    font-size: calc(var(--type-base) * var(--type-scale) * var(--type-scale));
+    line-height: calc(var(--baseline) * 12);
+  }
+
+  .type-h2 {
+    font-size: calc(var(--type-base) * var(--type-scale));
+    line-height: calc(var(--baseline) * 8);
+  }
+
+  .type-body {
+    font-size: var(--type-base);
+    line-height: calc(var(--baseline) * 6);
+  }
+}
+
+@layer utilities {
+  .baseline-grid {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px
+    );
+    background-size: 100% calc(var(--baseline));
+  }
+
+  .baseline-1 {
+    margin-bottom: calc(var(--baseline) * 1);
+  }
+  .baseline-2 {
+    margin-bottom: calc(var(--baseline) * 2);
+  }
+  .baseline-3 {
+    margin-bottom: calc(var(--baseline) * 3);
+  }
+  .baseline-4 {
+    margin-bottom: calc(var(--baseline) * 4);
+  }
+  .baseline-6 {
+    margin-bottom: calc(var(--baseline) * 6);
   }
 }
 
