@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import AgentNodeGraph from './AgentNodeGraph';
 import { AgentEvent } from '../lib/events/agentEvents';
 import type { AgentName, AgentLifecycle } from '../lib/types';
+import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
 
 interface Props {
   events: AgentEvent[];
@@ -17,21 +18,39 @@ const AgentVizCanvas: React.FC<Props> = ({ events, skipAnimations }) => {
     return map;
   }, [events]);
 
-  const statuses = useMemo(() => {
-    const map: Record<AgentName, { status: AgentLifecycle['status'] | 'idle' }> = {};
-    Object.entries(stateMap).forEach(([id, state]) => {
-      let status: AgentLifecycle['status'] | 'idle' = 'idle';
-      if (state === 'start') status = 'started';
-      if (state === 'result' || state === 'end') status = 'completed';
-      if (state === 'error') status = 'errored';
-      map[id as AgentName] = { status };
+  const { nodes, edges } = useMemo(() => {
+    const order: AgentName[] = [];
+    const statusMap: Record<AgentName, 'pending' | 'running' | 'completed' | 'errored'> = {};
+    events.forEach((e) => {
+      const id = e.agentId as AgentName;
+      if (e.type === 'start') {
+        order.push(id);
+        statusMap[id] = 'running';
+      } else if (e.type === 'result' || e.type === 'end') {
+        statusMap[id] = 'completed';
+      } else if (e.type === 'error') {
+        statusMap[id] = 'errored';
+      }
     });
-    return map;
-  }, [stateMap]);
+    const nodes: FlowNode[] = order.map((id) => ({
+      id,
+      label: id,
+      status: statusMap[id] || 'pending',
+    }));
+    const edges: FlowEdge[] = [];
+    for (let i = 1; i < order.length; i++) {
+      edges.push({
+        id: `${order[i - 1]}-${order[i]}`,
+        source: order[i - 1],
+        target: order[i],
+      });
+    }
+    return { nodes, edges };
+  }, [events]);
 
   return (
     <div>
-      <AgentNodeGraph statuses={statuses} />
+      <AgentNodeGraph nodes={nodes} edges={edges} />
       <div className="mt-4 flex flex-wrap gap-2">
         {Object.entries(stateMap).map(([id, state]) => (
           <div
