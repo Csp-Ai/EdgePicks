@@ -2563,6 +2563,20 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:46:55.671Z
+Commit: e846fe2219db3d54e1c4a195d9bbbd65d27108d1
+Author: Codex
+Message: feat: add basic i18n with locale switcher
+Files:
+- app/[locale]/layout.tsx (+23/-0)
+- app/[locale]/page.tsx (+16/-0)
+- lib/i18n/LocaleSwitcher.tsx (+20/-0)
+- lib/i18n/config.ts (+0/-42)
+- lib/i18n/config.tsx (+79/-0)
+- lib/i18n/getDictionary.ts (+5/-0)
+- locales/ar/common.json (+4/-0)
+=======
+
 Timestamp: 2025-08-08T12:47:52.181Z
 Commit: c91433642353fe2e0ab56c734157da950ce71ca9
 Author: Codex
@@ -2738,5 +2752,6 @@ Files:
 - .env.example (+5/-0)
 - README.md (+4/-0)
 =======
+
 
 
