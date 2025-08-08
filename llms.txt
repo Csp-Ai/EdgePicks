@@ -1382,3 +1382,12 @@ Files:
 - lib/data/schedule.ts (+67/-0)
 - pages/api/upcoming-games.ts (+34/-18)
 
+Timestamp: 2025-08-08T03:50:26.057Z
+Commit: 54de140f0cf6a11cdff61cfca66de82f81be107e
+Author: Codex
+Message: docs: document docsync environment variables
+Files:
+- .env.local.example (+10/-0)
+- docs/docsync-strategy.md (+21/-0)
+- scripts/docsync-agent.ts (+2/-1)
+

@@ -150,6 +150,7 @@ export async function runDocSync() {
     "GH_PAT",
     "GH_OWNER",
     "GH_REPO",
+    "WIKI_BRANCH",
   ];
   for (const key of requiredEnv) {
     if (!process.env[key]) {
@@ -174,7 +175,7 @@ export async function runDocSync() {
     const repo: RepoMeta = {
       owner: process.env.GH_OWNER!,
       repo: process.env.GH_REPO!,
-      wikiBranch: process.env.WIKI_BRANCH || "main",
+      wikiBranch: process.env.WIKI_BRANCH!,
     };
     const { data: logs } = await supabase
       .from("codex_logs")
