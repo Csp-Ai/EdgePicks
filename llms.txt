@@ -1532,4 +1532,13 @@ Message: chore: satisfy lint rules
 Files:
 - components/AppHeader.tsx (+1/-0)
 - components/HeroStrip.tsx (+1/-1)
+=======
+Timestamp: 2025-08-08T05:17:06.202Z
+Commit: a7015313daaa393df25a9eb49f49751d4c39d026
+Author: Codex
+Message: chore: clean up package scripts
+Files:
+- package-lock.json (+0/-587)
+- package.json (+1/-3)
+
 
