@@ -7,7 +7,7 @@ import { authOptions } from './auth/[...nextauth]';
 import { registry as agentRegistry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 
-import { readAgentLog, clearAgentLogs } from '../../lib/agentLogsStore';
+import { readAgentLog } from '../../lib/agentLogsStore';
 import { ENV } from '../../lib/env';
 
 interface LogEntry {
@@ -90,7 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
     }
-    await clearAgentLogs();
+    // no-op: filesystem logging removed
     res.status(204).end();
     return;
   }

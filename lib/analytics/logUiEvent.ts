@@ -4,6 +4,7 @@ export async function logAdapterMetric(
   adapter: string,
   metric: string,
   metadata: Record<string, unknown> = {},
+  correlationId?: string,
 ): Promise<void> {
-  await logUiEvent('adapterMetric', { adapter, metric, ...metadata });
+  await logUiEvent('adapterMetric', { adapter, metric, ...metadata }, correlationId);
 }

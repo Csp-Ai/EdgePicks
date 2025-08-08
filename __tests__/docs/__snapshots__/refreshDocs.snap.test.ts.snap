@@ -74,10 +74,20 @@ create table if not exists flow_stats (
 
 create table if not exists ui_events (
   id uuid primary key default gen_random_uuid(),
+  correlation_id text,
   event text not null,
-  session_type text,
+  metadata jsonb,
   user_id text,
-  extras jsonb,
+  created_at timestamptz default now()
+);
+
+create table if not exists agent_events (
+  id uuid primary key default gen_random_uuid(),
+  correlation_id text,
+  agent_id text,
+  event text not null,
+  metadata jsonb,
+  user_id text,
   created_at timestamptz default now()
 );
 
@@ -112,11 +122,17 @@ create table if not exists agent_outcomes (
 create index if not exists logs_user_id_ts_idx on logs (user_id, ts);
 create index if not exists matchups_user_id_idx on matchups (user_id);
 create index if not exists predictions_user_id_created_at_idx on predictions (user_id, created_at);
+create index if not exists ui_events_user_id_created_at_idx on ui_events (user_id, created_at);
+create index if not exists ui_events_correlation_id_idx on ui_events (correlation_id);
+create index if not exists agent_events_user_id_created_at_idx on agent_events (user_id, created_at);
+create index if not exists agent_events_correlation_id_idx on agent_events (correlation_id);
 
 -- Row Level Security policies
 alter table logs enable row level security;
 alter table predictions enable row level security;
 alter table matchups enable row level security;
+alter table ui_events enable row level security;
+alter table agent_events enable row level security;
 
 create policy "Users can view their logs" on logs
   for select using (auth.uid() = user_id);
@@ -126,6 +142,22 @@ create policy "Users can update their logs" on logs
   for update using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 create policy "Service role full access to logs" on logs
+  for all using (auth.role() = 'service_role')
+  with check (auth.role() = 'service_role');
+
+create policy "Users can view their ui events" on ui_events
+  for select using (auth.uid() = user_id);
+create policy "Users can insert their ui events" on ui_events
+  for insert with check (auth.uid() = user_id);
+create policy "Service role full access to ui events" on ui_events
+  for all using (auth.role() = 'service_role')
+  with check (auth.role() = 'service_role');
+
+create policy "Users can view their agent events" on agent_events
+  for select using (auth.uid() = user_id);
+create policy "Users can insert their agent events" on agent_events
+  for insert with check (auth.uid() = user_id);
+create policy "Service role full access to agent events" on agent_events
   for all using (auth.role() = 'service_role')
   with check (auth.role() = 'service_role');
 

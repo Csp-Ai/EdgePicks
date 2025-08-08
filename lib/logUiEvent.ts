@@ -1,33 +1,28 @@
-import { triggerToast } from './useToast';
-
 export async function logUiEvent(
   uiEvent: string,
-  metadata?: Record<string, unknown>,
+  metadata: Record<string, unknown> = {},
+  correlationId?: string,
 ): Promise<void> {
-  try {
-    const meta = metadata ?? {};
-    console.log(`[UI EVENT] ${uiEvent}`, Object.keys(meta).length ? meta : '');
+  const corr = correlationId ??
+    (typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? (crypto as any).randomUUID()
+      : undefined);
 
-    if (typeof window !== 'undefined') {
-      await fetch('/api/log-status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: uiEvent, metadata: meta }),
-      });
-      return;
-    }
+  console.log(`[UI EVENT] ${uiEvent}`, Object.keys(metadata).length ? metadata : '');
 
-    const { supabase } = await import('./supabaseClient');
-    await supabase.from('ui_events').insert({
-      event: uiEvent,
-      metadata: meta,
-      created_at: new Date().toISOString(),
+  if (typeof window !== 'undefined') {
+    await fetch('/api/log-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: uiEvent, metadata, correlationId: corr }),
     });
-  } catch (err) {
-    console.error('Failed to log UI event', err);
-    triggerToast({
-      message: 'Unable to log event; please sign in again',
-      type: 'error',
-    });
+    return;
   }
+
+  const { logToSupabase } = await import('./logToSupabase');
+  logToSupabase('ui_events', {
+    event: uiEvent,
+    metadata,
+    correlation_id: corr,
+  });
 }

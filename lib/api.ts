@@ -9,9 +9,21 @@ export const getUpcomingGames = async (league: string = 'NFL') => {
 };
 
 export const runPredictions = async (league: string, games: any[]) => {
+  const correlationId =
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? (crypto as any).randomUUID()
+      : undefined;
+  await (await import('./logUiEvent')).logUiEvent(
+    'runPredictions',
+    { league, games: games.length },
+    correlationId,
+  );
   const res = await fetch('/api/run-predictions', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-correlation-id': correlationId || '',
+    },
     body: JSON.stringify({ league, games }),
   });
   if (!res.ok) throw new Error('Prediction flow failed');
