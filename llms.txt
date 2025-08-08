@@ -1940,3 +1940,13 @@ Files:
 - __tests__/__snapshots__/AgentExecutionTracker.test.tsx.snap (+215/-0)
 - components/AgentExecutionTracker.tsx (+155/-0)
 
+Timestamp: 2025-08-08T09:30:32.963Z
+Commit: 2380bd7c9ee11db49f58b408cfbd33b00c6d4835
+Author: Codex
+Message: fix: cleanup AgentExecutionTracker timers
+Files:
+- __tests__/AgentExecutionTracker.test.tsx (+19/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/AgentExecutionTracker.tsx (+16/-4)
+- jest.setup.ts (+9/-0)
+

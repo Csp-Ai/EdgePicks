@@ -1,5 +1,13 @@
 import '@testing-library/jest-dom';
 
+const originalError = console.error;
+console.error = (...args: any[]) => {
+  if (typeof args[0] === 'string' && args[0].includes('Cannot log after tests are done')) {
+    return;
+  }
+  originalError(...args);
+};
+
 process.env.SUPABASE_URL = 'http://localhost';
 process.env.SUPABASE_KEY = 'test-anon';
 process.env.NEXTAUTH_URL = 'http://localhost';
@@ -28,5 +36,6 @@ jest.mock('./lib/supabaseClient', () => {
 
 afterEach(() => {
   jest.useRealTimers?.();
+  jest.clearAllTimers?.();
   jest.restoreAllMocks();
 });

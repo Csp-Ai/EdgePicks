@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CheckCircle2, AlertTriangle, Circle } from 'lucide-react';
 
 export type AgentStatus = 'pending' | 'running' | 'completed' | 'error';
@@ -44,6 +44,18 @@ const AgentExecutionTracker: React.FC<Props> = ({
   );
 
   const [statuses, setStatuses] = useState<Record<string, AgentStatus>>(base);
+  const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
+  const subscriptionsRef = useRef<Array<() => void>>([]);
+
+  // cleanup on unmount
+  useEffect(() => {
+    return () => {
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+      subscriptionsRef.current.forEach((unsub) => unsub());
+      subscriptionsRef.current = [];
+    };
+  }, []);
 
   // apply events
   useEffect(() => {
@@ -60,7 +72,6 @@ const AgentExecutionTracker: React.FC<Props> = ({
   // demo mode simulation
   useEffect(() => {
     if (mode !== 'demo') return;
-    const timeouts: ReturnType<typeof setTimeout>[] = [];
     agents.forEach((agent, i) => {
       const start = setTimeout(() => {
         setStatuses((s) => ({ ...s, [agent.name]: 'running' }));
@@ -68,10 +79,11 @@ const AgentExecutionTracker: React.FC<Props> = ({
       const end = setTimeout(() => {
         setStatuses((s) => ({ ...s, [agent.name]: 'completed' }));
       }, i * 1000 + 800);
-      timeouts.push(start, end);
+      timeoutsRef.current.push(start, end);
     });
     return () => {
-      timeouts.forEach(clearTimeout);
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
     };
   }, [mode, agents, runId]);
 
