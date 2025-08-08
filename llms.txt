@@ -2158,3 +2158,10 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:12:58.755Z
+Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
+Author: Codex
+Message: feat: improve AgentStatusPanel accessibility
+Files:
+- components/AgentStatusPanel.tsx (+17/-8)
+
