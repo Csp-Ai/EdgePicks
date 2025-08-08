@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import GoalPicker from './onboarding/GoalPicker';
 
 const STORAGE_KEY = 'onboardingComplete';
+const GOAL_KEY = 'userGoal';
 const STEPS = [
   { title: 'Welcome', text: 'Thanks for joining the EdgePicks beta.' },
   { title: 'Smart Picks', text: 'Our agents help you make data-driven choices.' },
@@ -11,7 +13,7 @@ const STEPS = [
 export default function Onboarding() {
   const { status } = useSession();
   const [show, setShow] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
 
   useEffect(() => {
     if (status !== 'authenticated') return;
@@ -32,6 +34,13 @@ export default function Onboarding() {
       });
   }, [status]);
 
+  const handleGoalSelect = (goal: string) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(GOAL_KEY, goal);
+    }
+    setStep(0);
+  };
+
   const finish = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, '1');
@@ -41,6 +50,21 @@ export default function Onboarding() {
   };
 
   if (!show) return null;
+
+  if (step === -1) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4 text-white">
+        <div className="bg-gray-900 p-6 rounded max-w-sm w-full space-y-4 text-center">
+          <GoalPicker onSelect={handleGoalSelect} />
+          <div className="flex justify-end pt-4">
+            <button onClick={finish} className="px-4 py-2 border rounded">
+              Skip
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const { title, text } = STEPS[step];
 
