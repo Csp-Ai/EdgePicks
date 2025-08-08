@@ -1979,3 +1979,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T10:11:10.100Z
+Commit: 2f5c250bfc4e8c2f54e5c6d601b2d252d7c3285c
+Author: Codex
+Message: docs: add contributing guidelines and architecture snapshot
+Files:
+- CONTRIBUTING.md (+23/-0)
+- docs/ARCHITECTURE_SNAPSHOT.md (+21/-0)
+
