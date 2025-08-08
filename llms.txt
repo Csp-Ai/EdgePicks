@@ -2840,3 +2840,10 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:59:49.441Z
+Commit: 8c50a4a2d6fe3480ce32016589618d986ea1ff1b
+Author: Codex
+Message: feat: add keyboard shortcut overlay
+Files:
+- components/a11y/Keymap.tsx (+67/-0)
+
