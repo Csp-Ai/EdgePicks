@@ -1,3 +1,24 @@
+# LLM Orchestration Overview
+## Flow Orchestration, Prompt Chaining, and Reasoning Disclosure
+- `FlowOrchestrator` loads agents from `flows/` and runs compatible ones in parallel.
+- Guardian audits execute after parallel stages to disclose reasoning and surface confidence.
+- Prompt templates chain through `codex-prompts/` and stream intermediate reasoning to the UI and logs.
+
+## Prompt Hygiene
+- Prompts are versioned in git and listed under `codex-prompts/`.
+- Each change must include tests and an entry in `llms.txt` with a timestamp and rationale.
+- Sanitizers strip PII and escape user-supplied tokens before submission.
+
+## Feature Flagging
+- Environment variables such as `LIVE_MODE` and `LLM_FEATURES` toggle LLM-powered flows.
+- Flags are checked server-side and exposed to the client for gradual rollout.
+
+## Offline Simulation
+- Run `npm run llm:offline` to exercise flows with local fixtures.
+- Set `OFFLINE_LLM=1` to bypass network calls and emulate responses.
+
+---
+Historical log:
 Timestamp: 2025-08-06T01:35:19Z
 Summary:
 - Repository docs synced (README + AGENTS.md)
@@ -2805,6 +2826,17 @@ Files:
 - package.json (+2/-1)
 - test/utils/freezeRandom.ts (+14/-0)
 - test/utils/freezeTime.ts (+26/-0)
+
+Timestamp: 2025-08-08T13:15:16.018Z
+Commit: a7bdd0f9b87f3fbcb9782f8a08319b99e114dcf7
+Author: Codex
+Message: docs: update README, agents.ms, and llms.txt for Series-A readiness
+Files:
+- AIML_OVERVIEW.md (+15/-14)
+- README.md (+42/-251)
+- agents.ms (+84/-0)
+- llms.txt (+21/-0)
+=======
 
 
 

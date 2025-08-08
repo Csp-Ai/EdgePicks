@@ -1,5 +1,5 @@
 # 🧠 AIML_OVERVIEW.md – EdgePicks AI/ML Constitution
-_Last Updated: August 6, 2025_
+_Last Updated: August 7, 2025_
 
 ## 🔍 Purpose
 
@@ -15,23 +15,24 @@ This file serves as the source of truth for all AI/ML logic in EdgePicks, includ
 
 ## 🤖 Agents
 
-Each AI agent contributes domain-specific insights to NFL matchup predictions. Current agents:
+Each AI agent contributes domain-specific insights to NFL matchup predictions. Active agents are detailed in `agents.ms` and include:
 
-- `InjuryScout`: Scrapes injury reports, flags absences and return-to-play indicators
-- `LineWatcher`: Monitors betting lines for sharp movement or reverse trends
-- `StatCruncher`: Computes stats like yards per play, QB pressure rate, turnover margin
-- `CoachWhisperer`: Applies heuristics on coaching style, decisions, and aggression
-- `WeatherEye`: Flags games with precipitation, heat index, or wind speed anomalies
+- `injuryScout` – tracks player injuries and availability
+- `lineWatcher` – monitors betting line movement and market signals
+- `statCruncher` – crunches historical statistics for trends
+- `trendsAgent` – analyzes recent matchups for flow popularity and hit rates
+- `guardianAgent` – reviews outputs for inconsistent or incomplete reasoning
 
-All agents output structured JSON to the `AgentDebugPanel` and propagate to `MatchupInsightsPanel`.
+All agents output structured JSON and stream reasoning to the UI and logs.
 
 ---
 
 ## 🔁 Flow Orchestration
 
-- `FlowOrchestrator` manages agent invocation in sequence or parallel, with optional weighting logic.
-- User input via `MatchupInputForm` triggers flows like `defaultNFLFlow`, which load all agents.
-- Agent outputs are merged into a composite prediction result, rendered in the UI with transparency.
+- `FlowOrchestrator` runs compatible agents in parallel batches followed by guardian audits.
+- User input triggers `defaultNFL` which invokes `injuryScout`, `lineWatcher`, and `statCruncher` concurrently.
+- `guardianAgent` validates the batch and can surface improvement suggestions.
+- Reflections recorded in `logs/agent-reflections.json` feed a self-regenerative loop for future runs.
 
 ---
 
@@ -39,9 +40,9 @@ All agents output structured JSON to the `AgentDebugPanel` and propagate to `Mat
 
 While no deep learning models are currently deployed, agents use ML-adjacent logic:
 
-- Rule-based scoring (StatCruncher, CoachWhisperer)
-- Real-time signals and weighting (LineWatcher)
-- Environmental heuristics (WeatherEye)
+- Rule-based scoring (`statCruncher`)
+- Real-time signals and weighting (`lineWatcher`)
+- Contextual heuristics (`injuryScout`, `trendsAgent`)
 - Future expansion may include:
   - GNNs for player interaction modeling
   - LLM-based playbook similarity
