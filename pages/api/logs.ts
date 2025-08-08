@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 
 import { registry as agentRegistry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
@@ -81,6 +83,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'DELETE') {
+    if (ENV.LIVE_MODE === 'on') {
+      const session = await getServerSession(req, res, authOptions);
+      if (!session) {
+        res.status(401).json({ error: 'auth_required' });
+        return;
+      }
+    }
     await clearAgentLogs();
     res.status(204).end();
     return;

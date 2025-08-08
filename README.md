@@ -28,13 +28,15 @@ npm run validate-env
 
 ### Live vs Mock
 
-Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.
+Local dev defaults to **mock mode** with `LIVE_MODE=off`.
 Provide real keys later to test full OAuth + live data.
-Run-agents allows unauthenticated calls when `LIVE_MODE=off` or `NEXT_PUBLIC_MOCK_AUTH=1`.
+Run-agents returns mock data and bypasses auth when `LIVE_MODE=off`.
 
-#### Mock Auth
+#### Auth Guards
 
-`/api/dev-login` is only available during local development or when `NEXT_PUBLIC_MOCK_AUTH=1`. Other environments receive `403`.
+When `LIVE_MODE=on`, `/api/run-agents`, `/api/run-predictions`, and write requests to `/api/logs` require a valid session. Unauthenticated calls respond with `401` and `{ "error": "auth_required" }`.
+
+`/api/dev-login` is only available when `NODE_ENV=development`; other environments get a `404`.
 
 🧱 Architecture Overview
 
@@ -238,7 +240,7 @@ PRs are gated by CI + required review
 
 Example audit output:
 
-🔴 Missing auth on /api/run-predictions
+🟢 Auth enforced on /api/run-predictions
 
 🟡 No tests for trendsAgent
 
