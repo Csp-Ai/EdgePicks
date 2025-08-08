@@ -1514,3 +1514,15 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T05:23:57.129Z
+Commit: bdc67f1a961575764a6e643057ad653a8ec95871
+Author: Codex
+Message: test: add API contract schemas and CI job split
+Files:
+- .github/workflows/ci.yml (+34/-43)
+- __tests__/__snapshots__/apiContracts.test.ts.snap (+197/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/apiContracts.test.ts (+157/-0)
+- package-lock.json (+12/-1)
+- package.json (+4/-3)
+
