@@ -2562,6 +2562,14 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:41:30.690Z
+Commit: 52307f9f5385f679183131d0e7f6607cf66d07b2
+Author: Codex
+Message: feat: add ancient tech gallery
+Files:
+- app/ancient/page.tsx (+128/-0)
+- components/ancient/AncientTechCard.tsx (+71/-0)
+=======
 
 
 Timestamp: 2025-08-08T12:39:36.823Z
@@ -2609,5 +2617,6 @@ Author: Codex
 Message: feat: add agent transparency drawer
 Files:
 - components/agents/TransparencyDrawer.tsx (+81/-0)
+
 
 
