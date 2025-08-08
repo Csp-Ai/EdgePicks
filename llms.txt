@@ -1940,10 +1940,42 @@ Files:
 - __tests__/__snapshots__/AgentExecutionTracker.test.tsx.snap (+215/-0)
 - components/AgentExecutionTracker.tsx (+155/-0)
 
+
 Timestamp: 2025-08-08T09:38:55.428Z
 Commit: ee10ce31e64bceb26a8bc4fd3e65266959449c2d
 Author: Codex
 Message: ci(constitution): switch PR creation to peter-evans + auto-merge; keep drift as blocking
 Files:
 - .github/workflows/constitution-drift.yml (+70/-0)
+=======
+
+Timestamp: 2025-08-08T09:30:32.963Z
+Commit: 2380bd7c9ee11db49f58b408cfbd33b00c6d4835
+Author: Codex
+Message: fix: cleanup AgentExecutionTracker timers
+Files:
+- __tests__/AgentExecutionTracker.test.tsx (+19/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/AgentExecutionTracker.tsx (+16/-4)
+- jest.setup.ts (+9/-0)
+=======
+Timestamp: 2025-08-08T09:31:55.064Z
+Commit: 18fb92694defa185d23b529533c15d51b61b78e2
+Author: Codex
+Message: feat(predictions): structured explanations + confidence bars + sticky summary
+Files:
+- __tests__/PredictionsPanel.explanations.test.tsx (+58/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/PredictionsPanel.tsx (+141/-12)
+=======
+Timestamp: 2025-08-08T09:31:00.153Z
+Commit: c0fd43fb192cb56f387557e784588b1fa65192fd
+Author: Codex
+Message: feat(insights): integrate AgentExecutionTracker with smooth reveal
+Files:
+- __tests__/MatchupInsights.tracker.integration.test.tsx (+36/-0)
+- components/MatchupInsights.tsx (+126/-0)
+- pages/predictions.tsx (+3/-38)
+
+
 
