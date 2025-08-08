@@ -2562,6 +2562,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:39:36.823Z
 Commit: 3547c5915d4dc28adc03d072fe462c0e33782c6a
 Author: Codex
@@ -2573,4 +2574,12 @@ Files:
 - app/maps/page.tsx (+87/-0)
 - package-lock.json (+2283/-3391)
 - package.json (+2/-0)
+=======
+Timestamp: 2025-08-08T12:37:33.324Z
+Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
+Author: Codex
+Message: feat: add agent transparency drawer
+Files:
+- components/agents/TransparencyDrawer.tsx (+81/-0)
+
 
