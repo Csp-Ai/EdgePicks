@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:51:11.450Z
+Commit: b1c625c18ee24bc5aea6dda6c95c8a2b4bc5ae99
+Author: Codex
+Message: feat: add ScenarioExplainer component
+Files:
+- __tests__/ScenarioExplainer.test.tsx (+24/-0)
+- components/agents/ScenarioExplainer.tsx (+46/-0)
+
