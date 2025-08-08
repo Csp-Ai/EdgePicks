@@ -2008,3 +2008,12 @@ Files:
 - __tests__/flags.test.ts (+24/-0)
 - lib/flags.ts (+25/-0)
 
+Timestamp: 2025-08-08T09:53:27.387Z
+Commit: 4d6ed3fe3d1e2ca8e75d2b73ea70772ccebe92b0
+Author: Codex
+Message: Add no-op TelemetryProvider with event queue
+Files:
+- __tests__/TelemetryProvider.test.tsx (+44/-0)
+- lib/telemetry/TelemetryProvider.tsx (+64/-0)
+- lib/telemetry/index.ts (+1/-0)
+
