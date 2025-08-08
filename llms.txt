@@ -1828,3 +1828,11 @@ Files:
 - pages/_app.tsx (+13/-0)
 - scripts/dev/commit-helper.ts (+27/-0)
 
+Timestamp: 2025-08-08T08:23:33.830Z
+Commit: 1a0cee181dec62e1b6b5b90412a6437a91c9bbf7
+Author: Codex
+Message: feat: add weight calibration script
+Files:
+- package.json (+2/-1)
+- scripts/calibrateWeights.ts (+54/-0)
+
