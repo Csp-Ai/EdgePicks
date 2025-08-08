@@ -2563,6 +2563,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:41:16.361Z
 Commit: 55f85677b6efb7ed98e8960068115897b3a4ada1
 Author: Codex
@@ -2570,6 +2571,15 @@ Message: feat: add risk communicator component
 Files:
 - components/health/RiskCommunicator.tsx (+71/-0)
 - stories/health/RiskCommunicator.stories.tsx (+28/-0)
+=======
+Timestamp: 2025-08-08T12:42:23.800Z
+Commit: e5edfe0d155f1c476c587bddf373c477f67fd8a2
+Author: Codex
+Message: feat: add inclusion persona toolbar
+Files:
+- components/inclusion/InclusionToolbar.tsx (+53/-0)
+- components/inclusion/persona.css (+44/-0)
+
 =======
 Timestamp: 2025-08-08T12:39:51.017Z
 Commit: efa7ee966a62f5986291ec1407685acda237c25a
@@ -2683,6 +2693,17 @@ Files:
 
 
 
+
+
+
+=======
+Timestamp: 2025-08-08T12:34:49.121Z
+Commit: a3a1d1a41552849c23a8d076f132af3952b5d7b9
+Author: Codex
+Message: chore(ci): harden docs and codex workflows
+Files:
+- .github/workflows/codex-diff.yml (+62/-7)
+- .github/workflows/docs-refresh.yml (+39/-8)
 
 
 
