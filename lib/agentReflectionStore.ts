@@ -35,3 +35,25 @@ export async function readAgentReflections(): Promise<Record<string, AgentReflec
     return {};
   }
 }
+
+export async function readRecentReflections(agent: string, count: number): Promise<AgentReflection[]> {
+  try {
+    const contents = await fs.readFile(filePath, 'utf8');
+    const entries = JSON.parse(contents) as Array<
+      { agent: string; timestamp?: string } & AgentReflection
+    >;
+    return entries
+      .filter((e) => e.agent === agent)
+      .sort((a, b) =>
+        new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime(),
+      )
+      .slice(-count)
+      .map((e) => ({
+        whatIObserved: e.whatIObserved,
+        whatIChose: e.whatIChose,
+        whatCouldImprove: e.whatCouldImprove,
+      }));
+  } catch {
+    return [];
+  }
+}
