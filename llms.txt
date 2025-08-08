@@ -2562,3 +2562,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:41:34.334Z
+Commit: 76c84b11fc802016cd1911be26fed71f2759a45e
+Author: Codex
+Message: feat: add preflight env check page
+Files:
+- app/dev/preflight/page.tsx (+83/-0)
+- app/layout.tsx (+18/-0)
+
