@@ -10,6 +10,7 @@ import { registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
+import { formatKickoff } from '../../lib/utils/formatKickoff';
 import pLimit from 'p-limit';
 
 const CONCURRENCY_LIMIT = 3;
@@ -39,6 +40,7 @@ type Result = {
   agentDelta?: number;
   disagreements: string[];
   edgePick: AgentExecution[];
+  kickoffDisplay: string;
 };
 
 type LeagueCacheEntry = { results: Result[]; timestamp: number };
@@ -154,6 +156,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 agentDelta,
                 disagreements,
                 edgePick: executions,
+                kickoffDisplay: formatKickoff(game.time),
               };
               return result;
             } catch (err) {
