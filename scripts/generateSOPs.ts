@@ -2,6 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import agentsMeta from '../lib/agents/agents.json';
 import { AgentReflection } from './agentSelfReflection';
+// use the new read helper that coexists with centralized writer
+import { readRecentAgentReflections } from '../lib/readAgentReflections';
 
 interface AgentMeta {
   name: string;
@@ -13,7 +15,12 @@ function extractNotes(content: string): string {
   return match ? match[1].trim() : 'TBD notes.';
 }
 
-async function buildSOP(agent: AgentMeta, reflection: AgentReflection | undefined, notes: string): Promise<string> {
+async function buildSOP(
+  agent: AgentMeta,
+  reflection: AgentReflection | undefined,
+  notes: string,
+  lessons: string[],
+): Promise<string> {
   const lines: string[] = [];
   lines.push(`# ${agent.name} SOP`);
   lines.push('');
@@ -48,6 +55,13 @@ async function buildSOP(agent: AgentMeta, reflection: AgentReflection | undefine
     lines.push('- TBD');
   }
   lines.push('');
+  lines.push('## Lessons Learned');
+  if (lessons.length) {
+    lessons.forEach((l) => lines.push(`- ${l}`));
+  } else {
+    lines.push('- TBD');
+  }
+  lines.push('');
   lines.push('<!-- Notes from Maintainer -->');
   lines.push(notes);
   lines.push('<!-- End Notes from Maintainer -->');
@@ -69,7 +83,16 @@ export async function run(): Promise<void> {
       const raw = await fs.readFile(path.join(dir, 'reflection.json'), 'utf8');
       reflection = JSON.parse(raw);
     } catch {}
-    const sop = await buildSOP(agent, reflection, notes);
+    const lessonCount = Number(process.env.SOP_LESSON_COUNT || '3');
+    // ensure we fetch recent reflections for “Lessons Learned”
+    const recentAll = await readRecentAgentReflections(lessonCount);
+    const recent = recentAll.filter(
+      (r) => (r.agentId || (r as any).agent) === agent.name,
+    );
+    const lessons = recent
+      .map((r) => r.improvement || (r as any).whatCouldImprove)
+      .filter(Boolean) as string[];
+    const sop = await buildSOP(agent, reflection, notes, lessons);
     await fs.writeFile(sopPath, sop);
   }
 }

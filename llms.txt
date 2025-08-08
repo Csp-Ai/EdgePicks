@@ -1846,3 +1846,8 @@ Files:
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
 
+
+feat(sop): include “Lessons Learned” from recent agent reflections
+- add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
+- keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
+- update SOP generator to merge maintainer notes + lessons learned
