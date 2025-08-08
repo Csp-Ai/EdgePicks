@@ -2393,6 +2393,15 @@ Files:
 =======
 
 
+
+Timestamp: 2025-08-08T11:46:03.808Z
+Commit: 1aa5060a5f0c634d8399286ba5bd484a15850d5b
+Author: Codex
+Message: feat: add disagreement badge for agent picks
+Files:
+- __tests__/DisagreementBadge.test.tsx (+47/-0)
+- components/agents/DisagreementBadge.tsx (+51/-0)
+=======
 Timestamp: 2025-08-08T11:45:51.107Z
 Commit: 2058c519c38770d8c79061b658fc583f1805db25
 Author: Codex
