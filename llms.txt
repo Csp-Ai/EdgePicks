@@ -1941,6 +1941,14 @@ Files:
 - components/AgentExecutionTracker.tsx (+155/-0)
 
 
+Timestamp: 2025-08-08T09:38:55.428Z
+Commit: ee10ce31e64bceb26a8bc4fd3e65266959449c2d
+Author: Codex
+Message: ci(constitution): switch PR creation to peter-evans + auto-merge; keep drift as blocking
+Files:
+- .github/workflows/constitution-drift.yml (+70/-0)
+=======
+
 Timestamp: 2025-08-08T09:30:32.963Z
 Commit: 2380bd7c9ee11db49f58b408cfbd33b00c6d4835
 Author: Codex
@@ -1969,7 +1977,154 @@ Files:
 - components/MatchupInsights.tsx (+126/-0)
 - pages/predictions.tsx (+3/-38)
 
+Timestamp: 2025-08-08T09:49:09.752Z
+Commit: 20e831f174cd0dd1e0e8a9249853cc42ac26bea5
+Author: Codex
+Message: feat(demo): Matchup carousel with tracker and compact predictions
+Files:
+- __tests__/DemoMatchupCarousel.test.tsx (+33/-0)
+- components/DemoMatchupCarousel.tsx (+89/-0)
+- mock/demo-matchups.json (+17/-0)
+=======
+Timestamp: 2025-08-08T09:43:55.171Z
+Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
+Author: Codex
+Message: feat: add governance audit log and tooling
+Files:
+- .github/workflows/lighthouse-ci.yml (+25/-0)
+- .github/workflows/percy.yml (+19/-0)
+- __tests__/AuditLogList.test.tsx (+48/-0)
+- components/AuditLogList.tsx (+148/-0)
+- lighthouserc.json (+30/-0)
+- pages/governance/audit.tsx (+17/-0)
+- tests/visual/percy.spec.ts (+13/-0)
 
+
+Timestamp: 2025-08-08T09:51:31.013Z
+Commit: 641da7678305cebfce2c04a0cff54615cdf940cf
+Author: Codex
+Message: feat: add feature flag helper
+Files:
+- __tests__/flags.test.ts (+24/-0)
+- lib/flags.ts (+25/-0)
+
+Timestamp: 2025-08-08T09:53:27.387Z
+Commit: 4d6ed3fe3d1e2ca8e75d2b73ea70772ccebe92b0
+Author: Codex
+Message: Add no-op TelemetryProvider with event queue
+Files:
+- __tests__/TelemetryProvider.test.tsx (+44/-0)
+- lib/telemetry/TelemetryProvider.tsx (+64/-0)
+- lib/telemetry/index.ts (+1/-0)
+
+Timestamp: 2025-08-08T09:50:01.141Z
+Commit: ed82d9c24b9a4a344fe3bf21d3dc33f6d3d4862a
+Author: Codex
+Message: feat(api): add health and version endpoints
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+2/-0)
+- __tests__/health.test.ts (+21/-0)
+- __tests__/version.test.ts (+22/-0)
+- pages/api/health.ts (+8/-0)
+- pages/api/version.ts (+9/-0)
+
+Timestamp: 2025-08-08T09:54:18.061Z
+Commit: e5b4c051fc8a5f80feb7430be976c6ce52d3a0d5
+Author: Codex
+Message: feat: add public API zod schemas
+Files:
+- __tests__/__snapshots__/publicApiSchemas.test.ts.snap (+298/-0)
+- __tests__/publicApiSchemas.test.ts (+22/-0)
+- lib/schemas/accuracy.ts (+15/-0)
+- lib/schemas/predictions.ts (+52/-0)
+- lib/schemas/reflections.ts (+11/-0)
+=======
+Timestamp: 2025-08-08T09:49:54.019Z
+Commit: 0ea587e571b4f3037132c25b6b91a4fcb38875f9
+Author: Codex
+Message: feat: add prediction marquee component
+Files:
+- __tests__/marketing/PredictionMarquee.test.tsx (+19/-0)
+- components/marketing/PredictionMarquee.tsx (+44/-0)
+
+
+
+Timestamp: 2025-08-08T09:50:10.383Z
+Commit: e0bc9f7184dff8cfcce3295acffd1ba4cf93d1f9
+Author: Codex
+Message: feat: add Storybook with a11y and testing
+Files:
+- .github/workflows/storybook-build.yml (+17/-0)
+- .storybook/main.ts (+12/-0)
+- .storybook/preview.ts (+10/-0)
+- package-lock.json (+19042/-5947)
+- package.json (+9/-2)
+- stories/AgentExecutionTracker.stories.tsx (+23/-0)
+- stories/PredictionsPanel.stories.tsx (+40/-0)
+=======
+Timestamp: 2025-08-08T10:00:21.029Z
+Commit: a2276f2391429cc08763bb630b8379288fcf602c
+Author: Codex
+Message: test: add MSW setup for API mocking
+Files:
+- jest.setup.msw.ts (+5/-0)
+- package-lock.json (+841/-0)
+- package.json (+2/-1)
+- tests/msw/handlers.ts (+8/-0)
+- tests/msw/server.ts (+4/-0)
+=======
+Timestamp: 2025-08-08T09:57:40.238Z
+Commit: 298561b80ef73cca538f91bf8a63d8ef861d626b
+Author: Codex
+Message: test: add axe-playwright accessibility checks
+Files:
+- .github/workflows/a11y.yml (+20/-0)
+- tests/a11y/core-pages.spec.ts (+21/-0)
+
+Timestamp: 2025-08-08T09:50:57.629Z
+Commit: b0ed9a00acaa6de93651301227f87e3895dbaa02
+Author: Codex
+Message: feat(api): add accuracy history endpoint
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/api/accuracy-history.test.ts (+62/-0)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+1/-0)
+- docs/api.md (+2/-0)
+- pages/api/accuracy-history.ts (+40/-0)
+
+Timestamp: 2025-08-08T09:56:10.180Z
+Commit: 286dcbca335bb37c3c0a5ed04e2a977a099b55a0
+Author: Codex
+Message: feat(analytics): Accuracy over time chart with SWR cache and a11y
+Files:
+- __tests__/AccuracyTrend.render.test.tsx (+82/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/AccuracyTrend.tsx (+148/-0)
+- package-lock.json (+325/-6)
+- package.json (+1/-0)
+- pages/analytics/accuracy.tsx (+29/-0)
+
+Timestamp: 2025-08-08T09:54:16.220Z
+Commit: 36ab87e5b5928fe47638d90db25291ac7e921ca0
+Author: Codex
+Message: feat(telemetry): Live Agent Log Stream with persistent filters (tests)
+Files:
+- __tests__/AgentLogStream.sse.test.tsx (+87/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/AgentLogStream.tsx (+118/-0)
+- package-lock.json (+24/-0)
+- package.json (+1/-0)
+- pages/logs/agents.tsx (+17/-0)
+
+
+Timestamp: 2025-08-08T10:11:10.100Z
+Commit: 2f5c250bfc4e8c2f54e5c6d601b2d252d7c3285c
+Author: Codex
+Message: docs: add contributing guidelines and architecture snapshot
+Files:
+- CONTRIBUTING.md (+23/-0)
+- docs/ARCHITECTURE_SNAPSHOT.md (+21/-0)
 
 Timestamp: 2025-08-08T10:23:40.241Z
 Commit: a3a724b03a7a9590a294754bc690544236257f7a
