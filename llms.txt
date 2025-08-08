@@ -2393,3 +2393,12 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:47:24.957Z
+Commit: a55a9f48a805934c78a932c7ebda5d4419e7a97d
+Author: Codex
+Message: Add static NFL demo route
+Files:
+- __tests__/demo.nfl.page.test.tsx (+30/-0)
+- pages/demo/mlb.tsx (+1/-0)
+- pages/demo/nfl.tsx (+76/-0)
+
