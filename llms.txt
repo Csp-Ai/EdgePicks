@@ -2562,6 +2562,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:47:52.181Z
 Commit: c91433642353fe2e0ab56c734157da950ce71ca9
 Author: Codex
@@ -2569,4 +2570,163 @@ Message: Add pricing teaser modal
 Files:
 - __tests__/marketing/PricingTeaser.test.tsx (+32/-0)
 - components/marketing/PricingTeaser.tsx (+49/-0)
+=======
+
+
+Timestamp: 2025-08-08T12:42:40.391Z
+Commit: 8d38970754b35a808833c8dea2e0900b63da4113
+Author: Codex
+Message: feat(a11y): add accessibility helpers and lint rule
+Files:
+- .eslintrc.json (+4/-1)
+- components/a11y/AriaButton.tsx (+31/-0)
+- components/a11y/FocusRing.tsx (+17/-0)
+- components/a11y/FocusTrap.tsx (+41/-0)
+- components/a11y/SkipLink.tsx (+15/-0)
+=======
+
+Timestamp: 2025-08-08T12:41:16.361Z
+Commit: 55f85677b6efb7ed98e8960068115897b3a4ada1
+Author: Codex
+Message: feat: add risk communicator component
+Files:
+- components/health/RiskCommunicator.tsx (+71/-0)
+- stories/health/RiskCommunicator.stories.tsx (+28/-0)
+=======
+Timestamp: 2025-08-08T12:42:23.800Z
+Commit: e5edfe0d155f1c476c587bddf373c477f67fd8a2
+Author: Codex
+Message: feat: add inclusion persona toolbar
+Files:
+- components/inclusion/InclusionToolbar.tsx (+53/-0)
+- components/inclusion/persona.css (+44/-0)
+
+
+=======
+Timestamp: 2025-08-08T12:39:51.017Z
+Commit: efa7ee966a62f5986291ec1407685acda237c25a
+Author: Codex
+Message: feat: add open knowledge lens components
+Files:
+- components/lens/LensAnnotation.tsx (+28/-0)
+- components/lens/LensContext.tsx (+48/-0)
+- components/lens/LensSideSheet.tsx (+30/-0)
+- components/lens/LensToggle.tsx (+14/-0)
+- components/lens/index.ts (+4/-0)
+- data/open-datasets.json (+20/-0)
+=======
+
+Timestamp: 2025-08-08T12:39:46.223Z
+Commit: 26050e2c7f521db654f95edeb58ca5df507f2d6a
+Author: Codex
+Message: Add interactive stats explainers
+Files:
+- app/learn-stats/page.tsx (+15/-0)
+- components/edu/BiasCard.tsx (+52/-0)
+- components/edu/ConfidenceIntervalCard.tsx (+58/-0)
+- components/edu/ErrorBarsCard.tsx (+53/-0)
+- components/edu/ZScoreCard.tsx (+54/-0)
+=======
+
+Timestamp: 2025-08-08T12:40:05.349Z
+Commit: 437c25a99b954291ac01adcd43f16c74b4406b11
+Author: Codex
+Message: feat: add impact dashboard
+Files:
+- app/impact/metrics.json (+34/-0)
+- app/impact/page.tsx (+134/-0)
+=======
+
+Timestamp: 2025-08-08T12:41:34.334Z
+Commit: 76c84b11fc802016cd1911be26fed71f2759a45e
+Author: Codex
+Message: feat: add preflight env check page
+Files:
+- app/dev/preflight/page.tsx (+83/-0)
+- app/layout.tsx (+18/-0)
+=======
+
+Timestamp: 2025-08-08T12:43:33.489Z
+Commit: 122ee1d176a78c20e4f44c93a045dbd429b8730e
+Author: Codex
+Message: feat: enable streaming on heavy leaderboard page
+Files:
+- app/(heavy)/leaderboard/head.tsx (+12/-0)
+- app/(heavy)/leaderboard/loading.tsx (+8/-0)
+- app/(heavy)/leaderboard/page.tsx (+28/-0)
+- app/layout.tsx (+10/-0)
+=======
+Timestamp: 2025-08-08T12:41:30.690Z
+Commit: 52307f9f5385f679183131d0e7f6607cf66d07b2
+Author: Codex
+Message: feat: add ancient tech gallery
+Files:
+- app/ancient/page.tsx (+128/-0)
+- components/ancient/AncientTechCard.tsx (+71/-0)
+=======
+
+
+Timestamp: 2025-08-08T12:39:36.823Z
+Commit: 3547c5915d4dc28adc03d072fe462c0e33782c6a
+Author: Codex
+Message: feat: add community needs heatmap
+Files:
+- app/maps/data/clinic-density.json (+33/-0)
+- app/maps/data/food-deserts.json (+33/-0)
+- app/maps/data/heat-islands.json (+33/-0)
+- app/maps/page.tsx (+87/-0)
+- package-lock.json (+2283/-3391)
+- package.json (+2/-0)
+=======
+
+Timestamp: 2025-08-08T12:39:36.997Z
+Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
+Author: Codex
+Message: feat: add app shell with suspense
+Files:
+- app/(shell)/about/page.tsx (+15/-0)
+- app/(shell)/layout.tsx (+22/-0)
+- app/(shell)/page.tsx (+15/-0)
+- components/ui/about-content.tsx (+12/-0)
+- components/ui/header.tsx (+15/-0)
+- components/ui/nav.tsx (+33/-0)
+- components/ui/skeleton.tsx (+15/-0)
+- components/ui/toaster.tsx (+10/-0)
+- components/ui/welcome.tsx (+16/-0)
+=======
+Timestamp: 2025-08-08T12:39:21.740Z
+Commit: a1875c21f7c6a69b25dbcec1396cdee62c5b8111
+Author: Codex
+Message: feat: add offline queue and app shell caching
+Files:
+- lib/offline/index.ts (+15/-0)
+- lib/offline/queue.ts (+23/-0)
+- public/sw.js (+33/-1)
+
+
+=======
+Timestamp: 2025-08-08T12:37:33.324Z
+Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
+Author: Codex
+Message: feat: add agent transparency drawer
+Files:
+- components/agents/TransparencyDrawer.tsx (+81/-0)
+
+
+
+
+
+
+
+=======
+Timestamp: 2025-08-08T12:34:49.121Z
+Commit: a3a1d1a41552849c23a8d076f132af3952b5d7b9
+Author: Codex
+Message: chore(ci): harden docs and codex workflows
+Files:
+- .github/workflows/codex-diff.yml (+62/-7)
+- .github/workflows/docs-refresh.yml (+39/-8)
+
+
+
 
