@@ -2393,6 +2393,14 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:45:51.107Z
+Commit: 2058c519c38770d8c79061b658fc583f1805db25
+Author: Codex
+Message: feat: add agent builder templates
+Files:
+- __tests__/agent-builder.templates.test.ts (+15/-0)
+- lib/agent-builder/templates.ts (+33/-0)
+=======
 
 
 
