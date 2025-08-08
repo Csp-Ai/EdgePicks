@@ -2394,6 +2394,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T11:43:08.923Z
+Commit: 8960b5d3983941c137c0120d515583c58f9581ef
+Author: Codex
+Message: feat: add confidence explainer
+Files:
+- __tests__/ConfidenceExplainer.test.tsx (+18/-0)
+- components/predictions/ConfidenceExplainer.tsx (+35/-0)
+=======
+
 Timestamp: 2025-08-08T11:43:09.068Z
 Commit: 55ab1d118794a4ad260edbee8c667be13a198158
 Author: Codex
@@ -2417,6 +2426,7 @@ Message: feat: add guest conversion panel
 Files:
 - __tests__/marketing/ConversionPanel.test.tsx (+26/-0)
 - components/marketing/ConversionPanel.tsx (+35/-0)
+
 
 
 
