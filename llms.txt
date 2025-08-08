@@ -1514,6 +1514,18 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T05:23:57.129Z
+Commit: bdc67f1a961575764a6e643057ad653a8ec95871
+Author: Codex
+Message: test: add API contract schemas and CI job split
+Files:
+- .github/workflows/ci.yml (+34/-43)
+- __tests__/__snapshots__/apiContracts.test.ts.snap (+197/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/apiContracts.test.ts (+157/-0)
+- package-lock.json (+12/-1)
+- package.json (+4/-3)
+=======
 Timestamp: 2025-08-08T05:20:25.428Z
 Commit: 09e3509275834a955575b2c20f88a89ea817b8c9
 Author: Codex
@@ -1552,4 +1564,5 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/GameCard.tsx (+16/-14)
 - components/UpcomingGamesGrid.tsx (+24/-5)
+
 
