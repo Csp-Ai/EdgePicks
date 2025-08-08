@@ -1491,3 +1491,12 @@ Files:
 - supabase/migrations/20240808090000_create_agent_outcomes_table.sql (+9/-0)
 - supabase/schema.sql (+10/-0)
 
+Timestamp: 2025-08-08T05:11:58.953Z
+Commit: 35e628b925f878ddcb08c0e5f6bafdbb9a100499
+Author: Codex
+Message: feat: add RLS policies and indexes
+Files:
+- db/policies.test.sql (+32/-0)
+- supabase/migrations/20240901000000_add_indexes_and_rls.sql (+45/-0)
+- supabase/schema.sql (+40/-0)
+
