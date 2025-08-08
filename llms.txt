@@ -2840,3 +2840,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:21.081Z
+Commit: 7d6e4c60f4402980848675c4c8a8f39d63ed4d9e
+Author: Codex
+Message: feat: add agent result schema with validation tests
+Files:
+- __tests__/agent-result.schema.test.ts (+23/-0)
+- package-lock.json (+93/-68)
+- package.json (+8/-7)
+- schemas/agent-result.schema.json (+14/-0)
+- schemas/fixtures/invalid-agent-result.json (+6/-0)
+- schemas/fixtures/valid-agent-result.json (+9/-0)
+
