@@ -2840,3 +2840,10 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:28:58.377Z
+Commit: db59429060b7161fda47ab4cbf1418ecc85985b8
+Author: Codex
+Message: feat: add confidence explainer tooltip
+Files:
+- components/edu/ConfidenceExplainer.tsx (+49/-0)
+
