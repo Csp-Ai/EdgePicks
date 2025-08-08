@@ -2562,6 +2562,17 @@ Files:
 
 
 
+
+Timestamp: 2025-08-08T12:43:33.489Z
+Commit: 122ee1d176a78c20e4f44c93a045dbd429b8730e
+Author: Codex
+Message: feat: enable streaming on heavy leaderboard page
+Files:
+- app/(heavy)/leaderboard/head.tsx (+12/-0)
+- app/(heavy)/leaderboard/loading.tsx (+8/-0)
+- app/(heavy)/leaderboard/page.tsx (+28/-0)
+- app/layout.tsx (+10/-0)
+=======
 Timestamp: 2025-08-08T12:41:30.690Z
 Commit: 52307f9f5385f679183131d0e7f6607cf66d07b2
 Author: Codex
@@ -2617,6 +2628,7 @@ Author: Codex
 Message: feat: add agent transparency drawer
 Files:
 - components/agents/TransparencyDrawer.tsx (+81/-0)
+
 
 
 
