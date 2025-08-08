@@ -1,0 +1,20 @@
+{
+  "events": [
+    { "type": "start", "agentId": "injuryScout", "ts": 1 },
+    {
+      "type": "result",
+      "agentId": "injuryScout",
+      "ts": 2,
+      "payload": { "team": "Alpha FC", "score": 0.6, "reason": "Healthy lineup" }
+    },
+    { "type": "end", "agentId": "injuryScout", "ts": 3 },
+    { "type": "start", "agentId": "lineWatcher", "ts": 4 },
+    {
+      "type": "result",
+      "agentId": "lineWatcher",
+      "ts": 5,
+      "payload": { "team": "Alpha FC", "score": 0.7, "reason": "Line shifted" }
+    },
+    { "type": "end", "agentId": "lineWatcher", "ts": 6 }
+  ]
+}

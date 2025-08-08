@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import AppHeader from '../components/AppHeader';
 import BetaRibbon from '../components/BetaRibbon';
 import Onboarding from '../components/Onboarding';
+import { DemoModeProvider } from '../lib/demoMode';
 
 let DevOnly: React.ComponentType<{ children: React.ReactNode }> | null = null;
 let FocusDock: React.ComponentType | null = null;
@@ -20,21 +21,23 @@ if (process.env.NODE_ENV === 'development') {
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const showRibbon = process.env.NEXT_PUBLIC_BETA_RIBBON === '1';
   return (
-    <SessionProvider session={session}>
-      <ToastProvider>
-        {showRibbon && <BetaRibbon />}
-        <AppHeader />
-        <Onboarding />
-        <main>
-          <Component {...pageProps} />
-          <Footer />
-        </main>
-        {DevOnly && FocusDock && (
-          <DevOnly>
-            <FocusDock />
-          </DevOnly>
-        )}
-      </ToastProvider>
-    </SessionProvider>
+    <DemoModeProvider>
+      <SessionProvider session={session}>
+        <ToastProvider>
+          {showRibbon && <BetaRibbon />}
+          <AppHeader />
+          <Onboarding />
+          <main>
+            <Component {...pageProps} />
+            <Footer />
+          </main>
+          {DevOnly && FocusDock && (
+            <DevOnly>
+              <FocusDock />
+            </DevOnly>
+          )}
+        </ToastProvider>
+      </SessionProvider>
+    </DemoModeProvider>
   );
 }
