@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import AppHeader from '../components/AppHeader';
+import HeroStrip from '../components/HeroStrip';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
 import type { Game } from '../lib/types';
 
@@ -112,31 +112,9 @@ export default function Home() {
         <title>{headTitle}</title>
         <meta name="description" content={headDesc} />
       </Head>
-      <header className="border-b">
-        <div className="max-w-7xl mx-auto grid grid-cols-3 items-center p-4">
-          <nav className="flex gap-4">
-            <Link href="/predictions" className="hover:underline">
-              Predictions
-            </Link>
-            <Link href="/leaderboard" className="hover:underline">
-              Leaderboard
-            </Link>
-            <Link href="/history" className="hover:underline">
-              History
-            </Link>
-          </nav>
-          <h1 className="text-center font-bold">EdgePicks</h1>
-          <div className="flex justify-end">
-            <button
-              onClick={() => signIn('google')}
-              className="px-3 py-1 border rounded"
-            >
-              Sign in with Google
-            </button>
-          </div>
-        </div>
-      </header>
-      <main className="min-h-screen p-4 space-y-4 max-w-7xl mx-auto">
+      <AppHeader />
+      <HeroStrip />
+      <main className="min-h-screen px-4 sm:px-6 lg:px-8 py-4 space-y-4 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="flex flex-wrap gap-2">
             {LEAGUES.map((l) => (
@@ -173,7 +151,12 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <section
+            id="live-games"
+            aria-label="Live games"
+            tabIndex={-1}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+          >
             <UpcomingGamesGrid
               games={games}
               search={search}
@@ -183,7 +166,7 @@ export default function Home() {
               onRetry={() => mutate()}
               preload={preloadDrawer}
             />
-          </div>
+          </section>
         )}
         <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
       </main>

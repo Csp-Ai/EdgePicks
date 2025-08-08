@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`API contract schemas run-agents live schema snapshot 1`] = `
+{
+  "$ref": "#/definitions/RunAgentsLive",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "RunAgentsLive": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": {
+              "reason": {
+                "type": "string",
+              },
+              "score": {
+                "type": "number",
+              },
+              "team": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "team",
+              "score",
+            ],
+            "type": "object",
+          },
+          "type": "object",
+        },
+        "finalConfidence": {
+          "type": "number",
+        },
+        "pick": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "pick",
+        "finalConfidence",
+        "agents",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`API contract schemas run-agents mock schema snapshot 1`] = `
+{
+  "$ref": "#/definitions/RunAgentsMock",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "RunAgentsMock": {
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "agentId": {
+                "type": "string",
+              },
+              "payload": {},
+              "ts": {
+                "type": "number",
+              },
+              "type": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "type",
+              "agentId",
+              "ts",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+        "final": {
+          "additionalProperties": false,
+          "properties": {
+            "confidence": {
+              "type": "number",
+            },
+            "winner": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "winner",
+            "confidence",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "events",
+        "final",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`API contract schemas upcoming-games schema snapshot 1`] = `
+{
+  "$ref": "#/definitions/UpcomingGames",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UpcomingGames": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "awayTeam": {
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "name",
+            ],
+            "type": "object",
+          },
+          "confidence": {
+            "type": "number",
+          },
+          "confidenceDrop": {
+            "type": "number",
+          },
+          "disagreements": {
+            "items": {
+              "type": "string",
+            },
+            "type": "array",
+          },
+          "edgeDelta": {
+            "type": "number",
+          },
+          "edgePick": {
+            "type": "array",
+          },
+          "gameId": {
+            "type": "string",
+          },
+          "homeTeam": {
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "name",
+            ],
+            "type": "object",
+          },
+          "kickoffDisplay": {
+            "type": "string",
+          },
+          "league": {
+            "type": "string",
+          },
+          "time": {
+            "type": "string",
+          },
+          "winner": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "gameId",
+          "homeTeam",
+          "awayTeam",
+          "confidence",
+          "time",
+          "league",
+          "winner",
+          "edgeDelta",
+          "confidenceDrop",
+          "disagreements",
+          "edgePick",
+          "kickoffDisplay",
+        ],
+        "type": "object",
+      },
+      "type": "array",
+    },
+  },
+}
+`;

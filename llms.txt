@@ -1514,6 +1514,37 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T05:23:57.129Z
+Commit: bdc67f1a961575764a6e643057ad653a8ec95871
+Author: Codex
+Message: test: add API contract schemas and CI job split
+Files:
+- .github/workflows/ci.yml (+34/-43)
+- __tests__/__snapshots__/apiContracts.test.ts.snap (+197/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/apiContracts.test.ts (+157/-0)
+- package-lock.json (+12/-1)
+- package.json (+4/-3)
+=======
+Timestamp: 2025-08-08T05:20:25.428Z
+Commit: 09e3509275834a955575b2c20f88a89ea817b8c9
+Author: Codex
+Message: feat: add header and hero strip
+Files:
+- __tests__/AppHeader.test.tsx (+28/-0)
+- __tests__/HeroStrip.test.tsx (+13/-0)
+- components/AppHeader.tsx (+45/-0)
+- components/HeroStrip.tsx (+25/-0)
+- pages/index.tsx (+5/-27)
+
+Timestamp: 2025-08-08T05:21:12.551Z
+Commit: cf290ac37a51e5b43b2570df87409c565e89510c
+Author: Codex
+Message: chore: satisfy lint rules
+Files:
+- components/AppHeader.tsx (+1/-0)
+- components/HeroStrip.tsx (+1/-1)
+=======
 Timestamp: 2025-08-08T05:17:06.202Z
 Commit: a7015313daaa393df25a9eb49f49751d4c39d026
 Author: Codex
@@ -1531,4 +1562,39 @@ Files:
 - __tests__/llmsLog.test.ts (+10/-2)
 - pages/api/logs.ts (+47/-7)
 - pages/history.tsx (+50/-82)
+=======
+
+
+Timestamp: 2025-08-08T05:30:00Z
+Message: integrated AppHeader/HeroStrip and stabilized llmsLog snapshot
+
+
+Timestamp: 2025-08-08T05:33:06.361Z
+Commit: 9e85acaadd86e6ff77d4865a0c2fef9eafef7c86
+Author: Codex
+Message: feat: integrate header hero and stabilize logs
+Files:
+- __tests__/AppHeader.test.tsx (+6/-3)
+- __tests__/HeroStrip.test.tsx (+23/-4)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/llmsLog.test.ts (+12/-2)
+- __tests__/utils/freezeTime.ts (+2/-3)
+- components/AppHeader.tsx (+41/-31)
+- components/HeroStrip.tsx (+18/-8)
+- llms.txt (+4/-0)
+- pages/index.tsx (+9/-4)
+=======
+Timestamp: 2025-08-08T05:23:19.983Z
+Commit: e79ad05062f1c1e0cf6facc489b88f437627a723
+Author: Codex
+Message: Polish game card and grid
+Files:
+- __tests__/GameCard.test.tsx (+44/-0)
+- __tests__/UpcomingGamesGrid.test.tsx (+5/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/GameCard.tsx (+16/-14)
+- components/UpcomingGamesGrid.tsx (+24/-5)
+
+
+
 

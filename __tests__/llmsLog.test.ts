@@ -13,7 +13,21 @@ afterAll(() => {
   unfreeze();
 });
 
+=======
+// Snapshot hash is sensitive to timestamps inside llms.txt. We freeze time so it
+// remains stable. Update the snapshot if the frozen ISO changes.
+
 describe('llms log', () => {
+  let restore: () => void;
+
+  beforeAll(() => {
+    restore = freezeTime('2024-01-02T03:04:05.000Z');
+  });
+
+  afterAll(() => {
+    restore();
+  });
+
   it('writes entry (stable time)', () => {
     const file = path.join(__dirname, '..', 'llms.txt');
     const content = fs.readFileSync(file, 'utf8');
