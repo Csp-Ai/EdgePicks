@@ -1,6 +1,18 @@
 {
   "ci": {
     "collect": {
+      "staticDistDir": "./out",
+      "settings": {
+        "budgets": [
+          {
+            "path": "/",
+            "resourceSizes": [
+              { "resourceType": "script", "budget": 250 },
+              { "resourceType": "total", "budget": 1500 }
+            ],
+            "resourceCounts": [
+              { "resourceType": "script", "budget": 50 },
+              { "resourceType": "total", "budget": 200 }
       "url": ["http://localhost:3000/"],
       "startServerCommand": "npm run start",
       "numberOfRuns": 1,
@@ -20,6 +32,8 @@
     "assert": {
       "assertions": {
         "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
+=======
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1, "aggregationMethod": "optimistic" }]
       }
     },
