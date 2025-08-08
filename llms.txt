@@ -1979,3 +1979,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:50:01.141Z
+Commit: ed82d9c24b9a4a344fe3bf21d3dc33f6d3d4862a
+Author: Codex
+Message: feat(api): add health and version endpoints
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+2/-0)
+- __tests__/health.test.ts (+21/-0)
+- __tests__/version.test.ts (+22/-0)
+- pages/api/health.ts (+8/-0)
+- pages/api/version.ts (+9/-0)
+
