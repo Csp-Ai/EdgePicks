@@ -8,8 +8,8 @@ describe('LIVE_MODE switch', () => {
   it('serves mock data when off', async () => {
     process.env.LIVE_MODE = 'off';
     const fetchSpy = jest.spyOn(global, 'fetch');
-    const { fetchNflGames } = await import('../lib/data/liveSports');
-    const games = await fetchNflGames();
+    const { fetchSchedule } = await import('../lib/data/schedule');
+    const games = await fetchSchedule('NFL');
     expect(games.length).toBeGreaterThan(0);
     expect(fetchSpy).not.toHaveBeenCalled();
     fetchSpy.mockRestore();
@@ -21,8 +21,8 @@ describe('LIVE_MODE switch', () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')
       .mockResolvedValue({ ok: true, json: async () => ({ events: [] }) } as any);
-    const { fetchNflGames } = await import('../lib/data/liveSports');
-    await fetchNflGames();
+    const { fetchSchedule } = await import('../lib/data/schedule');
+    await fetchSchedule('NFL');
     expect(fetchSpy).toHaveBeenCalled();
     fetchSpy.mockRestore();
   });

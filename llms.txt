@@ -1369,3 +1369,16 @@ Files:
 - supabase/schema.sql (+9/-0)
 
 
+Timestamp: 2025-08-08T03:42:51.752Z
+Commit: a435c60bf921cbaefbe7673f18693befe51185a1
+Author: Codex
+Message: feat: add data adapters for schedule and odds
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/env.liveMockSwitch.test.ts (+4/-4)
+- __tests__/upcomingGamesApi.joinOdds.test.ts (+62/-0)
+- lib/data/injuries.ts (+37/-0)
+- lib/data/odds.ts (+63/-0)
+- lib/data/schedule.ts (+67/-0)
+- pages/api/upcoming-games.ts (+34/-18)
+

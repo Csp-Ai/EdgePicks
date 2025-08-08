@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-  fetchNbaGames,
-  fetchMlbGames,
-  fetchNflGames,
-  fetchNhlGames,
-} from '../../lib/data/liveSports';
+import { fetchSchedule, type League } from '../../lib/data/schedule';
+import { fetchOdds, type OddsGame } from '../../lib/data/odds';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
@@ -48,17 +44,10 @@ const leagueCache = new Map<string, LeagueCacheEntry>();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const leagueParam =
-      typeof req.query.league === 'string' ? req.query.league.toUpperCase() : 'NFL';
-
-    const fetchMap = {
-      NFL: fetchNflGames,
-      MLB: fetchMlbGames,
-      NBA: fetchNbaGames,
-      NHL: fetchNhlGames,
-    } as const;
-
-    const fetchFn = fetchMap[leagueParam as keyof typeof fetchMap] || fetchMap.NFL;
+    const leagueParam: League =
+      typeof req.query.league === 'string'
+        ? (req.query.league.toUpperCase() as League)
+        : 'NFL';
 
     const cacheKey = `${leagueParam}-${Math.floor(Date.now() / CACHE_TTL_MS)}`;
     const cached = leagueCache.get(cacheKey);
@@ -67,7 +56,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    let games = await fetchFn();
+    let games = await fetchSchedule(leagueParam);
+    const oddsData: OddsGame[] = await fetchOdds(leagueParam);
+    games = games.map((g) => {
+      const home = g.homeTeam;
+      const away = g.awayTeam;
+      const gameOdds = oddsData.find(
+        (o) =>
+          (o.home_team === home && o.away_team === away) ||
+          (o.home_team === away && o.away_team === home)
+      );
+      const bookmaker = gameOdds?.bookmakers?.[0];
+      const spreads = bookmaker?.markets?.find((m) => m.key === 'spreads')?.outcomes;
+      const totals = bookmaker?.markets?.find((m) => m.key === 'totals')?.outcomes;
+      const h2h = bookmaker?.markets?.find((m) => m.key === 'h2h')?.outcomes;
+      const odds = gameOdds
+        ? {
+            spread: spreads?.find((o) => o.name === home)?.point ?? undefined,
+            overUnder: totals?.[0]?.point ?? undefined,
+            moneyline: {
+              home: h2h?.find((o) => o.name === home)?.price ?? undefined,
+              away: h2h?.find((o) => o.name === away)?.price ?? undefined,
+            },
+            bookmaker: bookmaker?.title,
+            lastUpdate: bookmaker?.last_update,
+          }
+        : undefined;
+      return { ...g, odds };
+    });
     if (!games.length) {
       games = getFallbackMatchups();
     }
