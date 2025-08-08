@@ -3,6 +3,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
+import GlossaryLink from './GlossaryLink';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
@@ -88,6 +89,7 @@ export default function Navbar() {
 
         {/* Right section */}
         <div className="flex items-center gap-4 relative z-10">
+          <GlossaryLink />
           <ThemeToggle />
           {status === 'loading' ? (
             <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />

@@ -2158,3 +2158,158 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:13:52.003Z
+Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
+Author: Codex
+Message: feat: add glossary link component
+Files:
+- components/AgentCard.tsx (+2/-0)
+- components/GlossaryLink.tsx (+15/-0)
+- components/Navbar.tsx (+2/-0)
+=======
+
+
+Timestamp: 2025-08-08T11:12:58.755Z
+Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
+Author: Codex
+Message: feat: improve AgentStatusPanel accessibility
+Files:
+- components/AgentStatusPanel.tsx (+17/-8)
+=======
+Timestamp: 2025-08-08T11:20:31.007Z
+Commit: bdf022d1b33ecb1aabf3ea4f894595e26e930e91
+Author: Codex
+Message: feat(trust): add read-only Trust & Transparency hub with accuracy, audit, and agent explainers
+Files:
+- __tests__/trust.page.test.tsx (+28/-0)
+- components/trust/AgentExplainers.tsx (+55/-0)
+- components/trust/AgreementMeter.tsx (+46/-0)
+- components/trust/AuditActivity.tsx (+58/-0)
+- components/trust/TrustSummary.tsx (+79/-0)
+- pages/trust/index.tsx (+73/-0)
+
+=======
+
+Timestamp: 2025-08-08T11:13:28.411Z
+Commit: 0d8d7455c34f5c17b43a3810d1e313409168530b
+Author: Codex
+Message: feat: add telemetry event schemas for onboarding and builder
+Files:
+- __tests__/logging.pipeline.test.ts (+1/-1)
+- __tests__/telemetry.events.test.ts (+12/-0)
+- lib/logUiEvent.test.js (+1/-1)
+- lib/logUiEvent.ts (+3/-1)
+- lib/telemetry/events.ts (+35/-0)
+=======
+
+Timestamp: 2025-08-08T11:15:16.055Z
+Commit: d4af1c627c1083af9b39e0b2d47d56cff42d2939
+Author: Codex
+Message: feat: add agent builder wizard
+Files:
+- __tests__/agent-builder.test.tsx (+23/-0)
+- components/agent-builder/Wizard.tsx (+73/-0)
+- lib/agent-builder/schema.ts (+9/-0)
+=======
+
+Timestamp: 2025-08-08T11:14:21.847Z
+Commit: 138f8927dc9fc40a30e989392427ebfd05c19f47
+Author: Codex
+Message: feat: add search and export to agent log stream
+Files:
+- __tests__/AgentLogStream.sse.test.tsx (+15/-0)
+- components/AgentLogStream.tsx (+53/-11)
+- lib/logs/search.ts (+36/-0)
+=======
+
+Timestamp: 2025-08-08T11:14:01.445Z
+Commit: 01b8756f27e2e0c625701e32ae748e95946c6027
+Author: Codex
+Message: feat: add agent trust score widget
+Files:
+- __tests__/AgentTrustScore.test.tsx (+27/-0)
+- components/agents/AgentTrustScore.tsx (+28/-0)
+=======
+
+
+Timestamp: 2025-08-08T11:11:29.359Z
+Commit: 15887453a2ab063e50fe11a9863deff16be227d8
+Author: Codex
+Message: feat: add agent gallery
+Files:
+- __tests__/AgentTile.test.tsx (+24/-0)
+- __tests__/AgentsPage.test.tsx (+36/-0)
+- components/agents/AgentTile.tsx (+42/-0)
+- pages/agents/index.tsx (+45/-0)
+=======
+Timestamp: 2025-08-08T11:14:31.397Z
+Commit: 73bc6ee5dbbb2d572666c410aa7ff87270878bee
+Author: Codex
+Message: feat: add guest demo page
+Files:
+- __tests__/demo.page.test.tsx (+27/-0)
+- components/demo/DemoHero.tsx (+40/-0)
+- pages/demo/index.tsx (+41/-0)
+=======
+
+Timestamp: 2025-08-08T11:13:31.757Z
+Commit: ca48d522b295553818dd2cc318d9052b9f07ada0
+Author: Codex
+Message: fix: clean PredictionMarquee merge artifact
+Files:
+- __tests__/marketing/PredictionMarquee.test.tsx (+0/-18)
+- components/marketing/PredictionMarquee.tsx (+0/-45)
+=======
+
+Timestamp: 2025-08-08T11:12:32.836Z
+Commit: 36a824f069c3c55c68d2e530a8aa614bae3d3482
+Author: Codex
+Message: feat: add onboarding progress with resume
+Files:
+- __tests__/ProgressStepper.test.tsx (+12/-0)
+- __tests__/onboarding.progress.test.ts (+20/-0)
+- components/Onboarding.tsx (+17/-4)
+- components/onboarding/ProgressStepper.tsx (+19/-0)
+- lib/onboarding/progress.ts (+22/-0)
+=======
+
+Timestamp: 2025-08-08T11:13:14.884Z
+Commit: f5994c41cafcf7b93c715285d944b6ce1d2e0452
+Author: Codex
+Message: feat: add onboarding goal capture
+Files:
+- __tests__/Onboarding.goal.test.tsx (+25/-0)
+- components/Onboarding.tsx (+25/-1)
+- components/onboarding/GoalPicker.tsx (+22/-0)
+=======
+
+Timestamp: 2025-08-08T11:11:05.639Z
+Commit: 9d28656713e70bddd795495936152f2f40aedbb5
+Author: Codex
+Message: feat: add agent node popover
+Files:
+- components/AgentVizCanvas.tsx (+75/-2)
+- components/agents/AgentNodePopover.tsx (+67/-0)
+
+=======
+Timestamp: 2025-08-08T11:10:12.452Z
+Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
+Author: Codex
+Message: feat: add fuzzy game search
+Files:
+- __tests__/GameFuzzySearch.test.tsx (+40/-0)
+- __tests__/fuzzy.test.ts (+33/-0)
+- components/search/GameFuzzySearch.tsx (+61/-0)
+- lib/search/fuzzy.ts (+42/-0)
+
+
+
+=======
+
+
+
+
+
+
+
+
