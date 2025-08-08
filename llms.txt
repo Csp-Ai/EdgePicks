@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:29:24.150Z
+Commit: 42467cb70fc736fdce584571c0a56eab39bc4f9c
+Author: Codex
+Message: feat: add client-only feature flags
+Files:
+- components/dev/FlagSwitch.tsx (+44/-0)
+- lib/flags/clientFlags.ts (+40/-0)
+
