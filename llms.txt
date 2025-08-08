@@ -2158,3 +2158,12 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:14:21.847Z
+Commit: 138f8927dc9fc40a30e989392427ebfd05c19f47
+Author: Codex
+Message: feat: add search and export to agent log stream
+Files:
+- __tests__/AgentLogStream.sse.test.tsx (+15/-0)
+- components/AgentLogStream.tsx (+53/-11)
+- lib/logs/search.ts (+36/-0)
+
