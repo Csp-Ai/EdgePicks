@@ -26,7 +26,9 @@
     "docs:self-reflect": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/agentSelfReflection.ts",
     "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts",
     "dev:commit": "ts-node scripts/dev/commit-helper.ts",
-    "weights:calibrate": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/calibrateWeights.ts"
+    "weights:calibrate": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/calibrateWeights.ts",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
@@ -63,6 +65,11 @@
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
-    "zod-to-json-schema": "^3.24.6"
+    "zod-to-json-schema": "^3.24.6",
+    "@storybook/addon-a11y": "^7.6.17",
+    "@storybook/addon-essentials": "^7.6.17",
+    "@storybook/nextjs": "^7.6.17",
+    "@storybook/testing-library": "^0.2.2",
+    "storybook": "^7.6.17"
   }
 }

@@ -2049,6 +2049,20 @@ Files:
 - components/marketing/PredictionMarquee.tsx (+44/-0)
 
 
+
+Timestamp: 2025-08-08T09:50:10.383Z
+Commit: e0bc9f7184dff8cfcce3295acffd1ba4cf93d1f9
+Author: Codex
+Message: feat: add Storybook with a11y and testing
+Files:
+- .github/workflows/storybook-build.yml (+17/-0)
+- .storybook/main.ts (+12/-0)
+- .storybook/preview.ts (+10/-0)
+- package-lock.json (+19042/-5947)
+- package.json (+9/-2)
+- stories/AgentExecutionTracker.stories.tsx (+23/-0)
+- stories/PredictionsPanel.stories.tsx (+40/-0)
+=======
 Timestamp: 2025-08-08T10:00:21.029Z
 Commit: a2276f2391429cc08763bb630b8379288fcf602c
 Author: Codex
@@ -2102,4 +2116,5 @@ Files:
 - package-lock.json (+24/-0)
 - package.json (+1/-0)
 - pages/logs/agents.tsx (+17/-0)
+
 
