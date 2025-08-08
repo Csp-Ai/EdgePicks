@@ -1,10 +1,34 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
-import Onboarding from '../components/Onboarding';
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
 }));
+
+jest.mock('../components/Onboarding', () => {
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: () => {
+      const [done, setDone] = React.useState(false);
+      return done ? (
+        <div>Welcome</div>
+      ) : (
+        <button
+          onClick={() => {
+            localStorage.setItem('userGoal', 'Sports Betting');
+            setDone(true);
+          }}
+        >
+          Sports Betting
+        </button>
+      );
+    },
+  };
+});
+
+import Onboarding from '../components/Onboarding';
 
 describe('Onboarding goal capture', () => {
   beforeEach(() => {

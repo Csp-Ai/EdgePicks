@@ -1,0 +1,44 @@
+/* Inclusive persona CSS variables */
+html {
+  --font-scale: 1;
+  --color-filter: none;
+  --dyslexic-font: inherit;
+  --motion-duration: initial;
+  --media-display: initial;
+}
+
+body {
+  font-size: calc(1rem * var(--font-scale));
+  filter: var(--color-filter);
+  font-family: var(--dyslexic-font);
+}
+
+* {
+  animation-duration: var(--motion-duration) !important;
+  transition-duration: var(--motion-duration) !important;
+}
+
+img,
+video {
+  display: var(--media-display);
+}
+
+html[data-low-vision="true"] {
+  --font-scale: 1.25;
+}
+
+html[data-color-blind="true"] {
+  --color-filter: grayscale(1);
+}
+
+html[data-dyslexia-font="true"] {
+  --dyslexic-font: "OpenDyslexic", Arial, sans-serif;
+}
+
+html[data-motion-sensitive="true"] {
+  --motion-duration: 0ms;
+}
+
+html[data-low-bandwidth="true"] {
+  --media-display: none;
+}

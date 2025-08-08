@@ -2563,6 +2563,104 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:59:17.024Z
+Commit: 1785eaf3a64bd3d34a08ca53b7e0a15e4e114bea
+Author: Codex
+Message: feat: add self-healing boundary
+Files:
+- __tests__/SelfHealBoundary.test.tsx (+29/-0)
+- components/self-heal/FixSuggestionsChip.tsx (+20/-0)
+- components/self-heal/SelfHealBoundary.tsx (+22/-0)
+=======
+
+Timestamp: 2025-08-08T12:51:22.352Z
+Commit: 87ea34131c698279e541df082a3096cf722e37f5
+Author: Codex
+Message: feat(onboarding): add purpose-first setup
+Files:
+- app/onboarding/page.tsx (+89/-0)
+- lib/profile/prefs.ts (+28/-0)
+=======
+
+Timestamp: 2025-08-08T12:46:55.671Z
+Commit: e846fe2219db3d54e1c4a195d9bbbd65d27108d1
+Author: Codex
+Message: feat: add basic i18n with locale switcher
+Files:
+- app/[locale]/layout.tsx (+23/-0)
+- app/[locale]/page.tsx (+16/-0)
+- lib/i18n/LocaleSwitcher.tsx (+20/-0)
+- lib/i18n/config.ts (+0/-42)
+- lib/i18n/config.tsx (+79/-0)
+- lib/i18n/getDictionary.ts (+5/-0)
+- locales/ar/common.json (+4/-0)
+=======
+
+Timestamp: 2025-08-08T12:47:52.181Z
+Commit: c91433642353fe2e0ab56c734157da950ce71ca9
+Author: Codex
+Message: Add pricing teaser modal
+Files:
+- __tests__/marketing/PricingTeaser.test.tsx (+32/-0)
+- components/marketing/PricingTeaser.tsx (+49/-0)
+=======
+
+
+Timestamp: 2025-08-08T12:42:40.391Z
+Commit: 8d38970754b35a808833c8dea2e0900b63da4113
+Author: Codex
+Message: feat(a11y): add accessibility helpers and lint rule
+Files:
+- .eslintrc.json (+4/-1)
+- components/a11y/AriaButton.tsx (+31/-0)
+- components/a11y/FocusRing.tsx (+17/-0)
+- components/a11y/FocusTrap.tsx (+41/-0)
+- components/a11y/SkipLink.tsx (+15/-0)
+=======
+
+Timestamp: 2025-08-08T12:41:16.361Z
+Commit: 55f85677b6efb7ed98e8960068115897b3a4ada1
+Author: Codex
+Message: feat: add risk communicator component
+Files:
+- components/health/RiskCommunicator.tsx (+71/-0)
+- stories/health/RiskCommunicator.stories.tsx (+28/-0)
+=======
+Timestamp: 2025-08-08T12:42:23.800Z
+Commit: e5edfe0d155f1c476c587bddf373c477f67fd8a2
+Author: Codex
+Message: feat: add inclusion persona toolbar
+Files:
+- components/inclusion/InclusionToolbar.tsx (+53/-0)
+- components/inclusion/persona.css (+44/-0)
+
+
+=======
+Timestamp: 2025-08-08T12:39:51.017Z
+Commit: efa7ee966a62f5986291ec1407685acda237c25a
+Author: Codex
+Message: feat: add open knowledge lens components
+Files:
+- components/lens/LensAnnotation.tsx (+28/-0)
+- components/lens/LensContext.tsx (+48/-0)
+- components/lens/LensSideSheet.tsx (+30/-0)
+- components/lens/LensToggle.tsx (+14/-0)
+- components/lens/index.ts (+4/-0)
+- data/open-datasets.json (+20/-0)
+=======
+
+Timestamp: 2025-08-08T12:39:46.223Z
+Commit: 26050e2c7f521db654f95edeb58ca5df507f2d6a
+Author: Codex
+Message: Add interactive stats explainers
+Files:
+- app/learn-stats/page.tsx (+15/-0)
+- components/edu/BiasCard.tsx (+52/-0)
+- components/edu/ConfidenceIntervalCard.tsx (+58/-0)
+- components/edu/ErrorBarsCard.tsx (+53/-0)
+- components/edu/ZScoreCard.tsx (+54/-0)
+=======
+
 Timestamp: 2025-08-08T12:40:05.349Z
 Commit: 437c25a99b954291ac01adcd43f16c74b4406b11
 Author: Codex
@@ -2651,6 +2749,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T13:04:07.631Z
 Commit: c6967cec9f106b361a5724e62b79793f3dd1b6d6
 Author: Codex
@@ -2662,4 +2761,50 @@ Files:
 - components/story/StoryLayout.tsx (+59/-0)
 - components/story/index.ts (+5/-0)
 - content/stories/first-story.mdx (+16/-0)
+=======
+
+
+=======
+Timestamp: 2025-08-08T12:34:49.121Z
+Commit: a3a1d1a41552849c23a8d076f132af3952b5d7b9
+Author: Codex
+Message: chore(ci): harden docs and codex workflows
+Files:
+- .github/workflows/codex-diff.yml (+62/-7)
+- .github/workflows/docs-refresh.yml (+39/-8)
+
+
+
+
+Timestamp: 2025-08-08T12:41:12.136Z
+Commit: 931188f0d5f530e9b46a8c8e9f598718f1ba3328
+Author: Codex
+Message: docs: explain CI preflight and add env defaults
+Files:
+- .env.example (+5/-0)
+- README.md (+4/-0)
+=======
+
+
+
+Timestamp: 2025-08-08T12:52:48.741Z
+Commit: 2f6adc0a68b875b6767bf232a1a859f41f12e043
+Author: Codex
+Message: test: stabilize deterministic tests
+Files:
+- __tests__/Onboarding.goal.test.tsx (+25/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-14)
+- __tests__/__snapshots__/uiSnapshot.test.tsx.snap (+2/-1)
+- __tests__/cache.test.ts (+1/-1)
+- __tests__/llmsLog.test.ts (+0/-15)
+- __tests__/supabaseRegistry.test.ts (+3/-1)
+- __tests__/telemetry.events.test.ts (+7/-4)
+- __tests__/useProfiler.test.tsx (+2/-4)
+- __tests__/utils/freezeTime.ts (+0/-5)
+- jest.setup.ts (+40/-0)
+- package.json (+2/-1)
+- test/utils/freezeRandom.ts (+14/-0)
+- test/utils/freezeTime.ts (+26/-0)
+
+
 
