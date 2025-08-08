@@ -2840,10 +2840,35 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T13:59:49.441Z
 Commit: 8c50a4a2d6fe3480ce32016589618d986ea1ff1b
 Author: Codex
 Message: feat: add keyboard shortcut overlay
 Files:
 - components/a11y/Keymap.tsx (+67/-0)
+=======
+Timestamp: 2025-08-08T14:12:40.878Z
+Commit: f41ffc8567523da6e794460e5f1e0708f92b1929
+Author: Codex
+Message: feat: add accessible modal
+Files:
+- __tests__/modal.a11y.test.tsx (+14/-0)
+- components/ui/Modal.tsx (+79/-0)
+- stories/Modal.stories.tsx (+21/-0)
+=======
+Timestamp: 2025-08-08T13:31:45.299Z
+Commit: 6ed9b369bf7e56f15fd184ad9470679efd748f5b
+Author: Codex
+Message: feat: add promise-aware toast system
+Files:
+- app/(shell)/toast-demo/page.tsx (+21/-0)
+- components/ui/toaster.tsx (+56/-5)
+- components/ui/welcome.tsx (+2/-2)
+- lib/offline/index.ts (+11/-5)
+- lib/ui/toast.ts (+39/-0)
+- lib/useToast.ts (+0/-62)
+- pages/_app.tsx (+3/-3)
+
+
 
