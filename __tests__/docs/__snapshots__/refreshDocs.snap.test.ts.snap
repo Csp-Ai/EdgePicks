@@ -10,6 +10,7 @@ exports[`docs refresh snapshots generates docs 1`] = `
 - /api/reflections
 - /api/run-agents
 - /api/run-predictions
+- /api/sports-webhook
 - /api/trends
 - /api/upcoming-games
 "
