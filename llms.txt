@@ -1267,3 +1267,18 @@ Message: chore: ignore tests and scripts for eslint
 Files:
 - .eslintignore (+2/-0)
 
+Timestamp: 2025-08-08T02:35:50.811Z
+Commit: 4f9a58188d7597bae0cc0cae8538f1cbbddbb194
+Author: Codex
+Message: Add kickoff display formatting
+Files:
+- pages/api/upcoming-games.ts (+3/-0)
+
+Timestamp: 2025-08-08T02:36:19.822Z
+Commit: 062fe439033dda4089f9a925681ce6b0744b9cc8
+Author: Codex
+Message: Add kickoff formatting util and tests
+Files:
+- __tests__/formatKickoff.test.ts (+32/-0)
+- lib/utils/formatKickoff.ts (+29/-0)
+
