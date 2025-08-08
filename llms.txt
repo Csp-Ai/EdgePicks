@@ -2562,6 +2562,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:39:21.740Z
 Commit: a1875c21f7c6a69b25dbcec1396cdee62c5b8111
 Author: Codex
@@ -2570,4 +2571,12 @@ Files:
 - lib/offline/index.ts (+15/-0)
 - lib/offline/queue.ts (+23/-0)
 - public/sw.js (+33/-1)
+=======
+Timestamp: 2025-08-08T12:37:33.324Z
+Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
+Author: Codex
+Message: feat: add agent transparency drawer
+Files:
+- components/agents/TransparencyDrawer.tsx (+81/-0)
+
 
