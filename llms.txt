@@ -2840,3 +2840,12 @@ Files:
 
 
 
+Timestamp: 2025-08-08T14:12:40.878Z
+Commit: f41ffc8567523da6e794460e5f1e0708f92b1929
+Author: Codex
+Message: feat: add accessible modal
+Files:
+- __tests__/modal.a11y.test.tsx (+14/-0)
+- components/ui/Modal.tsx (+79/-0)
+- stories/Modal.stories.tsx (+21/-0)
+
