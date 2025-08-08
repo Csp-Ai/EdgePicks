@@ -1940,3 +1940,12 @@ Files:
 - __tests__/__snapshots__/AgentExecutionTracker.test.tsx.snap (+215/-0)
 - components/AgentExecutionTracker.tsx (+155/-0)
 
+Timestamp: 2025-08-08T09:31:00.153Z
+Commit: c0fd43fb192cb56f387557e784588b1fa65192fd
+Author: Codex
+Message: feat(insights): integrate AgentExecutionTracker with smooth reveal
+Files:
+- __tests__/MatchupInsights.tracker.integration.test.tsx (+36/-0)
+- components/MatchupInsights.tsx (+126/-0)
+- pages/predictions.tsx (+3/-38)
+
