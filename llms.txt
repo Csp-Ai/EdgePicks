@@ -1304,3 +1304,12 @@ Files:
 
 
 
+Timestamp: 2025-08-08T03:18:06.846Z
+Commit: eb7592856ecb2a10156f06f61b99a6c0b2b31c14
+Author: Codex
+Message: feat: support mock auth env defaults
+Files:
+- .env.local.example (+6/-0)
+- README.md (+8/-5)
+- scripts/validateEnv.ts (+33/-2)
+
