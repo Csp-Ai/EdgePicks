@@ -2840,3 +2840,10 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:35:00.893Z
+Commit: ffe2687ede2e0e6f73cf184472d98a4b66d40a56
+Author: Codex
+Message: feat: add settings drawer
+Files:
+- components/app/SettingsDrawer.tsx (+87/-0)
+
