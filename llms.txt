@@ -1828,6 +1828,15 @@ Files:
 - pages/_app.tsx (+13/-0)
 - scripts/dev/commit-helper.ts (+27/-0)
 
+
+Timestamp: 2025-08-08T08:23:33.830Z
+Commit: 1a0cee181dec62e1b6b5b90412a6437a91c9bbf7
+Author: Codex
+Message: feat: add weight calibration script
+Files:
+- package.json (+2/-1)
+- scripts/calibrateWeights.ts (+54/-0)
+=======
 Timestamp: 2025-08-08T08:17:37.426Z
 Commit: 64702a5916578d5d107bedbeb3ab9af2f32289b9
 Author: Codex
@@ -1836,6 +1845,7 @@ Files:
 - __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+41/-10)
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
+
 Timestamp: 2025-08-08T08:40:33.591Z
 Commit: 1c771b197f490649a4882e1444c0b385821d4f82
 Author: Codex
@@ -1843,4 +1853,47 @@ Message: feat: use SWR for reflections
 Files:
 - __tests__/AgentNodeGraph.swr.test.tsx (+45/-0)
 - components/AgentNodeGraph.tsx (+42/-0)
+=======
+
+
+Timestamp: 2025-08-08T08:38:41.900Z
+Commit: 969303c6124df130edd05016b69ff0b0e4a96cf2
+Author: Codex
+Message: feat: add beta onboarding flow
+Files:
+- components/Onboarding.tsx (+72/-0)
+- pages/_app.tsx (+2/-0)
+- pages/api/user/onboarding.ts (+46/-0)
+- supabase/migrations/20241015000000_create_user_profiles_table.sql (+4/-0)
+=======
+
+Timestamp: 2025-08-08T08:35:52.343Z
+Commit: 69f387b9024230bf41f6bed279148f083d7aa60b
+Author: Codex
+Message: feat: add odds fallback
+Files:
+- __tests__/adapters.contract.test.ts (+16/-0)
+- lib/data/odds.ts (+5/-1)
+=======
+Timestamp: 2025-08-08T08:29:53.679Z
+Commit: 9246dc60c4a5bcdfb3d2cfda654ac6f27aaca557
+Author: Codex
+Message: refactor agent reflection logging
+Files:
+- lib/agentReflectionStore.ts (+0/-37)
+- lib/agents/utils.ts (+2/-5)
+- lib/writeAgentReflection.ts (+46/-0)
+- pages/api/reflections.ts (+1/-1)
+
+Timestamp: 2025-08-08T08:30:36.054Z
+Commit: 32d72c65736621afa2a711b5e646e5c1f543f664
+Author: Codex
+Message: test agent reflection concurrency
+Files:
+- __tests__/agentReflections.store.test.ts (+56/-0)
+- lib/logAgentReflection.ts (+6/-0)
+=======
+
+
+
 
