@@ -2562,3 +2562,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:51:22.352Z
+Commit: 87ea34131c698279e541df082a3096cf722e37f5
+Author: Codex
+Message: feat(onboarding): add purpose-first setup
+Files:
+- app/onboarding/page.tsx (+89/-0)
+- lib/profile/prefs.ts (+28/-0)
+
