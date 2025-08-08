@@ -2562,6 +2562,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:39:46.223Z
 Commit: 26050e2c7f521db654f95edeb58ca5df507f2d6a
 Author: Codex
@@ -2572,4 +2573,94 @@ Files:
 - components/edu/ConfidenceIntervalCard.tsx (+58/-0)
 - components/edu/ErrorBarsCard.tsx (+53/-0)
 - components/edu/ZScoreCard.tsx (+54/-0)
+=======
+
+Timestamp: 2025-08-08T12:40:05.349Z
+Commit: 437c25a99b954291ac01adcd43f16c74b4406b11
+Author: Codex
+Message: feat: add impact dashboard
+Files:
+- app/impact/metrics.json (+34/-0)
+- app/impact/page.tsx (+134/-0)
+=======
+
+Timestamp: 2025-08-08T12:41:34.334Z
+Commit: 76c84b11fc802016cd1911be26fed71f2759a45e
+Author: Codex
+Message: feat: add preflight env check page
+Files:
+- app/dev/preflight/page.tsx (+83/-0)
+- app/layout.tsx (+18/-0)
+=======
+
+Timestamp: 2025-08-08T12:43:33.489Z
+Commit: 122ee1d176a78c20e4f44c93a045dbd429b8730e
+Author: Codex
+Message: feat: enable streaming on heavy leaderboard page
+Files:
+- app/(heavy)/leaderboard/head.tsx (+12/-0)
+- app/(heavy)/leaderboard/loading.tsx (+8/-0)
+- app/(heavy)/leaderboard/page.tsx (+28/-0)
+- app/layout.tsx (+10/-0)
+=======
+Timestamp: 2025-08-08T12:41:30.690Z
+Commit: 52307f9f5385f679183131d0e7f6607cf66d07b2
+Author: Codex
+Message: feat: add ancient tech gallery
+Files:
+- app/ancient/page.tsx (+128/-0)
+- components/ancient/AncientTechCard.tsx (+71/-0)
+=======
+
+
+Timestamp: 2025-08-08T12:39:36.823Z
+Commit: 3547c5915d4dc28adc03d072fe462c0e33782c6a
+Author: Codex
+Message: feat: add community needs heatmap
+Files:
+- app/maps/data/clinic-density.json (+33/-0)
+- app/maps/data/food-deserts.json (+33/-0)
+- app/maps/data/heat-islands.json (+33/-0)
+- app/maps/page.tsx (+87/-0)
+- package-lock.json (+2283/-3391)
+- package.json (+2/-0)
+=======
+
+Timestamp: 2025-08-08T12:39:36.997Z
+Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
+Author: Codex
+Message: feat: add app shell with suspense
+Files:
+- app/(shell)/about/page.tsx (+15/-0)
+- app/(shell)/layout.tsx (+22/-0)
+- app/(shell)/page.tsx (+15/-0)
+- components/ui/about-content.tsx (+12/-0)
+- components/ui/header.tsx (+15/-0)
+- components/ui/nav.tsx (+33/-0)
+- components/ui/skeleton.tsx (+15/-0)
+- components/ui/toaster.tsx (+10/-0)
+- components/ui/welcome.tsx (+16/-0)
+=======
+Timestamp: 2025-08-08T12:39:21.740Z
+Commit: a1875c21f7c6a69b25dbcec1396cdee62c5b8111
+Author: Codex
+Message: feat: add offline queue and app shell caching
+Files:
+- lib/offline/index.ts (+15/-0)
+- lib/offline/queue.ts (+23/-0)
+- public/sw.js (+33/-1)
+
+
+=======
+Timestamp: 2025-08-08T12:37:33.324Z
+Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
+Author: Codex
+Message: feat: add agent transparency drawer
+Files:
+- components/agents/TransparencyDrawer.tsx (+81/-0)
+
+
+
+
+
 
