@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import useSWR from 'swr';
 import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
+import type { AgentReflection } from '../types/AgentReflection';
 
 interface Props {
   nodes: FlowNode[];
@@ -15,10 +17,32 @@ interface Line {
   y2: number;
 }
 
+type ReflectionEntry = { agent: string } & AgentReflection;
+
+const fetcher = async (url: string): Promise<ReflectionEntry[]> => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch');
+  return res.json();
+};
+
 const AgentNodeGraph: React.FC<Props> = ({ nodes, edges }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<Line[]>([]);
+
+  const {
+    data: reflections,
+    error,
+    isValidating,
+  } = useSWR<ReflectionEntry[]>(
+    '/api/reflections',
+    fetcher,
+    {
+      dedupingInterval: 60_000,
+      errorRetryInterval: 30_000,
+      fallbackData: [],
+    }
+  );
 
   const computeLines = () => {
     const container = containerRef.current;
@@ -53,6 +77,19 @@ const AgentNodeGraph: React.FC<Props> = ({ nodes, edges }) => {
 
   return (
     <div ref={containerRef} className="relative w-full overflow-x-auto">
+      {error && (
+        <div
+          role="alert"
+          className="absolute top-0 left-0 right-0 bg-red-100 text-red-800 text-sm p-2"
+        >
+          Failed to load reflections
+        </div>
+      )}
+      {isValidating && !error && (
+        <div className="absolute top-0 right-0 p-1 text-xs text-gray-500">
+          Refreshing…
+        </div>
+      )}
       <svg className="absolute inset-0 pointer-events-none w-full h-full">
         <defs>
           <marker
@@ -106,6 +143,11 @@ const AgentNodeGraph: React.FC<Props> = ({ nodes, edges }) => {
           );
         })}
       </div>
+      <ul data-testid="reflection-list" className="hidden">
+        {reflections?.map((r) => (
+          <li key={r.agent}>{r.agent}</li>
+        ))}
+      </ul>
     </div>
   );
 };

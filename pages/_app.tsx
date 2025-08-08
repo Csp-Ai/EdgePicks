@@ -7,6 +7,7 @@ import { ToastProvider } from '../lib/useToast';
 import Footer from '../components/Footer';
 import AppHeader from '../components/AppHeader';
 import BetaRibbon from '../components/BetaRibbon';
+import Onboarding from '../components/Onboarding';
 
 let DevOnly: React.ComponentType<{ children: React.ReactNode }> | null = null;
 let FocusDock: React.ComponentType | null = null;
@@ -23,6 +24,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       <ToastProvider>
         {showRibbon && <BetaRibbon />}
         <AppHeader />
+        <Onboarding />
         <main>
           <Component {...pageProps} />
           <Footer />
