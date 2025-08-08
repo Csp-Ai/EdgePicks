@@ -2158,6 +2158,7 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+
 Timestamp: 2025-08-08T11:16:58.142Z
 Commit: 7b65c5bf1a2e6290e76458af1959b86c9eaebef8
 Author: Codex
@@ -2166,6 +2167,35 @@ Files:
 - __tests__/ReasoningDisclosure.test.tsx (+22/-0)
 - components/AgentCard.tsx (+30/-31)
 - components/agents/ReasoningDisclosure.tsx (+38/-0)
+=======
+
+Timestamp: 2025-08-08T11:15:08.862Z
+Commit: e264823d76976f268d261110636c6f15e4f88d91
+Author: Codex
+Message: feat: add service worker for demo predictions
+Files:
+- __tests__/sw.register.test.ts (+36/-0)
+- lib/demoMode.tsx (+3/-0)
+- lib/sw/registerSW.ts (+20/-0)
+- public/sw.js (+37/-0)
+=======
+Timestamp: 2025-08-08T11:14:17.547Z
+Commit: 09c54bd2985207ae4ccf9cbe0f65582c4ebd1843
+Author: Codex
+Message: feat: add native share
+Files:
+- components/PredictionDrawer.tsx (+7/-3)
+- lib/share/nativeShare.ts (+25/-0)
+=======
+
+Timestamp: 2025-08-08T11:13:12.692Z
+Commit: 8eca2c4d94ef3eabf519271562631859ac7efcf0
+Author: Codex
+Message: fix: import hooks in navbar and add coverage
+Files:
+- __tests__/Navbar.test.tsx (+25/-0)
+- components/Navbar.tsx (+1/-1)
+
 =======
 Timestamp: 2025-08-08T11:13:52.003Z
 Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
@@ -2335,5 +2365,9 @@ Files:
 
 
 
+
+
+
+=======
 
 

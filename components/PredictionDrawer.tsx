@@ -9,6 +9,7 @@ import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
 import useEventSource from '../lib/hooks/useEventSource';
 import { logUiEvent } from '../lib/analytics/logUiEvent';
 import { Share2 } from 'lucide-react';
+import { nativeShare } from '../lib/share/nativeShare';
 
 interface Props {
   game: Game | null;
@@ -130,8 +131,11 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   if (!isOpen || !game) return null;
 
   const share = () => {
-    if (typeof window !== 'undefined') {
-      navigator.clipboard?.writeText(window.location.href);
+    if (typeof window !== 'undefined' && game) {
+      void nativeShare(
+        window.location.href,
+        `${game.homeTeam} vs ${game.awayTeam}`,
+      );
     }
   };
 
@@ -151,7 +155,7 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
             <div className="flex items-center gap-2">
               <button
                 onClick={share}
-                aria-label="Copy link"
+                aria-label="Share"
                 className="p-1 rounded hover:bg-slate-800"
               >
                 <Share2 className="w-4 h-4" />
