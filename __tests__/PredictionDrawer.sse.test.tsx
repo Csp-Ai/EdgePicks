@@ -7,6 +7,9 @@ jest.mock('../components/PickSummary', () => () => <div />);
 jest.mock('../components/AgentNodeGraph', () => () => <div />);
 jest.mock('../components/AgentRationalePanel', () => () => <div />);
 jest.mock('../components/ConfidenceMeter', () => () => <div />);
+jest.mock('next/router', () => ({
+  useRouter: () => ({ replace: jest.fn(), prefetch: jest.fn(), push: jest.fn() }),
+}));
 
 class MockEventSource {
   onmessage: ((ev: any) => void) | null = null;

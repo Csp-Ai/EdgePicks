@@ -1,0 +1,5 @@
+[
+  { "homeTeam": "C", "awayTeam": "D", "time": "2020-01-02T00:00:00Z", "league": "NFL", "gameId": "2" },
+  { "homeTeam": "A", "awayTeam": "B", "time": "2020-01-01T00:00:00Z", "league": "NFL", "gameId": "1" },
+  { "homeTeam": "E", "awayTeam": "F", "time": "2020-01-03T00:00:00Z", "league": "NFL", "gameId": "3" }
+]

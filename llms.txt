@@ -1782,3 +1782,20 @@ Files:
 - pages/predictions.tsx (+9/-2)
 
 
+Timestamp: 2025-08-08T07:48:27.482Z
+Commit: 4ebec0295d7c37e1bb999696cbb05b42889f0cfd
+Author: Codex
+Message: Stabilize odds join and freeze log timestamps
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx (+3/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/fixtures/odds.json (+28/-0)
+- __tests__/fixtures/schedule.json (+5/-0)
+- __tests__/llmsLog.test.ts (+7/-16)
+- __tests__/upcomingGamesApi.joinOdds.test.ts (+43/-26)
+- __tests__/utils/freezeTime.ts (+4/-3)
+- jest.setup.ts (+1/-0)
+- pages/api/upcoming-games.ts (+49/-30)
+=======
+
+
