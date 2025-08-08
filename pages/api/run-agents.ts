@@ -20,12 +20,11 @@ export default async function handler(
   }
 
   const liveMode = ENV?.LIVE_MODE ?? 'off';
-  const isMockAuth = process.env.NEXT_PUBLIC_MOCK_AUTH === '1';
 
-  if (liveMode !== 'off' && !isMockAuth) {
+  if (liveMode === 'on') {
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
-      res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'auth_required' });
       return;
     }
   }
