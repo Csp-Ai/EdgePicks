@@ -9,6 +9,7 @@ const envSchema = z.object({
   NEXTAUTH_URL: z.string().url(),
   SPORTS_API_KEY: z.string().nonempty(),
   LIVE_MODE: z.enum(['on', 'off']).default('off'),
+  WEIGHTS_DYNAMIC: z.enum(['on', 'off']).default('off'),
   PREDICTION_CACHE_TTL_SEC: z.coerce.number().int().positive().default(120),
   MAX_FLOW_CONCURRENCY: z.coerce.number().int().positive().default(3),
   CACHE_DRIVER: z.enum(['memory', 'redis']).default('memory'),
