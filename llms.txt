@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:56:44.345Z
+Commit: 29dda767430fa8a323dd18b91dd0780f7229479e
+Author: Codex
+Message: chore: add bundle size guard
+Files:
+- .github/workflows/bundle-guard.yml (+43/-0)
+- bundle-budget.json (+3/-0)
+
