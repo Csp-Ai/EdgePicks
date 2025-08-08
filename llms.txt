@@ -2158,3 +2158,14 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:13:17.314Z
+Commit: fbefa1a36fd7558917f9daeb44a369274ad99302
+Author: Codex
+Message: feat: add i18n bootstrap
+Files:
+- __tests__/i18n.test.tsx (+22/-0)
+- hooks/useI18n.ts (+6/-0)
+- lib/i18n/config.ts (+42/-0)
+- locales/en/common.json (+4/-0)
+- locales/es/common.json (+4/-0)
+
