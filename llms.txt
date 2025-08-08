@@ -1971,3 +1971,16 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:43:55.171Z
+Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
+Author: Codex
+Message: feat: add governance audit log and tooling
+Files:
+- .github/workflows/lighthouse-ci.yml (+25/-0)
+- .github/workflows/percy.yml (+19/-0)
+- __tests__/AuditLogList.test.tsx (+48/-0)
+- components/AuditLogList.tsx (+148/-0)
+- lighthouserc.json (+30/-0)
+- pages/governance/audit.tsx (+17/-0)
+- tests/visual/percy.spec.ts (+13/-0)
+

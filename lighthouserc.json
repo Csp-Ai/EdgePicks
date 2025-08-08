@@ -1,0 +1,30 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["http://localhost:3000/"],
+      "startServerCommand": "npm run start",
+      "numberOfRuns": 1,
+      "settings": {
+        "budgets": [
+          {
+            "resourceSizes": [
+              { "resourceType": "script", "budget": 5000 }
+            ],
+            "timings": [
+              { "metric": "interactive", "budget": 10000 }
+            ]
+          }
+        ]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1, "aggregationMethod": "optimistic" }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
