@@ -1940,3 +1940,10 @@ Files:
 - __tests__/__snapshots__/AgentExecutionTracker.test.tsx.snap (+215/-0)
 - components/AgentExecutionTracker.tsx (+155/-0)
 
+Timestamp: 2025-08-08T09:38:55.428Z
+Commit: ee10ce31e64bceb26a8bc4fd3e65266959449c2d
+Author: Codex
+Message: ci(constitution): switch PR creation to peter-evans + auto-merge; keep drift as blocking
+Files:
+- .github/workflows/constitution-drift.yml (+70/-0)
+
