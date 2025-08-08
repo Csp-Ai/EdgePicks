@@ -6,6 +6,7 @@ import Head from 'next/head';
 import HeroStrip from '../components/HeroStrip';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
 import PredictionMarquee from '../components/marketing/PredictionMarquee';
+import GameInsightsHero from '../components/GameInsightsHero';
 import type { Game } from '../lib/types';
 
 const PredictionDrawer = dynamic(() => import('../components/PredictionDrawer'), {
@@ -47,6 +48,16 @@ export default function Home() {
     awayLogo: g.awayTeam?.logo,
     odds: g.odds,
     source: g.source,
+  }));
+  const heroGames = games.map((g) => ({
+    id: g.gameId,
+    home: g.homeTeam,
+    away: g.awayTeam,
+    kickoff: g.time,
+    spread: g.odds?.spread ?? null,
+    total: g.odds?.overUnder ?? null,
+    homeLogoUrl: g.homeLogo,
+    awayLogoUrl: g.awayLogo,
   }));
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Game | null>(null);
@@ -116,6 +127,11 @@ export default function Home() {
         <title>{headTitle}</title>
         <meta name="description" content={headDesc} />
       </Head>
+      <GameInsightsHero
+        games={heroGames}
+        isLoading={isLoading}
+        onSeeAgents={() => router.push('/predictions?view=advanced')}
+      />
       <PredictionMarquee onTryDemo={openDemo} />
       <HeroStrip />
       <main className="min-h-screen px-4 sm:px-6 lg:px-8 py-4 space-y-4 max-w-7xl mx-auto">
