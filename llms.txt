@@ -2564,6 +2564,19 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:39:36.823Z
+Commit: 3547c5915d4dc28adc03d072fe462c0e33782c6a
+Author: Codex
+Message: feat: add community needs heatmap
+Files:
+- app/maps/data/clinic-density.json (+33/-0)
+- app/maps/data/food-deserts.json (+33/-0)
+- app/maps/data/heat-islands.json (+33/-0)
+- app/maps/page.tsx (+87/-0)
+- package-lock.json (+2283/-3391)
+- package.json (+2/-0)
+=======
+
 Timestamp: 2025-08-08T12:39:36.997Z
 Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
 Author: Codex
@@ -2587,6 +2600,7 @@ Files:
 - lib/offline/index.ts (+15/-0)
 - lib/offline/queue.ts (+23/-0)
 - public/sw.js (+33/-1)
+
 
 =======
 Timestamp: 2025-08-08T12:37:33.324Z
