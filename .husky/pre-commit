@@ -1,2 +1,6 @@
-[ -f .env.local ] || { echo ".env.local is missing. Copy it from .env.local.example" >&2; exit 1; }
-npm test
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run typecheck
+npm run lint:fix
+

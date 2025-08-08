@@ -25,7 +25,7 @@ export default function useEventSource(
   const [error, setError] = useState<Event | null>(null);
   const esRef = useRef<EventSource | null>(null);
   const retryRef = useRef(0);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const connect = () => {
     if (!url || !enabled) return;
@@ -73,7 +73,10 @@ export default function useEventSource(
     }
     return () => {
       esRef.current?.close();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, enabled]);

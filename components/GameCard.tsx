@@ -20,14 +20,17 @@ function formatRelative(time: string): string {
 
 const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
   const kickoff = formatRelative(game.time);
-  const hoverRef = useRef<NodeJS.Timeout>();
+  const hoverRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleEnter = () => {
     hoverRef.current = setTimeout(() => onHover?.(), 200);
   };
 
   const handleLeave = () => {
-    if (hoverRef.current) clearTimeout(hoverRef.current);
+    if (hoverRef.current) {
+      clearTimeout(hoverRef.current);
+      hoverRef.current = null;
+    }
   };
 
   const kickoffLabel = new Date(game.time).toLocaleTimeString([], {

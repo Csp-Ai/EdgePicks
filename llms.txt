@@ -1246,3 +1246,24 @@ Message: test: update llms log snapshot
 Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 
+Timestamp: 2025-08-07T23:57:20.034Z
+Commit: c759ac2dee8265581f16c7065fb839b112549043
+Author: Codex
+Message: chore: add doctor script and fix type checks
+Files:
+- .husky/pre-commit (+6/-2)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/GameCard.tsx (+5/-2)
+- lib/hooks/useEventSource.ts (+5/-2)
+- next.config.js (+8/-4)
+- package.json (+4/-0)
+- pages/index.tsx (+1/-1)
+- tsconfig.json (+1/-1)
+
+Timestamp: 2025-08-07T23:57:52.114Z
+Commit: 015e4b7ac957b69014b8bceb84adb9c7cc30a240
+Author: Codex
+Message: chore: ignore tests and scripts for eslint
+Files:
+- .eslintignore (+2/-0)
+

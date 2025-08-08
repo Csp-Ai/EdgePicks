@@ -50,7 +50,7 @@ export default function Home() {
   const [selected, setSelected] = useState<Game | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
 
-  const preloadDrawer = () => PredictionDrawer.preload?.();
+  const preloadDrawer = () => (PredictionDrawer as any).preload?.();
 
   // handle deep link
   useEffect(() => {
