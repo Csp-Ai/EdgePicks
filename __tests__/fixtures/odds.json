@@ -1,0 +1,28 @@
+[
+  {
+    "home_team": "A",
+    "away_team": "B",
+    "bookmakers": [
+      {
+        "title": "Book",
+        "last_update": "2020",
+        "markets": [
+          { "key": "h2h", "outcomes": [ { "name": "A", "price": -110 }, { "name": "B", "price": 100 } ] },
+          { "key": "spreads", "outcomes": [ { "name": "A", "point": -3.5 }, { "name": "B", "point": 3.5 } ] },
+          { "key": "totals", "outcomes": [ { "name": "over", "point": 40.5 } ] }
+        ]
+      }
+    ]
+  },
+  {
+    "home_team": "E",
+    "away_team": "F",
+    "bookmakers": [
+      {
+        "title": "OtherBook",
+        "last_update": "2020",
+        "markets": []
+      }
+    ]
+  }
+]

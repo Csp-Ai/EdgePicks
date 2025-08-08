@@ -11,7 +11,7 @@ jest.mock('../lib/data/odds', () => ({
 jest.mock('../lib/flow/runFlow', () => ({
   runFlow: jest.fn().mockResolvedValue({ outputs: {}, executions: [] }),
 }));
-jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn() }));
+jest.mock('../lib/logToSupabase', () => ({ logMatchup: jest.fn() }));
 jest.mock('../lib/utils/fallbackMatchups', () => ({ getFallbackMatchups: jest.fn(() => []) }));
 jest.mock('../lib/utils/formatKickoff', () => ({ formatKickoff: () => '' }));
 jest.mock('../lib/agents/registry', () => ({ registry: [] }));
@@ -19,27 +19,22 @@ jest.mock('../lib/agents/registry', () => ({ registry: [] }));
 const handler = require('../pages/api/upcoming-games').default;
 const { fetchSchedule } = require('../lib/data/schedule');
 const { fetchOdds } = require('../lib/data/odds');
+const schedule = require('./fixtures/schedule.json');
+const odds = require('./fixtures/odds.json');
 
 describe('upcoming-games API', () => {
+  let live: string | undefined;
+  beforeAll(() => {
+    live = process.env.LIVE_MODE;
+    process.env.LIVE_MODE = 'off';
+  });
+  afterAll(() => {
+    process.env.LIVE_MODE = live;
+  });
+
   it('joins odds data with schedule', async () => {
-    fetchSchedule.mockResolvedValue([
-      { homeTeam: 'A', awayTeam: 'B', time: '2020', league: 'NFL' },
-    ]);
-    fetchOdds.mockResolvedValue([
-      {
-        home_team: 'A',
-        away_team: 'B',
-        bookmakers: [
-          {
-            title: 'Book',
-            last_update: '2020',
-            markets: [
-              { key: 'h2h', outcomes: [{ name: 'A', price: -110 }, { name: 'B', price: 100 }] },
-            ],
-          },
-        ],
-      },
-    ]);
+    fetchSchedule.mockResolvedValue(schedule);
+    fetchOdds.mockResolvedValue(odds);
 
     const req = { query: { league: 'NFL' } } as unknown as NextApiRequest;
     const json = jest.fn();
@@ -49,14 +44,36 @@ describe('upcoming-games API', () => {
     await handler(req, res);
 
     expect(status).toHaveBeenCalledWith(200);
-    expect(json).toHaveBeenCalledWith(
-      expect.arrayContaining([
-        expect.objectContaining({
-          odds: expect.objectContaining({
-            moneyline: { home: -110, away: 100 },
-          }),
+    const payload = json.mock.calls[0][0];
+    expect(payload).toHaveLength(3);
+
+    expect(payload[0]).toEqual(
+      expect.objectContaining({
+        homeTeam: { name: 'A' },
+        awayTeam: { name: 'B' },
+        time: '2020-01-01T00:00:00Z',
+        odds: expect.objectContaining({
+          moneyline: { home: -110, away: 100 },
         }),
-      ])
+      }),
+    );
+
+    expect(payload[1]).toEqual(
+      expect.objectContaining({
+        homeTeam: { name: 'C' },
+        awayTeam: { name: 'D' },
+        time: '2020-01-02T00:00:00Z',
+        odds: null,
+      }),
+    );
+
+    expect(payload[2]).toEqual(
+      expect.objectContaining({
+        homeTeam: { name: 'E' },
+        awayTeam: { name: 'F' },
+        time: '2020-01-03T00:00:00Z',
+        odds: null,
+      }),
     );
   });
 });

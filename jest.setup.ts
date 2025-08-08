@@ -22,4 +22,5 @@ jest.mock('./lib/supabaseClient', () => ({
 
 afterEach(() => {
   jest.useRealTimers?.();
+  jest.restoreAllMocks();
 });
