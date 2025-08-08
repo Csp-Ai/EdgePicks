@@ -2562,3 +2562,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:40:05.349Z
+Commit: 437c25a99b954291ac01adcd43f16c74b4406b11
+Author: Codex
+Message: feat: add impact dashboard
+Files:
+- app/impact/metrics.json (+34/-0)
+- app/impact/page.tsx (+134/-0)
+
