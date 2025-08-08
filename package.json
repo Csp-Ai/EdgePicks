@@ -26,6 +26,7 @@
     "docs:refresh": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/refreshDocs.ts",
     "docs:self-reflect": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/agentSelfReflection.ts",
     "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts",
+    "doc:check": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/check-docstrings.ts",
     "dev:commit": "ts-node scripts/dev/commit-helper.ts",
     "weights:calibrate": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/calibrateWeights.ts",
     "purge-cache": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/purge-cache.ts",
