@@ -20,13 +20,13 @@ type Result = {
   history?: number[];
   time: string;
   league: string;
-  odds?: {
+  odds: {
     spread?: number;
     overUnder?: number;
     moneyline?: { home?: number; away?: number };
     bookmaker?: string;
     lastUpdate?: string;
-  };
+  } | null;
   source?: string;
   useFallback?: boolean;
   winner: string;
@@ -58,31 +58,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let games = await fetchSchedule(leagueParam);
     const oddsData: OddsGame[] = await fetchOdds(leagueParam);
+
+    const oddsMap = new Map<string, OddsGame>();
+    oddsData.forEach((o) => {
+      const key = [o.home_team, o.away_team].sort().join(':');
+      oddsMap.set(key, o);
+    });
+
     games = games.map((g) => {
-      const home = g.homeTeam;
-      const away = g.awayTeam;
-      const gameOdds = oddsData.find(
-        (o) =>
-          (o.home_team === home && o.away_team === away) ||
-          (o.home_team === away && o.away_team === home)
-      );
-      const bookmaker = gameOdds?.bookmakers?.[0];
-      const spreads = bookmaker?.markets?.find((m) => m.key === 'spreads')?.outcomes;
-      const totals = bookmaker?.markets?.find((m) => m.key === 'totals')?.outcomes;
-      const h2h = bookmaker?.markets?.find((m) => m.key === 'h2h')?.outcomes;
-      const odds = gameOdds
-        ? {
-            spread: spreads?.find((o) => o.name === home)?.point ?? undefined,
+      const key = [g.homeTeam, g.awayTeam].sort().join(':');
+      const gameOdds = oddsMap.get(key);
+      let odds: Result['odds'] = null;
+      if (gameOdds) {
+        const bookmaker = gameOdds.bookmakers?.[0];
+        const spreads = bookmaker?.markets?.find((m) => m.key === 'spreads')?.outcomes;
+        const totals = bookmaker?.markets?.find((m) => m.key === 'totals')?.outcomes;
+        const h2h = bookmaker?.markets?.find((m) => m.key === 'h2h')?.outcomes;
+        if (bookmaker && h2h) {
+          odds = {
+            spread: spreads?.find((o) => o.name === g.homeTeam)?.point ?? undefined,
             overUnder: totals?.[0]?.point ?? undefined,
             moneyline: {
-              home: h2h?.find((o) => o.name === home)?.price ?? undefined,
-              away: h2h?.find((o) => o.name === away)?.price ?? undefined,
+              home: h2h.find((o) => o.name === g.homeTeam)?.price ?? undefined,
+              away: h2h.find((o) => o.name === g.awayTeam)?.price ?? undefined,
             },
-            bookmaker: bookmaker?.title,
-            lastUpdate: bookmaker?.last_update,
-          }
-        : undefined;
+            bookmaker: bookmaker.title,
+            lastUpdate: bookmaker.last_update,
+          };
+        }
+      }
       return { ...g, odds };
+    });
+    games.sort((a, b) => {
+      const t = new Date(a.time).getTime() - new Date(b.time).getTime();
+      if (t !== 0) return t;
+      const aId = a.gameId ?? '';
+      const bId = b.gameId ?? '';
+      return aId.localeCompare(bId);
     });
     if (!games.length) {
       games = getFallbackMatchups();
@@ -139,14 +151,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
               const pickSummary: PickSummary = { winner, confidence: confidenceRaw, topReasons };
 
-              logMatchup(
-                { ...game },
-                outputs as AgentOutputs,
-                pickSummary,
-                null,
-                'upcoming-games',
-                true
-              );
+              if (typeof logMatchup === 'function') {
+                logMatchup(
+                  { ...game },
+                  outputs as AgentOutputs,
+                  pickSummary,
+                  null,
+                  'upcoming-games',
+                  true
+                );
+              }
 
               const sanitize = (s: string) => s.replace(/\s+/g, '-');
               const derivedId =
@@ -183,6 +197,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         )
       )
     ).filter((r): r is Result => Boolean(r));
+    results.sort((a, b) => {
+      const t = new Date(a.time).getTime() - new Date(b.time).getTime();
+      if (t !== 0) return t;
+      return a.gameId.localeCompare(b.gameId);
+    });
 
     leagueCache.set(cacheKey, { results, timestamp: Date.now() });
     res.status(200).json(results);
