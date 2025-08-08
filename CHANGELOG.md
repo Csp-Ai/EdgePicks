@@ -1,3 +1,5 @@
+# Changelog
+
 Timestamp: 2025-08-06T01:35:19Z
 Summary:
 - Repository docs synced (README + AGENTS.md)
@@ -1553,37 +1555,7 @@ Files:
 - package-lock.json (+0/-587)
 - package.json (+1/-3)
 
-Timestamp: 2025-08-08T05:40:20.522Z
-Commit: 6d530dbdd5823a2e78cdf864de04904694a9f563
-Author: Codex
-Message: feat: fetch logs at runtime and stabilize snapshot
-Files:
-- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
-- __tests__/llmsLog.test.ts (+10/-2)
-- pages/api/logs.ts (+47/-7)
-- pages/history.tsx (+50/-82)
-=======
 
-
-Timestamp: 2025-08-08T05:30:00Z
-Message: integrated AppHeader/HeroStrip and stabilized llmsLog snapshot
-
-
-Timestamp: 2025-08-08T05:33:06.361Z
-Commit: 9e85acaadd86e6ff77d4865a0c2fef9eafef7c86
-Author: Codex
-Message: feat: integrate header hero and stabilize logs
-Files:
-- __tests__/AppHeader.test.tsx (+6/-3)
-- __tests__/HeroStrip.test.tsx (+23/-4)
-- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
-- __tests__/llmsLog.test.ts (+12/-2)
-- __tests__/utils/freezeTime.ts (+2/-3)
-- components/AppHeader.tsx (+41/-31)
-- components/HeroStrip.tsx (+18/-8)
-- llms.txt (+4/-0)
-- pages/index.tsx (+9/-4)
-=======
 Timestamp: 2025-08-08T05:23:19.983Z
 Commit: e79ad05062f1c1e0cf6facc489b88f437627a723
 Author: Codex
@@ -1594,39 +1566,5 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/GameCard.tsx (+16/-14)
 - components/UpcomingGamesGrid.tsx (+24/-5)
-
-
-Timestamp: 2025-08-08T05:39:49.988Z
-Commit: ef8d429ea1aea810ddbe12b2b7ac1b9871e0ecca
-Author: Codex
-Message: feat: add docs refresh pipeline
-Files:
-- .env.local.example (+3/-0)
-- .github/workflows/docs-refresh.yml (+31/-0)
-- CHANGELOG.md (+1570/-0)
-- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+133/-0)
-- __tests__/docs/refreshDocs.snap.test.ts (+15/-0)
-- __tests__/docs/selfReflection.test.ts (+15/-0)
-- __tests__/docs/sopGeneration.test.ts (+38/-0)
-- __tests__/fixtures/agent_outcomes.json (+5/-0)
-- agents/guardianAgent/SOP.md (+23/-0)
-- agents/injuryScout/SOP.md (+24/-0)
-- agents/injuryScout/reflection.json (+20/-0)
-- agents/injuryScout/reflection.md (+1/-0)
-- agents/lineWatcher/SOP.md (+24/-0)
-- agents/lineWatcher/reflection.json (+16/-0)
-- agents/lineWatcher/reflection.md (+1/-0)
-- agents/statCruncher/SOP.md (+23/-0)
-- agents/trendsAgent/SOP.md (+23/-0)
-- docs/agents.md (+9/-0)
-- docs/api.md (+11/-0)
-- docs/db-schema.md (+100/-0)
-- docs/system-diagram.svg (+1/-0)
-- package.json (+4/-1)
-- scripts/agentSelfReflection.ts (+128/-0)
-- scripts/generateSOPs.ts (+79/-0)
-- scripts/refreshDocs.ts (+54/-0)
-=======
-
 
 
