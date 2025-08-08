@@ -2840,3 +2840,13 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:57:57.992Z
+Commit: b23e9e49ce3501cb900c7b3233cdb72e773b6216
+Author: Codex
+Message: feat: add lightweight chart primitives
+Files:
+- components/viz/Bar.tsx (+68/-0)
+- components/viz/Line.tsx (+72/-0)
+- components/viz/Spark.tsx (+13/-0)
+- stories/LightweightCharts.stories.tsx (+24/-0)
+
