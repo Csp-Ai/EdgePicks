@@ -2562,3 +2562,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:41:16.361Z
+Commit: 55f85677b6efb7ed98e8960068115897b3a4ada1
+Author: Codex
+Message: feat: add risk communicator component
+Files:
+- components/health/RiskCommunicator.tsx (+71/-0)
+- stories/health/RiskCommunicator.stories.tsx (+28/-0)
+
