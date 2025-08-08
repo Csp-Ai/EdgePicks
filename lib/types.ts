@@ -4,6 +4,8 @@ export interface Game {
   homeTeam: string;
   awayTeam: string;
   time: string; // ISO
+  /** Preformatted relative time for UI; supplied by API for consistency */
+  kickoffDisplay?: string;
   homeLogo?: string;
   awayLogo?: string;
   odds?: {
@@ -44,6 +46,8 @@ export interface Matchup {
   isLiveData?: boolean;
   source?: string;
   useFallback?: boolean;
+  /** Preformatted relative time for UI; supplied by API for consistency */
+  kickoffDisplay?: string;
 }
 
 export interface AgentResult {

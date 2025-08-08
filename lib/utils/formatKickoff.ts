@@ -1,29 +1,22 @@
-export function formatKickoff(time: string): string {
-  const kickoff = new Date(time);
-  const now = new Date();
-  const diffMs = kickoff.getTime() - now.getTime();
-  const minute = 60 * 1000;
-  const hour = 60 * minute;
-  const day = 24 * hour;
-  if (isNaN(kickoff.getTime()) || diffMs <= 0) {
-    return 'started';
-  }
-  if (diffMs < hour) {
-    const m = Math.round(diffMs / minute);
-    return `in ${m}m`;
-  }
-  if (diffMs < day) {
-    const h = Math.round(diffMs / hour);
-    return `in ${h}h`;
-  }
-  if (diffMs <= 7 * day) {
-    const d = Math.round(diffMs / day);
-    return `in ${d}d`;
-  }
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  }).format(kickoff);
+export function formatKickoff(iso: string, nowMs: number = Date.now()): string {
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return 'TBD';
+  const diff = t - nowMs;
+  if (diff <= 0) return 'started';
+  const min = Math.round(diff / 60000);
+  if (min < 60) return `in ${min}m`;
+  const hours = Math.floor(min / 60);
+  if (hours < 24) return `in ${hours}h`;
+  const days = Math.floor(hours / 24);
+  return `in ${days}d`;
 }
+
+export function formatAbsolute(iso: string, locale?: string): string {
+  const d = new Date(iso);
+  try {
+    return d.toLocaleString(locale ?? undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  } catch {
+    return d.toISOString();
+  }
+}
+

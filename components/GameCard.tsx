@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import type { Game } from '../lib/types';
+import { formatKickoff } from '../lib/utils/formatKickoff';
 
 interface Props {
   game: Game;
@@ -8,27 +9,8 @@ interface Props {
   onHover?: () => void;
 }
 
-function formatRelative(time: string): string {
-  const target = new Date(time).getTime();
-  const diffMs = target - Date.now();
-  if (diffMs <= 0) return 'started';
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 60) return `in ${diffMin}m`;
-  const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `in ${diffHr}h`;
-  const diffDay = Math.floor(diffHr / 24);
-  if (diffDay <= 7) return `in ${diffDay}d`;
-  const d = new Date(time);
-  const date = d.toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-  });
-  const t = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  return `${date}, ${t}`;
-}
-
 const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
-  const kickoff = formatRelative(game.time);
+  const kickoff = game.kickoffDisplay ?? formatKickoff(game.time);
   const hoverRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleEnter = () => {
