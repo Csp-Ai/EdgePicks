@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient';
 import { AgentOutputs, Matchup, PickSummary } from './types';
-import { recomputeAccuracy } from './accuracy';
+import { recomputeAccuracy, recordAgentOutcomes } from './accuracy';
 import { getQueueDriver } from './infra/queue';
 
 type LogEntry = {
@@ -33,25 +33,37 @@ async function processQueue() {
   }
   let retryDelay: number | null = null;
   try {
-    const { error } = await supabase.from('matchups').insert({
-      team_a: entry.matchup.homeTeam,
-      team_b: entry.matchup.awayTeam,
-      match_day: entry.matchup.matchDay,
-      agents: entry.agents,
-      pick: entry.pick,
-      flow: entry.flow,
-      actual_winner: entry.actualWinner,
-      is_auto_pick: entry.isAutoPick,
-      extras: entry.extras,
-      created_at: entry.loggedAt,
-    });
+    const { data: inserted, error } = await supabase
+      .from('matchups')
+      .insert({
+        team_a: entry.matchup.homeTeam,
+        team_b: entry.matchup.awayTeam,
+        match_day: entry.matchup.matchDay,
+        agents: entry.agents,
+        pick: entry.pick,
+        flow: entry.flow,
+        actual_winner: entry.actualWinner,
+        is_auto_pick: entry.isAutoPick,
+        extras: entry.extras,
+        created_at: entry.loggedAt,
+      })
+      .select('id')
+      .single();
 
     if (error) {
       throw error;
     }
 
     lastError = null;
-    if (entry.actualWinner) {
+    if (entry.actualWinner && inserted) {
+      await recordAgentOutcomes(
+        inserted.id,
+        entry.agents,
+        entry.actualWinner,
+        entry.loggedAt
+      ).catch((err) =>
+        console.error('Error recording agent outcomes:', err)
+      );
       recomputeAccuracy().catch((err) =>
         console.error('Error updating accuracy metrics:', err)
       );

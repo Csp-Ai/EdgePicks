@@ -16,6 +16,26 @@ export interface AccuracyStat {
   accuracy: number;
 }
 
+export async function recordAgentOutcomes(
+  gameId: string,
+  agents: AgentOutputs,
+  actualWinner: string,
+  ts: string = new Date().toISOString()
+) {
+  const rows = Object.entries(agents).map(([agent, result]) => ({
+    game_id: gameId,
+    agent,
+    pick: result.team,
+    correct: result.team === actualWinner,
+    confidence: result.score,
+    ts,
+  }));
+  if (rows.length === 0) return;
+  await supabase
+    .from('agent_outcomes')
+    .upsert(rows, { onConflict: 'game_id,agent' });
+}
+
 export async function recomputeAccuracy() {
   const { data, error } = await supabase
     .from('matchups')
