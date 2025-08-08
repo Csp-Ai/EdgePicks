@@ -1,0 +1,43 @@
+name: Bundle Guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  bundle-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - name: Build application
+        run: npm run build
+        env:
+          ANALYZE: 'true'
+      - name: Generate bundle report
+        run: npx nextjs-bundle-analysis@latest report
+      - name: Enforce bundle budget
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const budget = JSON.parse(fs.readFileSync('bundle-budget.json', 'utf8')).budget;
+          const data = JSON.parse(fs.readFileSync('.next/analyze/__bundle_analysis.json', 'utf8'));
+          const global = data.__global.gzip;
+          delete data.__global;
+          const over = Object.entries(data).filter(([page, stats]) => stats.gzip + global > budget);
+          if (over.length) {
+            console.error('Bundle size exceeds budget for pages:');
+            for (const [page, stats] of over) {
+              console.error(`${page}: ${stats.gzip + global} bytes > ${budget} bytes`);
+            }
+            process.exit(1);
+          } else {
+            console.log('All pages within bundle budget');
+          }
+          NODE
