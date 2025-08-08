@@ -1,87 +1,114 @@
-import React, { useState } from 'react';
-import useSWR from 'swr';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import type { AgentName, AgentLifecycle } from '../lib/types';
-import type { AgentReflection } from '../lib/types';
-import LoadingShimmer from './LoadingShimmer';
-
-interface ReflectionMap {
-  [key: string]: AgentReflection;
-}
+import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
 
 interface Props {
-  statuses: Record<AgentName, { status: AgentLifecycle['status'] | 'idle' }>;
+  nodes: FlowNode[];
+  edges: FlowEdge[];
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+interface Line {
+  id: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
 
-const AGENT_NAMES: AgentName[] = agentRegistry.map(
-  (a) => a.name as AgentName
-);
+const AgentNodeGraph: React.FC<Props> = ({ nodes, edges }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [lines, setLines] = useState<Line[]>([]);
 
-const AgentNodeGraph: React.FC<Props> = ({ statuses }) => {
-  const { data: reflections, error, isLoading } = useSWR<ReflectionMap>(
-    '/api/reflections',
-    fetcher
-  );
-  const [hovered, setHovered] = useState<AgentName | null>(null);
+  const computeLines = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    const bounds = container.getBoundingClientRect();
+    const next: Line[] = [];
+    edges.forEach((edge) => {
+      const source = nodeRefs.current[edge.source];
+      const target = nodeRefs.current[edge.target];
+      if (!source || !target) return;
+      const s = source.getBoundingClientRect();
+      const t = target.getBoundingClientRect();
+      next.push({
+        id: edge.id,
+        x1: s.left + s.width / 2 - bounds.left,
+        y1: s.top + s.height / 2 - bounds.top,
+        x2: t.left + t.width / 2 - bounds.left,
+        y2: t.top + t.height / 2 - bounds.top,
+      });
+    });
+    setLines(next);
+  };
 
-  const hasActivity = Object.values(statuses).some((s) => s.status !== 'idle');
-  if (!hasActivity) return null;
-  if (error) {
-    return <p className="text-center text-red-600">Failed to load reflections</p>;
-  }
-  if (isLoading || !reflections) {
-    return <LoadingShimmer />;
-  }
+  useEffect(() => {
+    computeLines();
+    window.addEventListener('resize', computeLines);
+    return () => window.removeEventListener('resize', computeLines);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes, edges]);
+
+  if (nodes.length === 0) return null;
+
   return (
-    <div className="flex justify-center flex-wrap gap-4 py-4">
-      {AGENT_NAMES.map((name) => {
-        const state = statuses[name]?.status || 'idle';
-        const reflection = reflections[name];
-        let bg = 'bg-blue-600';
-        if (state === 'errored') bg = 'bg-red-600';
-        return (
-          <div key={name} className="relative">
+    <div ref={containerRef} className="relative w-full overflow-x-auto">
+      <svg className="absolute inset-0 pointer-events-none w-full h-full">
+        <defs>
+          <marker
+            id="arrowhead"
+            markerWidth="10"
+            markerHeight="7"
+            refX="10"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" className="fill-gray-500" />
+          </marker>
+        </defs>
+        {lines.map((l) => (
+          <line
+            key={l.id}
+            x1={l.x1}
+            y1={l.y1}
+            x2={l.x2}
+            y2={l.y2}
+            strokeWidth={2}
+            className="stroke-gray-500"
+            markerEnd="url(#arrowhead)"
+          />
+        ))}
+      </svg>
+      <div className="flex items-center gap-4 p-4 min-w-max">
+        {nodes.map((node) => {
+          let bg = 'bg-gray-500';
+          if (node.status === 'completed') bg = 'bg-green-600';
+          else if (node.status === 'errored') bg = 'bg-red-600';
+          else if (node.status === 'running') bg = 'bg-blue-600';
+          return (
             <motion.div
-              onMouseEnter={() => setHovered(name)}
-              onMouseLeave={() => setHovered(null)}
-              animate={{
-                scale: state === 'started' ? 1.1 : 1,
-                opacity: state === 'errored' ? 0.4 : 1,
+              key={node.id}
+              ref={(el) => {
+                nodeRefs.current[node.id] = el;
               }}
-              transition={{
-                repeat: state === 'started' ? Infinity : 0,
-                repeatType: 'reverse',
-                duration: 0.8,
-              }}
-              className={`w-16 h-16 rounded-full ${bg} flex items-center justify-center text-xs`}
+              className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xs ${bg}`}
+              animate={
+                node.status === 'running' ? { scale: 1.1 } : { scale: 1 }
+              }
+              transition={
+                node.status === 'running'
+                  ? { repeat: Infinity, repeatType: 'reverse', duration: 0.8 }
+                  : {}
+              }
             >
-              {name}
+              {node.label}
             </motion.div>
-            {hovered === name && reflection && (
-              <div className="reflection-overlay">
-                <p className="font-bold mb-1">{name}</p>
-                <p>
-                  <span className="font-semibold">Observed:</span>{' '}
-                  {reflection.whatIObserved}
-                </p>
-                <p>
-                  <span className="font-semibold">Chose:</span>{' '}
-                  {reflection.whatIChose}
-                </p>
-                <p>
-                  <span className="font-semibold">Improve:</span>{' '}
-                  {reflection.whatCouldImprove}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 export default AgentNodeGraph;
+

@@ -1751,3 +1751,16 @@ Files:
 - styles/globals.css (+5/-0)
 - styles/typography.css (+8/-0)
 
+Timestamp: 2025-08-08T07:11:22.947Z
+Commit: a4aa3e5dc4e6f338de732b9124c23bba3e027dd3
+Author: Codex
+Message: feat: add advanced agent graph view
+Files:
+- __tests__/viz.playground.test.tsx (+2/-2)
+- components/AgentNodeGraph.tsx (+95/-68)
+- components/AgentVizCanvas.tsx (+30/-11)
+- components/PredictionDrawer.tsx (+3/-2)
+- components/PredictionsPanel.tsx (+23/-2)
+- lib/hooks/useEventSource.ts (+1/-7)
+- pages/predictions.tsx (+9/-2)
+

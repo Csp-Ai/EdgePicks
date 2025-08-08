@@ -8,7 +8,8 @@ import type { AgentExecution } from '../lib/flow/runFlow';
 const PredictionsPage: React.FC = () => {
   const [agents, setAgents] = useState<AgentOutputs>({});
   const [pick, setPick] = useState<PickSummary | null>(null);
-  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
+  const { statuses, handleLifecycleEvent, reset, nodes, edges } =
+    useFlowVisualizer();
 
   return (
     <main className="min-h-screen p-6 space-y-6 bg-neutral-100 dark:bg-neutral-900">
@@ -28,7 +29,13 @@ const PredictionsPage: React.FC = () => {
         onComplete={(data: { pick: PickSummary }) => setPick(data.pick)}
         onLifecycle={handleLifecycleEvent}
       />
-      <PredictionsPanel agents={agents} pick={pick} statuses={statuses} />
+      <PredictionsPanel
+        agents={agents}
+        pick={pick}
+        statuses={statuses}
+        nodes={nodes}
+        edges={edges}
+      />
     </main>
   );
 };

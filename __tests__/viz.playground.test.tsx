@@ -2,8 +2,8 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import VizPage from '../pages/viz';
 import { happyPath } from '../lib/mock/agentRuns';
 
-jest.mock('../components/AgentNodeGraph', () => ({ statuses }: any) => (
-  <div data-testid="graph">{Object.keys(statuses).join(',')}</div>
+jest.mock('../components/AgentNodeGraph', () => ({ nodes }: any) => (
+  <div data-testid="graph">{nodes.map((n: any) => n.id).join(',')}</div>
 ));
 
 jest.useFakeTimers();

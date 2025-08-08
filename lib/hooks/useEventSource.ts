@@ -29,13 +29,7 @@ export default function useEventSource(
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heartbeatRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
-  const router = (() => {
-    try {
-      return useRouter();
-    } catch {
-      return null as any;
-    }
-  })();
+  const router = useRouter();
 
   const connect = () => {
     if (!url || !enabled) return;
