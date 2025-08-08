@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import useEventSource from '../lib/hooks/useEventSource';
 import { FixedSizeList as List } from 'react-window';
+import { searchLogs, logsToCSV } from '../lib/logs/search';
 
 interface AgentLog {
   agent: string;
@@ -35,27 +36,35 @@ const AgentLogStream: React.FC = () => {
       return '';
     }
   });
+  const [query, setQuery] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored).query || '' : '';
+    } catch {
+      return '';
+    }
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ agent: agentFilter, state: stateFilter }),
+        JSON.stringify({ agent: agentFilter, state: stateFilter, query }),
       );
     }
-  }, [agentFilter, stateFilter]);
+  }, [agentFilter, stateFilter, query]);
 
   const { events } = useEventSource('/api/reflections', { enabled: !paused });
 
-  const filtered = useMemo(
-    () =>
-      (events as AgentLog[]).filter(
-        (e) =>
-          (!agentFilter || e.agent?.includes(agentFilter)) &&
-          (!stateFilter || e.state === stateFilter),
-      ),
-    [events, agentFilter, stateFilter],
-  );
+  const filtered = useMemo(() => {
+    const base = (events as AgentLog[]).filter(
+      (e) =>
+        (!agentFilter || e.agent?.includes(agentFilter)) &&
+        (!stateFilter || e.state === stateFilter),
+    );
+    return searchLogs(base, query);
+  }, [events, agentFilter, stateFilter, query]);
 
   const renderRow = ({ index, style }: { index: number; style: any }) => {
     const item = filtered[index];
@@ -102,11 +111,44 @@ const AgentLogStream: React.FC = () => {
           value={stateFilter}
           onChange={(e) => setStateFilter(e.target.value)}
         />
+        <input
+          aria-label="Search logs"
+          className="border p-1 flex-1"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
         <button
           onClick={() => setPaused((p) => !p)}
           className="px-3 py-1 border rounded"
         >
           {paused ? 'Resume' : 'Pause'}
+        </button>
+        <button
+          onClick={() =>
+            navigator.clipboard.writeText(
+              JSON.stringify(filtered, null, 2),
+            )
+          }
+          className="px-3 py-1 border rounded"
+        >
+          Copy
+        </button>
+        <button
+          onClick={() => {
+            const csv = logsToCSV(filtered);
+            const blob = new Blob([csv], {
+              type: 'text/csv;charset=utf-8;',
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'agent-logs.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+          }}
+          className="px-3 py-1 border rounded"
+        >
+          Export CSV
         </button>
       </div>
       {list}
