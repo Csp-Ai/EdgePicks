@@ -16,3 +16,24 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+
+  db:
+    runs-on: ubuntu-latest
+    container: postgres:15
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pgTAP
+        run: |
+          apt-get update
+          apt-get install -y postgresql-15-pgtap
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h localhost; do sleep 1; done
+      - name: Apply schema
+        run: psql -h localhost -U postgres -f supabase/schema.sql
+      - name: Run policy tests
+        run: psql -h localhost -U postgres -v ON_ERROR_STOP=1 -f db/policies.test.sql
