@@ -2159,6 +2159,17 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+
+Timestamp: 2025-08-08T11:11:29.359Z
+Commit: 15887453a2ab063e50fe11a9863deff16be227d8
+Author: Codex
+Message: feat: add agent gallery
+Files:
+- __tests__/AgentTile.test.tsx (+24/-0)
+- __tests__/AgentsPage.test.tsx (+36/-0)
+- components/agents/AgentTile.tsx (+42/-0)
+- pages/agents/index.tsx (+45/-0)
+=======
 Timestamp: 2025-08-08T11:14:31.397Z
 Commit: 73bc6ee5dbbb2d572666c410aa7ff87270878bee
 Author: Codex
@@ -2207,6 +2218,7 @@ Message: feat: add agent node popover
 Files:
 - components/AgentVizCanvas.tsx (+75/-2)
 - components/agents/AgentNodePopover.tsx (+67/-0)
+
 =======
 Timestamp: 2025-08-08T11:10:12.452Z
 Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
@@ -2219,6 +2231,8 @@ Files:
 - lib/search/fuzzy.ts (+42/-0)
 
 
+
+=======
 
 
 
