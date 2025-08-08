@@ -1,5 +1,7 @@
+import type { UiEventName } from './telemetry/events';
+
 export async function logUiEvent(
-  uiEvent: string,
+  uiEvent: UiEventName,
   metadata: Record<string, unknown> = {},
   correlationId?: string,
 ): Promise<void> {
