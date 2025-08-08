@@ -43,3 +43,11 @@
   }
 }
 
+/* Reduce animations when low-impact mode is enabled */
+.low-impact *,
+.low-impact *::before,
+.low-impact *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
