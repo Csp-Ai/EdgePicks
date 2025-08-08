@@ -1,0 +1,17 @@
+[
+  {
+    "homeTeam": "A",
+    "awayTeam": "B",
+    "prediction": { "winner": "A", "confidence": 0.68 }
+  },
+  {
+    "homeTeam": "C",
+    "awayTeam": "D",
+    "prediction": { "winner": "D", "confidence": 0.57 }
+  },
+  {
+    "homeTeam": "E",
+    "awayTeam": "F",
+    "prediction": { "winner": "E", "confidence": 0.61 }
+  }
+]
