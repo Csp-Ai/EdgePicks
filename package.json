@@ -23,7 +23,8 @@
     "snap:test": "ts-node scripts/uiSnapshot.ts",
     "docs:refresh": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/refreshDocs.ts",
     "docs:self-reflect": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/agentSelfReflection.ts",
-    "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts"
+    "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts",
+    "dev:commit": "ts-node scripts/dev/commit-helper.ts"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",

@@ -1814,3 +1814,17 @@ Files:
 
 
 
+Timestamp: 2025-08-08T08:07:14.836Z
+Commit: 7d47e49f32592258c9e3dd5f68219b2c8b632c73
+Author: Codex
+Message: feat: add dev focus dock
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx (+0/-4)
+- __tests__/dev/FocusDock.state.test.tsx (+39/-0)
+- __tests__/upcomingGamesApi.joinOdds.test.ts (+0/-2)
+- components/dev/DevOnly.tsx (+12/-0)
+- components/dev/FocusDock.tsx (+331/-0)
+- package.json (+2/-1)
+- pages/_app.tsx (+13/-0)
+- scripts/dev/commit-helper.ts (+27/-0)
+
