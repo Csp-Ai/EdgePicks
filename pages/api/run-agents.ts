@@ -101,5 +101,45 @@ export default async function handler(
     console.error(err);
     res.status(500).json({ error: 'Failed to run agents' });
   }
+=======
+  const winner = scores[homeTeam] >= scores[awayTeam] ? homeTeam : awayTeam;
+  const confidence = Math.max(scores[homeTeam], scores[awayTeam]);
+  const topReasons = flow.agents
+    .map((name) => outputs[name]?.reason)
+    .filter((r): r is string => Boolean(r));
+
+  const pickSummary: PickSummary = {
+    winner,
+    confidence,
+    topReasons,
+  };
+
+  await logEvent(
+    'run-agents',
+    { homeTeam, awayTeam, week: weekNum },
+    { requestId: req.headers?.['x-request-id']?.toString() || crypto.randomUUID() }
+  );
+
+  const loggedAt = logToSupabase(
+    matchup,
+    outputs as AgentOutputs,
+    pickSummary,
+    null,
+    flow.name
+  );
+
+  res.write(
+    `data: ${JSON.stringify({
+      type: 'summary',
+      sessionId,
+      matchup,
+      agents: outputs,
+      pick: pickSummary,
+      loggedAt,
+      cacheVersion: ENV.FLOW_CACHE_VERSION,
+    })}\n\n`
+  );
+  res.end();
+
 }
 

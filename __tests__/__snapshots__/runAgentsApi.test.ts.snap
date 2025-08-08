@@ -12,4 +12,10 @@ exports[`run-agents API matches snapshot 1`] = `
   "finalConfidence": 0.36,
   "pick": "A",
 }
+=======
+exports[`run-agents API matches snapshot of agent stream 1`] = `
+"data: {"type":"summary","sessionId":"test-session","matchup":{"homeTeam":"A","awayTeam":"B","matchDay":1,"time":"","league":""},"agents":{"injuryScout":{"team":"A","score":0.72,"reason":"Key WR out"}},"pick":{"winner":"A","confidence":0.36,"topReasons":["Key WR out"]},"cacheVersion":"v1"}
+
+"
+
 `;
