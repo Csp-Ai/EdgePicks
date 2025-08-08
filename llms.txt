@@ -2420,3 +2420,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:20:50.373Z
+Commit: 6becd6affab6b13badebb2cdde5c996f779c6763
+Author: Codex
+Message: test: add guest journey playwright spec
+Files:
+- .github/workflows/journey.yml (+20/-0)
+- tests/journey/guest.spec.ts (+22/-0)
+
