@@ -2159,6 +2159,18 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:13:28.411Z
+Commit: 0d8d7455c34f5c17b43a3810d1e313409168530b
+Author: Codex
+Message: feat: add telemetry event schemas for onboarding and builder
+Files:
+- __tests__/logging.pipeline.test.ts (+1/-1)
+- __tests__/telemetry.events.test.ts (+12/-0)
+- lib/logUiEvent.test.js (+1/-1)
+- lib/logUiEvent.ts (+3/-1)
+- lib/telemetry/events.ts (+35/-0)
+=======
+
 Timestamp: 2025-08-08T11:15:16.055Z
 Commit: d4af1c627c1083af9b39e0b2d47d56cff42d2939
 Author: Codex
@@ -2262,6 +2274,7 @@ Files:
 
 
 =======
+
 
 
 

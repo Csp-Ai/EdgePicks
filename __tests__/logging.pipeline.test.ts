@@ -24,7 +24,7 @@ describe('logging pipeline', () => {
 
   it('logs ui and agent events with correlation id', async () => {
     const correlationId = 'cid-123';
-    await logUiEvent('click', { x: 1 }, correlationId);
+    await logUiEvent('builderOpen', { x: 1 }, correlationId);
     logToSupabase('agent_events', {
       agent_id: 'a1',
       event: 'result',
