@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:57:19.194Z
+Commit: 8a5abad63c30c34ce415283c6d85ce922311614b
+Author: Codex
+Message: Add RTL layout demo page
+Files:
+- app/demo-rtl/page.tsx (+15/-0)
+- styles/rtl.css (+17/-0)
+
