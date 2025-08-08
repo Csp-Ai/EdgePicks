@@ -2158,6 +2158,15 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+
+Timestamp: 2025-08-08T11:13:12.692Z
+Commit: 8eca2c4d94ef3eabf519271562631859ac7efcf0
+Author: Codex
+Message: fix: import hooks in navbar and add coverage
+Files:
+- __tests__/Navbar.test.tsx (+25/-0)
+- components/Navbar.tsx (+1/-1)
+=======
 Timestamp: 2025-08-08T11:13:52.003Z
 Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
 Author: Codex
