@@ -33,6 +33,7 @@ describe('PredictionDrawer SSE', () => {
   afterEach(() => {
     (global as any).EventSource = originalES;
     global.fetch = originalFetch as any;
+    jest.useRealTimers();
   });
 
   it('processes events and announces final pick', () => {
@@ -61,5 +62,35 @@ describe('PredictionDrawer SSE', () => {
       });
     });
     expect(screen.getByTestId('a11y-result').textContent).toContain('A');
+  });
+
+  it('retries on error and stops after unmount', () => {
+    jest.useFakeTimers();
+    const game: Game = {
+      gameId: '1',
+      league: 'NFL',
+      homeTeam: 'A',
+      awayTeam: 'B',
+      time: new Date().toISOString(),
+    };
+    const { unmount } = render(
+      <PredictionDrawer game={game} isOpen={true} onClose={() => {}} />,
+    );
+    const esInstance = (
+      (global.EventSource as unknown as jest.Mock).mock.results[0]
+        .value as MockEventSource
+    );
+    act(() => {
+      esInstance.onerror && esInstance.onerror(new Event('error'));
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+    expect((global.EventSource as unknown as jest.Mock).mock.calls.length).toBe(3);
+    unmount();
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+    expect((global.EventSource as unknown as jest.Mock).mock.calls.length).toBe(3);
   });
 });

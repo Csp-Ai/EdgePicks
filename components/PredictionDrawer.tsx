@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Game, PickSummary } from '../lib/types';
 import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
 import AgentNodeGraph from './AgentNodeGraph';
@@ -7,7 +7,7 @@ import AgentRationalePanel from './AgentRationalePanel';
 import PickSummaryComp from './PickSummary';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
 import useEventSource from '../lib/hooks/useEventSource';
-import { logUiEvent } from '../lib/logUiEvent';
+import { logUiEvent } from '../lib/analytics/logUiEvent';
 import { Share2 } from 'lucide-react';
 
 interface Props {
@@ -28,6 +28,7 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   const [executions, setExecutions] = useState<AgentExecution[]>([]);
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [confidence, setConfidence] = useState(0);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   const url = useMemo(() => {
     if (!game) return null;
@@ -72,9 +73,30 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && isOpen && drawerRef.current) {
+        const focusable = drawerRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first || !last) return;
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     if (isOpen) {
       document.addEventListener('keydown', handleKey);
+      const focusable = drawerRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      );
+      focusable && focusable[0]?.focus();
     }
     return () => document.removeEventListener('keydown', handleKey);
   }, [isOpen, onClose]);
@@ -117,15 +139,24 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
   );
 
   return (
-    <div className="fixed inset-0 flex justify-end z-50">
+    <div className="fixed inset-0 flex justify-end z-50" role="dialog" aria-modal="true">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative w-full max-w-md h-full bg-slate-900 text-white flex flex-col rounded-xl overflow-hidden">
+      <div ref={drawerRef} className="relative w-full max-w-md h-full bg-slate-900 text-white flex flex-col rounded-xl overflow-hidden">
         <header className="p-4 sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">
               {game.homeTeam} vs {game.awayTeam}
             </h2>
-            <button onClick={onClose} aria-label="Close" className="text-sm">✕</button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={share}
+                aria-label="Copy link"
+                className="p-1 rounded hover:bg-slate-800"
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
+              <button onClick={onClose} aria-label="Close" className="text-sm">✕</button>
+            </div>
           </div>
           <div className="text-xs text-gray-400">{new Date(game.time).toLocaleString()}</div>
         </header>
@@ -171,13 +202,6 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
             disabled={esStatus !== 'open'}
           >
             Run again
-          </button>
-          <button
-            className="flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-slate-700 hover:bg-slate-700"
-            onClick={share}
-            disabled={esStatus !== 'open'}
-          >
-            <Share2 className="w-4 h-4" /> Share
           </button>
         </footer>
         <div aria-live="polite" data-testid="a11y-result" className="sr-only">

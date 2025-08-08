@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface Options {
   enabled?: boolean;
@@ -26,6 +27,15 @@ export default function useEventSource(
   const esRef = useRef<EventSource | null>(null);
   const retryRef = useRef(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const heartbeatRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lastActivityRef = useRef<number>(Date.now());
+  const router = (() => {
+    try {
+      return useRouter();
+    } catch {
+      return null as any;
+    }
+  })();
 
   const connect = () => {
     if (!url || !enabled) return;
@@ -43,6 +53,7 @@ export default function useEventSource(
             setLastMessage(data);
             setStatus('open');
             retryRef.current = 0;
+            lastActivityRef.current = Date.now();
           });
       } catch (e) {
         // ignore parse errors (keep-alives)
@@ -53,12 +64,21 @@ export default function useEventSource(
       setError(e as any);
       es.close();
       if (retryRef.current < 5) {
-        const delay = Math.min(2000, 250 * Math.pow(2, retryRef.current));
+        const base = Math.min(2000, 250 * Math.pow(2, retryRef.current));
+        const jitter = retryRef.current === 0 ? 0 : Math.random() * 100;
         retryRef.current += 1;
-        timeoutRef.current = setTimeout(connect, delay);
+        timeoutRef.current = setTimeout(connect, base + jitter);
       }
     };
     esRef.current = es;
+    lastActivityRef.current = Date.now();
+    if (heartbeatRef.current) clearInterval(heartbeatRef.current);
+    heartbeatRef.current = setInterval(() => {
+      if (Date.now() - lastActivityRef.current > 30000) {
+        esRef.current?.close();
+        connect();
+      }
+    }, 30000);
   };
 
   const reconnect = () => {
@@ -77,9 +97,28 @@ export default function useEventSource(
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
       }
+      if (heartbeatRef.current) {
+        clearInterval(heartbeatRef.current);
+        heartbeatRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, enabled]);
+
+  useEffect(() => {
+    if (!router?.events) return;
+    const handleRoute = () => {
+      esRef.current?.close();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+    router.events.on('routeChangeStart', handleRoute);
+    return () => {
+      router.events.off('routeChangeStart', handleRoute);
+    };
+  }, [router]);
 
   return { status, events, lastMessage, error, reconnect };
 }
