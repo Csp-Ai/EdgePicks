@@ -2159,6 +2159,16 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:14:31.397Z
+Commit: 73bc6ee5dbbb2d572666c410aa7ff87270878bee
+Author: Codex
+Message: feat: add guest demo page
+Files:
+- __tests__/demo.page.test.tsx (+27/-0)
+- components/demo/DemoHero.tsx (+40/-0)
+- pages/demo/index.tsx (+41/-0)
+=======
+
 Timestamp: 2025-08-08T11:13:31.757Z
 Commit: ca48d522b295553818dd2cc318d9052b9f07ada0
 Author: Codex
