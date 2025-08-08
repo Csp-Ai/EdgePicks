@@ -23,7 +23,10 @@ File: [pages/api/run-agents.ts](../pages/api/run-agents.ts)
 Files: [lib/flow/runFlow.ts](../lib/flow/runFlow.ts), [flows/](../flows)
 - Dynamically loads agent list based on flow type (e.g., `defaultNFL`)
 - Runs agents in order, optionally in parallel
+  - Parallelism capped by `MAX_FLOW_CONCURRENCY` (default: 3)
 - Pipes output and logs to Supabase
+- Caches predictions per matchup for fast re-reads
+  - TTL governed by `PREDICTION_CACHE_TTL_SEC` (default: 120)
 - Pushes real-time results to EventSource stream
 - Fallback error flows activate on uncaught exceptions
 
