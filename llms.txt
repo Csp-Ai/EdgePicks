@@ -1335,3 +1335,13 @@ Files:
 
 
 
+Timestamp: 2025-08-08T03:41:06.006Z
+Commit: f708451213dbdd16e8d86c20c67ab416ff6a82ed
+Author: Codex
+Message: feat: guard dev login endpoint
+Files:
+- README.md (+5/-1)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/devlogin.test.ts (+59/-0)
+- pages/api/dev-login.ts (+6/-0)
+

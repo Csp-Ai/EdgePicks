@@ -28,8 +28,12 @@ npm run validate-env
 
 ### Live vs Mock
 
-Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.  
+Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.
 Provide real keys later to test full OAuth + live data.
+
+#### Mock Auth
+
+`/api/dev-login` is only available during local development or when `NEXT_PUBLIC_MOCK_AUTH=1`. Other environments receive `403`.
 
 🧱 Architecture Overview
 
