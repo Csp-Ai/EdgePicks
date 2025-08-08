@@ -2049,6 +2049,17 @@ Files:
 - components/marketing/PredictionMarquee.tsx (+44/-0)
 
 
+Timestamp: 2025-08-08T10:00:21.029Z
+Commit: a2276f2391429cc08763bb630b8379288fcf602c
+Author: Codex
+Message: test: add MSW setup for API mocking
+Files:
+- jest.setup.msw.ts (+5/-0)
+- package-lock.json (+841/-0)
+- package.json (+2/-1)
+- tests/msw/handlers.ts (+8/-0)
+- tests/msw/server.ts (+4/-0)
+=======
 Timestamp: 2025-08-08T09:57:40.238Z
 Commit: 298561b80ef73cca538f91bf8a63d8ef861d626b
 Author: Codex
