@@ -8,6 +8,10 @@ import { runFlow } from '../../lib/flow/runFlow';
 import { ENV } from '../../lib/env';
 import mockData from '../../__mocks__/run-agents.json';
 import { authOptions } from './auth/[...nextauth]';
+=======
+import crypto from 'crypto';
+import { logEvent } from '../../lib/server/logEvent';
+
 
 export const config = {
   api: { bodyParser: false },
@@ -91,7 +95,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     topReasons,
   };
 
-  const loggedAt = logToSupabase(matchup, outputs as AgentOutputs, pickSummary, null, flow.name);
+  await logEvent(
+    'run-agents',
+    { homeTeam, awayTeam, week: weekNum },
+    { requestId: req.headers['x-request-id']?.toString() || crypto.randomUUID() }
+  );
+
+  const loggedAt = logToSupabase(
+    matchup,
+    outputs as AgentOutputs,
+    pickSummary,
+    null,
+    flow.name
+  );
 
   res.write(
     `data: ${JSON.stringify({

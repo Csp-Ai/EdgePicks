@@ -2,12 +2,15 @@
 import handler from '../pages/api/run-agents';
 import { runFlow } from '../lib/flow/runFlow';
 import { logToSupabase } from '../lib/logToSupabase';
+import { logEvent } from '../lib/server/logEvent';
 
 jest.mock('../lib/flow/runFlow');
 jest.mock('../lib/logToSupabase');
+jest.mock('../lib/server/logEvent');
 
 const mockedRunFlow = runFlow as jest.Mock;
 const mockedLog = logToSupabase as jest.Mock;
+const mockedLogEvent = logEvent as jest.Mock;
 
 process.env.NEXT_PUBLIC_MOCK_AUTH = '1';
 
@@ -27,6 +30,7 @@ describe('run-agents API', () => {
 
     const req: any = {
       query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
+      headers: {},
     };
     const chunks: string[] = [];
     const res: any = {
@@ -41,6 +45,7 @@ describe('run-agents API', () => {
 
     expect(mockedRunFlow).toHaveBeenCalled();
     expect(mockedLog).toHaveBeenCalled();
+    expect(mockedLogEvent).toHaveBeenCalled();
     const summary = chunks.find((c) => c.includes('summary'));
     expect(summary).toBeDefined();
   });
@@ -60,6 +65,7 @@ describe('run-agents API', () => {
 
     const req: any = {
       query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
+      headers: {},
     };
     const chunks: string[] = [];
     const res: any = {
