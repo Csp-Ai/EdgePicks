@@ -1267,3 +1267,12 @@ Message: chore: ignore tests and scripts for eslint
 Files:
 - .eslintignore (+2/-0)
 
+Timestamp: 2025-08-08T02:40:45.644Z
+Commit: d2e20591301365f8c28aa5430f307cf6e590e68c
+Author: Codex
+Message: refactor: polish landing page
+Files:
+- components/GameCard.tsx (+22/-12)
+- components/UpcomingGamesGrid.tsx (+13/-8)
+- pages/index.tsx (+71/-43)
+

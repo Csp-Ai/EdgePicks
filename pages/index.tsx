@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
 import type { Game } from '../lib/types';
 
@@ -110,55 +112,81 @@ export default function Home() {
         <title>{headTitle}</title>
         <meta name="description" content={headDesc} />
       </Head>
-      <main className="min-h-screen p-4 space-y-4">
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <div className="flex gap-2">
-          {LEAGUES.map((l) => (
+      <header className="border-b">
+        <div className="max-w-7xl mx-auto grid grid-cols-3 items-center p-4">
+          <nav className="flex gap-4">
+            <Link href="/predictions" className="hover:underline">
+              Predictions
+            </Link>
+            <Link href="/leaderboard" className="hover:underline">
+              Leaderboard
+            </Link>
+            <Link href="/history" className="hover:underline">
+              History
+            </Link>
+          </nav>
+          <h1 className="text-center font-bold">EdgePicks</h1>
+          <div className="flex justify-end">
             <button
-              key={l}
-              onClick={() => changeLeague(l)}
-              className={`px-3 py-1 rounded border ${
-                l === league ? 'bg-blue-600 text-white' : 'bg-white'
-              }`}
+              onClick={() => signIn('google')}
+              className="px-3 py-1 border rounded"
             >
-              {l}
+              Sign in with Google
             </button>
-          ))}
+          </div>
         </div>
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search"
-          className="border px-2 py-1 rounded"
-        />
       </header>
-      {pendingId && !games.find((g) => g.gameId === pendingId) && !isLoading ? (
-        <div className="p-4 text-center">
-          <p>Game not found.</p>
-          <button
-            className="mt-2 px-3 py-1 border rounded"
-            onClick={() => {
-              setPendingId(null);
-              const { gameId, ...rest } = router.query;
-              router.push({ query: rest }, undefined, { shallow: true });
-            }}
-          >
-            Back
-          </button>
+      <main className="min-h-screen p-4 space-y-4 max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="flex flex-wrap gap-2">
+            {LEAGUES.map((l) => (
+              <button
+                key={l}
+                onClick={() => changeLeague(l)}
+                className={`px-3 py-1 rounded border ${
+                  l === league ? 'bg-blue-600 text-white' : ''
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+            className="border px-2 py-1 rounded w-full sm:w-auto"
+          />
         </div>
-      ) : (
-        <UpcomingGamesGrid
-          games={games}
-          search={search}
-          onSelect={handleSelect}
-          isLoading={isLoading}
-          isError={!!error}
-          onRetry={() => mutate()}
-          preload={preloadDrawer}
-        />
-      )}
-      <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
-    </main>
+        {pendingId && !games.find((g) => g.gameId === pendingId) && !isLoading ? (
+          <div className="text-center">
+            <p>Game not found.</p>
+            <button
+              className="mt-2 px-3 py-1 border rounded"
+              onClick={() => {
+                setPendingId(null);
+                const { gameId, ...rest } = router.query;
+                router.push({ query: rest }, undefined, { shallow: true });
+              }}
+            >
+              Back
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <UpcomingGamesGrid
+              games={games}
+              search={search}
+              onSelect={handleSelect}
+              isLoading={isLoading}
+              isError={!!error}
+              onRetry={() => mutate()}
+              preload={preloadDrawer}
+            />
+          </div>
+        )}
+        <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
+      </main>
     </>
   );
 }

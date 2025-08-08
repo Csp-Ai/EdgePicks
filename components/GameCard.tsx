@@ -11,11 +11,20 @@ interface Props {
 function formatRelative(time: string): string {
   const target = new Date(time).getTime();
   const diffMs = target - Date.now();
-  const diffMin = Math.round(diffMs / 60000);
-  if (diffMin <= 0) return 'started';
+  if (diffMs <= 0) return 'started';
+  const diffMin = Math.floor(diffMs / 60000);
   if (diffMin < 60) return `in ${diffMin}m`;
-  const hours = Math.floor(diffMin / 60);
-  return `in ${hours}h`;
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return `in ${diffHr}h`;
+  const diffDay = Math.floor(diffHr / 24);
+  if (diffDay <= 7) return `in ${diffDay}d`;
+  const d = new Date(time);
+  const date = d.toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+  });
+  const t = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  return `${date}, ${t}`;
 }
 
 const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
@@ -45,7 +54,7 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
       onFocus={handleEnter}
       onMouseLeave={handleLeave}
       onBlur={handleLeave}
-      className="text-left w-full p-4 bg-white rounded shadow transition-transform hover:-translate-y-1 hover:shadow-lg focus:outline focus:outline-2 focus:outline-blue-500"
+      className="w-full text-left p-4 rounded-xl bg-slate-800/60 hover:bg-slate-800 ring-1 ring-transparent hover:ring-slate-700 shadow-sm hover:shadow transition-all"
       aria-label={`Analyze ${game.homeTeam} vs ${game.awayTeam} kickoff ${kickoffLabel}`}
     >
       <div className="flex items-center justify-between mb-2">
@@ -55,7 +64,7 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
           )}
           <span>{game.homeTeam}</span>
         </div>
-        <span className="text-gray-500">vs</span>
+        <span className="text-slate-400">vs</span>
         <div className="flex items-center gap-2">
           {game.awayLogo && (
             <Image src={game.awayLogo} alt="" width={24} height={24} />
@@ -63,21 +72,21 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
           <span>{game.awayTeam}</span>
         </div>
       </div>
-      <div className="text-sm text-gray-600">{kickoff}</div>
+      <div className="text-xs text-slate-400">{kickoff}</div>
       {game.odds ? (
-        <div className="text-xs text-gray-600 mt-1 flex gap-2">
+        <div className="flex flex-wrap gap-2 mt-2 text-xs">
           {game.odds.spread !== undefined && (
-            <span className="px-1 bg-gray-100 rounded" title="Spread">
+            <span className="px-2 py-0.5 rounded-full bg-slate-700" title="Spread">
               {game.homeTeam.slice(0, 3).toUpperCase()} {game.odds.spread}
             </span>
           )}
           {game.odds.overUnder !== undefined && (
-            <span className="px-1 bg-gray-100 rounded" title="Over/Under">
+            <span className="px-2 py-0.5 rounded-full bg-slate-700" title="Over/Under">
               O/U {game.odds.overUnder}
             </span>
           )}
           {game.odds.moneyline && (
-            <span className="px-1 bg-gray-100 rounded" title="Moneyline">
+            <span className="px-2 py-0.5 rounded-full bg-slate-700" title="Moneyline">
               ML {game.odds.moneyline.home ?? ''}
               {game.odds.moneyline.home && game.odds.moneyline.away ? ' / ' : ''}
               {game.odds.moneyline.away ?? ''}
@@ -85,10 +94,11 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
           )}
         </div>
       ) : (
-        <div className="text-xs text-gray-400 mt-1">No odds yet</div>
+        <div className="text-xs text-slate-500 mt-2">No odds yet</div>
       )}
     </button>
   );
 };
 
 export default GameCard;
+
