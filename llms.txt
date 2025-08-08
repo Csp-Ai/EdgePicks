@@ -2394,6 +2394,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T11:45:29.736Z
+Commit: 93730c799c14db6c8ddfc039f36dd2148a2601d5
+Author: Codex
+Message: feat: add referral link generator
+Files:
+- __tests__/referral.link.test.ts (+32/-0)
+- lib/referral/link.ts (+26/-0)
+=======
+
 Timestamp: 2025-08-08T11:43:08.923Z
 Commit: 8960b5d3983941c137c0120d515583c58f9581ef
 Author: Codex
@@ -2426,6 +2435,7 @@ Message: feat: add guest conversion panel
 Files:
 - __tests__/marketing/ConversionPanel.test.tsx (+26/-0)
 - components/marketing/ConversionPanel.tsx (+35/-0)
+
 
 
 
