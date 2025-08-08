@@ -2149,3 +2149,12 @@ Files:
 - .github/workflows/percy.yml (+32/-0)
 - tests/visual/percy.spec.ts (+17/-0)
 
+Timestamp: 2025-08-08T10:45:38.825Z
+Commit: 8cb5f25e2deed6a3895edcb32c3b9b9091ea8ba6
+Author: Codex
+Message: feat(cli): add cache purge/inspect script
+Files:
+- __tests__/purge-cache.test.ts (+39/-0)
+- package.json (+1/-1)
+- scripts/purge-cache.ts (+51/-0)
+
