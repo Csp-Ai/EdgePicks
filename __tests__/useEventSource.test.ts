@@ -1,5 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import useEventSource from '../lib/hooks/useEventSource';
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    pathname: '/',
+    query: {},
+    asPath: '/',
+  }),
+}));
 
 describe('useEventSource', () => {
   beforeEach(() => {
