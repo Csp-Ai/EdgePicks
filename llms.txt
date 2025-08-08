@@ -2393,6 +2393,7 @@ Files:
 =======
 
 
+
 Timestamp: 2025-08-08T11:51:11.450Z
 Commit: b1c625c18ee24bc5aea6dda6c95c8a2b4bc5ae99
 Author: Codex
@@ -2400,4 +2401,92 @@ Message: feat: add ScenarioExplainer component
 Files:
 - __tests__/ScenarioExplainer.test.tsx (+24/-0)
 - components/agents/ScenarioExplainer.tsx (+46/-0)
+=======
+Timestamp: 2025-08-08T11:45:51.107Z
+Commit: 2058c519c38770d8c79061b658fc583f1805db25
+Author: Codex
+Message: feat: add agent builder templates
+Files:
+- __tests__/agent-builder.templates.test.ts (+15/-0)
+- lib/agent-builder/templates.ts (+33/-0)
+=======
+
+
+
+Timestamp: 2025-08-08T11:43:22.503Z
+Commit: 3f07fffcc182f3a2af0511848cbb3ea3220a6868
+Author: Codex
+Message: Add Agent Card mini stories and docs
+Files:
+- docs/agents/mini.md (+10/-0)
+- stories/agents/AgentMini.stories.tsx (+110/-0)
+=======
+=======
+Timestamp: 2025-08-08T11:47:11.905Z
+Commit: 0bc1963a672a743efe359540df0889f92092a8bf
+Author: Codex
+Message: docs: add agent model cards and viewer
+Files:
+- components/agents/ModelCardViewer.tsx (+19/-0)
+- docs/model-cards/guardianAgent.md (+16/-0)
+- docs/model-cards/injuryScout.md (+16/-0)
+- docs/model-cards/lineWatcher.md (+16/-0)
+- docs/model-cards/statCruncher.md (+16/-0)
+- docs/model-cards/trendsAgent.md (+16/-0)
+=======
+
+
+Timestamp: 2025-08-08T11:45:29.736Z
+Commit: 93730c799c14db6c8ddfc039f36dd2148a2601d5
+Author: Codex
+Message: feat: add referral link generator
+Files:
+- __tests__/referral.link.test.ts (+32/-0)
+- lib/referral/link.ts (+26/-0)
+=======
+
+Timestamp: 2025-08-08T11:43:08.923Z
+Commit: 8960b5d3983941c137c0120d515583c58f9581ef
+Author: Codex
+Message: feat: add confidence explainer
+Files:
+- __tests__/ConfidenceExplainer.test.tsx (+18/-0)
+- components/predictions/ConfidenceExplainer.tsx (+35/-0)
+
+=======
+
+Timestamp: 2025-08-08T11:43:09.068Z
+Commit: 55ab1d118794a4ad260edbee8c667be13a198158
+Author: Codex
+Message: feat: add data freshness banner
+Files:
+- __tests__/DataFreshness.test.tsx (+21/-0)
+- components/system/DataFreshness.tsx (+39/-0)
+=======
+
+Timestamp: 2025-08-08T11:42:30.248Z
+Commit: 329f2c69043929fb61199204e258c0a586212ae2
+Author: Codex
+Message: test: add accessibility contracts
+Files:
+- tests/a11y/contracts.ts (+51/-0)
+=======
+Timestamp: 2025-08-08T11:43:16.706Z
+Commit: b12c12531658ffd771b992fd8448eabb3ecdf87c
+Author: Codex
+Message: feat: add guest conversion panel
+Files:
+- __tests__/marketing/ConversionPanel.test.tsx (+26/-0)
+- components/marketing/ConversionPanel.tsx (+35/-0)
+
+
+
+
+
+
+=======
+
+=======
+
+
 
