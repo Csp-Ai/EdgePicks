@@ -1940,3 +1940,12 @@ Files:
 - __tests__/__snapshots__/AgentExecutionTracker.test.tsx.snap (+215/-0)
 - components/AgentExecutionTracker.tsx (+155/-0)
 
+Timestamp: 2025-08-08T09:31:55.064Z
+Commit: 18fb92694defa185d23b529533c15d51b61b78e2
+Author: Codex
+Message: feat(predictions): structured explanations + confidence bars + sticky summary
+Files:
+- __tests__/PredictionsPanel.explanations.test.tsx (+58/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/PredictionsPanel.tsx (+141/-12)
+
