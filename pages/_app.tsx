@@ -3,7 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import '../styles/globals.css';
 import '../styles/typography.css';
 import '../styles/intelligence.css';
-import { ToastProvider } from '../lib/useToast';
+import Toaster from '../components/ui/toaster';
 import Footer from '../components/Footer';
 import AppHeader from '../components/AppHeader';
 import BetaRibbon from '../components/BetaRibbon';
@@ -23,7 +23,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   return (
     <DemoModeProvider>
       <SessionProvider session={session}>
-        <ToastProvider>
+        <Toaster>
           {showRibbon && <BetaRibbon />}
           <AppHeader />
           <Onboarding />
@@ -36,7 +36,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
               <FocusDock />
             </DevOnly>
           )}
-        </ToastProvider>
+        </Toaster>
       </SessionProvider>
     </DemoModeProvider>
   );
