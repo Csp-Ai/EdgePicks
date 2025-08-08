@@ -1979,3 +1979,14 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:54:18.061Z
+Commit: e5b4c051fc8a5f80feb7430be976c6ce52d3a0d5
+Author: Codex
+Message: feat: add public API zod schemas
+Files:
+- __tests__/__snapshots__/publicApiSchemas.test.ts.snap (+298/-0)
+- __tests__/publicApiSchemas.test.ts (+22/-0)
+- lib/schemas/accuracy.ts (+15/-0)
+- lib/schemas/predictions.ts (+52/-0)
+- lib/schemas/reflections.ts (+11/-0)
+
