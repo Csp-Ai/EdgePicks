@@ -2158,3 +2158,12 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:14:31.397Z
+Commit: 73bc6ee5dbbb2d572666c410aa7ff87270878bee
+Author: Codex
+Message: feat: add guest demo page
+Files:
+- __tests__/demo.page.test.tsx (+27/-0)
+- components/demo/DemoHero.tsx (+40/-0)
+- pages/demo/index.tsx (+41/-0)
+
