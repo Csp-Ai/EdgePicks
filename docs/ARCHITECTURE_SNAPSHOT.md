@@ -1,21 +1,22 @@
 # Architecture Snapshot
 
-EdgePicks combines a Next.js frontend with modular agents to evaluate sports matchups.
+EdgePicks combines a Next.js front end with modular agents that score sports matchups.
 
-## Frontend
-- Built with Next.js; pages live in `pages/`.
-- UI components are stored under `components/`.
+## Domains
+- **Frontend**: Next.js pages in `pages/` with shared components under `components/`.
+- **Agent Layer**: TypeScript agents in `agents/` orchestrated by flows in `flows/`.
+- **Data**: Supabase persists results while `agentLogsStore.json` captures temporary logs.
 
-## Agent Layer
-- Individual agents reside in `agents/` (e.g., `injuryScout`, `lineWatcher`, `statCruncher`).
-- Prompt templates live in `lib/prompts/`.
-- `flows/` orchestrates agent execution and scoring.
+## Flows
+- `flows/` defines execution paths and scoring aggregation for agents.
+- Flows can dynamically include or exclude agents based on matchup context.
 
-## Data and Storage
-- Supabase provides persistent storage.
-- Temporary agent logs are captured in `agentLogsStore.json` for later syncing.
+## Agents
+- Core agents: `injuryScout`, `lineWatcher`, `statCruncher`, `trendsAgent`, and `guardianAgent`.
+- Prompt templates reside in `lib/prompts/`.
 
-## Testing
-- Run `npm test` to execute the Jest test suite.
+## CI/CD
+- GitHub Actions handle tests, linting, accessibility, and repo-quality checks.
+- Deployments are triggered on merges to `main` via the hosting provider.
 
-For deeper architectural details see `docs/prediction-flow-architecture.md` and related documents in the `docs/` directory.
+For deeper architectural details see `docs/prediction-flow-architecture.md` and related documents.

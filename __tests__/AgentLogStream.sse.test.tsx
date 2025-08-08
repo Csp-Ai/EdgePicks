@@ -83,5 +83,20 @@ describe('AgentLogStream SSE', () => {
     });
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
   });
+
+  it('filters logs by search term', () => {
+    render(<AgentLogStream />);
+    const es = (global.EventSource as jest.Mock).mock.results[0]
+      .value as MockEventSource;
+    act(() => {
+      es.emit({ agent: 'a1', state: 'start', detail: 'hello world' });
+      es.emit({ agent: 'a2', state: 'done', detail: 'goodbye' });
+    });
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    fireEvent.change(screen.getByLabelText(/search logs/i), {
+      target: { value: 'goodbye' },
+    });
+    expect(screen.getAllByRole('listitem')).toHaveLength(1);
+  });
 });
 
