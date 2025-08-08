@@ -2159,6 +2159,18 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:12:32.836Z
+Commit: 36a824f069c3c55c68d2e530a8aa614bae3d3482
+Author: Codex
+Message: feat: add onboarding progress with resume
+Files:
+- __tests__/ProgressStepper.test.tsx (+12/-0)
+- __tests__/onboarding.progress.test.ts (+20/-0)
+- components/Onboarding.tsx (+17/-4)
+- components/onboarding/ProgressStepper.tsx (+19/-0)
+- lib/onboarding/progress.ts (+22/-0)
+=======
+
 Timestamp: 2025-08-08T11:13:14.884Z
 Commit: f5994c41cafcf7b93c715285d944b6ce1d2e0452
 Author: Codex
@@ -2186,6 +2198,7 @@ Files:
 - __tests__/fuzzy.test.ts (+33/-0)
 - components/search/GameFuzzySearch.tsx (+61/-0)
 - lib/search/fuzzy.ts (+42/-0)
+
 
 
 
