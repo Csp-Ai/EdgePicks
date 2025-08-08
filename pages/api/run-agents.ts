@@ -10,7 +10,10 @@ import { fetchSchedule, type League } from '../../lib/data/schedule';
 import { ENV } from '../../lib/env';
 import { supabase } from '../../lib/supabaseClient';
 
-const CACHE_TTL_SECONDS = 60;
+let CACHE_TTL_SECONDS = parseInt(
+  process.env.RUN_AGENTS_CACHE_TTL_SECONDS || '60',
+  10,
+);
 
 interface CacheEntry {
   value: any;
@@ -18,9 +21,37 @@ interface CacheEntry {
 }
 
 const memoryCache = new Map<string, CacheEntry>();
+let hits = 0;
+let misses = 0;
+
+setInterval(() => {
+  const total = hits + misses;
+  const hitRate = total ? hits / total : 0;
+  console.info({ hits, misses, hitRate });
+}, 5 * 60 * 1000).unref();
 
 export function __clearRunAgentsCache() {
   memoryCache.clear();
+  hits = 0;
+  misses = 0;
+}
+
+export function __setRunAgentsCacheTtl(seconds: number) {
+  CACHE_TTL_SECONDS = seconds;
+}
+
+export function purgeRunAgentsCache({
+  key,
+  prefix,
+}: {
+  key?: string;
+  prefix?: string;
+}) {
+  for (const k of Array.from(memoryCache.keys())) {
+    if (key && k !== key) continue;
+    if (prefix && !k.startsWith(prefix)) continue;
+    memoryCache.delete(k);
+  }
 }
 
 function buildCacheKey(league: string, gameId: string, agents: AgentName[]) {
@@ -30,21 +61,25 @@ function buildCacheKey(league: string, gameId: string, agents: AgentName[]) {
 async function getCachedResponse(key: string) {
   const now = Date.now();
   const entry = memoryCache.get(key);
-  if (entry && entry.expiresAt > now) return entry.value;
+  if (entry && entry.expiresAt > now) {
+    hits += 1;
+    return { value: entry.value, cached: true };
+  }
+  misses += 1;
   try {
     const { data, error } = await supabase
       .from('prediction_cache')
       .select('value, expires_at')
       .eq('key', key)
       .single();
-    if (!data || error) return null;
+    if (!data || error) return { value: null, cached: false };
     const exp = new Date(data.expires_at).getTime();
-    if (exp < now) return null;
+    if (exp < now) return { value: null, cached: false };
     memoryCache.set(key, { value: data.value, expiresAt: exp });
-    return data.value;
+    return { value: data.value, cached: true };
   } catch (err) {
     console.error('cache fetch error', err);
-    return null;
+    return { value: null, cached: false };
   }
 }
 
@@ -124,9 +159,15 @@ export default async function handler(
     }
 
     const cacheKey = buildCacheKey(league, gameId, agentList);
-    const cached = await getCachedResponse(cacheKey);
-    if (cached) {
-      res.status(200).json(cached);
+    const { value: cachedValue, cached: fromCache } = await getCachedResponse(
+      cacheKey,
+    );
+    if (cachedValue) {
+      const resp =
+        process.env.NODE_ENV === 'development' && fromCache
+          ? { ...cachedValue, _cached: true }
+          : cachedValue;
+      res.status(200).json(resp);
       return;
     }
 

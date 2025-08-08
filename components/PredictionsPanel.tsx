@@ -9,6 +9,7 @@ interface Props {
   statuses: Record<AgentName, { status: AgentLifecycle['status'] | 'idle'; durationMs?: number }>;
   nodes: FlowNode[];
   edges: FlowEdge[];
+  cached?: boolean;
 }
 
 const PredictionsPanel: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const PredictionsPanel: React.FC<Props> = ({
   statuses,
   nodes,
   edges,
+  cached,
 }) => {
   const [advanced, setAdvanced] = useState(false);
   const agentNames = Object.keys(agents) as AgentName[];
@@ -33,7 +35,12 @@ const PredictionsPanel: React.FC<Props> = ({
       </div>
       {advanced && <AgentNodeGraph nodes={nodes} edges={edges} />}
       {pick && (
-        <div className="p-4 bg-white/10 rounded">
+        <div className="p-4 bg-white/10 rounded relative">
+          {process.env.NODE_ENV === 'development' && cached && (
+            <span className="absolute top-1 right-1 px-2 py-0.5 text-xs rounded bg-green-600 text-white">
+              Cached
+            </span>
+          )}
           <h2 className="text-xl font-semibold">Prediction: {pick.winner}</h2>
           <p className="text-sm text-gray-300">
             Confidence: {(pick.confidence * 100).toFixed(0)}%

@@ -1782,3 +1782,16 @@ Files:
 - pages/predictions.tsx (+9/-2)
 
 
+Timestamp: 2025-08-08T07:49:58.149Z
+Commit: 325d675e052ccbab6e0f2b8aee8518919d67856b
+Author: Codex
+Message: feat: enhance run-agents cache and admin purge
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx (+10/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/runAgents.cache.admin.test.ts (+197/-0)
+- __tests__/useEventSource.test.ts (+10/-0)
+- components/PredictionsPanel.tsx (+8/-1)
+- pages/api/admin/purge-cache.ts (+44/-0)
+- pages/api/run-agents.ts (+50/-9)
+
