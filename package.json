@@ -27,6 +27,7 @@
     "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts",
     "dev:commit": "ts-node scripts/dev/commit-helper.ts",
     "weights:calibrate": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/calibrateWeights.ts",
+    "purge-cache": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/purge-cache.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -42,7 +43,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-window": "^1.8.11",
-=======
     "recharts": "^2.15.4",
     "swr": "^2.3.4",
     "zod": "^3.25.76"
