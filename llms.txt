@@ -2839,4 +2839,176 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T13:35:36.992Z
+Commit: 066afcc4eceeffb7a3be603c5ed9c3d153e310e1
+Author: Codex
+Message: feat(theme): add WCAG contrast checker
+Files:
+- __tests__/theme.contrast.test.ts (+27/-0)
+- lib/theme/contrast.ts (+53/-0)
+=======
+Timestamp: 2025-08-08T13:58:34.847Z
+Commit: 56dd65fd2042141f1f148f55379312f2c5fead38
+Author: Codex
+Message: chore: add docstring check
+Files:
+- package.json (+1/-0)
+- scripts/check-docstrings.ts (+78/-0)
+=======
+Timestamp: 2025-08-08T13:32:18.028Z
+Commit: dfdf81f8c51d1974d343e22e69cd5161be833ce3
+Author: Codex
+Message: feat(telemetry): add typed event buffer
+Files:
+- __tests__/telemetry.buffer.test.ts (+12/-0)
+- lib/telemetry/buffer.ts (+35/-0)
+- lib/telemetry/schema.ts (+12/-0)
+=======
+Timestamp: 2025-08-08T13:58:29.912Z
+Commit: cbaa9fd5f88c680a4244beddba8e5eec87e63f95
+Author: Codex
+Message: Add empty state component with variants
+Files:
+- components/ui/Empty.tsx (+51/-0)
+- stories/Empty.stories.tsx (+28/-0)
+=======
+Timestamp: 2025-08-08T13:32:52.924Z
+Commit: 20290114b9b023ddfc076b8e7bc2f555ccb86fb5
+Author: Codex
+Message: feat: add low-impact mode hook
+Files:
+- components/green/{CarbonEnergyHUD.tsx => Hud.tsx} (+4/-12)
+
+Timestamp: 2025-08-08T13:33:01.899Z
+Commit: d93d782daca01a5d9c87d52384f2b0701161360c
+Author: Codex
+Message: feat: add low-impact hook
+Files:
+- hooks/useLowImpact.ts (+35/-0)
+=======
+
+Timestamp: 2025-08-08T13:59:26.090Z
+Commit: 8d00ccf6bd0b7384b8274aa480bc8a39f45fa91a
+Author: Codex
+Message: feat: add reusable skeleton component
+Files:
+- components/ui/skeleton.tsx (+9/-2)
+- tailwind.config.js (+8/-0)
+
+Timestamp: 2025-08-08T13:59:46.016Z
+Commit: 4545e42e13528d4dfefa344e02b2cc3206166a42
+Author: Codex
+Message: chore: add skeleton stories
+Files:
+- stories/Skeleton.stories.tsx (+48/-0)
+=======
+
+Timestamp: 2025-08-08T13:34:40.538Z
+Commit: d04f7c88eccec59a239e11d59abdf5ebfa51f6df
+Author: Codex
+Message: feat: add run timeline component
+Files:
+- __tests__/RunTimeline.test.tsx (+36/-0)
+- components/agents/RunTimeline.tsx (+97/-0)
+=======
+
+Timestamp: 2025-08-08T13:57:57.992Z
+Commit: b23e9e49ce3501cb900c7b3233cdb72e773b6216
+Author: Codex
+Message: feat: add lightweight chart primitives
+Files:
+- components/viz/Bar.tsx (+68/-0)
+- components/viz/Line.tsx (+72/-0)
+- components/viz/Spark.tsx (+13/-0)
+- stories/LightweightCharts.stories.tsx (+24/-0)
+=======
+
+Timestamp: 2025-08-08T13:28:58.377Z
+Commit: db59429060b7161fda47ab4cbf1418ecc85985b8
+Author: Codex
+Message: feat: add confidence explainer tooltip
+Files:
+- components/edu/ConfidenceExplainer.tsx (+49/-0)
+=======
+Timestamp: 2025-08-08T13:29:34.158Z
+Commit: a3310c5cc80c3dd8e944fef7413cb8700659d71a
+Author: Codex
+Message: feat: add agent mini-cards and demo grid
+Files:
+- components/agents/MiniCard.tsx (+27/-0)
+- fixtures/demo/agent-metrics.json (+7/-0)
+- stories/agents/AgentMini.stories.tsx (+19/-103)
+=======
+
+Timestamp: 2025-08-08T13:29:24.150Z
+Commit: 42467cb70fc736fdce584571c0a56eab39bc4f9c
+Author: Codex
+Message: feat: add client-only feature flags
+Files:
+- components/dev/FlagSwitch.tsx (+44/-0)
+- lib/flags/clientFlags.ts (+40/-0)
+=======
+
+Timestamp: 2025-08-08T13:34:43.578Z
+Commit: e4bccd0a83c64e5de65f8c4e54caa5f81dc98737
+Author: Codex
+Message: feat: add error boundary with retry
+Files:
+- __tests__/SystemErrorBoundary.test.tsx (+58/-0)
+- components/system/ErrorBoundary.tsx (+48/-0)
+=======
+
+Timestamp: 2025-08-08T13:59:49.441Z
+Commit: 8c50a4a2d6fe3480ce32016589618d986ea1ff1b
+Author: Codex
+Message: feat: add keyboard shortcut overlay
+Files:
+- components/a11y/Keymap.tsx (+67/-0)
+=======
+Timestamp: 2025-08-08T14:12:40.878Z
+Commit: f41ffc8567523da6e794460e5f1e0708f92b1929
+Author: Codex
+Message: feat: add accessible modal
+Files:
+- __tests__/modal.a11y.test.tsx (+14/-0)
+- components/ui/Modal.tsx (+79/-0)
+- stories/Modal.stories.tsx (+21/-0)
+=======
+Timestamp: 2025-08-08T13:31:45.299Z
+Commit: 6ed9b369bf7e56f15fd184ad9470679efd748f5b
+Author: Codex
+Message: feat: add promise-aware toast system
+Files:
+- app/(shell)/toast-demo/page.tsx (+21/-0)
+- components/ui/toaster.tsx (+56/-5)
+- components/ui/welcome.tsx (+2/-2)
+- lib/offline/index.ts (+11/-5)
+- lib/ui/toast.ts (+39/-0)
+- lib/useToast.ts (+0/-62)
+- pages/_app.tsx (+3/-3)
+
+
+
+
+
+
+
+
+
+
+Timestamp: 2025-08-08T13:34:03.757Z
+Commit: cd49ccb778e8d0e48e090099deef92b60c5e73f6
+Author: Codex
+Message: Add deterministic helpers and snapshot test
+Files:
+- test/utils/freezeRandom.ts (+1/-0)
+- test/utils/freezeTime.ts (+2/-1)
+
+Timestamp: 2025-08-08T13:34:20.549Z
+Commit: 7106831abb522add06839afa1404b3943b2a7321
+Author: Codex
+Message: Add sample test to verify deterministic helpers
+Files:
+- __tests__/__snapshots__/deterministic.utils.test.ts.snap (+8/-0)
+- __tests__/deterministic.utils.test.ts (+22/-0)
 

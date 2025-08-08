@@ -7,6 +7,7 @@ export function freezeRandom(startSeed: number = 1) {
     seed = (seed * 16807) % 2147483647;
     return (seed - 1) / 2147483646;
   };
+  return resetRandom;
 }
 
 export function resetRandom() {
