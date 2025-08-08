@@ -1542,3 +1542,22 @@ Files:
 - package.json (+1/-3)
 
 
+Timestamp: 2025-08-08T05:30:00Z
+Message: integrated AppHeader/HeroStrip and stabilized llmsLog snapshot
+
+
+Timestamp: 2025-08-08T05:33:06.361Z
+Commit: 9e85acaadd86e6ff77d4865a0c2fef9eafef7c86
+Author: Codex
+Message: feat: integrate header hero and stabilize logs
+Files:
+- __tests__/AppHeader.test.tsx (+6/-3)
+- __tests__/HeroStrip.test.tsx (+23/-4)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/llmsLog.test.ts (+12/-2)
+- __tests__/utils/freezeTime.ts (+2/-3)
+- components/AppHeader.tsx (+41/-31)
+- components/HeroStrip.tsx (+18/-8)
+- llms.txt (+4/-0)
+- pages/index.tsx (+9/-4)
+

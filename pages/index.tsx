@@ -113,8 +113,8 @@ export default function Home() {
         <meta name="description" content={headDesc} />
       </Head>
       <AppHeader />
-      <main className="min-h-screen p-4 space-y-4 max-w-7xl mx-auto">
-        <HeroStrip />
+      <HeroStrip />
+      <main className="min-h-screen px-4 sm:px-6 lg:px-8 py-4 space-y-4 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="flex flex-wrap gap-2">
             {LEAGUES.map((l) => (
@@ -151,7 +151,12 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div id="games" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <section
+            id="live-games"
+            aria-label="Live games"
+            tabIndex={-1}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+          >
             <UpcomingGamesGrid
               games={games}
               search={search}
@@ -161,7 +166,7 @@ export default function Home() {
               onRetry={() => mutate()}
               preload={preloadDrawer}
             />
-          </div>
+          </section>
         )}
         <PredictionDrawer game={selected} isOpen={!!selected} onClose={handleClose} />
       </main>
