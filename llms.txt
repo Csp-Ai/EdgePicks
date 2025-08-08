@@ -2000,3 +2000,11 @@ Files:
 - tests/visual/percy.spec.ts (+13/-0)
 
 
+Timestamp: 2025-08-08T09:51:31.013Z
+Commit: 641da7678305cebfce2c04a0cff54615cdf940cf
+Author: Codex
+Message: feat: add feature flag helper
+Files:
+- __tests__/flags.test.ts (+24/-0)
+- lib/flags.ts (+25/-0)
+
