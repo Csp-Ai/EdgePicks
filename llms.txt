@@ -1846,6 +1846,12 @@ Files:
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
 
+
+feat(sop): include “Lessons Learned” from recent agent reflections
+- add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
+- keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
+- update SOP generator to merge maintainer notes + lessons learned
+=======
 Timestamp: 2025-08-08T08:40:33.591Z
 Commit: 1c771b197f490649a4882e1444c0b385821d4f82
 Author: Codex
@@ -1924,5 +1930,4 @@ Files:
 - package-lock.json (+71/-0)
 - package.json (+2/-0)
 - pages/index.tsx (+2/-0)
-
 
