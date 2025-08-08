@@ -1382,6 +1382,13 @@ Files:
 - lib/data/schedule.ts (+67/-0)
 - pages/api/upcoming-games.ts (+34/-18)
 
+Timestamp: 2025-08-08T03:53:22.255Z
+Commit: 9210b4c2792951ffd7b6943a85f2fd5467c3b6df
+Author: Codex
+Message: Add NEXTAUTH_URL to required env keys
+Files:
+- lib/envKeys.ts (+1/-0)
+=======
 
 =======
 
