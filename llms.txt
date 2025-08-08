@@ -2158,3 +2158,11 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:11:05.639Z
+Commit: 9d28656713e70bddd795495936152f2f40aedbb5
+Author: Codex
+Message: feat: add agent node popover
+Files:
+- components/AgentVizCanvas.tsx (+75/-2)
+- components/agents/AgentNodePopover.tsx (+67/-0)
+
