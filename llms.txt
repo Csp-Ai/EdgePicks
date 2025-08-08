@@ -2840,6 +2840,20 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:32:52.924Z
+Commit: 20290114b9b023ddfc076b8e7bc2f555ccb86fb5
+Author: Codex
+Message: feat: add low-impact mode hook
+Files:
+- components/green/{CarbonEnergyHUD.tsx => Hud.tsx} (+4/-12)
+
+Timestamp: 2025-08-08T13:33:01.899Z
+Commit: d93d782daca01a5d9c87d52384f2b0701161360c
+Author: Codex
+Message: feat: add low-impact hook
+Files:
+- hooks/useLowImpact.ts (+35/-0)
+=======
 
 Timestamp: 2025-08-08T13:59:26.090Z
 Commit: 8d00ccf6bd0b7384b8274aa480bc8a39f45fa91a
