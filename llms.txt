@@ -2394,6 +2394,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T11:43:09.068Z
+Commit: 55ab1d118794a4ad260edbee8c667be13a198158
+Author: Codex
+Message: feat: add data freshness banner
+Files:
+- __tests__/DataFreshness.test.tsx (+21/-0)
+- components/system/DataFreshness.tsx (+39/-0)
+=======
+
 Timestamp: 2025-08-08T11:42:30.248Z
 Commit: 329f2c69043929fb61199204e258c0a586212ae2
 Author: Codex
@@ -2408,5 +2417,6 @@ Message: feat: add guest conversion panel
 Files:
 - __tests__/marketing/ConversionPanel.test.tsx (+26/-0)
 - components/marketing/ConversionPanel.tsx (+35/-0)
+
 
 
