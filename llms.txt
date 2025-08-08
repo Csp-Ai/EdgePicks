@@ -1382,6 +1382,13 @@ Files:
 - lib/data/schedule.ts (+67/-0)
 - pages/api/upcoming-games.ts (+34/-18)
 
+Timestamp: 2025-08-08T03:53:22.255Z
+Commit: 9210b4c2792951ffd7b6943a85f2fd5467c3b6df
+Author: Codex
+Message: Add NEXTAUTH_URL to required env keys
+Files:
+- lib/envKeys.ts (+1/-0)
+=======
 
 =======
 
@@ -1468,7 +1475,6 @@ Files:
 - lib/data/stats.ts (+36/-0)
 =======
 
-
 Timestamp: 2025-08-08T05:00:16.687Z
 Commit: c6d87a12380e3189f14c3f5468d3f7d903197030
 Author: Codex
@@ -1481,4 +1487,20 @@ Files:
 - lib/weights/index.ts (+44/-0)
 - pages/api/run-agents.ts (+0/-40)
 - pages/api/run-predictions.ts (+9/-4)
+=======
+Timestamp: 2025-08-08T04:59:28.223Z
+Commit: 132db6b1138e362404d370f001c195e189b27a67
+Author: Codex
+Message: feat: store agent outcomes and add backfill
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+0/-6)
+- __tests__/agentOutcomes.test.ts (+44/-0)
+- lib/accuracy.ts (+20/-0)
+- lib/logToSupabase.ts (+26/-14)
+- pages/api/run-agents.ts (+0/-40)
+- scripts/backfillAgentOutcomes.ts (+24/-0)
+- supabase/migrations/20240808090000_create_agent_outcomes_table.sql (+9/-0)
+- supabase/schema.sql (+10/-0)
+
 
