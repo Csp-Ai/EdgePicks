@@ -2562,3 +2562,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:39:51.017Z
+Commit: efa7ee966a62f5986291ec1407685acda237c25a
+Author: Codex
+Message: feat: add open knowledge lens components
+Files:
+- components/lens/LensAnnotation.tsx (+28/-0)
+- components/lens/LensContext.tsx (+48/-0)
+- components/lens/LensSideSheet.tsx (+30/-0)
+- components/lens/LensToggle.tsx (+14/-0)
+- components/lens/index.ts (+4/-0)
+- data/open-datasets.json (+20/-0)
+
