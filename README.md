@@ -30,6 +30,7 @@ npm run validate-env
 
 Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.
 Provide real keys later to test full OAuth + live data.
+Run-agents allows unauthenticated calls when `LIVE_MODE=off` or `NEXT_PUBLIC_MOCK_AUTH=1`.
 
 #### Mock Auth
 
@@ -175,8 +176,11 @@ NEXTAUTH_URL=...
 ODDS_API_KEY=...
 SPORTS_API_KEY=...
 SPORTS_DB_NFL_ID=4391
+PREDICTION_CACHE_TTL_SEC=120
+MAX_FLOW_CONCURRENCY=3
 
 Run npm run validate-env to check missing vars. See .env.local.example for a complete list.
+Use `PREDICTION_CACHE_TTL_SEC` to control how long predictions stay cached (in seconds) and `MAX_FLOW_CONCURRENCY` to cap concurrent agent runs.
 
 🔍 Testing
 

@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient';
 import { AgentOutputs, Matchup, PickSummary } from './types';
 import { recomputeAccuracy } from './accuracy';
+import { getQueueDriver } from './infra/queue';
 
 type LogEntry = {
   matchup: Matchup;
@@ -13,19 +14,23 @@ type LogEntry = {
   loggedAt: string;
   attempts: number;
 };
-
-const queue: LogEntry[] = [];
+const QUEUE_NAME = 'matchup-logs';
+const queue = getQueueDriver();
 let processing = false;
 let lastError: string | null = null;
 const MAX_ATTEMPTS = 5;
 const BASE_DELAY_MS = 1000;
 
 async function processQueue() {
-  if (processing || queue.length === 0) {
+  if (processing) {
     return;
   }
   processing = true;
-  const entry = queue.shift()!;
+  const entry = await queue.dequeue<LogEntry>(QUEUE_NAME);
+  if (!entry) {
+    processing = false;
+    return;
+  }
   let retryDelay: number | null = null;
   try {
     const { error } = await supabase.from('matchups').insert({
@@ -56,14 +61,15 @@ async function processQueue() {
     lastError = err.message || String(err);
     entry.attempts += 1;
     if (entry.attempts < MAX_ATTEMPTS) {
-      queue.push(entry); // Re-queue for retry
+      await queue.enqueue(QUEUE_NAME, entry);
       retryDelay = BASE_DELAY_MS * 2 ** (entry.attempts - 1);
     } else {
       console.error('Max retry attempts reached for log entry; dropping.');
     }
   } finally {
     processing = false;
-    if (queue.length > 0) {
+    const pending = await queue.size(QUEUE_NAME);
+    if (pending > 0) {
       if (retryDelay !== null) {
         setTimeout(processQueue, retryDelay);
       } else {
@@ -83,7 +89,7 @@ export function logToSupabase(
   extras: Record<string, any> = {},
   loggedAt: string = new Date().toISOString()
 ): string {
-  queue.push({
+  void queue.enqueue(QUEUE_NAME, {
     matchup,
     agents,
     pick,
@@ -98,9 +104,9 @@ export function logToSupabase(
   return loggedAt;
 }
 
-export function getLogStatus() {
+export async function getLogStatus() {
   return {
-    pending: queue.length,
+    pending: await queue.size(QUEUE_NAME),
     lastError,
   };
 }

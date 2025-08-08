@@ -1,83 +1,58 @@
 /** @jest-environment node */
-import handler from '../pages/api/run-agents';
 import { runFlow } from '../lib/flow/runFlow';
-import { logToSupabase } from '../lib/logToSupabase';
-import { logEvent } from '../lib/server/logEvent';
+import { fetchSchedule } from '../lib/data/schedule';
 
 jest.mock('../lib/flow/runFlow');
-jest.mock('../lib/logToSupabase');
-jest.mock('../lib/server/logEvent');
+jest.mock('../lib/data/schedule');
 
-const mockedRunFlow = runFlow as jest.Mock;
-const mockedLog = logToSupabase as jest.Mock;
-const mockedLogEvent = logEvent as jest.Mock;
-
+process.env.LIVE_MODE = 'on';
 process.env.NEXT_PUBLIC_MOCK_AUTH = '1';
 
+const handler = require('../pages/api/run-agents').default;
+const mockedRunFlow = runFlow as jest.Mock;
+const mockedSchedule = fetchSchedule as jest.Mock;
+
 describe('run-agents API', () => {
-  it('streams agent results and logs summary', async () => {
+  beforeEach(() => {
+    mockedSchedule.mockResolvedValue([
+      { homeTeam: 'A', awayTeam: 'B', time: '', league: 'NFL', gameId: '1' },
+    ]);
     mockedRunFlow.mockResolvedValue({
       outputs: {
         injuryScout: { team: 'A', score: 0.7, reason: 'healthy' },
       },
-      executions: [
-        {
-          name: 'injuryScout',
-          result: { team: 'A', score: 0.7, reason: 'healthy' },
-        },
-      ],
     });
+  });
 
-    const req: any = {
-      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
-      headers: {},
-    };
-    const chunks: string[] = [];
-    const res: any = {
-      setHeader: jest.fn(),
-      write: (c: string) => chunks.push(c),
-      end: jest.fn(),
-      flush: jest.fn(),
-      flushHeaders: jest.fn(),
-    };
+  it('returns pick and agents', async () => {
+    const req: any = { method: 'POST', body: { league: 'NFL', gameId: '1' } };
+    const json = jest.fn();
+    const res: any = { status: jest.fn().mockReturnThis(), json };
 
     await handler(req, res);
 
     expect(mockedRunFlow).toHaveBeenCalled();
-    expect(mockedLog).toHaveBeenCalled();
-    expect(mockedLogEvent).toHaveBeenCalled();
-    const summary = chunks.find((c) => c.includes('summary'));
-    expect(summary).toBeDefined();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(json).toHaveBeenCalledWith({
+      pick: 'A',
+      finalConfidence: 0.35,
+      agents: { injuryScout: { team: 'A', score: 0.7, reason: 'healthy' } },
+    });
   });
 
-  it('matches snapshot of agent stream', async () => {
-    mockedRunFlow.mockResolvedValue({
+  it('matches snapshot', async () => {
+    mockedRunFlow.mockResolvedValueOnce({
       outputs: {
         injuryScout: { team: 'A', score: 0.72, reason: 'Key WR out' },
       },
-      executions: [
-        {
-          name: 'injuryScout',
-          result: { team: 'A', score: 0.72, reason: 'Key WR out' },
-        },
-      ],
     });
 
-    const req: any = {
-      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: 'test-session' },
-      headers: {},
-    };
-    const chunks: string[] = [];
-    const res: any = {
-      setHeader: jest.fn(),
-      write: (c: string) => chunks.push(c),
-      end: jest.fn(),
-      flush: jest.fn(),
-      flushHeaders: jest.fn(),
-    };
+    const req: any = { method: 'POST', body: { league: 'NFL', gameId: '1' } };
+    const json = jest.fn();
+    const res: any = { status: jest.fn().mockReturnThis(), json };
 
     await handler(req, res);
-
-    expect(chunks.join('')).toMatchSnapshot();
+    expect(json.mock.calls[0][0]).toMatchSnapshot();
   });
 });
+

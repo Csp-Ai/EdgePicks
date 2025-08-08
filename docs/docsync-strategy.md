@@ -4,6 +4,27 @@ DocSync ensures documentation updates make it to the GitHub wiki even when
 external services are unavailable. Failed sync attempts are written to
 `agentLogsStore.json` and can be retried later.
 
+## Required Environment Variables
+
+`scripts/docsync-agent.ts` needs access to both Supabase and your GitHub wiki.
+Set the following variables in your environment or `.env.local`:
+
+| Variable | Purpose | Where to Obtain |
+| --- | --- | --- |
+| `SUPABASE_URL` | Supabase project URL | Supabase Dashboard → Project Settings → API |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key used to mark Codex logs as synced | Supabase Dashboard → Project Settings → API |
+| `GH_PAT` | GitHub Personal Access Token with `repo` scope for wiki updates | GitHub Settings → Developer settings → Personal access tokens |
+| `GH_OWNER` | Owner of the target GitHub repository | Repository owner name |
+| `GH_REPO` | Repository name | Repository name |
+| `WIKI_BRANCH` | Branch of the wiki repository to update (e.g., `main`) | Usually `main` |
+
+```bash
+# example
+GH_OWNER=acme
+GH_REPO=edgepicks
+WIKI_BRANCH=main
+```
+
 ## Features
 - **Dry Run:** `scripts/docsync-agent.ts` accepts a `--dry-run` flag to validate
   environment configuration without making network calls.

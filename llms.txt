@@ -1388,4 +1388,91 @@ Author: Codex
 Message: Add NEXTAUTH_URL to required env keys
 Files:
 - lib/envKeys.ts (+1/-0)
+=======
+
+=======
+
+
+Timestamp: 2025-08-08T03:50:26.057Z
+Commit: 54de140f0cf6a11cdff61cfca66de82f81be107e
+Author: Codex
+Message: docs: document docsync environment variables
+Files:
+- .env.local.example (+10/-0)
+- docs/docsync-strategy.md (+21/-0)
+- scripts/docsync-agent.ts (+2/-1)
+
+=======
+=======
+Timestamp: 2025-08-08T03:49:38.599Z
+Commit: a2d729a10ae513e1c8fe4b69e2860a2851dc2681
+Author: Codex
+Message: chore: document cache ttl and concurrency env vars
+Files:
+- .env.development (+2/-0)
+- .env.local.example (+2/-0)
+- .env.production (+2/-0)
+- README.md (+3/-0)
+- docs/prediction-flow-architecture.md (+3/-0)
+- pages/api/run-agents.ts (+0/-1)
+
+
+
+
+Timestamp: 2025-08-08T04:21:38.526Z
+Commit: 4ab4e24e613435e121c0e373875c45c0a3f6cb42
+Author: Codex
+Message: feat: rebuild run-agents endpoint
+Files:
+- README.md (+1/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+12/-4)
+- __tests__/runAgents.auth.test.ts (+18/-32)
+- __tests__/runAgentsApi.test.ts (+29/-54)
+- pages/api/run-agents.ts (+77/-95)
+=======
+Timestamp: 2025-08-08T04:14:09.128Z
+Commit: b6cd4ee2233b066366078ebfe07cbf9a4e237845
+Author: Codex
+Message: feat: add pluggable queue and cache drivers
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+1/-1)
+- __tests__/cacheDriver.test.ts (+11/-0)
+- __tests__/queueDriver.test.ts (+13/-0)
+- lib/env.ts (+4/-0)
+- lib/flow/runFlow.ts (+17/-10)
+- lib/infra/cache/driver.ts (+4/-0)
+- lib/infra/cache/index.ts (+20/-0)
+- lib/infra/cache/memory.ts (+24/-0)
+- lib/infra/cache/redis.ts (+19/-0)
+- lib/infra/queue/driver.ts (+5/-0)
+- lib/infra/queue/index.ts (+20/-0)
+- lib/infra/queue/memory.ts (+20/-0)
+- lib/infra/queue/redis.ts (+23/-0)
+- lib/logToSupabase.ts (+15/-9)
+- package-lock.json (+88/-2)
+- package.json (+2/-1)
+- pages/api/log-status.ts (+2/-2)
+- pages/api/run-agents.ts (+2/-1)
+- pages/api/run-predictions.ts (+2/-1)
+
+Timestamp: 2025-08-08T04:29:55.348Z
+Commit: 95c7b09de4b3c64b3760992ef0b42ef6c79b127a
+Author: Codex
+Message: feat: wire agents to live data
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/agents/fixtures/injuries.json (+5/-0)
+- __tests__/agents/fixtures/odds.json (+34/-0)
+- __tests__/agents/fixtures/stats.json (+4/-0)
+- __tests__/agents/injuryScout.test.ts (+22/-0)
+- __tests__/agents/lineWatcher.test.ts (+22/-0)
+- __tests__/agents/statCruncher.test.ts (+22/-0)
+- lib/agents/injuryScout.ts (+16/-5)
+- lib/agents/lineWatcher.ts (+35/-4)
+- lib/agents/statCruncher.ts (+17/-6)
+- lib/data/stats.ts (+36/-0)
+=======
+
 

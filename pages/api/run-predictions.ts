@@ -6,6 +6,7 @@ import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+import { ENV } from '../../lib/env';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
@@ -133,7 +134,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     );
 
-    res.status(200).json({ predictions, agentScores, timestamp });
+    res.status(200).json({ predictions, agentScores, timestamp, cacheVersion: ENV.FLOW_CACHE_VERSION });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to run predictions' });
