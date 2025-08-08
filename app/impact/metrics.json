@@ -1,0 +1,34 @@
+[
+  {
+    "category": "Education",
+    "date": "2025-01-01",
+    "usersHelped": 500,
+    "timeSaved": 1200,
+    "co2Saved": 30,
+    "accuracy": 0.95
+  },
+  {
+    "category": "Education",
+    "date": "2025-02-01",
+    "usersHelped": 650,
+    "timeSaved": 1400,
+    "co2Saved": 35,
+    "accuracy": 0.96
+  },
+  {
+    "category": "Environment",
+    "date": "2025-01-01",
+    "usersHelped": 400,
+    "timeSaved": 900,
+    "co2Saved": 60,
+    "accuracy": 0.89
+  },
+  {
+    "category": "Environment",
+    "date": "2025-02-01",
+    "usersHelped": 450,
+    "timeSaved": 950,
+    "co2Saved": 65,
+    "accuracy": 0.9
+  }
+]

@@ -1,14 +1,69 @@
+name: Codex Diff
+
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-diff-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  diff-llms:
+  diff:
+    if: ${{ github.event.pull_request.head.repo.fork == false }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm ci
-      - run: npx ts-node scripts/diff-llms-summary.ts
+          fetch-depth: 0
+      - name: Check for codex or prompts changes
+        id: changes
+        run: |
+          git diff --name-only origin/${{ github.base_ref }}...${{ github.sha }} -- 'prompts/**' 'codex/**' > files.txt
+          if [[ -s files.txt ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      - name: No codex changes
+        if: steps.changes.outputs.changed == 'false'
+        run: echo 'No codex or prompts changes'
+      - name: Generate diff
+        if: steps.changes.outputs.changed == 'true'
+        id: diff
+        run: |
+          git diff origin/${{ github.base_ref }}...${{ github.sha }} -- 'prompts/**' 'codex/**' > diff.txt
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat diff.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - uses: peter-evans/find-comment@v3
+        if: steps.changes.outputs.changed == 'true'
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: codex-diff ${{ github.sha }}
+      - name: Post diff comment
+        if: steps.changes.outputs.changed == 'true' && github.token != ''
+        uses: Wandalen/wretry.action@v3
+        with:
+          attempt_limit: 3
+          attempt_delay: 10000
+          action: peter-evans/create-or-update-comment@v4
+          with: |
+            token: ${{ secrets.GITHUB_TOKEN }}
+            issue-number: ${{ github.event.pull_request.number }}
+            comment-id: ${{ steps.fc.outputs.comment-id }}
+            body: |
+              codex-diff ${{ github.sha }}
+              ```diff
+              ${{ steps.diff.outputs.body }}
+              ```
+            edit-mode: replace
+        continue-on-error: true
