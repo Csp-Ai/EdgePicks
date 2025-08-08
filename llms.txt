@@ -1630,3 +1630,22 @@ Files:
 
 
 
+Timestamp: 2025-08-08T05:56:22.247Z
+Commit: 886484ad67ff08a052737703cd0e235e0526fb72
+Author: Codex
+Message: feat: guard live APIs with auth
+Files:
+- README.md (+7/-5)
+- __tests__/__snapshots__/apiContracts.test.ts.snap (+22/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-13)
+- __tests__/apiContracts.test.ts (+25/-2)
+- __tests__/devlogin.test.ts (+2/-20)
+- __tests__/llmsLog.test.ts (+0/-1)
+- __tests__/runAgents.auth.test.ts (+6/-6)
+- __tests__/runAgentsApi.test.ts (+10/-1)
+- middleware.ts (+27/-1)
+- pages/api/dev-login.ts (+3/-4)
+- pages/api/logs.ts (+9/-0)
+- pages/api/run-agents.ts (+2/-3)
+- pages/api/run-predictions.ts (+10/-5)
+
