@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameCard matches contrast snapshot 1`] = `
+<button
+  aria-label="Analyze Lakers vs Celtics kickoff 7:20 PM"
+  class="card group w-full text-left bg-slate-800 hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ring-1 ring-slate-700 transition-colors"
+>
+  <div
+    class="flex items-center justify-between mb-3 text-slate-100"
+  >
+    <div
+      class="flex items-center gap-2"
+    >
+      <img
+        alt=""
+        height="24"
+        src="/home.png"
+        width="24"
+      />
+      <span>
+        Lakers
+      </span>
+    </div>
+    <span
+      class="text-slate-300"
+    >
+      vs
+    </span>
+    <div
+      class="flex items-center gap-2"
+    >
+      <img
+        alt=""
+        height="24"
+        src="/away.png"
+        width="24"
+      />
+      <span>
+        Celtics
+      </span>
+    </div>
+  </div>
+  <div
+    class="text-xs text-slate-300"
+  >
+    in 2h
+     • 
+    7:20 PM
+  </div>
+  <div
+    class="flex flex-wrap gap-1 mt-2 text-[11px]"
+  >
+    <span
+      class="px-2 py-0.5 rounded-full border border-emerald-700/40 bg-emerald-900/20 text-emerald-100"
+      title="Spread"
+    >
+      Spread 
+      -3.5
+    </span>
+    <span
+      class="px-2 py-0.5 rounded-full border border-emerald-700/40 bg-emerald-900/20 text-emerald-100"
+      title="Over/Under"
+    >
+      O/U 
+      45.5
+    </span>
+    <span
+      class="px-2 py-0.5 rounded-full border border-emerald-700/40 bg-emerald-900/20 text-emerald-100"
+      title="Moneyline"
+    >
+      ML 
+      -150
+       / 
+      130
+    </span>
+  </div>
+  <div
+    class="mt-1 text-[10px] text-slate-400"
+  >
+    via 
+    MockBook
+  </div>
+</button>
+`;
