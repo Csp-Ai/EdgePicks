@@ -41,14 +41,24 @@ const GameCard: React.FC<Props> = ({ game, onClick, onHover }) => {
       <div className="flex items-center justify-between mb-3 text-slate-100">
         <div className="flex items-center gap-2">
           {game.homeLogo && (
-            <Image src={game.homeLogo} alt="" width={24} height={24} />
+            <Image
+              src={game.homeLogo}
+              alt={`${game.homeTeam} logo`}
+              width={24}
+              height={24}
+            />
           )}
           <span>{game.homeTeam}</span>
         </div>
         <span className="text-slate-300">vs</span>
         <div className="flex items-center gap-2">
           {game.awayLogo && (
-            <Image src={game.awayLogo} alt="" width={24} height={24} />
+            <Image
+              src={game.awayLogo}
+              alt={`${game.awayTeam} logo`}
+              width={24}
+              height={24}
+            />
           )}
           <span>{game.awayTeam}</span>
         </div>

@@ -8,6 +8,7 @@ const envSchema = z.object({
   NEXTAUTH_SECRET: z.string().nonempty(),
   NEXTAUTH_URL: z.string().url(),
   SPORTS_API_KEY: z.string().nonempty(),
+  SPORTS_WEBHOOK_SECRET: z.string().optional(),
   LIVE_MODE: z.enum(['on', 'off']).default('off'),
   WEIGHTS_DYNAMIC: z.enum(['on', 'off']).default('off'),
   PREDICTION_CACHE_TTL_SEC: z.coerce.number().int().positive().default(120),
