@@ -1,5 +1,9 @@
 
-import { uiEventNameSchema } from '../lib/telemetry/events';
+import {
+  uiEventNameSchema,
+  DASHBOARD_EVENTS,
+  dashboardEventSchema,
+} from '../lib/telemetry/events';
 
 describe('uiEventNameSchema', () => {
   it('accepts onboarding and builder events', () => {
@@ -9,8 +13,8 @@ describe('uiEventNameSchema', () => {
 
   it('rejects unknown events', () => {
     expect(() => uiEventNameSchema.parse('unknownEvent')).toThrow();
-=======
-import { DASHBOARD_EVENTS, dashboardEventSchema } from '../lib/telemetry/events';
+  });
+});
 
 describe('dashboard telemetry events', () => {
   test('all known events validate', () => {
@@ -21,6 +25,5 @@ describe('dashboard telemetry events', () => {
 
   test('unknown events fail validation', () => {
     expect(() => dashboardEventSchema.parse({ type: 'unknown' })).toThrow();
-
   });
 });

@@ -1,6 +1,11 @@
-const CACHE_NAME = 'demo-run-agents';
+const CACHE_NAME = 'edgepicks-cache-v1';
+const APP_SHELL = ['/'];
 
+// Precache the app shell so the basic UI works offline
 self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+  );
   self.skipWaiting();
 });
 
@@ -8,10 +13,37 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
 });
 
+// Serve cached content when offline and keep cache updated when online
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
+
   if (url.pathname === '/api/run-agents') {
     event.respondWith(handleRunAgents());
+    return;
+  }
+
+  // For navigation requests, try network first, fall back to cache
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/'))
+    );
+    return;
+  }
+
+  // Cache-first strategy for same-origin GET requests
+  if (event.request.method === 'GET' && url.origin === location.origin) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        const fetchPromise = fetch(event.request)
+          .then((resp) => {
+            const copy = resp.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+            return resp;
+          })
+          .catch(() => cached);
+        return cached || fetchPromise;
+      })
+    );
   }
 });
 
