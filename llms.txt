@@ -2158,3 +2158,13 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:10:12.452Z
+Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
+Author: Codex
+Message: feat: add fuzzy game search
+Files:
+- __tests__/GameFuzzySearch.test.tsx (+40/-0)
+- __tests__/fuzzy.test.ts (+33/-0)
+- components/search/GameFuzzySearch.tsx (+61/-0)
+- lib/search/fuzzy.ts (+42/-0)
+
