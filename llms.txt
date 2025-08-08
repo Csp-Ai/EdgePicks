@@ -2159,6 +2159,15 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:13:31.757Z
+Commit: ca48d522b295553818dd2cc318d9052b9f07ada0
+Author: Codex
+Message: fix: clean PredictionMarquee merge artifact
+Files:
+- __tests__/marketing/PredictionMarquee.test.tsx (+0/-18)
+- components/marketing/PredictionMarquee.tsx (+0/-45)
+=======
+
 Timestamp: 2025-08-08T11:12:32.836Z
 Commit: 36a824f069c3c55c68d2e530a8aa614bae3d3482
 Author: Codex
@@ -2198,6 +2207,7 @@ Files:
 - __tests__/fuzzy.test.ts (+33/-0)
 - components/search/GameFuzzySearch.tsx (+61/-0)
 - lib/search/fuzzy.ts (+42/-0)
+
 
 
 
