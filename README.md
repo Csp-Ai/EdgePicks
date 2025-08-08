@@ -30,6 +30,7 @@ npm run validate-env
 
 Local dev defaults to **mock mode**: `NEXT_PUBLIC_MOCK_AUTH=1` and `LIVE_MODE=off`.
 Provide real keys later to test full OAuth + live data.
+Run-agents allows unauthenticated calls when `LIVE_MODE=off` or `NEXT_PUBLIC_MOCK_AUTH=1`.
 
 #### Mock Auth
 

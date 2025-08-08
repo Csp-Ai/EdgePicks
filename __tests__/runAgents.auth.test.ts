@@ -1,22 +1,25 @@
 /** @jest-environment node */
-import handler from '../pages/api/run-agents';
 import { getServerSession } from 'next-auth/next';
 import { runFlow } from '../lib/flow/runFlow';
-import { logToSupabase } from '../lib/logToSupabase';
+import { fetchSchedule } from '../lib/data/schedule';
 
 jest.mock('next-auth/next');
 jest.mock('../lib/flow/runFlow');
-jest.mock('../lib/logToSupabase');
+jest.mock('../lib/data/schedule');
 
+process.env.LIVE_MODE = 'on';
+
+const handler = require('../pages/api/run-agents').default;
 const mockedGetSession = getServerSession as jest.Mock;
 const mockedRunFlow = runFlow as jest.Mock;
+const mockedSchedule = fetchSchedule as jest.Mock;
 
 describe('run-agents auth', () => {
   beforeEach(() => {
-    mockedRunFlow.mockResolvedValue({
-      outputs: {},
-      executions: [],
-    });
+    mockedSchedule.mockResolvedValue([
+      { homeTeam: 'A', awayTeam: 'B', time: '', league: 'NFL', gameId: '1' },
+    ]);
+    mockedRunFlow.mockResolvedValue({ outputs: {} });
   });
 
   afterEach(() => {
@@ -26,7 +29,7 @@ describe('run-agents auth', () => {
 
   it('returns 401 when no session and LIVE_MODE on', async () => {
     mockedGetSession.mockResolvedValue(null);
-    const req: any = { query: { homeTeam: 'A', awayTeam: 'B', week: '1' } };
+    const req: any = { method: 'POST', body: { league: 'NFL', gameId: '1' } };
     const res: any = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     await handler(req, res);
@@ -37,42 +40,25 @@ describe('run-agents auth', () => {
 
   it('allows when session exists', async () => {
     mockedGetSession.mockResolvedValue({ user: { name: 'Test' } });
-    const req: any = {
-      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: '1' },
-    };
-    const res: any = {
-      setHeader: jest.fn(),
-      write: jest.fn(),
-      end: jest.fn(),
-      flushHeaders: jest.fn(),
-      status: jest.fn(),
-      json: jest.fn(),
-    };
+    const req: any = { method: 'POST', body: { league: 'NFL', gameId: '1' } };
+    const res: any = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     await handler(req, res);
 
     expect(mockedRunFlow).toHaveBeenCalled();
-    expect(res.status).not.toHaveBeenCalledWith(401);
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 
   it('allows without session when NEXT_PUBLIC_MOCK_AUTH=1', async () => {
     process.env.NEXT_PUBLIC_MOCK_AUTH = '1';
     mockedGetSession.mockResolvedValue(null);
-    const req: any = {
-      query: { homeTeam: 'A', awayTeam: 'B', week: '1', sessionId: '1' },
-    };
-    const res: any = {
-      setHeader: jest.fn(),
-      write: jest.fn(),
-      end: jest.fn(),
-      flushHeaders: jest.fn(),
-      status: jest.fn(),
-      json: jest.fn(),
-    };
+    const req: any = { method: 'POST', body: { league: 'NFL', gameId: '1' } };
+    const res: any = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     await handler(req, res);
 
     expect(mockedRunFlow).toHaveBeenCalled();
-    expect(res.status).not.toHaveBeenCalledWith(401);
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 });
+

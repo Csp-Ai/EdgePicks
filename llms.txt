@@ -1411,3 +1411,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T04:21:38.526Z
+Commit: 4ab4e24e613435e121c0e373875c45c0a3f6cb42
+Author: Codex
+Message: feat: rebuild run-agents endpoint
+Files:
+- README.md (+1/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+12/-4)
+- __tests__/runAgents.auth.test.ts (+18/-32)
+- __tests__/runAgentsApi.test.ts (+29/-54)
+- pages/api/run-agents.ts (+77/-95)
+
