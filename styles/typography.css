@@ -4,5 +4,13 @@
   .confidenceText {
     @apply font-semibold;
   }
+
+  /* Beta typographic scale */
+  .beta-h1 {
+    @apply text-2xl sm:text-3xl font-bold;
+  }
+  .beta-h2 {
+    @apply text-xl sm:text-2xl font-semibold;
+  }
 }
 

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import AppHeader from '../components/AppHeader';
 import HeroStrip from '../components/HeroStrip';
 import UpcomingGamesGrid from '../components/UpcomingGamesGrid';
 import type { Game } from '../lib/types';
@@ -112,7 +111,6 @@ export default function Home() {
         <title>{headTitle}</title>
         <meta name="description" content={headDesc} />
       </Head>
-      <AppHeader />
       <HeroStrip />
       <main className="min-h-screen px-4 sm:px-6 lg:px-8 py-4 space-y-4 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">

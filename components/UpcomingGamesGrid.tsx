@@ -43,7 +43,7 @@ const UpcomingGamesGrid: React.FC<Props> = ({
   if (isLoading) {
     const SkeletonCard = () => (
       <div
-        className="p-4 rounded-xl bg-slate-800/40 animate-pulse h-28 flex flex-col gap-3"
+        className="p-4 sm:p-6 rounded-xl bg-slate-800/40 animate-pulse h-28 flex flex-col gap-3 shadow-md"
         data-testid="game-skeleton"
       >
         <div className="flex justify-between">
@@ -76,7 +76,7 @@ const UpcomingGamesGrid: React.FC<Props> = ({
   if (filtered.length === 0) {
     return (
       <div
-        className="col-span-full text-center text-slate-400"
+        className="col-span-full text-center text-slate-500"
         data-testid="empty-state"
       >
         No games match your search

@@ -41,4 +41,9 @@ describe('GameCard', () => {
     render(<GameCard game={game} onClick={jest.fn()} />);
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
+
+  it('matches contrast snapshot', () => {
+    const { container } = render(<GameCard game={game} onClick={jest.fn()} />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
 });

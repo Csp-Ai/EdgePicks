@@ -1732,3 +1732,22 @@ Files:
 - supabase/schema.sql (+34/-2)
 
 
+Timestamp: 2025-08-08T06:54:10.411Z
+Commit: 56fc6156c8d239a2c20d2e9ae7bca3407d2127e1
+Author: Codex
+Message: feat: add beta ribbon and theme tweaks
+Files:
+- __tests__/BetaRibbon.test.tsx (+17/-0)
+- __tests__/GameCard.test.tsx (+5/-0)
+- __tests__/__snapshots__/GameCard.test.tsx.snap (+84/-0)
+- components/AppHeader.tsx (+3/-3)
+- components/BetaRibbon.tsx (+33/-0)
+- components/GameCard.tsx (+9/-9)
+- components/UpcomingGamesGrid.tsx (+2/-2)
+- lib/analytics/logUiEvent.ts (+1/-35)
+- pages/_app.tsx (+9/-101)
+- pages/index.tsx (+0/-2)
+- styles/cardStyles.ts (+3/-3)
+- styles/globals.css (+5/-0)
+- styles/typography.css (+8/-0)
+
