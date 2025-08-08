@@ -1979,3 +1979,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:57:40.238Z
+Commit: 298561b80ef73cca538f91bf8a63d8ef861d626b
+Author: Codex
+Message: test: add axe-playwright accessibility checks
+Files:
+- .github/workflows/a11y.yml (+20/-0)
+- tests/a11y/core-pages.spec.ts (+21/-0)
+
