@@ -1334,7 +1334,6 @@ Files:
 - jest.setup.ts (+4/-0)
 
 
-
 Timestamp: 2025-08-08T03:41:06.006Z
 Commit: f708451213dbdd16e8d86c20c67ab416ff6a82ed
 Author: Codex
@@ -1344,4 +1343,29 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - __tests__/devlogin.test.ts (+59/-0)
 - pages/api/dev-login.ts (+6/-0)
+=======
+Timestamp: 2025-08-08T03:40:43.944Z
+Commit: 35426a767f0c53df96d1d1296e7c134f8ace1e9a
+Author: Codex
+Message: require auth for run-agents
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/runAgents.auth.test.ts (+78/-0)
+- __tests__/runAgentsApi.test.ts (+2/-0)
+- pages/api/run-agents.ts (+10/-0)
+=======
+Timestamp: 2025-08-08T03:37:37.748Z
+Commit: 0b675168ef3ed003e54103bbc9743418189ba5be
+Author: Codex
+Message: feat(logging): centralize server log events
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/logEvent.test.ts (+23/-0)
+- __tests__/runAgentsApi.test.ts (+6/-0)
+- lib/server/logEvent.ts (+51/-0)
+- pages/api/run-agents.ts (+15/-1)
+- pages/api/run-predictions.ts (+10/-11)
+- supabase/migrations/20240101000000_create_logs_table.sql (+8/-0)
+- supabase/schema.sql (+9/-0)
+
 

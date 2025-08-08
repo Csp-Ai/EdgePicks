@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-import fs from 'fs';
-import path from 'path';
+import crypto from 'crypto';
 import { authOptions } from './auth/[...nextauth]';
 import { loadFlow } from '../../lib/flow/loadFlow';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
@@ -10,6 +9,7 @@ import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
 import { logToSupabase } from '../../lib/logToSupabase';
+import { logEvent } from '../../lib/server/logEvent';
 
 interface Game {
   homeTeam: { name: string };
@@ -124,15 +124,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.warn('Mock data is being used for predictions.');
     }
 
-    try {
-      const logPath = path.join(process.cwd(), 'llms.txt');
-      const entry = `[${timestamp}] [${league}] predictions run by ${
-        session.user?.name || 'Anonymous'
-      }\n`;
-      await fs.promises.appendFile(logPath, entry);
-    } catch (err) {
-      console.error('failed to log prediction', err);
-    }
+    await logEvent(
+      'run-predictions',
+      { league },
+      {
+        requestId: req.headers['x-request-id']?.toString() || crypto.randomUUID(),
+        userId: (session.user as any)?.id || (session.user as any)?.email || undefined,
+      }
+    );
 
     res.status(200).json({ predictions, agentScores, timestamp });
   } catch (err) {

@@ -36,3 +36,12 @@ create table if not exists ui_events (
   extras jsonb,
   created_at timestamptz default now()
 );
+
+create table if not exists logs (
+  id uuid primary key default gen_random_uuid(),
+  kind text not null,
+  request_id text,
+  user_id text,
+  payload jsonb,
+  ts timestamptz default now()
+);
