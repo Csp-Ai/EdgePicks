@@ -2395,6 +2395,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T11:43:22.503Z
 Commit: 3f07fffcc182f3a2af0511848cbb3ea3220a6868
 Author: Codex
@@ -2403,6 +2404,21 @@ Files:
 - docs/agents/mini.md (+10/-0)
 - stories/agents/AgentMini.stories.tsx (+110/-0)
 =======
+=======
+Timestamp: 2025-08-08T11:47:11.905Z
+Commit: 0bc1963a672a743efe359540df0889f92092a8bf
+Author: Codex
+Message: docs: add agent model cards and viewer
+Files:
+- components/agents/ModelCardViewer.tsx (+19/-0)
+- docs/model-cards/guardianAgent.md (+16/-0)
+- docs/model-cards/injuryScout.md (+16/-0)
+- docs/model-cards/lineWatcher.md (+16/-0)
+- docs/model-cards/statCruncher.md (+16/-0)
+- docs/model-cards/trendsAgent.md (+16/-0)
+=======
+
+
 Timestamp: 2025-08-08T11:45:29.736Z
 Commit: 93730c799c14db6c8ddfc039f36dd2148a2601d5
 Author: Codex
@@ -2449,6 +2465,9 @@ Files:
 
 
 
+
+
+=======
 
 =======
 
