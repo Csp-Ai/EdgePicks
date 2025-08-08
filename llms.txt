@@ -1971,3 +1971,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T10:32:38.135Z
+Commit: 0dd167812fea3b27dbe4f3039227465dd625db1c
+Author: Codex
+Message: chore: add Percy snapshot workflow
+Files:
+- .github/workflows/percy.yml (+32/-0)
+- tests/visual/percy.spec.ts (+17/-0)
+
