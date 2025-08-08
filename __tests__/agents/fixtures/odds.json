@@ -1,0 +1,34 @@
+[
+  {
+    "home_team": "A",
+    "away_team": "B",
+    "bookmakers": [
+      {
+        "title": "Book",
+        "last_update": "2024-01-01",
+        "markets": [
+          {
+            "key": "spreads",
+            "outcomes": [
+              { "name": "A", "point": -3 },
+              { "name": "B", "point": 3 }
+            ]
+          },
+          {
+            "key": "h2h",
+            "outcomes": [
+              { "name": "A", "price": -150 },
+              { "name": "B", "price": 130 }
+            ]
+          },
+          {
+            "key": "totals",
+            "outcomes": [
+              { "name": "over", "point": 45 }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
