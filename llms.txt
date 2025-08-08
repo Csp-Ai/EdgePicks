@@ -1695,3 +1695,29 @@ Files:
 
 
 
+Timestamp: 2025-08-08T06:30:19.837Z
+Commit: c29ef23d1d3dd33863275364a57a0945637f2a92
+Author: Codex
+Message: feat: add supabase event tables and unify logging
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+34/-2)
+- __tests__/logging.pipeline.test.ts (+41/-0)
+- __tests__/runPredictions.weights.test.ts (+1/-1)
+- docs/api.md (+0/-8)
+- docs/db-schema.md (+34/-2)
+- jest.setup.ts (+8/-0)
+- lib/agents/lifecycleAgent.ts (+2/-2)
+- lib/analytics/logUiEvent.ts (+2/-1)
+- lib/api.ts (+13/-1)
+- lib/logToSupabase.ts (+53/-65)
+- lib/logUiEvent.test.js (+7/-11)
+- lib/logUiEvent.ts (+20/-25)
+- lib/server/logEvent.ts (+0/-12)
+- pages/api/log-status.ts (+20/-3)
+- pages/api/logs.ts (+2/-2)
+- pages/api/run-predictions.ts (+32/-11)
+- pages/api/upcoming-games.ts (+2/-2)
+- supabase/migrations/20240920000000_create_event_tables.sql (+38/-0)
+- supabase/schema.sql (+34/-2)
+

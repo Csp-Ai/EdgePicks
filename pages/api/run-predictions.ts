@@ -10,7 +10,7 @@ import { ENV } from '../../lib/env';
 import { getDynamicWeights } from '../../lib/weights';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
-import { logToSupabase } from '../../lib/logToSupabase';
+import { logMatchup, logToSupabase } from '../../lib/logToSupabase';
 import { logEvent } from '../../lib/server/logEvent';
 
 interface Game {
@@ -67,6 +67,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const predictions: Prediction[] = [];
     const aggregatedAgentScores: Record<string, number> = {};
 
+    const correlationId =
+      req.headers['x-correlation-id']?.toString() || crypto.randomUUID();
     for (const g of games || []) {
       const matchup: Matchup = {
         homeTeam: g.homeTeam.name,
@@ -112,7 +114,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         topReasons,
       };
 
-      logToSupabase(matchup, outputs as AgentOutputs, pickSummary, null, 'run-predictions');
+      logMatchup(
+        matchup,
+        outputs as AgentOutputs,
+        pickSummary,
+        null,
+        'run-predictions',
+        false,
+        {},
+        correlationId,
+      );
+
+      const userId =
+        (session as any)?.user?.id || (session as any)?.user?.email || undefined;
+      executions.forEach((exec) => {
+        logToSupabase('agent_events', {
+          correlation_id: correlationId,
+          agent_id: exec.name,
+          event: exec.error ? 'error' : 'result',
+          metadata: exec.error ? exec.errorInfo : exec.result,
+          user_id: userId,
+          created_at: new Date().toISOString(),
+        });
+      });
 
       predictions.push({
         game: g,
@@ -136,15 +160,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.warn('Mock data is being used for predictions.');
     }
 
-    await logEvent(
-      'run-predictions',
-      { league },
-      {
-        requestId: req.headers['x-request-id']?.toString() || crypto.randomUUID(),
-        userId:
-          (session as any)?.user?.id || (session as any)?.user?.email || undefined,
-      }
-    );
+    const userId =
+      (session as any)?.user?.id || (session as any)?.user?.email || undefined;
+    await logEvent('run-predictions', { league }, {
+      requestId: correlationId,
+      userId,
+    });
 
     res
       .status(200)

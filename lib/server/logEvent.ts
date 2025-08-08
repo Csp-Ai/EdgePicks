@@ -1,6 +1,4 @@
 import { supabase } from '../supabaseClient';
-import fs from 'fs';
-import path from 'path';
 
 interface LogOptions {
   requestId?: string;
@@ -37,15 +35,5 @@ export async function logEvent(
 
   if (lastError) {
     console.error('Failed to log event', lastError);
-  }
-
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      const logPath = path.join(process.cwd(), 'llms.txt');
-      const line = `[${ts}] ${kind} ${JSON.stringify(payload)}\n`;
-      await fs.promises.appendFile(logPath, line);
-    } catch (err) {
-      console.error('Failed to mirror log to file', err);
-    }
   }
 }

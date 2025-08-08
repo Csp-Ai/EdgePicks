@@ -8,7 +8,7 @@ import { ENV } from '../lib/env';
 jest.mock('next-auth/next');
 jest.mock('../lib/flow/runFlow');
 jest.mock('../lib/flow/loadFlow');
-jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn() }));
+jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn(), logMatchup: jest.fn() }));
 jest.mock('../lib/server/logEvent', () => ({ logEvent: jest.fn() }));
 jest.mock('../lib/weights');
 

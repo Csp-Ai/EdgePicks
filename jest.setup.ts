@@ -12,6 +12,14 @@ process.env.PREDICTION_CACHE_TTL_SEC = '120';
 process.env.MAX_FLOW_CONCURRENCY = '3';
 process.env.GITHUB_REPOSITORY = 'owner/repo';
 
+jest.mock('./lib/supabaseClient', () => ({
+  supabase: {
+    from: jest.fn(() => ({
+      insert: jest.fn(() => ({ select: () => ({ single: () => Promise.resolve({ data: { id: '1' }, error: null }) }) })),
+    })),
+  },
+}));
+
 afterEach(() => {
   jest.useRealTimers?.();
 });
