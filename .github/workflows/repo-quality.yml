@@ -1,0 +1,20 @@
+name: repo-quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npx --yes markdownlint-cli "**/*.md" --config .markdownlint.json
+      - run: |
+          for file in README.md docs/ARCHITECTURE_SNAPSHOT.md SECURITY.md CODE_OF_CONDUCT.md SUPPORT.md CONTRIBUTING.md; do
+            npx --yes markdown-link-check "$file";
+          done
