@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import ProgressStepper from './onboarding/ProgressStepper';
+import {
+  getProgress,
+  setProgress,
+  clearProgress,
+} from '../lib/onboarding/progress';
 
 const STORAGE_KEY = 'onboardingComplete';
 const STEPS = [
@@ -25,17 +31,26 @@ export default function Onboarding() {
           localStorage.setItem(STORAGE_KEY, '1');
         } else {
           setShow(true);
+          setStep(getProgress());
         }
       })
       .catch(() => {
         setShow(true);
+        setStep(getProgress());
       });
   }, [status]);
+
+  const next = () => {
+    const n = step + 1;
+    setStep(n);
+    setProgress(n);
+  };
 
   const finish = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, '1');
     }
+    clearProgress();
     fetch('/api/user/onboarding', { method: 'POST' }).catch(() => {});
     setShow(false);
   };
@@ -47,6 +62,7 @@ export default function Onboarding() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4 text-white">
       <div className="bg-gray-900 p-6 rounded max-w-sm w-full space-y-4 text-center">
+        <ProgressStepper total={STEPS.length} current={step} />
         <h2 className="text-2xl font-bold">{title}</h2>
         <p>{text}</p>
         <div className="flex justify-between pt-4">
@@ -54,10 +70,7 @@ export default function Onboarding() {
             Skip
           </button>
           {step < STEPS.length - 1 ? (
-            <button
-              onClick={() => setStep(step + 1)}
-              className="px-4 py-2 bg-blue-600 rounded"
-            >
+            <button onClick={next} className="px-4 py-2 bg-blue-600 rounded">
               Next
             </button>
           ) : (
