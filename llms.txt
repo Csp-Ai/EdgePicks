@@ -1971,3 +1971,18 @@ Files:
 
 
 
+Timestamp: 2025-08-08T10:23:40.241Z
+Commit: a3a724b03a7a9590a294754bc690544236257f7a
+Author: Codex
+Message: feat(demo): global demo mode with fixtures + E2E offline test
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/demoMode.endtoend.test.tsx (+86/-0)
+- components/dev/DemoToggle.tsx (+18/-0)
+- fixtures/demo/agent-events.json (+20/-0)
+- fixtures/demo/predictions.json (+42/-0)
+- fixtures/demo/upcoming.json (+18/-0)
+- lib/demoMode.tsx (+78/-0)
+- pages/_app.tsx (+19/-16)
+- pages/dev.tsx (+13/-0)
+
