@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { AgentName, AgentResult } from '../lib/types';
 import { formatAgentName } from '../lib/utils';
-import Tooltip from './Tooltip';
+import ReasoningDisclosure from './agents/ReasoningDisclosure';
 import ConfidenceMeter from './ConfidenceMeter';
 import GlossaryLink from './GlossaryLink';
 import { agentCard, agentCardSkeleton } from '../styles/cardStyles';
@@ -78,36 +78,35 @@ const AgentCard: React.FC<Props> = ({
       } ${className}`}
       style={{ boxShadow: `0 0 8px ${glowColor}` }}
     >
-      <div className="flex items-center justify-between">
-        <Tooltip content={result.reason}>
-          <span
-            className="flex items-center gap-2 font-medium cursor-help"
-            tabIndex={0}
-            onMouseEnter={() =>
-              window.dispatchEvent(
-                new CustomEvent('glossary-hover', { detail: name })
-              )
-            }
-            onMouseLeave={() =>
-              window.dispatchEvent(
-                new CustomEvent('glossary-hover', { detail: null })
-              )
-            }
-            onFocus={() =>
-              window.dispatchEvent(
-                new CustomEvent('glossary-hover', { detail: name })
-              )
-            }
-            onBlur={() =>
-              window.dispatchEvent(
-                new CustomEvent('glossary-hover', { detail: null })
-              )
-            }
-          >
-            <Icon className="w-4 h-4" />
-            {formatAgentName(name)}
-          </span>
-        </Tooltip>
+      <div className="flex items-start justify-between">
+        <ReasoningDisclosure
+          reason={result.reason}
+          className="flex items-center gap-2 font-medium cursor-pointer"
+          tabIndex={0}
+          onMouseEnter={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: name })
+            )
+          }
+          onMouseLeave={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: null })
+            )
+          }
+          onFocus={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: name })
+            )
+          }
+          onBlur={() =>
+            window.dispatchEvent(
+              new CustomEvent('glossary-hover', { detail: null })
+            )
+          }
+        >
+          <Icon className="w-4 h-4" />
+          {formatAgentName(name)}
+        </ReasoningDisclosure>
         {showWeight && (
           <span className="text-xs text-gray-500">{weightPct}% weight</span>
         )}

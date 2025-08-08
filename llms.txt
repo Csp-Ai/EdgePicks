@@ -2159,6 +2159,16 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:16:58.142Z
+Commit: 7b65c5bf1a2e6290e76458af1959b86c9eaebef8
+Author: Codex
+Message: feat: add reasoning disclosure
+Files:
+- __tests__/ReasoningDisclosure.test.tsx (+22/-0)
+- components/AgentCard.tsx (+30/-31)
+- components/agents/ReasoningDisclosure.tsx (+38/-0)
+=======
+
 Timestamp: 2025-08-08T11:15:08.862Z
 Commit: e264823d76976f268d261110636c6f15e4f88d91
 Author: Codex
@@ -2185,6 +2195,7 @@ Message: fix: import hooks in navbar and add coverage
 Files:
 - __tests__/Navbar.test.tsx (+25/-0)
 - components/Navbar.tsx (+1/-1)
+
 =======
 Timestamp: 2025-08-08T11:13:52.003Z
 Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
@@ -2355,5 +2366,8 @@ Files:
 
 
 
+
+
+=======
 
 
