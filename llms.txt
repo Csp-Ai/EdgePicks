@@ -2840,3 +2840,14 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:35:35.604Z
+Commit: 1a2cbf473c2a2474fcd53f9aadd604614d5f15cf
+Author: Codex
+Message: feat: add agent output diff viewer
+Files:
+- __tests__/Diff.test.tsx (+12/-0)
+- __tests__/fixtures/outputDiff.json (+4/-0)
+- components/agents/Diff.tsx (+35/-0)
+- package-lock.json (+14/-4)
+- package.json (+8/-7)
+
