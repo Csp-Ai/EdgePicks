@@ -6,6 +6,7 @@ exports[`docs refresh snapshots generates docs 1`] = `
 - /api/accuracy-history
 - /api/accuracy
 - /api/dev-login
+- /api/health
 - /api/log-status
 - /api/logs
 - /api/reflections
@@ -14,6 +15,7 @@ exports[`docs refresh snapshots generates docs 1`] = `
 - /api/sports-webhook
 - /api/trends
 - /api/upcoming-games
+- /api/version
 "
 `;
 
