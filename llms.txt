@@ -1630,3 +1630,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T05:55:43.160Z
+Commit: 04fe0dfb7156e76c7092c45864487d5fa573581e
+Author: Codex
+Message: feat(db): add rls policies and tests
+Files:
+- .github/workflows/ci-tests.yml (+21/-0)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+26/-3)
+- db/policies.test.sql (+60/-18)
+- docs/db-schema.md (+26/-3)
+- supabase/migrations/20240901000000_add_indexes_and_rls.sql (+27/-6)
+- supabase/schema.sql (+26/-3)
+
