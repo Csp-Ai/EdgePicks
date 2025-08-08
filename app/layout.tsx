@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+
 import '../styles/typography.css';
 import '../styles/intelligence.css';
 
@@ -13,6 +14,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen">
         {children}
       </body>
+=======
+import type { ReactNode } from 'react';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+
     </html>
   );
 }
