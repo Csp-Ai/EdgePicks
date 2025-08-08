@@ -1,0 +1,20 @@
+[
+  {
+    "id": "who-covid19-cases",
+    "title": "WHO COVID-19 Global Cases",
+    "url": "https://covid19.who.int/WHO-COVID-19-global-table-data.csv",
+    "description": "Daily global counts of COVID-19 cases reported to WHO."
+  },
+  {
+    "id": "cdc-fluview",
+    "title": "CDC FluView Interactive",
+    "url": "https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html",
+    "description": "Influenza surveillance data for the United States."
+  },
+  {
+    "id": "unicef-water",
+    "title": "UNICEF Water and Sanitation Data",
+    "url": "https://data.unicef.org/resources/dataset/wash-data/",
+    "description": "Global water and sanitation statistics compiled by UNICEF."
+  }
+]

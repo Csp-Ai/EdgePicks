@@ -1,0 +1,58 @@
+name: 'Preflight'
+description: 'Verify required secrets and apply test defaults'
+inputs:
+  required-secrets:
+    description: 'Comma separated list of required secret names'
+    default: ''
+  optional-secrets:
+    description: 'Comma separated list of optional secret names'
+    default: ''
+runs:
+  using: 'composite'
+  steps:
+    - name: Verify environment
+      shell: bash
+      run: |
+        set -e
+        echo "CI preflight check"
+        echo
+        printf "%-25s | %-8s | %-8s\n" "Secret" "Required" "Status"
+        printf "%-25s-+-%-8s-+-%-8s\n" "------------------------" "--------" "--------"
+        missing=""
+        for name in $(echo "${{ inputs.required-secrets }}" | tr ',' ' '); do
+          [ -z "$name" ] && continue
+          if [ -z "${!name}" ]; then
+            printf "%-25s | %-8s | %-8s\n" "$name" "yes" "missing"
+            missing="$missing $name"
+          else
+            printf "%-25s | %-8s | %-8s\n" "$name" "yes" "present"
+          fi
+        done
+        for name in $(echo "${{ inputs.optional-secrets }}" | tr ',' ' '); do
+          [ -z "$name" ] && continue
+          if [ -z "${!name}" ]; then
+            printf "%-25s | %-8s | %-8s\n" "$name" "no" "missing"
+          else
+            printf "%-25s | %-8s | %-8s\n" "$name" "no" "present"
+          fi
+        done
+        echo
+        if [ "$CI_TEST_MODE" = "true" ]; then
+          echo "CI_TEST_MODE=true - using safe test defaults where needed"
+          if [[ "$missing" == *" SUPABASE_URL"* ]]; then
+            echo "SUPABASE_URL=http://localhost" >> "$GITHUB_ENV"
+            echo "  -> SUPABASE_URL defaulted to http://localhost"
+            missing=${missing// SUPABASE_URL/}
+          fi
+          if [[ "$missing" == *" SUPABASE_ANON_KEY"* ]]; then
+            echo "SUPABASE_ANON_KEY=test" >> "$GITHUB_ENV"
+            echo "SUPABASE_KEY=test" >> "$GITHUB_ENV"
+            echo "  -> SUPABASE_ANON_KEY defaulted to test"
+            missing=${missing// SUPABASE_ANON_KEY/}
+          fi
+        fi
+        if [ -n "$missing" ]; then
+          echo "Missing required secrets:$missing" >&2
+          exit 1
+        fi
+
