@@ -1514,3 +1514,22 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T05:20:25.428Z
+Commit: 09e3509275834a955575b2c20f88a89ea817b8c9
+Author: Codex
+Message: feat: add header and hero strip
+Files:
+- __tests__/AppHeader.test.tsx (+28/-0)
+- __tests__/HeroStrip.test.tsx (+13/-0)
+- components/AppHeader.tsx (+45/-0)
+- components/HeroStrip.tsx (+25/-0)
+- pages/index.tsx (+5/-27)
+
+Timestamp: 2025-08-08T05:21:12.551Z
+Commit: cf290ac37a51e5b43b2570df87409c565e89510c
+Author: Codex
+Message: chore: satisfy lint rules
+Files:
+- components/AppHeader.tsx (+1/-0)
+- components/HeroStrip.tsx (+1/-1)
+
