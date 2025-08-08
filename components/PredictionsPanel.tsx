@@ -1,16 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AgentNodeGraph from './AgentNodeGraph';
 import type { AgentOutputs, AgentLifecycle, PickSummary, AgentName } from '../lib/types';
+import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
 
 interface Props {
   agents: AgentOutputs;
   pick: PickSummary | null;
   statuses: Record<AgentName, { status: AgentLifecycle['status'] | 'idle'; durationMs?: number }>;
+  nodes: FlowNode[];
+  edges: FlowEdge[];
 }
 
-const PredictionsPanel: React.FC<Props> = ({ agents, pick, statuses }) => {
+const PredictionsPanel: React.FC<Props> = ({
+  agents,
+  pick,
+  statuses,
+  nodes,
+  edges,
+}) => {
+  const [advanced, setAdvanced] = useState(false);
   const agentNames = Object.keys(agents) as AgentName[];
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Matchup Insights</h2>
+        <button
+          className="text-sm text-blue-500 underline"
+          onClick={() => setAdvanced((v) => !v)}
+        >
+          {advanced ? 'Basic View' : 'Advanced View'}
+        </button>
+      </div>
+      {advanced && <AgentNodeGraph nodes={nodes} edges={edges} />}
       {pick && (
         <div className="p-4 bg-white/10 rounded">
           <h2 className="text-xl font-semibold">Prediction: {pick.winner}</h2>

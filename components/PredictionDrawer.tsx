@@ -24,7 +24,8 @@ interface AgentExecution extends BaseAgentExecution {
 }
 
 const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
-  const { statuses, handleLifecycleEvent, reset } = useFlowVisualizer();
+  const { statuses, handleLifecycleEvent, reset, nodes, edges } =
+    useFlowVisualizer();
   const [executions, setExecutions] = useState<AgentExecution[]>([]);
   const [pick, setPick] = useState<PickSummary | null>(null);
   const [confidence, setConfidence] = useState(0);
@@ -161,7 +162,7 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
           <div className="text-xs text-gray-400">{new Date(game.time).toLocaleString()}</div>
         </header>
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          <AgentNodeGraph statuses={statuses} />
+          <AgentNodeGraph nodes={nodes} edges={edges} />
           {pick ? (
             <PickSummaryComp
               teamA={game.homeTeam}
