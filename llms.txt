@@ -1977,8 +1977,15 @@ Files:
 - components/MatchupInsights.tsx (+126/-0)
 - pages/predictions.tsx (+3/-38)
 
-
-
+Timestamp: 2025-08-08T09:49:09.752Z
+Commit: 20e831f174cd0dd1e0e8a9249853cc42ac26bea5
+Author: Codex
+Message: feat(demo): Matchup carousel with tracker and compact predictions
+Files:
+- __tests__/DemoMatchupCarousel.test.tsx (+33/-0)
+- components/DemoMatchupCarousel.tsx (+89/-0)
+- mock/demo-matchups.json (+17/-0)
+=======
 Timestamp: 2025-08-08T09:43:55.171Z
 Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
 Author: Codex
@@ -1991,4 +1998,5 @@ Files:
 - lighthouserc.json (+30/-0)
 - pages/governance/audit.tsx (+17/-0)
 - tests/visual/percy.spec.ts (+13/-0)
+
 
