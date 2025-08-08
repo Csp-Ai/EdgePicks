@@ -5,7 +5,33 @@ import { ENV } from './lib/env';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  if (pathname === '/' || pathname.startsWith('/auth') || pathname.startsWith('/api')) {
+
+  if (pathname.startsWith('/api')) {
+    if (pathname === '/api/dev-login' && process.env.NODE_ENV !== 'development') {
+      return NextResponse.json({ error: 'not_found' }, { status: 404 });
+    }
+
+    if (ENV.LIVE_MODE === 'on') {
+      const isLogs = pathname.startsWith('/api/logs');
+      const requiresAuth =
+        pathname === '/api/run-agents' ||
+        pathname === '/api/run-predictions' ||
+        isLogs;
+      const isWrite = isLogs && req.method !== 'GET';
+      if (requiresAuth && (!isLogs || isWrite)) {
+        const token = await getToken({ req, secret: ENV.NEXTAUTH_SECRET });
+        if (!token) {
+          return new NextResponse(JSON.stringify({ error: 'auth_required' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+      }
+    }
+    return NextResponse.next();
+  }
+
+  if (pathname === '/' || pathname.startsWith('/auth')) {
     return NextResponse.next();
   }
 
