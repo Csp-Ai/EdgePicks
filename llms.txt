@@ -2543,3 +2543,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:41:12.136Z
+Commit: 931188f0d5f530e9b46a8c8e9f598718f1ba3328
+Author: Codex
+Message: docs: explain CI preflight and add env defaults
+Files:
+- .env.example (+5/-0)
+- README.md (+4/-0)
+

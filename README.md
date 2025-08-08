@@ -184,6 +184,10 @@ MAX_FLOW_CONCURRENCY=3
 Run npm run validate-env to check missing vars. See .env.local.example for a complete list.
 Use `PREDICTION_CACHE_TTL_SEC` to control how long predictions stay cached (in seconds) and `MAX_FLOW_CONCURRENCY` to cap concurrent agent runs.
 
+### CI Preflight
+
+The CI workflow runs a preflight step that checks required secrets and applies safe defaults when `CI_TEST_MODE=true`. This allows forks to run linting, type checks, builds and tests without providing private keys. Missing secrets are reported in a table and the job fails only when a required value is actually needed.
+
 🔍 Testing
 
 Unit tests:
