@@ -16,6 +16,10 @@
     "postpush": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/log-llms-entry.ts",
     "prepare": "husky",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "doctor": "npm run validate-env && npm run typecheck && npm run lint:fix && jest -w 1",
+    "check": "npm run doctor",
     "sync-system-diagram": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/syncSystemDiagram.ts",
     "snap:test": "ts-node scripts/uiSnapshot.ts"
   },
