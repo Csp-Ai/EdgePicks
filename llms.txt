@@ -2562,6 +2562,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T12:39:36.997Z
 Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
 Author: Codex
@@ -2576,4 +2577,12 @@ Files:
 - components/ui/skeleton.tsx (+15/-0)
 - components/ui/toaster.tsx (+10/-0)
 - components/ui/welcome.tsx (+16/-0)
+=======
+Timestamp: 2025-08-08T12:37:33.324Z
+Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
+Author: Codex
+Message: feat: add agent transparency drawer
+Files:
+- components/agents/TransparencyDrawer.tsx (+81/-0)
+
 
