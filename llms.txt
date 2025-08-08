@@ -2563,6 +2563,22 @@ Files:
 
 
 
+
+Timestamp: 2025-08-08T12:39:36.997Z
+Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
+Author: Codex
+Message: feat: add app shell with suspense
+Files:
+- app/(shell)/about/page.tsx (+15/-0)
+- app/(shell)/layout.tsx (+22/-0)
+- app/(shell)/page.tsx (+15/-0)
+- components/ui/about-content.tsx (+12/-0)
+- components/ui/header.tsx (+15/-0)
+- components/ui/nav.tsx (+33/-0)
+- components/ui/skeleton.tsx (+15/-0)
+- components/ui/toaster.tsx (+10/-0)
+- components/ui/welcome.tsx (+16/-0)
+=======
 Timestamp: 2025-08-08T12:39:21.740Z
 Commit: a1875c21f7c6a69b25dbcec1396cdee62c5b8111
 Author: Codex
@@ -2571,6 +2587,7 @@ Files:
 - lib/offline/index.ts (+15/-0)
 - lib/offline/queue.ts (+23/-0)
 - public/sw.js (+33/-1)
+
 =======
 Timestamp: 2025-08-08T12:37:33.324Z
 Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
