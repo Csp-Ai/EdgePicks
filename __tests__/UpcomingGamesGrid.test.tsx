@@ -37,6 +37,11 @@ describe('UpcomingGamesGrid', () => {
     expect(onSelect).toHaveBeenCalled();
   });
 
+  it('shows empty state when no games match search', () => {
+    render(<UpcomingGamesGrid games={games} search="xyz" onSelect={jest.fn()} />);
+    expect(screen.getByTestId('empty-state')).toBeInTheDocument();
+  });
+
   it('error retry calls fetch again', () => {
     const onRetry = jest.fn();
     render(
