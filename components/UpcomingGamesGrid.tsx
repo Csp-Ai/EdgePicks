@@ -41,14 +41,33 @@ const UpcomingGamesGrid: React.FC<Props> = ({
   }
 
   if (isLoading) {
+    const SkeletonCard = () => (
+      <div
+        className="p-4 rounded-xl bg-slate-800/40 animate-pulse h-28 flex flex-col gap-3"
+        data-testid="game-skeleton"
+      >
+        <div className="flex justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-slate-700/40" />
+            <div className="w-20 h-3 rounded bg-slate-700/40" />
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-slate-700/40" />
+            <div className="w-20 h-3 rounded bg-slate-700/40" />
+          </div>
+        </div>
+        <div className="w-24 h-3 rounded bg-slate-700/40" />
+        <div className="flex gap-2">
+          <div className="w-12 h-4 rounded-full bg-slate-700/40" />
+          <div className="w-12 h-4 rounded-full bg-slate-700/40" />
+          <div className="w-12 h-4 rounded-full bg-slate-700/40" />
+        </div>
+      </div>
+    );
     return (
       <>
         {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="h-24 rounded-xl bg-slate-800/40 animate-pulse"
-            data-testid="game-skeleton"
-          />
+          <SkeletonCard key={i} />
         ))}
       </>
     );
