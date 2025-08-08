@@ -2750,6 +2750,19 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:04:07.631Z
+Commit: c6967cec9f106b361a5724e62b79793f3dd1b6d6
+Author: Codex
+Message: feat: add markdown story engine
+Files:
+- components/story/Footnote.tsx (+9/-0)
+- components/story/PullQuote.tsx (+10/-0)
+- components/story/Section.tsx (+15/-0)
+- components/story/StoryLayout.tsx (+59/-0)
+- components/story/index.ts (+5/-0)
+- content/stories/first-story.mdx (+16/-0)
+=======
+
 
 =======
 Timestamp: 2025-08-08T12:34:49.121Z
@@ -2792,5 +2805,6 @@ Files:
 - package.json (+2/-1)
 - test/utils/freezeRandom.ts (+14/-0)
 - test/utils/freezeTime.ts (+26/-0)
+
 
 
