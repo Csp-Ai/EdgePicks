@@ -1828,3 +1828,11 @@ Files:
 - pages/_app.tsx (+13/-0)
 - scripts/dev/commit-helper.ts (+27/-0)
 
+Timestamp: 2025-08-08T08:17:37.426Z
+Commit: 64702a5916578d5d107bedbeb3ab9af2f32289b9
+Author: Codex
+Message: test: stabilise agent docs snapshot
+Files:
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+41/-10)
+- __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
+
