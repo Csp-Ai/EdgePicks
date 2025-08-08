@@ -8,6 +8,7 @@ import React, {
 import upcoming from '../fixtures/demo/upcoming.json';
 import agentEvents from '../fixtures/demo/agent-events.json';
 import predictions from '../fixtures/demo/predictions.json';
+import { registerSW, unregisterSW } from './sw/registerSW';
 
 type DemoModeContext = { enabled: boolean; setEnabled(v: boolean): void };
 
@@ -25,9 +26,11 @@ export const DemoModeProvider: React.FC<{ children: React.ReactNode }> = ({
     if (typeof window === 'undefined') return;
     const original = window.fetch;
     if (!enabled) {
+      void unregisterSW();
       window.fetch = original;
       return;
     }
+    void registerSW();
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       const url =
         typeof input === 'string'

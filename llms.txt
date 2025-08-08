@@ -2158,6 +2158,17 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+
+Timestamp: 2025-08-08T11:15:08.862Z
+Commit: e264823d76976f268d261110636c6f15e4f88d91
+Author: Codex
+Message: feat: add service worker for demo predictions
+Files:
+- __tests__/sw.register.test.ts (+36/-0)
+- lib/demoMode.tsx (+3/-0)
+- lib/sw/registerSW.ts (+20/-0)
+- public/sw.js (+37/-0)
+=======
 Timestamp: 2025-08-08T11:14:17.547Z
 Commit: 09c54bd2985207ae4ccf9cbe0f65582c4ebd1843
 Author: Codex
@@ -2336,6 +2347,7 @@ Files:
 
 
 =======
+
 
 
 
