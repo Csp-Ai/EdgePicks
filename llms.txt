@@ -2158,3 +2158,12 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:11:56.734Z
+Commit: 63b003834ece721d3a28e6d0146a5c913d7c9644
+Author: Codex
+Message: feat(theme): persist selection
+Files:
+- __tests__/theme.persist.test.ts (+21/-0)
+- components/ThemeToggle.tsx (+4/-5)
+- lib/theme/persist.ts (+14/-0)
+

@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-
-const storageKey = 'theme';
+import { getStoredTheme, setStoredTheme } from '../lib/theme/persist';
 
 const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const stored = localStorage.getItem(storageKey);
+    const stored = getStoredTheme();
     const initial = stored ? stored === 'dark' : mq.matches;
     document.documentElement.classList.toggle('dark', initial);
     setIsDark(initial);
 
     const listener = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem(storageKey)) {
+      if (!getStoredTheme()) {
         document.documentElement.classList.toggle('dark', e.matches);
         setIsDark(e.matches);
       }
@@ -25,7 +24,7 @@ const ThemeToggle: React.FC = () => {
   const toggleTheme = () => {
     const html = document.documentElement;
     const next = html.classList.toggle('dark');
-    localStorage.setItem(storageKey, next ? 'dark' : 'light');
+    setStoredTheme(next ? 'dark' : 'light');
     setIsDark(next);
   };
 
