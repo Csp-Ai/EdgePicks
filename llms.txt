@@ -1846,3 +1846,13 @@ Files:
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
 
+Timestamp: 2025-08-08T08:38:41.900Z
+Commit: 969303c6124df130edd05016b69ff0b0e4a96cf2
+Author: Codex
+Message: feat: add beta onboarding flow
+Files:
+- components/Onboarding.tsx (+72/-0)
+- pages/_app.tsx (+2/-0)
+- pages/api/user/onboarding.ts (+46/-0)
+- supabase/migrations/20241015000000_create_user_profiles_table.sql (+4/-0)
+
