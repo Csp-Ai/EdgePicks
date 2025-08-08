@@ -1,0 +1,42 @@
+{
+  "predictions": [
+    {
+      "game": {
+        "homeTeam": { "name": "Alpha FC" },
+        "awayTeam": { "name": "Beta FC" },
+        "time": "2025-09-07T20:20:00Z"
+      },
+      "winner": "Alpha FC",
+      "confidence": 80,
+      "agents": {
+        "injuryScout": {
+          "team": "Alpha FC",
+          "reason": "Healthy lineup",
+          "score": 0.6,
+          "confidenceEstimate": 0.8
+        },
+        "lineWatcher": {
+          "team": "Alpha FC",
+          "reason": "Line shifted",
+          "score": 0.7,
+          "confidenceEstimate": 0.7
+        }
+      },
+      "agentScores": { "injuryScout": 0.6, "lineWatcher": 0.7 },
+      "executions": [
+        {
+          "name": "injuryScout",
+          "result": { "team": "Alpha FC", "reason": "Healthy lineup", "score": 0.6, "confidenceEstimate": 0.8 }
+        },
+        {
+          "name": "lineWatcher",
+          "result": { "team": "Alpha FC", "reason": "Line shifted", "score": 0.7, "confidenceEstimate": 0.7 }
+        }
+      ]
+    }
+  ],
+  "agentScores": { "injuryScout": 0.6, "lineWatcher": 0.7 },
+  "weightsUsed": {},
+  "timestamp": "2025-09-07T20:20:00Z",
+  "cacheVersion": "demo"
+}
