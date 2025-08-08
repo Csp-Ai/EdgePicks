@@ -1,5 +1,5 @@
 const ORIGINAL_DATE = Date;
-const FIXED_ISO = '2024-01-01T00:00:00.000Z';
+export const FIXED_ISO = '2024-01-01T00:00:00.000Z';
 
 export function freezeTime(iso: string = FIXED_ISO) {
   const fixed = new Date(iso);
@@ -18,6 +18,7 @@ export function freezeTime(iso: string = FIXED_ISO) {
   }
   // @ts-ignore
   global.Date = MockDate;
+  return resetTime;
 }
 
 export function resetTime() {
