@@ -2394,6 +2394,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T11:43:22.503Z
 Commit: 3f07fffcc182f3a2af0511848cbb3ea3220a6868
 Author: Codex
@@ -2401,6 +2402,24 @@ Message: Add Agent Card mini stories and docs
 Files:
 - docs/agents/mini.md (+10/-0)
 - stories/agents/AgentMini.stories.tsx (+110/-0)
+=======
+Timestamp: 2025-08-08T11:45:29.736Z
+Commit: 93730c799c14db6c8ddfc039f36dd2148a2601d5
+Author: Codex
+Message: feat: add referral link generator
+Files:
+- __tests__/referral.link.test.ts (+32/-0)
+- lib/referral/link.ts (+26/-0)
+=======
+
+Timestamp: 2025-08-08T11:43:08.923Z
+Commit: 8960b5d3983941c137c0120d515583c58f9581ef
+Author: Codex
+Message: feat: add confidence explainer
+Files:
+- __tests__/ConfidenceExplainer.test.tsx (+18/-0)
+- components/predictions/ConfidenceExplainer.tsx (+35/-0)
+
 =======
 
 Timestamp: 2025-08-08T11:43:09.068Z
@@ -2428,5 +2447,9 @@ Files:
 - components/marketing/ConversionPanel.tsx (+35/-0)
 
 
+
+
+
+=======
 
 
