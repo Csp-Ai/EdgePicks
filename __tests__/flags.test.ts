@@ -1,24 +1,37 @@
-import { getFlag, setFlag } from '../lib/flags';
+import { getFlag, setFlag } from '../lib/flags/flags';
+import { experiments } from '../lib/flags/experiments';
 
 describe('feature flags', () => {
   beforeEach(() => {
     localStorage.clear();
-    delete process.env.NEXT_PUBLIC_FLAG_TEST;
+    delete process.env.NEXT_PUBLIC_FF_DEMOMODE;
+    window.history.replaceState({}, '', '/');
   });
 
-  it('reads from localStorage before env', () => {
-    process.env.NEXT_PUBLIC_FLAG_TEST = '0';
-    setFlag('test', true);
-    expect(localStorage.getItem('edgepicks.flag.test')).toBe('1');
-    expect(getFlag('test')).toBe(true);
+  it('resolves in priority order', () => {
+    // default
+    expect(getFlag('demoMode')).toBe(experiments.demoMode);
+
+    // env overrides default
+    process.env.NEXT_PUBLIC_FF_DEMOMODE = 'on';
+    expect(getFlag('demoMode')).toBe(true);
+
+    // storage overrides env
+    setFlag('demoMode', false);
+    expect(getFlag('demoMode')).toBe(false);
+
+    // url overrides storage
+    window.history.replaceState({}, '', '/?ff.demoMode=on');
+    expect(getFlag('demoMode')).toBe(true);
   });
 
-  it('falls back to env when localStorage missing', () => {
-    process.env.NEXT_PUBLIC_FLAG_TEST = '1';
-    expect(getFlag('test')).toBe(true);
-  });
+  it('serializes and deserializes', () => {
+    setFlag('demoMode', true);
+    expect(localStorage.getItem('ff.demoMode')).toBe('on');
+    expect(getFlag('demoMode')).toBe(true);
 
-  it('returns false when unset', () => {
-    expect(getFlag('missing')).toBe(false);
+    setFlag('demoMode', false);
+    expect(localStorage.getItem('ff.demoMode')).toBe('off');
+    expect(getFlag('demoMode')).toBe(false);
   });
 });
