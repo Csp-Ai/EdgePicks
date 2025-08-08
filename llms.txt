@@ -1971,3 +1971,15 @@ Files:
 
 
 
+Timestamp: 2025-08-08T09:54:16.220Z
+Commit: 36ab87e5b5928fe47638d90db25291ac7e921ca0
+Author: Codex
+Message: feat(telemetry): Live Agent Log Stream with persistent filters (tests)
+Files:
+- __tests__/AgentLogStream.sse.test.tsx (+87/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- components/AgentLogStream.tsx (+118/-0)
+- package-lock.json (+24/-0)
+- package.json (+1/-0)
+- pages/logs/agents.tsx (+17/-0)
+
