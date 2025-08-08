@@ -11,6 +11,12 @@ interface AgentStatsRow {
   losses: number | null;
 }
 
+interface SnapshotRow {
+  agent: string;
+  weight: number | null;
+  ts: string;
+}
+
 export function computeWeight(
   { wins, losses }: AgentStats,
   {
@@ -27,6 +33,25 @@ export function computeWeight(
 }
 
 export async function getDynamicWeights(): Promise<Record<string, number>> {
+  // First try latest snapshots
+  const snapshotQuery = await supabase
+    .from('agent_weights_snapshot')
+    .select('agent, weight, ts')
+    .order('ts', { ascending: false })
+    .limit(100);
+  if (!snapshotQuery.error && snapshotQuery.data && snapshotQuery.data.length) {
+    const weights: Record<string, number> = {};
+    (snapshotQuery.data as SnapshotRow[]).forEach((row) => {
+      if (row.weight != null && weights[row.agent] === undefined) {
+        weights[row.agent] = row.weight;
+      }
+    });
+    if (Object.keys(weights).length) {
+      return weights;
+    }
+  }
+
+  // Fallback to computing from agent_stats
   const { data, error } = await supabase
     .from('agent_stats')
     .select('agent, wins, losses');

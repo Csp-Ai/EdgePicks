@@ -53,8 +53,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const flow = await loadFlow('football-pick');
-    const baseWeights = Object.fromEntries(registry.map((a) => [a.name, a.weight]));
-    const weights =
+    const baseWeights = Object.fromEntries(
+      registry.map((a) => [a.name, a.weight])
+    );
+    const weightsUsed =
       ENV.WEIGHTS_DYNAMIC === 'on'
         ? { ...baseWeights, ...(await getDynamicWeights()) }
         : baseWeights;
@@ -81,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const meta = agentMetaMap.get(name as AgentName);
         const result = outputs[name];
         if (!meta || !result) continue;
-        const weight = weights[name] ?? meta.weight;
+        const weight = weightsUsed[name] ?? meta.weight;
         scores[result.team] += result.score * weight;
         agentScores[name] = result.score;
         aggregatedAgentScores[name] =
@@ -139,7 +141,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     );
 
-    res.status(200).json({ predictions, agentScores, weights, timestamp, cacheVersion: ENV.FLOW_CACHE_VERSION });
+    res
+      .status(200)
+      .json({
+        predictions,
+        agentScores,
+        weightsUsed,
+        timestamp,
+        cacheVersion: ENV.FLOW_CACHE_VERSION,
+      });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to run predictions' });
