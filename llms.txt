@@ -2840,3 +2840,13 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:29.354Z
+Commit: 081ffed4772b7723f741cad952aa62dcdbadfe4a
+Author: Codex
+Message: feat(forms): add form primitives
+Files:
+- components/forms/Error.tsx (+23/-0)
+- components/forms/Field.tsx (+39/-0)
+- components/forms/Label.tsx (+20/-0)
+- stories/forms/Field.stories.tsx (+64/-0)
+
