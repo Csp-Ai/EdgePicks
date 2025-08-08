@@ -2158,6 +2158,14 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:14:17.547Z
+Commit: 09c54bd2985207ae4ccf9cbe0f65582c4ebd1843
+Author: Codex
+Message: feat: add native share
+Files:
+- components/PredictionDrawer.tsx (+7/-3)
+- lib/share/nativeShare.ts (+25/-0)
+=======
 
 Timestamp: 2025-08-08T11:13:12.692Z
 Commit: 8eca2c4d94ef3eabf519271562631859ac7efcf0
@@ -2328,6 +2336,7 @@ Files:
 
 
 =======
+
 
 
 
