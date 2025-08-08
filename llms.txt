@@ -2158,6 +2158,16 @@ Files:
 - package.json (+1/-1)
 - scripts/purge-cache.ts (+51/-0)
 
+Timestamp: 2025-08-08T11:13:52.003Z
+Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
+Author: Codex
+Message: feat: add glossary link component
+Files:
+- components/AgentCard.tsx (+2/-0)
+- components/GlossaryLink.tsx (+15/-0)
+- components/Navbar.tsx (+2/-0)
+=======
+
 
 
 Timestamp: 2025-08-08T11:17:57.539Z
@@ -2171,6 +2181,14 @@ Files:
 - lib/flags/experiments.ts (+11/-0)
 - lib/flags/flags.ts (+34/-0)
 - lib/flags/useFlag.ts (+9/-0)
+=======
+Timestamp: 2025-08-08T11:12:58.755Z
+Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
+Author: Codex
+Message: feat: improve AgentStatusPanel accessibility
+Files:
+- components/AgentStatusPanel.tsx (+17/-8)
+
 =======
 Timestamp: 2025-08-08T11:20:31.007Z
 Commit: bdf022d1b33ecb1aabf3ea4f894595e26e930e91
@@ -2301,6 +2319,7 @@ Files:
 
 
 =======
+
 
 
 
