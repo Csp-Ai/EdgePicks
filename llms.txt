@@ -2562,3 +2562,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T12:47:52.181Z
+Commit: c91433642353fe2e0ab56c734157da950ce71ca9
+Author: Codex
+Message: Add pricing teaser modal
+Files:
+- __tests__/marketing/PricingTeaser.test.tsx (+32/-0)
+- components/marketing/PricingTeaser.tsx (+49/-0)
+
