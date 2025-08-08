@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:43.578Z
+Commit: e4bccd0a83c64e5de65f8c4e54caa5f81dc98737
+Author: Codex
+Message: feat: add error boundary with retry
+Files:
+- __tests__/SystemErrorBoundary.test.tsx (+58/-0)
+- components/system/ErrorBoundary.tsx (+48/-0)
+
