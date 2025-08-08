@@ -1450,4 +1450,22 @@ Files:
 - pages/api/run-agents.ts (+2/-1)
 - pages/api/run-predictions.ts (+2/-1)
 
+Timestamp: 2025-08-08T04:29:55.348Z
+Commit: 95c7b09de4b3c64b3760992ef0b42ef6c79b127a
+Author: Codex
+Message: feat: wire agents to live data
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/agents/fixtures/injuries.json (+5/-0)
+- __tests__/agents/fixtures/odds.json (+34/-0)
+- __tests__/agents/fixtures/stats.json (+4/-0)
+- __tests__/agents/injuryScout.test.ts (+22/-0)
+- __tests__/agents/lineWatcher.test.ts (+22/-0)
+- __tests__/agents/statCruncher.test.ts (+22/-0)
+- lib/agents/injuryScout.ts (+16/-5)
+- lib/agents/lineWatcher.ts (+35/-4)
+- lib/agents/statCruncher.ts (+17/-6)
+- lib/data/stats.ts (+36/-0)
+=======
+
 
