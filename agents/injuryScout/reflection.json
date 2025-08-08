@@ -1,0 +1,20 @@
+{
+  "agentId": "injuryScout",
+  "windowDays": 14,
+  "correctPct": 50,
+  "samples": 2,
+  "avgConfCorrect": 0.8,
+  "avgConfWrong": 0.9,
+  "commonFailureModes": [
+    "Issues vs C"
+  ],
+  "changeHints": [
+    "Calibrate confidence on misses"
+  ],
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "inputsPreview": {
+    "team": "A",
+    "opponent": "B"
+  },
+  "summary": "Over last 14 days, accuracy was 50.0%. Issues vs C"
+}

@@ -1,0 +1,16 @@
+{
+  "agentId": "lineWatcher",
+  "windowDays": 14,
+  "correctPct": 100,
+  "samples": 1,
+  "avgConfCorrect": 0.7,
+  "avgConfWrong": 0,
+  "commonFailureModes": [],
+  "changeHints": [],
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "inputsPreview": {
+    "team": "D",
+    "opponent": "E"
+  },
+  "summary": "Over last 14 days, accuracy was 100.0%. No notable failures."
+}
