@@ -2159,6 +2159,16 @@ Files:
 - scripts/purge-cache.ts (+51/-0)
 
 
+Timestamp: 2025-08-08T11:15:16.055Z
+Commit: d4af1c627c1083af9b39e0b2d47d56cff42d2939
+Author: Codex
+Message: feat: add agent builder wizard
+Files:
+- __tests__/agent-builder.test.tsx (+23/-0)
+- components/agent-builder/Wizard.tsx (+73/-0)
+- lib/agent-builder/schema.ts (+9/-0)
+=======
+
 Timestamp: 2025-08-08T11:14:21.847Z
 Commit: 138f8927dc9fc40a30e989392427ebfd05c19f47
 Author: Codex
@@ -2252,6 +2262,7 @@ Files:
 
 
 =======
+
 
 
 
