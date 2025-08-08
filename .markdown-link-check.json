@@ -1,0 +1,6 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^mailto:" },
+    { "pattern": "contributor-covenant.org" }
+  ]
+}
