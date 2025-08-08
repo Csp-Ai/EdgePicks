@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:58:29.912Z
+Commit: cbaa9fd5f88c680a4244beddba8e5eec87e63f95
+Author: Codex
+Message: Add empty state component with variants
+Files:
+- components/ui/Empty.tsx (+51/-0)
+- stories/Empty.stories.tsx (+28/-0)
+
