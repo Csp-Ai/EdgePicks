@@ -12,11 +12,14 @@ describe('AppHeader', () => {
     (useSession as jest.Mock).mockReturnValue({ data: null, status: 'unauthenticated' });
   });
 
-  it('renders navigation and sign in button', () => {
+  it('renders centered navigation and sign in button', () => {
     render(<AppHeader />);
     expect(screen.getByText('EdgePicks')).toBeInTheDocument();
-    expect(screen.getByText('Predictions')).toBeInTheDocument();
-    expect(screen.getAllByText('Sign in with Google')).toHaveLength(1);
+    expect(screen.getByText('Live')).toBeInTheDocument();
+    const nav = screen.getByRole('navigation');
+    expect(nav).toHaveClass('justify-center');
+    const btn = screen.getByRole('button', { name: 'Sign in with Google' });
+    expect(btn).toHaveClass('focus:ring-2');
   });
 
   it('hides sign in when authenticated', () => {

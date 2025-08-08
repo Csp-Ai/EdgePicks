@@ -1,99 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { AgentName, AgentOutputs } from '../lib/types';
-import { formatAgentName } from '../lib/utils';
-import { supabase } from '../lib/supabaseClient';
-import EmptyState from '../components/EmptyState';
+import React from 'react';
+import useSWR from 'swr';
 
-interface MatchupRow {
+interface LogEntry {
   id: string;
-  team_a: string;
-  team_b: string;
-  agents: AgentOutputs;
-  pick: {
-    winner: string;
-    confidence: number;
-  };
-  actual_winner: string | null;
+  ts: string;
+  level: string;
+  message: string;
+  meta?: Record<string, any>;
 }
 
+interface LogsResponse {
+  items: LogEntry[];
+}
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const HistoryPage: React.FC = () => {
-  const [matchups, setMatchups] = useState<MatchupRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, error, isLoading, mutate } = useSWR<LogsResponse>('/api/logs', fetcher);
 
-  useEffect(() => {
-    const fetchMatchups = async () => {
-      const { data, error } = await supabase
-        .from('matchups')
-        .select('id, team_a, team_b, agents, pick, actual_winner')
-        .order('created_at', { ascending: false });
-
-      if (error || !data) {
-        console.error('Error fetching matchups', error);
-        setMatchups([]);
-      } else {
-        setMatchups(data as MatchupRow[]);
-      }
-      setLoading(false);
-    };
-
-    fetchMatchups();
-  }, []);
+  let content: React.ReactNode;
+  if (isLoading) {
+    content = (
+      <ul className="space-y-2 max-w-3xl mx-auto">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <li key={i} className="h-6 bg-gray-200 rounded animate-pulse" />
+        ))}
+      </ul>
+    );
+  } else if (error) {
+    content = (
+      <div className="text-center">
+        <p className="mb-4 text-red-600">Failed to load logs.</p>
+        <button className="text-blue-600 underline" onClick={() => mutate()}>
+          Retry
+        </button>
+      </div>
+    );
+  } else if (!data || data.items.length === 0) {
+    content = <p className="text-center">No logs yet.</p>;
+  } else {
+    content = (
+      <ul className="space-y-4 max-w-3xl mx-auto">
+        {data.items.map((item) => (
+          <li key={item.id} className="bg-white rounded-lg shadow p-4">
+            <div className="text-xs text-gray-500 mb-1">
+              {item.ts} &middot; {item.level}
+            </div>
+            <div className="text-sm whitespace-pre-line">{item.message}</div>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 p-6" suppressHydrationWarning>
       <header className="text-center mb-8">
-        <h1 className="text-3xl font-mono font-bold">Matchup History</h1>
-        <p className="text-gray-600">Previous agent predictions</p>
+        <h1 className="text-3xl font-mono font-bold">Log History</h1>
+        <p className="text-gray-600">Recent system logs</p>
       </header>
-      {loading ? (
-        <div className="flex items-center justify-center h-64">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
-        </div>
-      ) : matchups.length === 0 ? (
-        <EmptyState message="No data" />
-      ) : (
-        <div className="space-y-6 max-w-3xl mx-auto">
-          {matchups.map((m) => (
-            <div key={m.id} className="bg-white rounded-lg shadow p-6">
-              <h3 className="font-semibold mb-4">
-                {m.team_a} <span className="text-gray-400">vs</span> {m.team_b}
-              </h3>
-              <ul className="space-y-3 mb-4 text-sm">
-                {(Object.keys(m.agents) as AgentName[]).map((name) => {
-                  const result = m.agents[name];
-                  return (
-                    <li key={name} className="p-3 bg-gray-50 rounded">
-                      <div className="font-medium">
-                        {formatAgentName(name)}: {result.team}
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        Score: {result.score.toFixed(2)} – {result.reason}
-                      </div>
-                      {result.warnings && result.warnings.length > 0 && (
-                        <ul className="mt-1 text-xs text-yellow-700 list-disc pl-4">
-                          {result.warnings.map((w, i) => (
-                            <li key={i}>{w}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-              <div className="text-sm">
-                <span className="font-medium">Prediction:</span> {m.pick.winner}
-                <span className="ml-2 font-medium">Outcome:</span>{' '}
-                {m.actual_winner ?? 'N/A'}
-                <span className="ml-2 font-medium">Confidence:</span>{' '}
-                {Math.round(m.pick.confidence * 100)}%
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      {content}
     </main>
   );
 };
 
 export default HistoryPage;
-

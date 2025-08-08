@@ -1,13 +1,35 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import fs from 'fs/promises';
+import path from 'path';
 
 import { registry as agentRegistry } from '../../lib/agents/registry';
 import type { AgentMeta, AgentName } from '../../lib/agents/registry';
 
-import {
-  readAgentLog,
-  getAllAgentLogs,
-  clearAgentLogs,
-} from '../../lib/agentLogsStore';
+import { readAgentLog, clearAgentLogs } from '../../lib/agentLogsStore';
+import { ENV } from '../../lib/env';
+
+interface LogEntry {
+  id: string;
+  ts: string;
+  level: string;
+  message: string;
+  meta?: Record<string, any>;
+}
+
+function parseLlms(raw: string): LogEntry[] {
+  const blocks = raw.split(/Timestamp:\s*/).slice(1);
+  return blocks.map((block, idx) => {
+    const lines = block.split('\n');
+    const ts = lines[0]?.trim() ?? '';
+    const message = lines.slice(1).join('\n').trim();
+    return {
+      id: String(idx),
+      ts,
+      level: 'info',
+      message,
+    };
+  });
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const agentMetaMap = new Map<AgentName, AgentMeta>(
@@ -35,8 +57,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       return;
     }
-    const logs = await getAllAgentLogs();
-    res.status(200).json(logs);
+    if (ENV.LIVE_MODE !== 'on') {
+      const mock: LogEntry[] = [
+        {
+          id: 'mock-1',
+          ts: '2025-01-01T00:00:00.000Z',
+          level: 'info',
+          message: 'mock log entry',
+        },
+      ];
+      res.status(200).json({ items: mock });
+      return;
+    }
+    try {
+      const filePath = path.join(process.cwd(), 'llms.txt');
+      const raw = await fs.readFile(filePath, 'utf8');
+      const items = parseLlms(raw);
+      res.status(200).json({ items });
+    } catch {
+      res.status(500).json({ items: [] });
+    }
     return;
   }
 
