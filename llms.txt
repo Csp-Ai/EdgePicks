@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:43:16.706Z
+Commit: b12c12531658ffd771b992fd8448eabb3ecdf87c
+Author: Codex
+Message: feat: add guest conversion panel
+Files:
+- __tests__/marketing/ConversionPanel.test.tsx (+26/-0)
+- components/marketing/ConversionPanel.tsx (+35/-0)
+
