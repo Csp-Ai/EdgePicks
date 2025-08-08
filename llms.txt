@@ -2840,6 +2840,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T13:57:57.992Z
 Commit: b23e9e49ce3501cb900c7b3233cdb72e773b6216
 Author: Codex
@@ -2849,4 +2850,74 @@ Files:
 - components/viz/Line.tsx (+72/-0)
 - components/viz/Spark.tsx (+13/-0)
 - stories/LightweightCharts.stories.tsx (+24/-0)
+=======
+
+Timestamp: 2025-08-08T13:28:58.377Z
+Commit: db59429060b7161fda47ab4cbf1418ecc85985b8
+Author: Codex
+Message: feat: add confidence explainer tooltip
+Files:
+- components/edu/ConfidenceExplainer.tsx (+49/-0)
+=======
+Timestamp: 2025-08-08T13:29:34.158Z
+Commit: a3310c5cc80c3dd8e944fef7413cb8700659d71a
+Author: Codex
+Message: feat: add agent mini-cards and demo grid
+Files:
+- components/agents/MiniCard.tsx (+27/-0)
+- fixtures/demo/agent-metrics.json (+7/-0)
+- stories/agents/AgentMini.stories.tsx (+19/-103)
+=======
+
+Timestamp: 2025-08-08T13:29:24.150Z
+Commit: 42467cb70fc736fdce584571c0a56eab39bc4f9c
+Author: Codex
+Message: feat: add client-only feature flags
+Files:
+- components/dev/FlagSwitch.tsx (+44/-0)
+- lib/flags/clientFlags.ts (+40/-0)
+=======
+
+Timestamp: 2025-08-08T13:34:43.578Z
+Commit: e4bccd0a83c64e5de65f8c4e54caa5f81dc98737
+Author: Codex
+Message: feat: add error boundary with retry
+Files:
+- __tests__/SystemErrorBoundary.test.tsx (+58/-0)
+- components/system/ErrorBoundary.tsx (+48/-0)
+=======
+
+Timestamp: 2025-08-08T13:59:49.441Z
+Commit: 8c50a4a2d6fe3480ce32016589618d986ea1ff1b
+Author: Codex
+Message: feat: add keyboard shortcut overlay
+Files:
+- components/a11y/Keymap.tsx (+67/-0)
+=======
+Timestamp: 2025-08-08T14:12:40.878Z
+Commit: f41ffc8567523da6e794460e5f1e0708f92b1929
+Author: Codex
+Message: feat: add accessible modal
+Files:
+- __tests__/modal.a11y.test.tsx (+14/-0)
+- components/ui/Modal.tsx (+79/-0)
+- stories/Modal.stories.tsx (+21/-0)
+=======
+Timestamp: 2025-08-08T13:31:45.299Z
+Commit: 6ed9b369bf7e56f15fd184ad9470679efd748f5b
+Author: Codex
+Message: feat: add promise-aware toast system
+Files:
+- app/(shell)/toast-demo/page.tsx (+21/-0)
+- components/ui/toaster.tsx (+56/-5)
+- components/ui/welcome.tsx (+2/-2)
+- lib/offline/index.ts (+11/-5)
+- lib/ui/toast.ts (+39/-0)
+- lib/useToast.ts (+0/-62)
+- pages/_app.tsx (+3/-3)
+
+
+
+
+
 
