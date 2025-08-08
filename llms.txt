@@ -2841,6 +2841,22 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:59:26.090Z
+Commit: 8d00ccf6bd0b7384b8274aa480bc8a39f45fa91a
+Author: Codex
+Message: feat: add reusable skeleton component
+Files:
+- components/ui/skeleton.tsx (+9/-2)
+- tailwind.config.js (+8/-0)
+
+Timestamp: 2025-08-08T13:59:46.016Z
+Commit: 4545e42e13528d4dfefa344e02b2cc3206166a42
+Author: Codex
+Message: chore: add skeleton stories
+Files:
+- stories/Skeleton.stories.tsx (+48/-0)
+=======
+
 Timestamp: 2025-08-08T13:34:40.538Z
 Commit: d04f7c88eccec59a239e11d59abdf5ebfa51f6df
 Author: Codex
