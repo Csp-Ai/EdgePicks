@@ -8,7 +8,7 @@ import { ENV } from '../lib/env';
 jest.mock('next-auth/next');
 jest.mock('../lib/flow/runFlow');
 jest.mock('../lib/flow/loadFlow');
-jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn() }));
+jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn(), logMatchup: jest.fn() }));
 jest.mock('../lib/server/logEvent', () => ({ logEvent: jest.fn() }));
 jest.mock('../lib/weights');
 
@@ -60,7 +60,7 @@ describe('run-predictions dynamic weights', () => {
 
     expect(mockedWeights).toHaveBeenCalled();
     const data = json.mock.calls[0][0];
-    expect(data.weights.injuryScout).toBe(0.8);
+    expect(data.weightsUsed.injuryScout).toBe(0.8);
     expect(data.predictions[0].confidence).toBe(72);
   });
 
@@ -82,7 +82,7 @@ describe('run-predictions dynamic weights', () => {
     await handler(req, res);
 
     const data = json.mock.calls[0][0];
-    expect(data.weights.injuryScout).toBe(0.5);
+    expect(data.weightsUsed.injuryScout).toBe(0.5);
     expect(data.predictions[0].confidence).toBe(45);
   });
 });

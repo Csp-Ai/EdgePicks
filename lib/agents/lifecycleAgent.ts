@@ -1,5 +1,5 @@
 import type { AgentLifecycle, AgentName, Matchup, AgentOutputs, PickSummary } from '../types';
-import { logToSupabase } from '../logToSupabase';
+import { logMatchup } from '../logToSupabase';
 
 // Listen for agent lifecycle events and log them. Optionally persists
 // the event to Supabase using the existing logToSupabase helper when a
@@ -17,7 +17,7 @@ export function lifecycleAgent(
       confidence: event.durationMs ?? 0,
       topReasons: [`status: ${event.status}`],
     };
-    logToSupabase(matchup, agents, pick, null, 'lifecycle');
+    logMatchup(matchup, agents, pick, null, 'lifecycle');
   } catch (err) {
     console.error('[lifecycleAgent] failed to log to Supabase:', err);
   }

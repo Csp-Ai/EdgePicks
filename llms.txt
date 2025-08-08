@@ -1639,4 +1639,96 @@ Files:
 - components/PredictionDrawer.tsx (+36/-12)
 - lib/analytics/logUiEvent.ts (+33/-0)
 - lib/hooks/useEventSource.ts (+41/-2)
+=======
+
+Timestamp: 2025-08-08T06:01:23.168Z
+Commit: 1fde5c5b6505b336c8f10b4504620d89fe4ccafe
+Author: Codex
+Message: feat: snapshot dynamic weights
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-13)
+- __tests__/llmsLog.test.ts (+0/-1)
+- __tests__/runPredictions.weights.test.ts (+2/-2)
+- __tests__/weights.snapshot.test.ts (+44/-0)
+- lib/weights/index.ts (+25/-0)
+- pages/admin/weights.tsx (+86/-0)
+- pages/api/run-predictions.ts (+14/-4)
+- scripts/snapshotWeights.ts (+40/-0)
+- supabase/migrations/20240915000000_create_agent_weights_snapshot_table.sql (+9/-0)
+=======
+
+Timestamp: 2025-08-08T05:55:43.160Z
+Commit: 04fe0dfb7156e76c7092c45864487d5fa573581e
+Author: Codex
+Message: feat(db): add rls policies and tests
+Files:
+- .github/workflows/ci-tests.yml (+21/-0)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+26/-3)
+- db/policies.test.sql (+60/-18)
+- docs/db-schema.md (+26/-3)
+- supabase/migrations/20240901000000_add_indexes_and_rls.sql (+27/-6)
+- supabase/schema.sql (+26/-3)
+=======
+Timestamp: 2025-08-08T05:56:22.247Z
+Commit: 886484ad67ff08a052737703cd0e235e0526fb72
+Author: Codex
+Message: feat: guard live APIs with auth
+Files:
+- README.md (+7/-5)
+- __tests__/__snapshots__/apiContracts.test.ts.snap (+22/-0)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-13)
+- __tests__/apiContracts.test.ts (+25/-2)
+- __tests__/devlogin.test.ts (+2/-20)
+- __tests__/llmsLog.test.ts (+0/-1)
+- __tests__/runAgents.auth.test.ts (+6/-6)
+- __tests__/runAgentsApi.test.ts (+10/-1)
+- middleware.ts (+27/-1)
+- pages/api/dev-login.ts (+3/-4)
+- pages/api/logs.ts (+9/-0)
+- pages/api/run-agents.ts (+2/-3)
+- pages/api/run-predictions.ts (+10/-5)
+=======
+Timestamp: 2025-08-08T05:57:18.828Z
+Commit: 2ac3632c371cee1fc090894dbd77fa6afb52c0ce
+Author: Codex
+Message: feat: harden live data adapters with caching and circuit breaker
+Files:
+- __tests__/adapters.circuit.test.ts (+26/-0)
+- __tests__/adapters.contract.test.ts (+42/-0)
+- __tests__/llmsLog.test.ts (+0/-1)
+- docs/api.md (+8/-0)
+- lib/analytics/logUiEvent.ts (+9/-0)
+- lib/data/injuries.ts (+65/-12)
+- lib/data/odds.ts (+87/-30)
+- lib/data/stats.ts (+60/-11)
+
+
+
+
+Timestamp: 2025-08-08T06:30:19.837Z
+Commit: c29ef23d1d3dd33863275364a57a0945637f2a92
+Author: Codex
+Message: feat: add supabase event tables and unify logging
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/docs/__snapshots__/refreshDocs.snap.test.ts.snap (+34/-2)
+- __tests__/logging.pipeline.test.ts (+41/-0)
+- __tests__/runPredictions.weights.test.ts (+1/-1)
+- docs/api.md (+0/-8)
+- docs/db-schema.md (+34/-2)
+- jest.setup.ts (+8/-0)
+- lib/agents/lifecycleAgent.ts (+2/-2)
+- lib/analytics/logUiEvent.ts (+2/-1)
+- lib/api.ts (+13/-1)
+- lib/logToSupabase.ts (+53/-65)
+- lib/logUiEvent.test.js (+7/-11)
+- lib/logUiEvent.ts (+20/-25)
+- lib/server/logEvent.ts (+0/-12)
+- pages/api/log-status.ts (+20/-3)
+- pages/api/logs.ts (+2/-2)
+- pages/api/run-predictions.ts (+32/-11)
+- pages/api/upcoming-games.ts (+2/-2)
+- supabase/migrations/20240920000000_create_event_tables.sql (+38/-0)
+- supabase/schema.sql (+34/-2)
+
 

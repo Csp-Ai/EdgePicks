@@ -13,7 +13,6 @@ afterAll(() => {
   unfreeze();
 });
 
-=======
 // Snapshot hash is sensitive to timestamps inside llms.txt. We freeze time so it
 // remains stable. Update the snapshot if the frozen ISO changes.
 

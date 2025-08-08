@@ -4,7 +4,7 @@ import { fetchOdds, type OddsGame } from '../../lib/data/odds';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
-import { logToSupabase } from '../../lib/logToSupabase';
+import { logMatchup } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 import { formatKickoff } from '../../lib/utils/formatKickoff';
 import pLimit from 'p-limit';
@@ -139,7 +139,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
               const pickSummary: PickSummary = { winner, confidence: confidenceRaw, topReasons };
 
-              logToSupabase(
+              logMatchup(
                 { ...game },
                 outputs as AgentOutputs,
                 pickSummary,

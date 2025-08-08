@@ -1,20 +1,15 @@
 import { supabase } from './supabaseClient';
-import { AgentOutputs, Matchup, PickSummary } from './types';
-import { recomputeAccuracy, recordAgentOutcomes } from './accuracy';
 import { getQueueDriver } from './infra/queue';
+import type { AgentOutputs, Matchup, PickSummary } from './types';
+import { recomputeAccuracy, recordAgentOutcomes } from './accuracy';
 
-type LogEntry = {
-  matchup: Matchup;
-  agents: AgentOutputs;
-  pick: PickSummary;
-  actualWinner: string | null;
-  flow: string;
-  isAutoPick?: boolean;
-  extras?: Record<string, any>;
-  loggedAt: string;
+interface QueueEntry {
+  table: string;
+  row: Record<string, any>;
   attempts: number;
-};
-const QUEUE_NAME = 'matchup-logs';
+}
+
+const QUEUE_NAME = 'supabase-logs';
 const queue = getQueueDriver();
 let processing = false;
 let lastError: string | null = null;
@@ -22,54 +17,36 @@ const MAX_ATTEMPTS = 5;
 const BASE_DELAY_MS = 1000;
 
 async function processQueue() {
-  if (processing) {
-    return;
-  }
+  if (processing) return;
   processing = true;
-  const entry = await queue.dequeue<LogEntry>(QUEUE_NAME);
+  const entry = await queue.dequeue<QueueEntry>(QUEUE_NAME);
   if (!entry) {
     processing = false;
     return;
   }
   let retryDelay: number | null = null;
   try {
-    const { data: inserted, error } = await supabase
-      .from('matchups')
-      .insert({
-        team_a: entry.matchup.homeTeam,
-        team_b: entry.matchup.awayTeam,
-        match_day: entry.matchup.matchDay,
-        agents: entry.agents,
-        pick: entry.pick,
-        flow: entry.flow,
-        actual_winner: entry.actualWinner,
-        is_auto_pick: entry.isAutoPick,
-        extras: entry.extras,
-        created_at: entry.loggedAt,
-      })
-      .select('id')
-      .single();
-
-    if (error) {
-      throw error;
-    }
-
+    const { table, row } = entry;
+    const insertBuilder = supabase.from(table).insert(row);
+    const exec = (insertBuilder as any).select
+      ? (insertBuilder as any).select('id').single()
+      : insertBuilder;
+    const { data: inserted, error } = await exec;
+    if (error) throw error;
     lastError = null;
-    if (entry.actualWinner && inserted) {
+    if (table === 'matchups' && row.actual_winner && inserted) {
       await recordAgentOutcomes(
         inserted.id,
-        entry.agents,
-        entry.actualWinner,
-        entry.loggedAt
-      ).catch((err) =>
-        console.error('Error recording agent outcomes:', err)
-      );
+        row.agents,
+        row.actual_winner,
+        row.created_at
+      ).catch((err) => console.error('Error recording agent outcomes:', err));
       recomputeAccuracy().catch((err) =>
         console.error('Error updating accuracy metrics:', err)
       );
     }
   } catch (err: any) {
-    console.error('Error inserting matchup log:', err);
+    console.error('Error inserting log:', err);
     lastError = err.message || String(err);
     entry.attempts += 1;
     if (entry.attempts < MAX_ATTEMPTS) {
@@ -91,7 +68,24 @@ async function processQueue() {
   }
 }
 
-export function logToSupabase(
+export function logToSupabase(table: string, row: Record<string, any>): string {
+  const created = row.created_at || new Date().toISOString();
+  void queue.enqueue(QUEUE_NAME, { table, row: { ...row, created_at: created }, attempts: 0 });
+  setImmediate(processQueue);
+  return created;
+}
+
+export async function flushLogQueue() {
+  while ((await queue.size(QUEUE_NAME)) > 0) {
+    await processQueue();
+  }
+}
+
+export async function getLogStatus() {
+  return { pending: await queue.size(QUEUE_NAME), lastError };
+}
+
+export function logMatchup(
   matchup: Matchup,
   agents: AgentOutputs,
   pick: PickSummary,
@@ -99,27 +93,21 @@ export function logToSupabase(
   flow: string = 'unknown',
   isAutoPick: boolean = false,
   extras: Record<string, any> = {},
+  correlationId?: string,
   loggedAt: string = new Date().toISOString()
-): string {
-  void queue.enqueue(QUEUE_NAME, {
-    matchup,
+) {
+  const row = {
+    team_a: matchup.homeTeam,
+    team_b: matchup.awayTeam,
+    match_day: matchup.matchDay,
     agents,
     pick,
-    actualWinner,
     flow,
-    isAutoPick,
-    extras,
-    loggedAt,
-    attempts: 0,
-  });
-  setImmediate(processQueue);
+    actual_winner: actualWinner,
+    is_auto_pick: isAutoPick,
+    extras: { ...extras, correlation_id: correlationId },
+    created_at: loggedAt,
+  };
+  logToSupabase('matchups', row);
   return loggedAt;
 }
-
-export async function getLogStatus() {
-  return {
-    pending: await queue.size(QUEUE_NAME),
-    lastError,
-  };
-}
-

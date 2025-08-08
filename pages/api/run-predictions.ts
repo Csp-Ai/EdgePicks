@@ -10,7 +10,7 @@ import { ENV } from '../../lib/env';
 import { getDynamicWeights } from '../../lib/weights';
 
 import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
-import { logToSupabase } from '../../lib/logToSupabase';
+import { logMatchup, logToSupabase } from '../../lib/logToSupabase';
 import { logEvent } from '../../lib/server/logEvent';
 
 interface Game {
@@ -29,10 +29,14 @@ interface Prediction {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) {
-    res.status(401).json({ error: 'Unauthorized' });
-    return;
+  const liveMode = ENV?.LIVE_MODE ?? 'off';
+  let session: any = null;
+  if (liveMode === 'on') {
+    session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      res.status(401).json({ error: 'auth_required' });
+      return;
+    }
   }
 
   if (req.method !== 'POST') {
@@ -53,14 +57,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const flow = await loadFlow('football-pick');
-    const baseWeights = Object.fromEntries(registry.map((a) => [a.name, a.weight]));
-    const weights =
+    const baseWeights = Object.fromEntries(
+      registry.map((a) => [a.name, a.weight])
+    );
+    const weightsUsed =
       ENV.WEIGHTS_DYNAMIC === 'on'
         ? { ...baseWeights, ...(await getDynamicWeights()) }
         : baseWeights;
     const predictions: Prediction[] = [];
     const aggregatedAgentScores: Record<string, number> = {};
 
+    const correlationId =
+      req.headers['x-correlation-id']?.toString() || crypto.randomUUID();
     for (const g of games || []) {
       const matchup: Matchup = {
         homeTeam: g.homeTeam.name,
@@ -81,7 +89,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const meta = agentMetaMap.get(name as AgentName);
         const result = outputs[name];
         if (!meta || !result) continue;
-        const weight = weights[name] ?? meta.weight;
+        const weight = weightsUsed[name] ?? meta.weight;
         scores[result.team] += result.score * weight;
         agentScores[name] = result.score;
         aggregatedAgentScores[name] =
@@ -106,7 +114,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         topReasons,
       };
 
-      logToSupabase(matchup, outputs as AgentOutputs, pickSummary, null, 'run-predictions');
+      logMatchup(
+        matchup,
+        outputs as AgentOutputs,
+        pickSummary,
+        null,
+        'run-predictions',
+        false,
+        {},
+        correlationId,
+      );
+
+      const userId =
+        (session as any)?.user?.id || (session as any)?.user?.email || undefined;
+      executions.forEach((exec) => {
+        logToSupabase('agent_events', {
+          correlation_id: correlationId,
+          agent_id: exec.name,
+          event: exec.error ? 'error' : 'result',
+          metadata: exec.error ? exec.errorInfo : exec.result,
+          user_id: userId,
+          created_at: new Date().toISOString(),
+        });
+      });
 
       predictions.push({
         game: g,
@@ -130,16 +160,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.warn('Mock data is being used for predictions.');
     }
 
-    await logEvent(
-      'run-predictions',
-      { league },
-      {
-        requestId: req.headers['x-request-id']?.toString() || crypto.randomUUID(),
-        userId: (session.user as any)?.id || (session.user as any)?.email || undefined,
-      }
-    );
+    const userId =
+      (session as any)?.user?.id || (session as any)?.user?.email || undefined;
+    await logEvent('run-predictions', { league }, {
+      requestId: correlationId,
+      userId,
+    });
 
-    res.status(200).json({ predictions, agentScores, weights, timestamp, cacheVersion: ENV.FLOW_CACHE_VERSION });
+    res
+      .status(200)
+      .json({
+        predictions,
+        agentScores,
+        weightsUsed,
+        timestamp,
+        cacheVersion: ENV.FLOW_CACHE_VERSION,
+      });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to run predictions' });

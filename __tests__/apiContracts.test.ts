@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
+import { getServerSession } from 'next-auth/next';
 
 // Schemas
 const agentResultSchema = z.object({
@@ -25,6 +26,8 @@ const runAgentsMockSchema = z.object({
   ),
   final: z.object({ winner: z.string(), confidence: z.number() }),
 });
+
+const authErrorSchema = z.object({ error: z.literal('auth_required') });
 
 const upcomingGameSchema = z
   .object({
@@ -52,6 +55,7 @@ jest.mock('../lib/logToSupabase', () => ({ logToSupabase: jest.fn() }));
 jest.mock('../lib/utils/fallbackMatchups', () => ({ getFallbackMatchups: jest.fn(() => []) }));
 jest.mock('../lib/utils/formatKickoff', () => ({ formatKickoff: () => '' }));
 jest.mock('../lib/agents/registry', () => ({ registry: [] }));
+jest.mock('next-auth/next');
 
 const runAgentsHandler = require('../pages/api/run-agents').default;
 const upcomingGamesHandler = require('../pages/api/upcoming-games').default;
@@ -68,6 +72,11 @@ describe('API contract schemas', () => {
     expect(schema).toMatchSnapshot();
   });
 
+  test('auth error schema snapshot', () => {
+    const schema = zodToJsonSchema(authErrorSchema, 'AuthError');
+    expect(schema).toMatchSnapshot();
+  });
+
   test('upcoming-games schema snapshot', () => {
     const schema = zodToJsonSchema(upcomingGamesSchema, 'UpcomingGames');
     expect(schema).toMatchSnapshot();
@@ -77,16 +86,16 @@ describe('API contract schemas', () => {
 describe('run-agents API contract', () => {
   const { runFlow } = require('../lib/flow/runFlow');
   const { fetchSchedule } = require('../lib/data/schedule');
+  const mockedGetSession = getServerSession as jest.Mock;
 
   afterEach(() => {
     jest.clearAllMocks();
-    delete process.env.NEXT_PUBLIC_MOCK_AUTH;
     ENV.LIVE_MODE = 'off';
   });
 
   it('validates live response', async () => {
     ENV.LIVE_MODE = 'on';
-    process.env.NEXT_PUBLIC_MOCK_AUTH = '1';
+    mockedGetSession.mockResolvedValue({ user: { id: '1' } });
     (runFlow as jest.Mock).mockResolvedValue({
       outputs: {
         injuryScout: { team: 'A', score: 0.7, reason: 'ok' },
@@ -107,6 +116,7 @@ describe('run-agents API contract', () => {
 
   it('validates mock response', async () => {
     ENV.LIVE_MODE = 'off';
+    mockedGetSession.mockResolvedValue(null);
     const req = { method: 'POST', body: { league: 'NFL', gameId: '1' } } as NextApiRequest;
     const json = jest.fn();
     const res = { status: jest.fn(() => ({ json })) } as unknown as NextApiResponse;
@@ -114,6 +124,19 @@ describe('run-agents API contract', () => {
     await runAgentsHandler(req, res);
     const data = json.mock.calls[0][0];
     expect(() => runAgentsMockSchema.parse(data)).not.toThrow();
+  });
+
+  it('validates unauthorized response', async () => {
+    ENV.LIVE_MODE = 'on';
+    mockedGetSession.mockResolvedValue(null);
+    const req = { method: 'POST', body: { league: 'NFL', gameId: '1' } } as NextApiRequest;
+    const json = jest.fn();
+    const res = { status: jest.fn(() => ({ json })) } as unknown as NextApiResponse;
+
+    await runAgentsHandler(req, res);
+    expect(res.status).toHaveBeenCalledWith(401);
+    const data = json.mock.calls[0][0];
+    expect(() => authErrorSchema.parse(data)).not.toThrow();
   });
 });
 

@@ -1,3 +1,4 @@
+
 import { triggerToast } from '../useToast';
 
 export async function logUiEvent(
@@ -30,4 +31,15 @@ export async function logUiEvent(
       type: 'error',
     });
   }
+=======
+import { logUiEvent } from '../logUiEvent';
+
+export async function logAdapterMetric(
+  adapter: string,
+  metric: string,
+  metadata: Record<string, unknown> = {},
+  correlationId?: string,
+): Promise<void> {
+  await logUiEvent('adapterMetric', { adapter, metric, ...metadata }, correlationId);
+
 }
