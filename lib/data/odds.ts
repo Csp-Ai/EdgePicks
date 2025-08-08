@@ -45,6 +45,7 @@ const OddsGameSchema = z
 export type OddsGame = z.infer<typeof OddsGameSchema>;
 
 const CACHE_TTL = 60; // seconds
+const FALLBACK_TTL = 24 * 60 * 60; // 24 hours
 const CIRCUIT_TTL = 600; // 10 minutes
 export const ERROR_BUDGET = 3;
 const PROVIDER_TIMEOUT_MS = 3000;
@@ -89,6 +90,7 @@ export async function fetchOdds(league: League): Promise<OddsGame[]> {
   const apiKey = ENV.ODDS_API_KEY;
   if (!sport || !apiKey) return [];
   const cacheKey = `odds:${sport}`;
+  const fallbackKey = `${cacheKey}:last`;
   const cached = await cache.get<OddsGame[]>(cacheKey);
   if (cached) return cached;
 
@@ -101,6 +103,7 @@ export async function fetchOdds(league: League): Promise<OddsGame[]> {
     }
     const data = z.array(OddsGameSchema).parse(await res.json());
     await cache.set(cacheKey, data, CACHE_TTL);
+    await cache.set(fallbackKey, data, FALLBACK_TTL);
     await cache.set('odds:failures', 0, CIRCUIT_TTL);
     await logAdapterMetric('odds', 'success', {
       latencyMs: Date.now() - start,
@@ -115,6 +118,7 @@ export async function fetchOdds(league: League): Promise<OddsGame[]> {
       await cache.set(circuitKey, true, CIRCUIT_TTL);
       await logAdapterMetric('odds', 'circuit_open', { failures: next });
     }
-    return cached ?? [];
+    const fallback = await cache.get<OddsGame[]>(fallbackKey);
+    return fallback ?? cached ?? [];
   }
 }
