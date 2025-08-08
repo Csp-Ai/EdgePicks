@@ -2393,3 +2393,13 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T12:03:40.344Z
+Commit: cc2b7fd9475ab3c9c83ae46a524d638efda08a68
+Author: Codex
+Message: feat: add guest funnel dashboard
+Files:
+- __tests__/FunnelChart.test.tsx (+26/-0)
+- components/analytics/FunnelChart.tsx (+24/-0)
+- fixtures/funnels.json (+7/-0)
+- pages/admin/funnels.tsx (+67/-0)
+
