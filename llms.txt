@@ -2840,3 +2840,19 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:03.757Z
+Commit: cd49ccb778e8d0e48e090099deef92b60c5e73f6
+Author: Codex
+Message: Add deterministic helpers and snapshot test
+Files:
+- test/utils/freezeRandom.ts (+1/-0)
+- test/utils/freezeTime.ts (+2/-1)
+
+Timestamp: 2025-08-08T13:34:20.549Z
+Commit: 7106831abb522add06839afa1404b3943b2a7321
+Author: Codex
+Message: Add sample test to verify deterministic helpers
+Files:
+- __tests__/__snapshots__/deterministic.utils.test.ts.snap (+8/-0)
+- __tests__/deterministic.utils.test.ts (+22/-0)
+
