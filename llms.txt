@@ -1630,3 +1630,13 @@ Files:
 
 
 
+Timestamp: 2025-08-08T06:30:32.153Z
+Commit: 5857e140c1abb35a76c8db494d4428a89d9ee946
+Author: Codex
+Message: Improve prediction drawer SSE resiliency
+Files:
+- __tests__/PredictionDrawer.sse.test.tsx (+31/-0)
+- components/PredictionDrawer.tsx (+36/-12)
+- lib/analytics/logUiEvent.ts (+33/-0)
+- lib/hooks/useEventSource.ts (+41/-2)
+
