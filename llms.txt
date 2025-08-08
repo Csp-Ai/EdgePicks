@@ -1469,3 +1469,16 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T05:00:16.687Z
+Commit: c6d87a12380e3189f14c3f5468d3f7d903197030
+Author: Codex
+Message: feat: add dynamic agent weights
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/runPredictions.weights.test.ts (+88/-0)
+- __tests__/weights.test.ts (+20/-0)
+- lib/env.ts (+1/-0)
+- lib/weights/index.ts (+44/-0)
+- pages/api/run-agents.ts (+0/-40)
+- pages/api/run-predictions.ts (+9/-4)
+
