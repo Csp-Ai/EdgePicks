@@ -2395,6 +2395,7 @@ Files:
 
 
 
+
 Timestamp: 2025-08-08T11:51:11.450Z
 Commit: b1c625c18ee24bc5aea6dda6c95c8a2b4bc5ae99
 Author: Codex
@@ -2403,6 +2404,18 @@ Files:
 - __tests__/ScenarioExplainer.test.tsx (+24/-0)
 - components/agents/ScenarioExplainer.tsx (+46/-0)
 =======
+=======
+Timestamp: 2025-08-08T11:47:24.957Z
+Commit: a55a9f48a805934c78a932c7ebda5d4419e7a97d
+Author: Codex
+Message: Add static NFL demo route
+Files:
+- __tests__/demo.nfl.page.test.tsx (+30/-0)
+- pages/demo/mlb.tsx (+1/-0)
+- pages/demo/nfl.tsx (+76/-0)
+=======
+
+
 Timestamp: 2025-08-08T11:46:03.808Z
 Commit: 1aa5060a5f0c634d8399286ba5bd484a15850d5b
 Author: Codex
