@@ -2169,12 +2169,26 @@ Files:
 =======
 
 
+
+Timestamp: 2025-08-08T11:17:57.539Z
+Commit: 8f9f8a5ea857d39e0822c7f9c7f2d6c93b03c91c
+Author: Codex
+Message: feat(flags): add feature flag provider, registry, and dev experiments panel
+Files:
+- __tests__/flags.test.ts (+26/-13)
+- components/dev/ExperimentsPanel.tsx (+25/-0)
+- lib/flags/FlagsProvider.tsx (+36/-0)
+- lib/flags/experiments.ts (+11/-0)
+- lib/flags/flags.ts (+34/-0)
+- lib/flags/useFlag.ts (+9/-0)
+=======
 Timestamp: 2025-08-08T11:12:58.755Z
 Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
 Author: Codex
 Message: feat: improve AgentStatusPanel accessibility
 Files:
 - components/AgentStatusPanel.tsx (+17/-8)
+
 =======
 Timestamp: 2025-08-08T11:20:31.007Z
 Commit: bdf022d1b33ecb1aabf3ea4f894595e26e930e91
