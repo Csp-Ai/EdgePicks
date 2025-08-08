@@ -1,0 +1,70 @@
+name: Constitution Drift
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - 'docs/constitution.md'
+      - '.github/workflows/constitution-drift.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    env:
+      CI: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 6  # compare against last 5 commits + HEAD
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Your existing checker: must exit 1 on unauthorized drift, 0 on allowed changes
+      - name: Run constitution drift check
+        id: drift
+        run: |
+          chmod +x scripts/constitution-drift-check.sh
+          scripts/constitution-drift-check.sh
+
+      # Keep this as a blocking status check
+      - name: Fail on unauthorized drift
+        if: failure()
+        run: |
+          echo "Unauthorized constitution drift detected — failing as required."
+          exit 1
+
+      # Only when drift check PASSES, create/update a PR and enable auto-merge
+      - name: Create Pull Request
+        id: cpr
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: "chore/constitution/${{ github.ref_name }}"
+          base: "main"
+          title: "chore: update constitution for ${{ github.ref_name }}"
+          commit-message: "chore: update docs/constitution.md on ${{ github.ref_name }}"
+          body: |
+            Auto-created after the **Constitution drift check passed** ✅
+
+            - Source branch: `${{ github.ref_name }}`
+            - File: `docs/constitution.md`
+            - Note: Drift check remains a required status prior to merge.
+          labels: |
+            constitution
+            automerge
+          signoff: true
+          delete-branch: false
+
+      - name: Enable PR auto-merge
+        if: steps.cpr.outputs.pull-request-number != ''
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
