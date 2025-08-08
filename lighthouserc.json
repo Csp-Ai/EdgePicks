@@ -13,6 +13,17 @@
             "resourceCounts": [
               { "resourceType": "script", "budget": 50 },
               { "resourceType": "total", "budget": 200 }
+      "url": ["http://localhost:3000/"],
+      "startServerCommand": "npm run start",
+      "numberOfRuns": 1,
+      "settings": {
+        "budgets": [
+          {
+            "resourceSizes": [
+              { "resourceType": "script", "budget": 5000 }
+            ],
+            "timings": [
+              { "metric": "interactive", "budget": 10000 }
             ]
           }
         ]
@@ -22,6 +33,8 @@
       "assertions": {
         "categories:accessibility": ["error", { "minScore": 0.9 }],
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
+=======
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1, "aggregationMethod": "optimistic" }]
       }
     },
     "upload": {

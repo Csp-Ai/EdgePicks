@@ -1941,6 +1941,14 @@ Files:
 - components/AgentExecutionTracker.tsx (+155/-0)
 
 
+Timestamp: 2025-08-08T09:38:55.428Z
+Commit: ee10ce31e64bceb26a8bc4fd3e65266959449c2d
+Author: Codex
+Message: ci(constitution): switch PR creation to peter-evans + auto-merge; keep drift as blocking
+Files:
+- .github/workflows/constitution-drift.yml (+70/-0)
+=======
+
 Timestamp: 2025-08-08T09:30:32.963Z
 Commit: 2380bd7c9ee11db49f58b408cfbd33b00c6d4835
 Author: Codex
@@ -1970,4 +1978,17 @@ Files:
 - pages/predictions.tsx (+3/-38)
 
 
+
+Timestamp: 2025-08-08T09:43:55.171Z
+Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
+Author: Codex
+Message: feat: add governance audit log and tooling
+Files:
+- .github/workflows/lighthouse-ci.yml (+25/-0)
+- .github/workflows/percy.yml (+19/-0)
+- __tests__/AuditLogList.test.tsx (+48/-0)
+- components/AuditLogList.tsx (+148/-0)
+- lighthouserc.json (+30/-0)
+- pages/governance/audit.tsx (+17/-0)
+- tests/visual/percy.spec.ts (+13/-0)
 
