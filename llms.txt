@@ -3059,3 +3059,11 @@ Files:
 - components/system/Guard.tsx (+41/-0)
 - stories/system/Guard.stories.tsx (+38/-0)
 
+Timestamp: 2025-08-08T13:44:18.335Z
+Commit: f4f5f1e0209c76025dd0cf2208170f3fdefd2858
+Author: Codex
+Message: feat(a11y): add central live announcer
+Files:
+- components/a11y/Announcer.tsx (+41/-0)
+- stories/Announcer.stories.tsx (+37/-0)
+
