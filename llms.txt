@@ -2393,3 +2393,11 @@ Files:
 =======
 
 
+Timestamp: 2025-08-08T11:43:22.503Z
+Commit: 3f07fffcc182f3a2af0511848cbb3ea3220a6868
+Author: Codex
+Message: Add Agent Card mini stories and docs
+Files:
+- docs/agents/mini.md (+10/-0)
+- stories/agents/AgentMini.stories.tsx (+110/-0)
+
