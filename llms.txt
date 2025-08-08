@@ -1846,12 +1846,7 @@ Files:
 - __tests__/docs/refreshDocs.snap.test.ts (+10/-2)
 
 
-Timestamp: 2025-08-08T08:31:52.997Z
-Commit: c009a3339816888063322a077a01ccef41556c4c
-Author: Codex
-Message: feat: include lessons from reflection history in SOPs
-Files:
-- __tests__/docs/sopGeneration.test.ts (+30/-0)
-- lib/agentReflectionStore.ts (+22/-0)
-- scripts/generateSOPs.ts (+18/-2)
-
+feat(sop): include “Lessons Learned” from recent agent reflections
+- add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
+- keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
+- update SOP generator to merge maintainer notes + lessons learned

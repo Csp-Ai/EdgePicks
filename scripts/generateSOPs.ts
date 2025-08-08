@@ -2,7 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import agentsMeta from '../lib/agents/agents.json';
 import { AgentReflection } from './agentSelfReflection';
-import { readRecentReflections } from '../lib/agentReflectionStore';
+// use the new read helper that coexists with centralized writer
+import { readRecentAgentReflections } from '../lib/readAgentReflections';
 
 interface AgentMeta {
   name: string;
@@ -83,8 +84,14 @@ export async function run(): Promise<void> {
       reflection = JSON.parse(raw);
     } catch {}
     const lessonCount = Number(process.env.SOP_LESSON_COUNT || '3');
-    const recent = await readRecentReflections(agent.name, lessonCount);
-    const lessons = recent.map((r) => r.whatCouldImprove).filter(Boolean);
+    // ensure we fetch recent reflections for “Lessons Learned”
+    const recentAll = await readRecentAgentReflections(lessonCount);
+    const recent = recentAll.filter(
+      (r) => (r.agentId || (r as any).agent) === agent.name,
+    );
+    const lessons = recent
+      .map((r) => r.improvement || (r as any).whatCouldImprove)
+      .filter(Boolean) as string[];
     const sop = await buildSOP(agent, reflection, notes, lessons);
     await fs.writeFile(sopPath, sop);
   }

@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { run as runSOPs } from '../../scripts/generateSOPs';
 import { AgentReflection } from '../../scripts/agentSelfReflection';
+import { readRecentAgentReflections } from '../../lib/readAgentReflections';
 
 describe('SOP generation', () => {
   const dir = path.join(process.cwd(), 'agents', 'injuryScout');
