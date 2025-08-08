@@ -23,8 +23,9 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry, sessionId }) => 
     <div className="fixed left-0 right-0 bottom-16 mx-auto max-w-md">
       <div className="bg-white border rounded-t shadow-lg">
         <button
-          className="w-full px-4 py-2 text-left font-medium bg-gray-100"
+          className="w-full px-4 py-2 text-left font-medium bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
           onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
         >
           {open ? 'Hide Agent Status' : 'Show Agent Status'}
         </button>
@@ -42,18 +43,23 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry, sessionId }) => 
                   key={name}
                   className="flex items-center justify-between px-4 py-2 text-sm"
                 >
-                  <span
-                    className="flex-1 cursor-pointer"
+                  <button
+                    type="button"
+                    className="flex-1 text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onClick={() => setSelectedAgent(name)}
                   >
                     {formatAgentName(name)}
-                  </span>
+                  </button>
                   {errored ? (
-                    <span className="flex items-center space-x-2">
+                    <span
+                      className="flex items-center space-x-2"
+                      role="status"
+                      aria-live="assertive"
+                    >
                       <button
                         type="button"
                         onClick={() => setSelectedAgent(name)}
-                        className="px-2 py-0.5 text-xs rounded bg-red-100 text-red-700"
+                        className="px-2 py-0.5 text-xs rounded bg-red-100 text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                       >
                         Error
                       </button>
@@ -61,15 +67,18 @@ const AgentStatusPanel: React.FC<Props> = ({ statuses, onRetry, sessionId }) => 
                         <button
                           type="button"
                           onClick={() => onRetry(name)}
-                          className="text-xs text-blue-600 underline"
+                          className="text-xs text-blue-600 underline focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           Re-run Agent
                         </button>
                       )}
                     </span>
                   ) : (
-                    <span>{label}</span>
+                    <span role="status" aria-live="polite">{label}</span>
                   )}
+                  <span className="sr-only" role="status" aria-live="polite">
+                    {formatAgentName(name)}: {errored ? 'Error' : label}
+                  </span>
                 </li>
               );
             })}

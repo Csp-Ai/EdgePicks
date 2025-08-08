@@ -14,6 +14,7 @@ import { AgentName, AgentResult } from '../lib/types';
 import { formatAgentName } from '../lib/utils';
 import ReasoningDisclosure from './agents/ReasoningDisclosure';
 import ConfidenceMeter from './ConfidenceMeter';
+import GlossaryLink from './GlossaryLink';
 import { agentCard, agentCardSkeleton } from '../styles/cardStyles';
 
 interface Props {
@@ -125,6 +126,7 @@ const AgentCard: React.FC<Props> = ({
           ))}
         </ul>
       )}
+      <GlossaryLink className="mt-2 block" />
     </div>
   );
 
