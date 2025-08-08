@@ -97,7 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await logEvent(
     'run-agents',
     { homeTeam, awayTeam, week: weekNum },
-    { requestId: req.headers['x-request-id']?.toString() || crypto.randomUUID() }
+    { requestId: req.headers?.['x-request-id']?.toString() || crypto.randomUUID() }
   );
 
   const loggedAt = logToSupabase(
@@ -116,6 +116,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       agents: outputs,
       pick: pickSummary,
       loggedAt,
+      cacheVersion: ENV.FLOW_CACHE_VERSION,
     })}\n\n`
   );
   res.end();

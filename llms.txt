@@ -1411,3 +1411,29 @@ Files:
 
 
 
+Timestamp: 2025-08-08T04:14:09.128Z
+Commit: b6cd4ee2233b066366078ebfe07cbf9a4e237845
+Author: Codex
+Message: feat: add pluggable queue and cache drivers
+Files:
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
+- __tests__/__snapshots__/runAgentsApi.test.ts.snap (+1/-1)
+- __tests__/cacheDriver.test.ts (+11/-0)
+- __tests__/queueDriver.test.ts (+13/-0)
+- lib/env.ts (+4/-0)
+- lib/flow/runFlow.ts (+17/-10)
+- lib/infra/cache/driver.ts (+4/-0)
+- lib/infra/cache/index.ts (+20/-0)
+- lib/infra/cache/memory.ts (+24/-0)
+- lib/infra/cache/redis.ts (+19/-0)
+- lib/infra/queue/driver.ts (+5/-0)
+- lib/infra/queue/index.ts (+20/-0)
+- lib/infra/queue/memory.ts (+20/-0)
+- lib/infra/queue/redis.ts (+23/-0)
+- lib/logToSupabase.ts (+15/-9)
+- package-lock.json (+88/-2)
+- package.json (+2/-1)
+- pages/api/log-status.ts (+2/-2)
+- pages/api/run-agents.ts (+2/-1)
+- pages/api/run-predictions.ts (+2/-1)
+
