@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:40.538Z
+Commit: d04f7c88eccec59a239e11d59abdf5ebfa51f6df
+Author: Codex
+Message: feat: add run timeline component
+Files:
+- __tests__/RunTimeline.test.tsx (+36/-0)
+- components/agents/RunTimeline.tsx (+97/-0)
+
