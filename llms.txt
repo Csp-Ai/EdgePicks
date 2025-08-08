@@ -1977,7 +1977,45 @@ Files:
 - components/MatchupInsights.tsx (+126/-0)
 - pages/predictions.tsx (+3/-38)
 
+Timestamp: 2025-08-08T09:49:09.752Z
+Commit: 20e831f174cd0dd1e0e8a9249853cc42ac26bea5
+Author: Codex
+Message: feat(demo): Matchup carousel with tracker and compact predictions
+Files:
+- __tests__/DemoMatchupCarousel.test.tsx (+33/-0)
+- components/DemoMatchupCarousel.tsx (+89/-0)
+- mock/demo-matchups.json (+17/-0)
+=======
+Timestamp: 2025-08-08T09:43:55.171Z
+Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
+Author: Codex
+Message: feat: add governance audit log and tooling
+Files:
+- .github/workflows/lighthouse-ci.yml (+25/-0)
+- .github/workflows/percy.yml (+19/-0)
+- __tests__/AuditLogList.test.tsx (+48/-0)
+- components/AuditLogList.tsx (+148/-0)
+- lighthouserc.json (+30/-0)
+- pages/governance/audit.tsx (+17/-0)
+- tests/visual/percy.spec.ts (+13/-0)
 
+
+Timestamp: 2025-08-08T09:51:31.013Z
+Commit: 641da7678305cebfce2c04a0cff54615cdf940cf
+Author: Codex
+Message: feat: add feature flag helper
+Files:
+- __tests__/flags.test.ts (+24/-0)
+- lib/flags.ts (+25/-0)
+
+Timestamp: 2025-08-08T09:53:27.387Z
+Commit: 4d6ed3fe3d1e2ca8e75d2b73ea70772ccebe92b0
+Author: Codex
+Message: Add no-op TelemetryProvider with event queue
+Files:
+- __tests__/TelemetryProvider.test.tsx (+44/-0)
+- lib/telemetry/TelemetryProvider.tsx (+64/-0)
+- lib/telemetry/index.ts (+1/-0)
 
 Timestamp: 2025-08-08T09:50:01.141Z
 Commit: ed82d9c24b9a4a344fe3bf21d3dc33f6d3d4862a
