@@ -37,6 +37,7 @@ npm run dev
 
 ## Environment
 - `npm run setup:dev` creates `.env.local` with safe defaults.
+- Or run `cp .env.local.example .env.local` and fill in the values (or `vercel env pull .env.local`).
 - In production or on Vercel, env validation is strict and missing vars fail the build.
 - CI loads `.env.test` (falling back to `.env.test.example`) for tests and sets `SKIP_BUILD_ENV_CHECK=1` during build unless secrets are configured.
 - `.env.example` – base defaults used by various scripts

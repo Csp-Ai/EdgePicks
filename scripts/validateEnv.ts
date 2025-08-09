@@ -1,23 +1,24 @@
+import { config } from 'dotenv';
+
+// Load .env.local in dev/CI; Vercel injects envs so this is harmless there
+config({ path: '.env.local' });
+config(); // also load .env if present
+
 const required = [
   'NEXTAUTH_URL',
   'NEXTAUTH_SECRET',
   'SUPABASE_URL',
   'SUPABASE_KEY',
-  'SPORTS_API_KEY'
+  'SPORTS_API_KEY',
+  'GOOGLE_CLIENT_ID',
+  'GOOGLE_CLIENT_SECRET',
 ] as const;
 
-// In mock mode we allow Google OAuth vars to be missing locally
-const isMockAuth =
-  process.env.NEXT_PUBLIC_MOCK_AUTH === '1' ||
-  process.env.LIVE_MODE === 'off';
+if (!process.env.SUPABASE_KEY && process.env.SUPABASE_ANON_KEY) {
+  process.env.SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
+}
 
 const missing: string[] = required.filter((k) => !process.env[k]);
-
-if (!isMockAuth) {
-  ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET'].forEach((k) => {
-    if (!process.env[k]) missing.push(k);
-  });
-}
 
 const isProd = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
 const skipCheck = process.env.SKIP_BUILD_ENV_CHECK === '1';
