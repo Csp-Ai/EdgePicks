@@ -7,7 +7,11 @@ interface Scored<T> {
   score: number;
 }
 
-function scoreText(text: string, query: string): number {
+/**
+ * Calculate a fuzzy match score for a piece of text.
+ * Lower scores are better; `Infinity` means no match.
+ */
+export function scoreText(text: string, query: string): number {
   let tIndex = 0;
   let score = 0;
   for (const char of query) {
