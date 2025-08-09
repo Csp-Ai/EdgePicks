@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:36:19.982Z
+Commit: fbf2bf57dd1fd0d1e5c13398ecfab37981349fb9
+Author: Codex
+Message: feat: add impact metric formatters
+Files:
+- __tests__/impact.format.test.ts (+19/-0)
+- lib/format/impact.ts (+15/-0)
+
