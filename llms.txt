@@ -3090,3 +3090,11 @@ Files:
 - schemas/fixtures/invalid-agent-result.json (+6/-0)
 - schemas/fixtures/valid-agent-result.json (+9/-0)
 
+Timestamp: 2025-08-08T13:34:35.296Z
+Commit: b8ad33c8c18fe9c08e69fd6943a1bfc170a35afa
+Author: Codex
+Message: feat: add safe fixture loader
+Files:
+- __tests__/fixtures.load.test.ts (+15/-0)
+- lib/fixtures/load.ts (+18/-0)
+
