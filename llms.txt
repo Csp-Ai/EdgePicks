@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:37:08.649Z
+Commit: 53209f70b07355240bd374e5b6f0c2efeaffec9a
+Author: Codex
+Message: Enable Storybook a11y and interactions
+Files:
+- .storybook/preview.ts (+4/-0)
+- stories/AgentDetailsModal.stories.tsx (+7/-1)
+
