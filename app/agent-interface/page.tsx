@@ -1,12 +1,10 @@
 import UniversalAgentInterface from "@/components/universal/UniversalAgentInterface";
 import { SportsAdapter } from "@/components/universal/adapters/SportsAdapter";
-import Guard from "@/components/system/Guard";
+import { flags } from "@/lib/flags/experiments";
 
 export default function Page() {
-  // For now, rely on demo mode inside the component; pass a streamUrl later if needed.
-  return (
-    <Guard flag="agentInterface" fallback={null}>
-      <UniversalAgentInterface adapter={SportsAdapter} />
-    </Guard>
-  );
+  if (!flags.agentInterface) {
+    return <div className="p-4 text-center">Agent interface not enabled.</div>;
+  }
+  return <UniversalAgentInterface adapter={SportsAdapter} />;
 }

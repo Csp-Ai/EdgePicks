@@ -1,4 +1,4 @@
-export const experiments = {
+export const flags = {
   agentGallery: false,
   agentBuilder: false,
   demoMode: false,
@@ -6,7 +6,7 @@ export const experiments = {
   logStreamV2: false,
   i18n: false,
   nativeShare: false,
-  agentInterface: false,
+  agentInterface: process.env.FEATURE_AGENT_INTERFACE === "true",
 } as const;
 
-export type FlagKey = keyof typeof experiments;
+export type FlagKey = keyof typeof flags;
