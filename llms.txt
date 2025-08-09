@@ -3214,3 +3214,35 @@ Files:
 =======
 
 
+Timestamp: 2025-08-09T04:18:44.498Z
+Commit: f47b93a0ee2115c01833fdba5285f74fb0f82940
+Author: Codex
+Message: feat(ui): add UniversalAgentInterface (demo-ready, portable)
+Files:
+- components/universal/UniversalAgentInterface.tsx (+457/-0)
+
+Timestamp: 2025-08-09T04:19:05.916Z
+Commit: 834dd57b14984521dce6a14e1b0432c810612dbc
+Author: Codex
+Message: feat(app): mount /agent-interface behind feature flag
+Files:
+- app/agent-interface/page.tsx (+12/-0)
+- components/universal/adapters/SportsAdapter.ts (+20/-0)
+- lib/flags/experiments.ts (+1/-0)
+
+Timestamp: 2025-08-09T04:19:55.285Z
+Commit: 38f4ebf5a8b822ae2fdd0244536ca8eab0e2e680
+Author: Codex
+Message: feat(graph): integrate AgentNodeGraph via mapper (flagged)
+Files:
+- components/universal/UniversalAgentInterface.tsx (+5/-26)
+- components/universal/mapAgentEventsToGraph.ts (+16/-0)
+
+Timestamp: 2025-08-09T04:20:10.146Z
+Commit: b56c58317adcc34af81070275d6d9bfe22f8e1d2
+Author: Codex
+Message: test(story+rtl): add UniversalAgentInterface story and smoke test
+Files:
+- __tests__/universalAgentInterface.smoke.test.tsx (+14/-0)
+- stories/UniversalAgentInterface.stories.tsx (+14/-0)
+
