@@ -1,6 +1,9 @@
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig({ path: '.env.test' });
 import '@testing-library/jest-dom';
-import { freezeTime, resetTime } from './test/utils/freezeTime';
-import { freezeRandom, resetRandom } from './test/utils/freezeRandom';
+import { freezeTime, resetTime } from './lib/test/freezeTime';
+import { server } from './test/msw/server';
+import { installNetworkGuard } from './lib/test/networkGuard';
 
 const originalError = console.error;
 console.error = (...args: any[]) => {
@@ -47,7 +50,6 @@ process.env.NEXTAUTH_URL = 'http://localhost';
 process.env.NEXTAUTH_SECRET = 'secret';
 process.env.GOOGLE_CLIENT_ID = 'google-id';
 process.env.GOOGLE_CLIENT_SECRET = 'google-secret';
-process.env.SPORTS_API_KEY = 'sports-key';
 process.env.LIVE_MODE = 'on';
 process.env.PREDICTION_CACHE_TTL_SEC = '120';
 process.env.MAX_FLOW_CONCURRENCY = '3';
@@ -67,9 +69,13 @@ jest.mock('./lib/supabaseClient', () => {
   };
 });
 
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' });
+  installNetworkGuard();
+});
+
 beforeEach(() => {
   freezeTime();
-  freezeRandom();
 });
 
 afterEach(() => {
@@ -77,5 +83,9 @@ afterEach(() => {
   jest.clearAllTimers?.();
   jest.restoreAllMocks();
   resetTime();
-  resetRandom();
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
 });

@@ -1,0 +1,14 @@
+[
+  {
+    "GameID": 1,
+    "Date": "2023-09-10T17:00:00Z",
+    "HomeTeam": "KAN",
+    "AwayTeam": "CHI"
+  },
+  {
+    "GameID": 2,
+    "Date": "2023-09-10T20:25:00Z",
+    "HomeTeam": "DAL",
+    "AwayTeam": "NYG"
+  }
+]

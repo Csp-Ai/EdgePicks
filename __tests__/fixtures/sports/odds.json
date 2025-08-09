@@ -1,0 +1,16 @@
+[
+  {
+    "GameID": 1,
+    "HomeTeam": "KAN",
+    "AwayTeam": "CHI",
+    "HomeOdds": -150,
+    "AwayOdds": 130
+  },
+  {
+    "GameID": 2,
+    "HomeTeam": "DAL",
+    "AwayTeam": "NYG",
+    "HomeOdds": -110,
+    "AwayOdds": 110
+  }
+]
