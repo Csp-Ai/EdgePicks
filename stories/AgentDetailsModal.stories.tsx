@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { within, userEvent } from '@storybook/testing-library';
+import { action } from '@storybook/addon-actions';
 import AgentDetailsModal from '../components/AgentDetailsModal';
 
 const meta: Meta<typeof AgentDetailsModal> = {
@@ -22,8 +24,12 @@ const agent = {
 export const Open: Story = {
   args: {
     isOpen: true,
-    onClose: () => {},
+    onClose: action('onClose'),
     agent,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: /close/i }));
   },
 };
 

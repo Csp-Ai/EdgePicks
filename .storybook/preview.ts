@@ -4,6 +4,10 @@ import '../styles/globals.css';
 const preview: Preview = {
   parameters: {
     controls: { expanded: true },
+    a11y: {
+      // Enable accessibility checks
+    },
+    actions: { argTypesRegex: '^on.*' },
   },
 };
 
