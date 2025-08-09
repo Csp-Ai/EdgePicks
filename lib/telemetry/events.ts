@@ -34,7 +34,6 @@ const allEvents = [
 
 export const uiEventNameSchema = z.enum(allEvents);
 export type UiEventName = z.infer<typeof uiEventNameSchema>;
-=======
 export const DASHBOARD_EVENTS = {
   OPEN_DRAWER: 'openDrawer',
   TOGGLE_ADVANCED_VIEW: 'toggleAdvancedView',

@@ -3223,3 +3223,31 @@ Message: chore: add route conflict guard script
 Files:
 - scripts/checkRouteConflicts.ts (+124/-0)
 
+Timestamp: 2025-08-09T01:16:37.678Z
+Commit: 577c3954a94c775c238466691bc115d5588d25f8
+Author: Codex
+Message: test: add shared render utilities and msw mocks
+Files:
+- __tests__/cache.test.ts (+1/-1)
+- __tests__/cacheDriver.test.ts (+3/-1)
+- __tests__/fixtures/github/issue.json (+1/-0)
+- __tests__/fixtures/i18n/en.json (+3/-0)
+- __tests__/github.api.test.ts (+10/-25)
+- __tests__/i18n.test.tsx (+8/-3)
+- __tests__/supabaseRegistry.test.ts (+1/-1)
+- __tests__/telemetry.events.test.ts (+17/-0)
+- app/layout.tsx (+2/-12)
+- components/Onboarding.tsx (+3/-11)
+- jest.setup.ts (+0/-2)
+- lib/agents/supabaseRegistry.ts (+1/-1)
+- lib/db.ts (+1/-0)
+- lib/server/cache.ts (+3/-2)
+- lib/telemetry/events.ts (+0/-1)
+- package.json (+1/-0)
+- test/msw/handlers/githubHandlers.ts (+8/-0)
+- test/msw/handlers/supabaseHandlers.ts (+10/-0)
+- test/msw/server.ts (+7/-2)
+- test/utils/mockTelemetry.ts (+10/-0)
+- test/utils/renderWithProviders.tsx (+57/-0)
+- tests/visual/percy.spec.ts (+0/-8)
+

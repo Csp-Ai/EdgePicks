@@ -4,6 +4,8 @@ import {
   DASHBOARD_EVENTS,
   dashboardEventSchema,
 } from '../lib/telemetry/events';
+import { logEvent } from '../lib/telemetry/logger';
+import { mockTelemetry } from '../test/utils/mockTelemetry';
 
 describe('uiEventNameSchema', () => {
   it('accepts onboarding and builder events', () => {
@@ -25,5 +27,20 @@ describe('dashboard telemetry events', () => {
 
   test('unknown events fail validation', () => {
     expect(() => dashboardEventSchema.parse({ type: 'unknown' })).toThrow();
+  });
+});
+
+describe('telemetry emission', () => {
+  it('collects logged events', async () => {
+    const { events } = mockTelemetry();
+    jest.useFakeTimers();
+    Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
+    Object.defineProperty(navigator, 'userAgent', { value: 'jest', configurable: true });
+    setTimeout(() => {
+      logEvent({ level: 'info', name: 'test' });
+    }, 1000);
+    jest.advanceTimersByTime(1000);
+    await Promise.resolve();
+    expect(events).toEqual([{ level: 'info', name: 'test' }]);
   });
 });

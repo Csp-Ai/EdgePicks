@@ -1,15 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-
 import ProgressStepper from './onboarding/ProgressStepper';
-import {
-  getProgress,
-  setProgress,
-  clearProgress,
-} from '../lib/onboarding/progress';
-=======
 import GoalPicker from './onboarding/GoalPicker';
-
+import { getProgress, setProgress, clearProgress } from '../lib/onboarding/progress';
 
 const STORAGE_KEY = 'onboardingComplete';
 const GOAL_KEY = 'userGoal';
@@ -45,18 +38,17 @@ export default function Onboarding() {
       });
   }, [status]);
 
-
   const next = () => {
     const n = step + 1;
     setStep(n);
     setProgress(n);
-=======
+  };
+
   const handleGoalSelect = (goal: string) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(GOAL_KEY, goal);
     }
     setStep(0);
-
   };
 
   const finish = () => {

@@ -1,4 +1,6 @@
 
+import { supabase } from '../supabaseClient';
+
 export interface CacheStore {
   get(key: string): Promise<string | null>;
   set(key: string, value: string, ttlSeconds: number): Promise<void>;
@@ -63,8 +65,7 @@ export async function withTtl<T>(
   const value = await fn();
   await setCache(key, value, ttlSeconds, store);
   return value;
-=======
-import { supabase } from '../supabaseClient';
+}
 
 interface CacheEntry {
   value: any;

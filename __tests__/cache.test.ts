@@ -12,7 +12,7 @@ describe.skip('cache helpers', () => {
   });
 
   it('expires entries after TTL', async () => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ now: new Date('2024-01-01T00:00:00Z') });
     const store = createMemoryStore();
     let counter = 0;
     const fn = jest.fn(async () => ++counter);

@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient';
+import { supabase } from '../db';
 import { cache } from '../server/cache';
 
 export interface SupabaseAgentMeta {
