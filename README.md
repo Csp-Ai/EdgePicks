@@ -43,6 +43,12 @@ npm run dev
 ## Vercel
 Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.
 
+## Routing Rules
+- UI routes live in `app/**`.
+- `pages/` is reserved for `pages/api/**` only.
+- During build, any conflicting `pages/*.tsx|jsx` is auto-archived to `archive/pages/**`.
+- Use `npm run guard:dry` to preview moves locally.
+
 ## Testing
 ```bash
 cp .env.test.example .env.test && npm test

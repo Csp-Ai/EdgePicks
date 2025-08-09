@@ -2,5 +2,17 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "jsx-a11y/color-contrast": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["pages/**/*.{ts,tsx,js,jsx}"],
+      "excludedFiles": ["pages/api/**"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          "UI components under pages/ are disallowed; use app/"
+        ]
+      }
+    }
+  ]
 }
