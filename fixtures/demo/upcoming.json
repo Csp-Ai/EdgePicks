@@ -1,0 +1,18 @@
+[
+  {
+    "gameId": "demo1",
+    "homeTeam": { "name": "Alpha FC", "logo": "" },
+    "awayTeam": { "name": "Beta FC", "logo": "" },
+    "league": "NFL",
+    "time": "2025-09-07T20:20:00Z",
+    "confidence": 75,
+    "edgeDelta": 0.1,
+    "winner": "Alpha FC",
+    "edgePick": [
+      {
+        "name": "injuryScout",
+        "result": { "team": "Alpha FC", "reason": "Healthy lineup", "score": 0.6 }
+      }
+    ]
+  }
+]

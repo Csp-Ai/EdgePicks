@@ -1,0 +1,298 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`public API schema snapshots accuracy schema 1`] = `
+{
+  "$ref": "#/definitions/Accuracy",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Accuracy": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "accuracy": {
+                "type": "number",
+              },
+              "losses": {
+                "type": "number",
+              },
+              "name": {
+                "type": "string",
+              },
+              "wins": {
+                "type": "number",
+              },
+            },
+            "required": [
+              "name",
+              "wins",
+              "losses",
+              "accuracy",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+        "flows": {
+          "items": {
+            "$ref": "#/definitions/Accuracy/properties/agents/items",
+          },
+          "type": "array",
+        },
+      },
+      "required": [
+        "agents",
+        "flows",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`public API schema snapshots predictions schema 1`] = `
+{
+  "$ref": "#/definitions/Predictions",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Predictions": {
+      "additionalProperties": false,
+      "properties": {
+        "agentScores": {
+          "additionalProperties": {
+            "type": "number",
+          },
+          "type": "object",
+        },
+        "cacheVersion": {
+          "type": "string",
+        },
+        "predictions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "agentScores": {
+                "additionalProperties": {
+                  "type": "number",
+                },
+                "type": "object",
+              },
+              "agents": {
+                "additionalProperties": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "confidenceEstimate": {
+                      "type": "number",
+                    },
+                    "description": {
+                      "type": "string",
+                    },
+                    "reason": {
+                      "type": "string",
+                    },
+                    "reflection": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "whatCouldImprove": {
+                          "type": "string",
+                        },
+                        "whatIChose": {
+                          "type": "string",
+                        },
+                        "whatIObserved": {
+                          "type": "string",
+                        },
+                      },
+                      "required": [
+                        "whatIObserved",
+                        "whatIChose",
+                        "whatCouldImprove",
+                      ],
+                      "type": "object",
+                    },
+                    "score": {
+                      "type": "number",
+                    },
+                    "scoreTotal": {
+                      "type": "number",
+                    },
+                    "team": {
+                      "type": "string",
+                    },
+                    "warnings": {
+                      "items": {
+                        "type": "string",
+                      },
+                      "type": "array",
+                    },
+                    "weight": {
+                      "type": "number",
+                    },
+                  },
+                  "required": [
+                    "team",
+                    "score",
+                  ],
+                  "type": "object",
+                },
+                "type": "object",
+              },
+              "confidence": {
+                "type": "number",
+              },
+              "executions": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "agentDurationMs": {
+                      "type": "number",
+                    },
+                    "confidenceEstimate": {
+                      "type": "number",
+                    },
+                    "error": {
+                      "const": true,
+                      "type": "boolean",
+                    },
+                    "errorInfo": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                        },
+                        "stack": {
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "name": {
+                      "type": "string",
+                    },
+                    "result": {
+                      "$ref": "#/definitions/Predictions/properties/predictions/items/properties/agents/additionalProperties",
+                    },
+                    "scoreTotal": {
+                      "type": "number",
+                    },
+                    "sessionId": {
+                      "type": "string",
+                    },
+                  },
+                  "required": [
+                    "name",
+                  ],
+                  "type": "object",
+                },
+                "type": "array",
+              },
+              "game": {
+                "additionalProperties": false,
+                "properties": {
+                  "awayTeam": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "name",
+                    ],
+                    "type": "object",
+                  },
+                  "homeTeam": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "name",
+                    ],
+                    "type": "object",
+                  },
+                  "time": {
+                    "type": "string",
+                  },
+                },
+                "required": [
+                  "homeTeam",
+                  "awayTeam",
+                  "time",
+                ],
+                "type": "object",
+              },
+              "winner": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "game",
+              "winner",
+              "confidence",
+              "agents",
+              "agentScores",
+              "executions",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+        "timestamp": {
+          "type": "string",
+        },
+        "weightsUsed": {
+          "additionalProperties": {
+            "type": "number",
+          },
+          "type": "object",
+        },
+      },
+      "required": [
+        "predictions",
+        "agentScores",
+        "weightsUsed",
+        "timestamp",
+        "cacheVersion",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`public API schema snapshots reflections schema 1`] = `
+{
+  "$ref": "#/definitions/Reflections",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Reflections": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "whatCouldImprove": {
+            "type": "string",
+          },
+          "whatIChose": {
+            "type": "string",
+          },
+          "whatIObserved": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "whatIObserved",
+          "whatIChose",
+          "whatCouldImprove",
+        ],
+        "type": "object",
+      },
+      "type": "object",
+    },
+  },
+}
+`;

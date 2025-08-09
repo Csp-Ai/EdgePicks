@@ -1,4 +1,45 @@
 import '@testing-library/jest-dom';
+import { freezeTime, resetTime } from './test/utils/freezeTime';
+import { freezeRandom, resetRandom } from './test/utils/freezeRandom';
+
+const originalError = console.error;
+console.error = (...args: any[]) => {
+  if (typeof args[0] === 'string' && args[0].includes('Cannot log after tests are done')) {
+    return;
+  }
+  originalError(...args);
+};
+
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      pathname: '/',
+      query: {},
+      asPath: '/',
+      events: { on: jest.fn(), off: jest.fn() },
+      prefetch: jest.fn().mockResolvedValue(null),
+    };
+  },
+}));
+
+class MockEventSource {
+  url: string;
+  readyState = 0;
+  onmessage: ((e: MessageEvent) => void) | null = null;
+  onerror: ((e: any) => void) | null = null;
+  constructor(url: string) {
+    this.url = url;
+  }
+  addEventListener() {}
+  removeEventListener() {}
+  close() {
+    this.readyState = 2;
+  }
+}
+// @ts-ignore
+global.EventSource = MockEventSource;
 
 process.env.SUPABASE_URL = 'http://localhost';
 process.env.SUPABASE_KEY = 'test-anon';
@@ -26,7 +67,15 @@ jest.mock('./lib/supabaseClient', () => {
   };
 });
 
+beforeEach(() => {
+  freezeTime();
+  freezeRandom();
+});
+
 afterEach(() => {
   jest.useRealTimers?.();
+  jest.clearAllTimers?.();
   jest.restoreAllMocks();
+  resetTime();
+  resetRandom();
 });
