@@ -9,7 +9,7 @@ function fromMock() {
   return { select: selectMock };
 }
 
-jest.mock('../lib/supabaseClient', () => ({
+jest.mock('../lib/db', () => ({
   supabase: { from: fromMock },
 }));
 
