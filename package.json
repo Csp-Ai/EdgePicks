@@ -26,6 +26,7 @@
     "docs:refresh": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/refreshDocs.ts",
     "docs:self-reflect": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/agentSelfReflection.ts",
     "docs:sops": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/generateSOPs.ts",
+    "doc:check": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/check-docstrings.ts",
     "dev:commit": "ts-node scripts/dev/commit-helper.ts",
     "weights:calibrate": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/calibrateWeights.ts",
     "purge-cache": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/purge-cache.ts",
@@ -35,6 +36,7 @@
   "dependencies": {
     "@octokit/rest": "^20.1.0",
     "@supabase/supabase-js": "^2.39.5",
+    "diff": "^8.0.2",
     "framer-motion": "^11.18.2",
     "ioredis": "^5.4.1",
     "leaflet": "^1.9.4",

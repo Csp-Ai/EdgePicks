@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import useLowImpact from '../../hooks/useLowImpact';
 
 const CO2_PER_INTERACTION = 0.2; // grams of CO2 per interaction
 const ENERGY_PER_INTERACTION = 0.0005; // kWh per interaction
 
-const CarbonEnergyHUD: React.FC = () => {
+const Hud: React.FC = () => {
   const [interactions, setInteractions] = useState(0);
-  const [lowImpact, setLowImpact] = useState(false);
+  const [lowImpact, setLowImpact] = useLowImpact();
 
   useEffect(() => {
     const increment = () => setInteractions((i) => i + 1);
@@ -18,15 +19,6 @@ const CarbonEnergyHUD: React.FC = () => {
       window.removeEventListener('keydown', increment);
     };
   }, []);
-
-  useEffect(() => {
-    const html = document.documentElement;
-    if (lowImpact) {
-      html.classList.add('low-impact');
-    } else {
-      html.classList.remove('low-impact');
-    }
-  }, [lowImpact]);
 
   const co2 = (interactions * CO2_PER_INTERACTION).toFixed(2);
   const energy = (interactions * ENERGY_PER_INTERACTION).toFixed(4);
@@ -48,4 +40,4 @@ const CarbonEnergyHUD: React.FC = () => {
   );
 };
 
-export default CarbonEnergyHUD;
+export default Hud;

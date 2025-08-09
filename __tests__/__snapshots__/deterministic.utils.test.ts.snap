@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deterministic helpers produces stable values 1`] = `
+{
+  "now": "2024-01-01T00:00:00.000Z",
+  "random": 0.000007825903601782307,
+}
+`;
