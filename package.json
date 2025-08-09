@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run validate-env && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts && next dev",
-    "prebuild": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkRouteConflicts.ts && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkMergeMarkers.ts",
+    "prebuild": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkRouteConflicts.ts && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkMergeMarkers.ts && npm run setup:dev",
     "build": "npm run validate-env && next build",
     "start": "npm run validate-env && next start",
     "test": "SPORTS_API_KEY=test node scripts/update-llms-log.test.js && SPORTS_API_KEY=test node lib/logUiEvent.test.js && jest",
@@ -35,7 +35,8 @@
     "purge-cache": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/purge-cache.ts",
     "guard:dry": "CONFLICT_GUARD_DRY_RUN=1 ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkRouteConflicts.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "setup:dev": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/bootstrapDevEnv.ts"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",

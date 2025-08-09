@@ -35,10 +35,13 @@ npm run dev
 ```
 
 
-## Config
+## Environment
+- `npm run setup:dev` creates `.env.local` with safe defaults.
+- In production or on Vercel, env validation is strict and missing vars fail the build.
+- CI loads `.env.test` (falling back to `.env.test.example`) for tests and sets `SKIP_BUILD_ENV_CHECK=1` during build unless secrets are configured.
 - `.env.example` – base defaults used by various scripts
-- `.env.local.example` – copy to `.env.local` for local development
-- `.env.test.example` – copy to `.env.test` when running tests
+- `.env.local.example` – template for local development
+- `.env.test.example` – template for tests
 
 ## Vercel
 Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.

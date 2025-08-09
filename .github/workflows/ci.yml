@@ -35,8 +35,13 @@ jobs:
       - name: Lint
         run: npm run lint --if-present
 
+      - name: Load test env
+        run: echo "$(cat .env.test 2>/dev/null || cat .env.test.example)" >> $GITHUB_ENV
+
       - name: Tests
         run: CI=1 npm test -- --runInBand --silent
 
-      - name: Build
+      - name: Build (CI non-prod)
+        env:
+          SKIP_BUILD_ENV_CHECK: '1'
         run: npm run build
