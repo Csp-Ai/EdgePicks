@@ -3174,3 +3174,20 @@ Files:
 - scripts/bootstrapDevEnv.ts (+13/-0)
 - scripts/validateEnv.ts (+20/-16)
 
+Timestamp: 2025-08-09T03:23:37.105Z
+Commit: e1a7dced158bbb5cb22ac4cf78d02fb43992a21a
+Author: Codex
+Message: chore: stabilize builds and env checks
+Files:
+- .husky/pre-commit (+3/-3)
+- README.md (+1/-0)
+- app/layout.tsx (+0/-1)
+- package.json (+20/-20)
+- scripts/validateEnv.ts (+12/-11)
+- styles/base.css (+48/-0)
+- styles/globals.css (+2/-49)
+- styles/typography.css (+0/-2)
+- tailwind.config.js (+7/-1)
+- tsconfig.json (+7/-14)
+- tsconfig.node.json (+9/-0)
+
