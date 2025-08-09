@@ -11,10 +11,5 @@
   "changeHints": [
     "Calibrate confidence on misses"
   ],
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "inputsPreview": {
-    "team": "A",
-    "opponent": "B"
-  },
-  "summary": "Over last 14 days, accuracy was 50.0%. Issues vs C"
+  "timestamp": "2024-01-01T00:00:00.000Z"
 }

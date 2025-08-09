@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "npm run validate-env && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/listMissingEnv.ts && next dev",
-    "prebuild": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkRouteConflicts.ts",
+    "prebuild": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkRouteConflicts.ts && ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/checkMergeMarkers.ts",
     "build": "npm run validate-env && next build",
     "start": "npm run validate-env && next start",
-    "test": "node scripts/update-llms-log.test.js && node lib/logUiEvent.test.js && jest --setupFilesAfterEnv=./jest.setup.ts --setupFilesAfterEnv=./jest.setup.msw.ts",
+    "test": "SPORTS_API_KEY=test node scripts/update-llms-log.test.js && SPORTS_API_KEY=test node lib/logUiEvent.test.js && jest",
     "test:update": "CI=1 npm test -- -u",
     "test:ci": "CI=1 npm test -- --runInBand",
     "test:a11y": "jest __tests__/a11y.test.tsx",

@@ -1,5 +1,5 @@
 # Codex Prompt Registry
-
+# Codex Prompt Registry
 
 `llms.txt` records commit summaries and prompts for this repository. To prevent reused prompts or hallucinated commit links, the registry is audited on each push.
 
@@ -17,7 +17,7 @@ Run manually with:
 ```bash
 npx ts-node scripts/diff-llms-summary.ts
 ```
-=======
+
 The Codex Prompt Registry aggregates historical prompt metadata from `llms.txt` and the Git commit history. Use `scripts/generatePromptRegistry.ts` to rebuild the registry and write the results to `data/prompt-registry.json`.
 
 ## Entry Structure
