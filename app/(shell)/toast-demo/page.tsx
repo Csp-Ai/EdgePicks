@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { toast } from '../../../../lib/ui/toast';
+import { toast } from '@/lib/ui/toast';
 
 export default function ToastDemoPage() {
   useEffect(() => {

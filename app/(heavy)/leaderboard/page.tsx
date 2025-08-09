@@ -1,11 +1,7 @@
+'use client';
+
 import Image from 'next/image';
 import Leaderboard from '../../../components/Leaderboard';
-
-async function LeaderboardContent() {
-  // Simulate slow data fetching so the skeleton can stream
-  await new Promise((r) => setTimeout(r, 1000));
-  return <Leaderboard />;
-}
 
 export default function LeaderboardPage() {
   return (
@@ -20,9 +16,7 @@ export default function LeaderboardPage() {
           fetchPriority="high"
         />
       </div>
-      {/* Stream the leaderboard once the data is ready */}
-      {/* @ts-expect-error Async Server Component */}
-      <LeaderboardContent />
+      <Leaderboard />
     </main>
   );
 }
