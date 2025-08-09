@@ -1,0 +1,17 @@
+.rtl-demo {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl-row {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.rtl-row .box {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #f3f4f6;
+}
