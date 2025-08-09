@@ -1,0 +1,7 @@
+[
+  { "name": "injuryScout", "score": 0.82, "uncertainty": 0.1 },
+  { "name": "lineWatcher", "score": 0.76, "uncertainty": 0.15 },
+  { "name": "statCruncher", "score": 0.71, "uncertainty": 0.2 },
+  { "name": "trendsAgent", "score": 0.64, "uncertainty": 0.3 },
+  { "name": "guardianAgent", "score": 0.5, "uncertainty": 0.25 }
+]
