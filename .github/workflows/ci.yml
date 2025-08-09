@@ -58,6 +58,10 @@ jobs:
         run: npm run typecheck
       - name: Lint
         run: npm run lint
+      - name: Check route conflicts
+        run: npm run guard:dry
+        env:
+          CI: '1'
       - name: Build
         run: npm run build
       - name: Test

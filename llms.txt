@@ -3203,3 +3203,23 @@ Files:
 
 
 
+Timestamp: 2025-08-09T01:01:29.753Z
+Commit: ead4c24aeadad3fe763ab439a285d5e6017cbb90
+Author: Codex
+Message: feat: add route conflict guard and react 18 types
+Files:
+- .eslintrc.json (+13/-1)
+- .github/workflows/ci.yml (+4/-0)
+- README.md (+6/-0)
+- package-lock.json (+23/-4)
+- package.json (+5/-5)
+- pages/index.tsx (+0/-197)
+- pages/leaderboard.tsx (+0/-11)
+
+Timestamp: 2025-08-09T01:01:42.552Z
+Commit: 58f86fee9b4ec3ff1dd5acadb894c07d7ec95ce8
+Author: Codex
+Message: chore: add route conflict guard script
+Files:
+- scripts/checkRouteConflicts.ts (+124/-0)
+
