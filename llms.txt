@@ -3174,6 +3174,15 @@ Files:
 - scripts/bootstrapDevEnv.ts (+13/-0)
 - scripts/validateEnv.ts (+20/-16)
 
+Timestamp: 2025-08-09T03:28:34.777Z
+Commit: af5a5bef82e0da9c9894a6238b796f408cdbadc6
+Author: Codex
+Message: feat: stream agent lifecycle events
+Files:
+- __tests__/MatchupInputForm.sse.test.tsx (+92/-0)
+- __tests__/runAgents.sse.test.ts (+54/-0)
+- pages/api/run-agents.ts (+107/-1)
+=======
 Timestamp: 2025-08-09T03:23:37.105Z
 Commit: e1a7dced158bbb5cb22ac4cf78d02fb43992a21a
 Author: Codex
@@ -3202,4 +3211,6 @@ Files:
 - pages/_app.tsx (+1/-2)
 - styles/base.css (+0/-48)
 - styles/globals.css (+0/-6)
+=======
+
 
