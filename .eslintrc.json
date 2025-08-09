@@ -1,8 +1,6 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules": {
-    "jsx-a11y/color-contrast": "error"
-  },
+  "extends": ["plugin:jsx-a11y/recommended", "next/core-web-vitals"],
+  "plugins": ["jsx-a11y"],
   "overrides": [
     {
       "files": ["pages/**/*.{ts,tsx,js,jsx}"],
