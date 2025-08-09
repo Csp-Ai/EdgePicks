@@ -1,0 +1,28 @@
+import MethodCard from '../../components/docs/MethodCard';
+import * as InjuryScout from '../../content/agents/injuryScout.mdx';
+import * as LineWatcher from '../../content/agents/lineWatcher.mdx';
+import * as StatCruncher from '../../content/agents/statCruncher.mdx';
+import * as TrendsAgent from '../../content/agents/trendsAgent.mdx';
+import * as GuardianAgent from '../../content/agents/guardianAgent.mdx';
+
+const methods = [
+  InjuryScout,
+  LineWatcher,
+  StatCruncher,
+  TrendsAgent,
+  GuardianAgent,
+];
+
+export default function AgentsDocs() {
+  return (
+    <>
+      <h1>Agent Methods</h1>
+      {methods.map(({ default: Content, meta }) => (
+        <MethodCard key={meta.name} title={meta.title} description={meta.description}>
+          <Content />
+        </MethodCard>
+      ))}
+    </>
+  );
+}
+
