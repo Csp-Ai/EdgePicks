@@ -1,9 +1,24 @@
+
+import 'dotenv/config';
+=======
 import { config as dotenvConfig } from 'dotenv';
 dotenvConfig({ path: '.env.test' });
+
 import '@testing-library/jest-dom';
 import { freezeTime, resetTime } from './lib/test/freezeTime';
 import { server } from './test/msw/server';
 import { installNetworkGuard } from './lib/test/networkGuard';
+
+// Block accidental live network in tests (except localhost & msw)
+const origFetch = global.fetch;
+global.fetch = async (input: any, init?: any) => {
+  const url = typeof input === 'string' ? input : input?.url ?? '';
+  const allow = process.env.ALLOW_TEST_NETWORK === '1';
+  if (!allow && url && !url.includes('localhost') && !url.startsWith('http://127.0.0.1')) {
+    throw new Error(`[test-net-guard] Blocked network call in tests: ${url}`);
+  }
+  return origFetch(input as any, init as any);
+};
 
 const originalError = console.error;
 console.error = (...args: any[]) => {

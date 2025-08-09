@@ -18,7 +18,6 @@ process.env.SUPABASE_KEY = 'key';
 process.env.SUPABASE_URL = 'http://localhost';
 process.env.NEXTAUTH_SECRET = 'secret';
 process.env.NEXTAUTH_URL = 'http://localhost';
-process.env.SPORTS_API_KEY = 'sports';
 
 const handler = require('../pages/api/run-predictions').default;
 
