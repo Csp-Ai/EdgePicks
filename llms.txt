@@ -3098,3 +3098,11 @@ Files:
 - __tests__/fixtures.load.test.ts (+15/-0)
 - lib/fixtures/load.ts (+18/-0)
 
+Timestamp: 2025-08-08T13:39:45.479Z
+Commit: e2e5d321efda4e04087f9c047ecfe369304727eb
+Author: Codex
+Message: feat: add client-side fuzzy search
+Files:
+- components/ui/SearchBox.tsx (+64/-0)
+- lib/search/fuzzy.ts (+5/-1)
+
