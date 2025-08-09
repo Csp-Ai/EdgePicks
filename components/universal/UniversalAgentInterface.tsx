@@ -18,9 +18,22 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { ChevronRight, Play, Pause, Settings, Globe, LineChart, Eye, RefreshCw, ShieldAlert, Info, Share2 } from "lucide-react";
+import {
+  ChevronRight,
+  Play,
+  Pause,
+  Settings,
+  Globe,
+  LineChart,
+  Eye,
+  RefreshCw,
+  ShieldAlert,
+  Info,
+  Share2,
+} from "lucide-react";
 import AgentNodeGraph from "@/components/AgentNodeGraph";
 import { toGraph } from "./mapAgentEventsToGraph";
+import type { PublicPrediction } from "@/lib/types/public";
 
 export type AgentEvent = {
   id: string;
@@ -33,16 +46,7 @@ export type AgentEvent = {
   meta?: Record<string, any>;
 };
 
-export type Prediction = {
-  gameId: string;
-  league: string;
-  home: string;
-  away: string;
-  kickoffISO: string;
-  pick?: string;
-  confidence?: number; // 0-1
-  disagreement?: boolean;
-};
+export type Prediction = PublicPrediction & { pick?: string };
 
 export type RunArchive = {
   runId: string;
@@ -178,7 +182,14 @@ function DisagreementChip({ on }: { on?: boolean }) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Badge className="rounded-2xl border border-yellow-300 bg-yellow-50 text-yellow-900">disagreement</Badge>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="rounded-2xl border border-yellow-300 bg-yellow-50 text-yellow-900"
+          >
+            disagreement
+          </Button>
         </TooltipTrigger>
         <TooltipContent>Some agents disagreed — tap to view rationale deltas.</TooltipContent>
       </Tooltip>
@@ -321,8 +332,14 @@ export default function UniversalAgentInterface({
       <main className="grid grid-cols-1 lg:grid-cols-3 gap-6" role="main">
         <section aria-labelledby="upcoming" className="lg:col-span-1">
           <div className="mb-3 flex items-center gap-2">
-            <Input placeholder="Search games…" value={query} onChange={(e)=>setQuery(e.target.value)} />
-            <Button variant="outline" onClick={()=>adapter.list().then(setItems)}><RefreshCw className="h-4 w-4"/></Button>
+            <Input placeholder="Search games…" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <Button
+              variant="outline"
+              aria-label="Refresh games"
+              onClick={() => adapter.list().then(setItems)}
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
           <Card className="rounded-2xl">
             <CardHeader className="pb-2"><CardTitle id="upcoming">Upcoming games</CardTitle></CardHeader>
@@ -393,8 +410,14 @@ export default function UniversalAgentInterface({
                     {selected?.disagreement && <DisagreementChip on />}
                   </div>
                   <div className="flex gap-2">
-                    <Button className="rounded-2xl"><Share2 className="h-4 w-4 mr-2"/>Share replay</Button>
-                    <Button variant="outline" className="rounded-2xl"><ChevronRight className="h-4 w-4 mr-2"/>See how we picked</Button>
+                    <Button className="rounded-2xl">
+                      <Share2 className="h-4 w-4 mr-2" />
+                      Share replay
+                    </Button>
+                    <Button variant="outline" className="rounded-2xl">
+                      <ChevronRight className="h-4 w-4 mr-2" />
+                      See how we picked
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

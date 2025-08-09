@@ -3246,3 +3246,52 @@ Files:
 - __tests__/universalAgentInterface.smoke.test.tsx (+14/-0)
 - stories/UniversalAgentInterface.stories.tsx (+14/-0)
 
+Timestamp: 2025-08-09T04:29:32.857Z
+Commit: 20bc8d76eca2f43b9b807bed891c37a66244fccd
+Author: Codex
+Message: fix(a11y): replace clickable divs with buttons and add proper roles/labels
+Files:
+- components/universal/UniversalAgentInterface.tsx (+24/-5)
+
+Timestamp: 2025-08-09T04:30:32.416Z
+Commit: 923f924ea6c68e17bd2768024a487eae5f7d749b
+Author: Codex
+Message: fix(types): align upcoming-games API with PublicPrediction contract and validate
+Files:
+- components/universal/UniversalAgentInterface.tsx (+15/-11)
+- components/universal/adapters/SportsAdapter.ts (+3/-2)
+- lib/schemas/public.ts (+16/-0)
+- lib/types/public.ts (+10/-0)
+- pages/api/upcoming-games.ts (+16/-3)
+
+Timestamp: 2025-08-09T04:31:00.946Z
+Commit: ac303b4cba838f5b6bf21fd0c148ad6f740a4c7b
+Author: Codex
+Message: chore(test): add tsconfig.jest.json and adjust jest transform to avoid bundler option
+Files:
+- jest.config.js (+4/-7)
+- package-lock.json (+100/-0)
+- package.json (+1/-0)
+- tsconfig.jest.json (+13/-0)
+
+Timestamp: 2025-08-09T04:31:41.823Z
+Commit: 04914e16702de543e3ec91431fd5f41dfe91b31d
+Author: Codex
+Message: chore(env): demo-safe bootstrap and relax validation outside production
+Files:
+- .env.local.example (+10/-6)
+- lib/config/env.ts (+7/-12)
+- lib/env.ts (+22/-8)
+- package.json (+4/-3)
+- scripts/bootstrap-env.mjs (+10/-0)
+
+Timestamp: 2025-08-09T04:32:08.571Z
+Commit: 8c6767c3bcfdb0f7707ed5c429ab78167367d1c7
+Author: Codex
+Message: feat(flag): gate /agent-interface behind FEATURE_AGENT_INTERFACE
+Files:
+- app/agent-interface/page.tsx (+5/-7)
+- lib/flags/FlagsProvider.tsx (+2/-2)
+- lib/flags/experiments.ts (+3/-3)
+- lib/flags/flags.ts (+2/-2)
+

@@ -1,8 +1,9 @@
-import type { DataAdapter, Prediction, RunArchive } from "../UniversalAgentInterface";
+import type { DataAdapter, RunArchive } from "../UniversalAgentInterface";
+import type { PublicPrediction } from "@/lib/types/public";
 
 export const SportsAdapter: DataAdapter = {
   name: "sports-live",
-  async list(): Promise<Prediction[]> {
+  async list(): Promise<PublicPrediction[]> {
     const r = await fetch("/api/upcoming-games?league=NFL", { cache: "no-store" });
     if (!r.ok) throw new Error("Failed to load upcoming games");
     return await r.json();

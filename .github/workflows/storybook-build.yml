@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FEATURE_AGENT_INTERFACE: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

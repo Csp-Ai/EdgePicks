@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { experiments, FlagKey } from './experiments';
+import { flags as defaults, FlagKey } from './experiments';
 import { getFlag as baseGetFlag, setFlag as baseSetFlag } from './flags';
 
 type FlagsState = Record<FlagKey, boolean>;
@@ -13,7 +13,7 @@ const FlagsContext = createContext<FlagsContextValue | undefined>(undefined);
 export const FlagsProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [flags, setFlags] = useState<FlagsState>(() => {
     const initial = {} as FlagsState;
-    (Object.keys(experiments) as FlagKey[]).forEach((key) => {
+    (Object.keys(defaults) as FlagKey[]).forEach((key) => {
       initial[key] = baseGetFlag(key);
     });
     return initial;

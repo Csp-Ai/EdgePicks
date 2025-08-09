@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
 const envSchema = z.object({
-  GOOGLE_CLIENT_ID: z.string().nonempty(),
-  GOOGLE_CLIENT_SECRET: z.string().nonempty(),
-  SUPABASE_KEY: z.string().nonempty(),
-  SUPABASE_URL: z.string().url(),
-  NEXTAUTH_SECRET: z.string().nonempty(),
-  NEXTAUTH_URL: z.string().url(),
-  SPORTS_API_KEY: z.string().nonempty(),
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  SUPABASE_KEY: z.string().optional(),
+  SUPABASE_URL: z.string().url().optional(),
+  NEXTAUTH_SECRET: z.string().optional(),
+  NEXTAUTH_URL: z.string().url().optional(),
+  SPORTS_API_KEY: z.string().optional(),
   SPORTS_WEBHOOK_SECRET: z.string().optional(),
   LIVE_MODE: z.enum(['on', 'off']).default('off'),
   WEIGHTS_DYNAMIC: z.enum(['on', 'off']).default('off'),
@@ -24,4 +24,18 @@ const envSchema = z.object({
   ODDS_API_KEY: z.string().optional(),
 });
 
-export const ENV = envSchema.parse(process.env);
+const parsed = envSchema.safeParse(process.env);
+if (!parsed.success) {
+  const missing = Object.keys(parsed.error.flatten().fieldErrors);
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(`[env] Missing required env: ${missing.join(', ')}`);
+  } else {
+    console.warn('[env] Missing vars (using defaults):', missing.join(', '));
+  }
+}
+
+export const ENV = parsed.success ? parsed.data : ({} as z.infer<typeof envSchema>);
+
+if (process.env.FEATURE_AGENT_INTERFACE === 'true' && !process.env.SPORTS_API_KEY) {
+  console.warn('SPORTS_API_KEY missing; running agent interface in demo mode.');
+}

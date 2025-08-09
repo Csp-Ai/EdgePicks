@@ -1,4 +1,4 @@
-import { experiments, FlagKey } from './experiments';
+import { flags as defaults, FlagKey } from './experiments';
 
 const STORAGE_PREFIX = 'ff.';
 
@@ -24,7 +24,7 @@ export function getFlag(key: FlagKey): boolean {
   const envVal = parse(process.env[envKey]);
   if (envVal !== undefined) return envVal;
 
-  return experiments[key];
+  return defaults[key];
 }
 
 export function setFlag(key: FlagKey, value: boolean): void {

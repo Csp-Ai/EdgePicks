@@ -4,6 +4,8 @@ import { fetchOdds, type OddsGame } from '../../lib/data/odds';
 import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
 import { registry } from '../../lib/agents/registry';
 import type { AgentOutputs, PickSummary } from '../../lib/types';
+import type { PublicPrediction } from '../../lib/types/public';
+import { PublicPredictionListSchema } from '../../lib/schemas/public';
 import { logMatchup } from '../../lib/logToSupabase';
 import { getFallbackMatchups } from '../../lib/utils/fallbackMatchups';
 import { formatKickoff } from '../../lib/utils/formatKickoff';
@@ -39,7 +41,7 @@ type Result = {
   kickoffDisplay: string;
 };
 
-type LeagueCacheEntry = { results: Result[]; timestamp: number };
+type LeagueCacheEntry = { results: PublicPrediction[]; timestamp: number };
 const leagueCache = new Map<string, LeagueCacheEntry>();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -203,8 +205,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return a.gameId.localeCompare(b.gameId);
     });
 
-    leagueCache.set(cacheKey, { results, timestamp: Date.now() });
-    res.status(200).json(results);
+    const out: PublicPrediction[] = results.map((r) => ({
+      gameId: r.gameId,
+      league: r.league,
+      home: r.homeTeam.name,
+      away: r.awayTeam.name,
+      kickoffISO: new Date(r.time).toISOString(),
+      confidence: r.confidence / 100,
+      disagreement: r.disagreements.length > 0,
+    }));
+
+    PublicPredictionListSchema.parse(out);
+    leagueCache.set(cacheKey, { results: out, timestamp: Date.now() });
+    res.status(200).json(out);
   } catch (err) {
     console.error('Error fetching upcoming games:', err);
     if (err instanceof Error && err.message.includes('RATE_LIMIT')) {
