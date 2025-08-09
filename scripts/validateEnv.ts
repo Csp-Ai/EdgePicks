@@ -20,21 +20,21 @@ if (!isMockAuth) {
 }
 
 const isProd = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
+const skipCheck = process.env.SKIP_BUILD_ENV_CHECK === '1';
 
-if (isProd) {
-  if (missing.length) {
+if (missing.length) {
+  if (isProd) {
     console.error('❌ Env validation failed.');
     missing.forEach((k) => console.error(` - Missing env: ${k}`));
     process.exit(1);
   }
-} else if (process.env.SKIP_BUILD_ENV_CHECK === '1') {
-  if (missing.length) {
+  if (skipCheck) {
     console.warn(`⚠️ Env validation skipped. Missing env: ${missing.join(', ')}`);
   } else {
-    console.warn('⚠️ Env validation skipped.');
+    console.warn(`⚠️ Missing env: ${missing.join(', ')}`);
   }
-} else if (missing.length) {
-  console.warn(`⚠️ Missing env: ${missing.join(', ')}`);
+} else if (skipCheck) {
+  console.warn('⚠️ Env validation skipped.');
 } else {
   console.log('✅ All env files contain required keys.');
 }

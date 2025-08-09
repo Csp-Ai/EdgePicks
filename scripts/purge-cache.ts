@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { getClient } from '../lib/server/cache';
 
 interface Options {
