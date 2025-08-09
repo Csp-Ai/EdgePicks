@@ -1868,6 +1868,9 @@ Files:
 
 
 
+=======
+
+
 feat(sop): include “Lessons Learned” from recent agent reflections
 - add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
 - keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
@@ -3157,6 +3160,7 @@ Files:
 - .storybook/preview.ts (+4/-0)
 - stories/AgentDetailsModal.stories.tsx (+7/-1)
 
+
 Timestamp: 2025-08-09T00:33:06.921Z
 Commit: 5a9d1469c2f97360db2564e0d8958c37786c687d
 Author: Codex
@@ -3175,4 +3179,6 @@ Files:
 - scripts/test-local.sh (+6/-0)
 - test/msw/handlers/sportsHandlers.ts (+20/-0)
 - test/msw/server.ts (+4/-0)
+=======
+
 
