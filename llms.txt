@@ -2840,3 +2840,16 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:35.685Z
+Commit: 96f02f0d790a5689e0c05020c99cfe95f2a62f3e
+Author: Codex
+Message: docs: add agent method cards
+Files:
+- components/docs/MethodCard.tsx (+18/-0)
+- content/agents/guardianAgent.mdx (+8/-0)
+- content/agents/injuryScout.mdx (+8/-0)
+- content/agents/lineWatcher.mdx (+8/-0)
+- content/agents/statCruncher.mdx (+8/-0)
+- content/agents/trendsAgent.mdx (+8/-0)
+- docs/agents/index.mdx (+28/-0)
+
