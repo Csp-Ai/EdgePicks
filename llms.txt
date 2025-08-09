@@ -2840,3 +2840,10 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:34:46.959Z
+Commit: 3daea2eb49c91f10f9b344a02a8e54fa0a479307
+Author: Codex
+Message: feat(dev): add state inspector
+Files:
+- components/dev/StatePeek.tsx (+33/-0)
+
