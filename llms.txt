@@ -1868,6 +1868,9 @@ Files:
 
 
 
+=======
+
+
 feat(sop): include “Lessons Learned” from recent agent reflections
 - add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
 - keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
@@ -3156,4 +3159,5 @@ Message: Enable Storybook a11y and interactions
 Files:
 - .storybook/preview.ts (+4/-0)
 - stories/AgentDetailsModal.stories.tsx (+7/-1)
+
 
