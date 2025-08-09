@@ -2840,3 +2840,11 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:36:56.995Z
+Commit: bf761d630a9b42e178e713370241f18a8dc3828d
+Author: Codex
+Message: feat(a11y): add breadcrumb landmarks
+Files:
+- components/a11y/Landmarks.tsx (+33/-0)
+- components/nav/Breadcrumbs.tsx (+50/-0)
+
