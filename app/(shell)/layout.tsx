@@ -1,4 +1,4 @@
-import '../../styles/globals.css';
+import '../globals.css';
 import Header from '../../components/ui/header';
 import Toaster from '../../components/ui/toaster';
 import Skeleton from '../../components/ui/skeleton';

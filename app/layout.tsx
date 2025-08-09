@@ -1,5 +1,4 @@
-import '../styles/globals.css';
-import '../styles/intelligence.css';
+import './globals.css';
 import type { ReactNode } from 'react';
 
 export const metadata = {
