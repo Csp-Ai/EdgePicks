@@ -2840,3 +2840,10 @@ Files:
 
 
 
+Timestamp: 2025-08-08T13:37:48.081Z
+Commit: 2ec8e47bbc059b444908fc155829ccbd7a4a6417
+Author: Codex
+Message: feat: add PWA install prompt component
+Files:
+- components/pwa/InstallPrompt.tsx (+41/-0)
+
