@@ -1,15 +1,21 @@
-import { triggerToast } from '../useToast';
+import { toast } from '../ui/toast';
 import { enqueueToast, flushToastQueue, QueuedToast } from './queue';
 
 export function initOfflineQueue() {
   if (typeof window === 'undefined') return;
-  window.addEventListener('online', () => flushToastQueue(triggerToast));
+  window.addEventListener('online', () =>
+    flushToastQueue((t) =>
+      t.type === 'error' ? toast.error(t.message) : toast.success(t.message),
+    ),
+  );
 }
 
-export function queueToast(toast: QueuedToast) {
+export function queueToast(toastData: QueuedToast) {
   if (navigator.onLine) {
-    triggerToast(toast);
+    toastData.type === 'error'
+      ? toast.error(toastData.message)
+      : toast.success(toastData.message);
   } else {
-    enqueueToast(toast);
+    enqueueToast(toastData);
   }
 }
