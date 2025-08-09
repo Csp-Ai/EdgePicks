@@ -1,0 +1,16 @@
+[
+  {
+    "PlayerID": 1,
+    "Name": "John Doe",
+    "Team": "KAN",
+    "Position": "QB",
+    "Status": "Out"
+  },
+  {
+    "PlayerID": 2,
+    "Name": "Jane Smith",
+    "Team": "NYG",
+    "Position": "WR",
+    "Status": "Questionable"
+  }
+]
