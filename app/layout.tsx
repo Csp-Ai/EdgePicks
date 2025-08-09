@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-import '../styles/typography.css';
 import '../styles/intelligence.css';
 import type { ReactNode } from 'react';
 
