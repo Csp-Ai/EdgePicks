@@ -3200,4 +3200,17 @@ Files:
 - tsconfig.json (+7/-14)
 - tsconfig.node.json (+9/-0)
 
+Timestamp: 2025-08-09T03:38:12.017Z
+Commit: cb71685a340aa73f0284013d27f94fb04684d67b
+Author: Codex
+Message: refactor: consolidate tailwind layers
+Files:
+- app/(shell)/layout.tsx (+1/-1)
+- styles/typography.css => app/globals.css (+53/-1)
+- app/layout.tsx (+1/-2)
+- pages/_app.tsx (+1/-2)
+- styles/base.css (+0/-48)
+- styles/globals.css (+0/-6)
+=======
+
 
