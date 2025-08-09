@@ -1,24 +1,3 @@
-
-name: Percy Visual Tests
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-  workflow_dispatch:
-
-jobs:
-  percy:
-    if: ${{ github.repository_owner == 'EdgePicks' }}
-    runs-on: ubuntu-latest
-    env:
-      NEXTAUTH_URL: http://localhost:3000
-      NEXTAUTH_SECRET: secret
-      SUPABASE_URL: https://example.supabase.co
-      SUPABASE_KEY: placeholder
-      SPORTS_API_KEY: placeholder
-      NEXT_PUBLIC_MOCK_AUTH: '1'
-=======
 name: Percy Snapshots
 
 on:
@@ -28,23 +7,17 @@ jobs:
   percy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-
           node-version: 20
           cache: 'npm'
       - run: npm ci
       - run: npm run build
       - run: npm run start &
       - run: npx wait-on http://localhost:3000
-=======
-          node-version: 18
-      - run: npm ci
       - run: npx playwright install --with-deps
-
       - run: npx percy exec -- npx playwright test tests/visual/percy.spec.ts
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

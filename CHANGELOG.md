@@ -1117,7 +1117,6 @@ Files:
 - lib/flow/runFlow.ts (+10/-26)
 - pages/api/run-agents.ts (+3/-14)
 - pages/api/upcoming-games.ts (+99/-113)
-=======
 Timestamp: 2025-08-07T21:36:11.936Z
 Commit: 3830e9079e51bd6d159aebbbee0adbd9da1a9488
 Author: Codex
@@ -1140,7 +1139,6 @@ Files:
 - components/PredictionsPanel.tsx (+19/-1)
 - lib/types.ts (+4/-0)
 - pages/index.tsx (+18/-2)
-=======
 
 Timestamp: 2025-08-07T21:53:54.442Z
 Commit: abc8a8d2f81b5d1ab686729a4b2a6e3459c1b8e8
@@ -1149,7 +1147,6 @@ Message: feat: load leaderboard from api
 Files:
 - components/AgentLeaderboardPanel.tsx (+29/-18)
 - pages/index.tsx (+24/-37)
-=======
 Timestamp: 2025-08-07T21:51:59.705Z
 Commit: 832b79200e3d86bd9e7f8af22549b75223fbd993
 Author: Codex
@@ -1211,7 +1208,6 @@ Files:
 - lib/mock/agentRuns.ts (+81/-0)
 - lib/mock/streamAgentRun.ts (+48/-0)
 - pages/viz.tsx (+129/-0)
-=======
 Timestamp: 2025-08-07T22:46:58.981Z
 Commit: 31f4dffae486f5b692a96277bb0a799d11083d5b
 Author: Codex
@@ -1278,7 +1274,6 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/AgentRationalePanel.tsx (+34/-8)
 - components/PredictionDrawer.tsx (+31/-10)
-=======
 
 Timestamp: 2025-08-08T02:40:45.644Z
 Commit: d2e20591301365f8c28aa5430f307cf6e590e68c
@@ -1288,7 +1283,6 @@ Files:
 - components/GameCard.tsx (+22/-12)
 - components/UpcomingGamesGrid.tsx (+13/-8)
 - pages/index.tsx (+71/-43)
-=======
 Timestamp: 2025-08-08T02:35:50.811Z
 Commit: 4f9a58188d7597bae0cc0cae8538f1cbbddbb194
 Author: Codex
@@ -1315,7 +1309,6 @@ Files:
 - lib/types.ts (+4/-0)
 - lib/utils/formatKickoff.ts (+20/-27)
 - pages/api/upcoming-games.ts (+1/-1)
-=======
 Timestamp: 2025-08-08T03:18:06.846Z
 Commit: eb7592856ecb2a10156f06f61b99a6c0b2b31c14
 Author: Codex
@@ -1324,7 +1317,6 @@ Files:
 - .env.local.example (+6/-0)
 - README.md (+8/-5)
 - scripts/validateEnv.ts (+33/-2)
-=======
 Timestamp: 2025-08-08T03:12:51.175Z
 Commit: a16a1d2b5bd2647ce7ea91db8a1e2df4c3cbe31b
 Author: Codex
@@ -1345,7 +1337,6 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - __tests__/devlogin.test.ts (+59/-0)
 - pages/api/dev-login.ts (+6/-0)
-=======
 Timestamp: 2025-08-08T03:40:43.944Z
 Commit: 35426a767f0c53df96d1d1296e7c134f8ace1e9a
 Author: Codex
@@ -1355,7 +1346,6 @@ Files:
 - __tests__/runAgents.auth.test.ts (+78/-0)
 - __tests__/runAgentsApi.test.ts (+2/-0)
 - pages/api/run-agents.ts (+10/-0)
-=======
 Timestamp: 2025-08-08T03:37:37.748Z
 Commit: 0b675168ef3ed003e54103bbc9743418189ba5be
 Author: Codex
@@ -1390,9 +1380,7 @@ Author: Codex
 Message: Add NEXTAUTH_URL to required env keys
 Files:
 - lib/envKeys.ts (+1/-0)
-=======
 
-=======
 
 
 Timestamp: 2025-08-08T03:50:26.057Z
@@ -1404,8 +1392,6 @@ Files:
 - docs/docsync-strategy.md (+21/-0)
 - scripts/docsync-agent.ts (+2/-1)
 
-=======
-=======
 Timestamp: 2025-08-08T03:49:38.599Z
 Commit: a2d729a10ae513e1c8fe4b69e2860a2851dc2681
 Author: Codex
@@ -1432,7 +1418,6 @@ Files:
 - __tests__/runAgents.auth.test.ts (+18/-32)
 - __tests__/runAgentsApi.test.ts (+29/-54)
 - pages/api/run-agents.ts (+77/-95)
-=======
 Timestamp: 2025-08-08T04:14:09.128Z
 Commit: b6cd4ee2233b066366078ebfe07cbf9a4e237845
 Author: Codex
@@ -1475,7 +1460,6 @@ Files:
 - lib/agents/lineWatcher.ts (+35/-4)
 - lib/agents/statCruncher.ts (+17/-6)
 - lib/data/stats.ts (+36/-0)
-=======
 
 Timestamp: 2025-08-08T05:00:16.687Z
 Commit: c6d87a12380e3189f14c3f5468d3f7d903197030
@@ -1489,7 +1473,6 @@ Files:
 - lib/weights/index.ts (+44/-0)
 - pages/api/run-agents.ts (+0/-40)
 - pages/api/run-predictions.ts (+9/-4)
-=======
 Timestamp: 2025-08-08T04:59:28.223Z
 Commit: 132db6b1138e362404d370f001c195e189b27a67
 Author: Codex
@@ -1513,7 +1496,6 @@ Files:
 - db/policies.test.sql (+32/-0)
 - supabase/migrations/20240901000000_add_indexes_and_rls.sql (+45/-0)
 - supabase/schema.sql (+40/-0)
-=======
 
 
 Timestamp: 2025-08-08T05:23:57.129Z
@@ -1527,7 +1509,6 @@ Files:
 - __tests__/apiContracts.test.ts (+157/-0)
 - package-lock.json (+12/-1)
 - package.json (+4/-3)
-=======
 Timestamp: 2025-08-08T05:20:25.428Z
 Commit: 09e3509275834a955575b2c20f88a89ea817b8c9
 Author: Codex
@@ -1546,7 +1527,6 @@ Message: chore: satisfy lint rules
 Files:
 - components/AppHeader.tsx (+1/-0)
 - components/HeroStrip.tsx (+1/-1)
-=======
 Timestamp: 2025-08-08T05:17:06.202Z
 Commit: a7015313daaa393df25a9eb49f49751d4c39d026
 Author: Codex

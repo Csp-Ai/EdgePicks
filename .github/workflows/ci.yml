@@ -1,68 +1,42 @@
-name: EdgePicks CI Pipeline
+name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  push:
+    branches: [ main ]
 
 jobs:
-  ci:
+  build-and-test:
     runs-on: ubuntu-latest
-    env:
-      CI_TEST_MODE: true
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Preflight
-        uses: ./.github/actions/preflight
-        with:
-          required-secrets: SUPABASE_URL,SUPABASE_ANON_KEY
-      - name: Detect package manager
-        id: pkg
-        run: |
-          if [ -f pnpm-lock.yaml ]; then
-            echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "lock=pnpm-lock.yaml" >> $GITHUB_OUTPUT
-          elif [ -f yarn.lock ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "lock=yarn.lock" >> $GITHUB_OUTPUT
-          else
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "lock=package-lock.json" >> $GITHUB_OUTPUT
-          fi
-      - name: Setup Node
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: ${{ steps.pkg.outputs.manager }}
-          cache-dependency-path: ${{ steps.pkg.outputs.lock }}
-      - name: Install dependencies
-        run: |
-          if [ "${{ steps.pkg.outputs.manager }}" = "pnpm" ]; then
-            corepack pnpm install --frozen-lockfile
-          elif [ "${{ steps.pkg.outputs.manager }}" = "yarn" ]; then
-            corepack yarn install --frozen-lockfile
-          else
-            npm ci
-          fi
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      # Fail PRs immediately if merge markers exist
+      - name: Merge marker guard
+        run: npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/checkMergeMarkers.ts
+
+      # Show route conflicts in dry-run (no file changes in CI)
+      - name: Route conflict dry-run
+        run: CONFLICT_GUARD_DRY_RUN=1 npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/checkRouteConflicts.ts
+
       - name: Typecheck
-        run: npm run typecheck
+        run: npm run typecheck --if-present
+
       - name: Lint
-        run: npm run lint
-      - name: Check route conflicts
-        run: npm run guard:dry
-        env:
-          CI: '1'
+        run: npm run lint --if-present
+
+      - name: Tests
+        run: CI=1 npm test -- --runInBand --silent
+
       - name: Build
         run: npm run build
-      - name: Test
-        run: npm test

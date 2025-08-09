@@ -54,17 +54,8 @@ Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in bo
 cp .env.test.example .env.test && npm test
 ```
 
-=======
-## Testing
-
-```bash
-cp .env.test.example .env.test
-npm test
-```
-
 Tests use MSW; no real SPORTS_API_KEY is required.
 Set `ALLOW_TEST_NETWORK=1` to permit live network calls in rare cases.
-
 
 ## Live Demos
 - Production: https://edgepicks.app *(placeholder)*

@@ -3,19 +3,16 @@ name: Lighthouse CI
 on:
   push:
     branches: [main]
-=======
   pull_request:
 
 jobs:
   lhci:
     runs-on: ubuntu-latest
-=======
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-
           node-version: 20
           cache: 'npm'
       - run: npm ci
@@ -24,12 +21,7 @@ jobs:
           npx next build
           npx next export
       - name: Run Lighthouse CI
-        run: npx lhci autorun
-=======
-          node-version: 18
-      - run: npm ci
-      - run: npm run build
-      - run: npx lhci autorun --config=./lighthouserc.json
+        run: npx lhci autorun --config=./lighthouserc.json
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       - name: Upload Lighthouse artifacts

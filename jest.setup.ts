@@ -1,22 +1,25 @@
-
-import { config as dotenvConfig } from 'dotenv';
-dotenvConfig({ path: '.env.test' });
-
-import '@testing-library/jest-dom';
+import 'dotenv/config';
 import { freezeTime, resetTime } from './lib/test/freezeTime';
 import { server } from './test/msw/server';
-import { installNetworkGuard } from './lib/test/networkGuard';
 
-// Block accidental live network in tests (except localhost & msw)
-const origFetch = global.fetch;
-global.fetch = async (input: any, init?: any) => {
-  const url = typeof input === 'string' ? input : input?.url ?? '';
-  const allow = process.env.ALLOW_TEST_NETWORK === '1';
-  if (!allow && url && !url.includes('localhost') && !url.startsWith('http://127.0.0.1')) {
-    throw new Error(`[test-net-guard] Blocked network call in tests: ${url}`);
-  }
-  return origFetch(input as any, init as any);
-};
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeEach(() => {
+  freezeTime();
+});
+afterEach(() => {
+  jest.useRealTimers?.();
+  jest.clearAllTimers?.();
+  jest.restoreAllMocks();
+  resetTime();
+  server.resetHandlers();
+});
+afterAll(() => server.close());
+
+// Place network guard AFTER MSW so mocks still work
+import { installNetworkGuard } from './lib/test/networkGuard';
+installNetworkGuard();
+
+import '@testing-library/jest-dom';
 
 const originalError = console.error;
 console.error = (...args: any[]) => {
@@ -61,6 +64,7 @@ process.env.SUPABASE_URL = 'http://localhost';
 process.env.SUPABASE_KEY = 'test-anon';
 process.env.NEXTAUTH_URL = 'http://localhost';
 process.env.NEXTAUTH_SECRET = 'secret';
+process.env.SPORTS_API_KEY = 'test';
 process.env.GOOGLE_CLIENT_ID = 'google-id';
 process.env.GOOGLE_CLIENT_SECRET = 'google-secret';
 process.env.LIVE_MODE = 'on';
@@ -80,25 +84,4 @@ jest.mock('./lib/supabaseClient', () => {
       })),
     },
   };
-});
-
-beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' });
-  installNetworkGuard();
-});
-
-beforeEach(() => {
-  freezeTime();
-});
-
-afterEach(() => {
-  jest.useRealTimers?.();
-  jest.clearAllTimers?.();
-  jest.restoreAllMocks();
-  resetTime();
-  server.resetHandlers();
-});
-
-afterAll(() => {
-  server.close();
 });

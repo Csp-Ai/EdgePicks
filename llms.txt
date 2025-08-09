@@ -1136,7 +1136,6 @@ Files:
 - lib/flow/runFlow.ts (+10/-26)
 - pages/api/run-agents.ts (+3/-14)
 - pages/api/upcoming-games.ts (+99/-113)
-=======
 Timestamp: 2025-08-07T21:36:11.936Z
 Commit: 3830e9079e51bd6d159aebbbee0adbd9da1a9488
 Author: Codex
@@ -1159,7 +1158,6 @@ Files:
 - components/PredictionsPanel.tsx (+19/-1)
 - lib/types.ts (+4/-0)
 - pages/index.tsx (+18/-2)
-=======
 
 Timestamp: 2025-08-07T21:53:54.442Z
 Commit: abc8a8d2f81b5d1ab686729a4b2a6e3459c1b8e8
@@ -1168,7 +1166,6 @@ Message: feat: load leaderboard from api
 Files:
 - components/AgentLeaderboardPanel.tsx (+29/-18)
 - pages/index.tsx (+24/-37)
-=======
 Timestamp: 2025-08-07T21:51:59.705Z
 Commit: 832b79200e3d86bd9e7f8af22549b75223fbd993
 Author: Codex
@@ -1230,7 +1227,6 @@ Files:
 - lib/mock/agentRuns.ts (+81/-0)
 - lib/mock/streamAgentRun.ts (+48/-0)
 - pages/viz.tsx (+129/-0)
-=======
 Timestamp: 2025-08-07T22:46:58.981Z
 Commit: 31f4dffae486f5b692a96277bb0a799d11083d5b
 Author: Codex
@@ -1297,7 +1293,6 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/AgentRationalePanel.tsx (+34/-8)
 - components/PredictionDrawer.tsx (+31/-10)
-=======
 
 Timestamp: 2025-08-08T02:40:45.644Z
 Commit: d2e20591301365f8c28aa5430f307cf6e590e68c
@@ -1307,7 +1302,6 @@ Files:
 - components/GameCard.tsx (+22/-12)
 - components/UpcomingGamesGrid.tsx (+13/-8)
 - pages/index.tsx (+71/-43)
-=======
 Timestamp: 2025-08-08T02:35:50.811Z
 Commit: 4f9a58188d7597bae0cc0cae8538f1cbbddbb194
 Author: Codex
@@ -1334,7 +1328,6 @@ Files:
 - lib/types.ts (+4/-0)
 - lib/utils/formatKickoff.ts (+20/-27)
 - pages/api/upcoming-games.ts (+1/-1)
-=======
 Timestamp: 2025-08-08T03:18:06.846Z
 Commit: eb7592856ecb2a10156f06f61b99a6c0b2b31c14
 Author: Codex
@@ -1343,7 +1336,6 @@ Files:
 - .env.local.example (+6/-0)
 - README.md (+8/-5)
 - scripts/validateEnv.ts (+33/-2)
-=======
 Timestamp: 2025-08-08T03:12:51.175Z
 Commit: a16a1d2b5bd2647ce7ea91db8a1e2df4c3cbe31b
 Author: Codex
@@ -1364,7 +1356,6 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - __tests__/devlogin.test.ts (+59/-0)
 - pages/api/dev-login.ts (+6/-0)
-=======
 Timestamp: 2025-08-08T03:40:43.944Z
 Commit: 35426a767f0c53df96d1d1296e7c134f8ace1e9a
 Author: Codex
@@ -1374,7 +1365,6 @@ Files:
 - __tests__/runAgents.auth.test.ts (+78/-0)
 - __tests__/runAgentsApi.test.ts (+2/-0)
 - pages/api/run-agents.ts (+10/-0)
-=======
 Timestamp: 2025-08-08T03:37:37.748Z
 Commit: 0b675168ef3ed003e54103bbc9743418189ba5be
 Author: Codex
@@ -1409,9 +1399,7 @@ Author: Codex
 Message: Add NEXTAUTH_URL to required env keys
 Files:
 - lib/envKeys.ts (+1/-0)
-=======
 
-=======
 
 
 Timestamp: 2025-08-08T03:50:26.057Z
@@ -1423,8 +1411,6 @@ Files:
 - docs/docsync-strategy.md (+21/-0)
 - scripts/docsync-agent.ts (+2/-1)
 
-=======
-=======
 Timestamp: 2025-08-08T03:49:38.599Z
 Commit: a2d729a10ae513e1c8fe4b69e2860a2851dc2681
 Author: Codex
@@ -1451,7 +1437,6 @@ Files:
 - __tests__/runAgents.auth.test.ts (+18/-32)
 - __tests__/runAgentsApi.test.ts (+29/-54)
 - pages/api/run-agents.ts (+77/-95)
-=======
 Timestamp: 2025-08-08T04:14:09.128Z
 Commit: b6cd4ee2233b066366078ebfe07cbf9a4e237845
 Author: Codex
@@ -1494,7 +1479,6 @@ Files:
 - lib/agents/lineWatcher.ts (+35/-4)
 - lib/agents/statCruncher.ts (+17/-6)
 - lib/data/stats.ts (+36/-0)
-=======
 
 Timestamp: 2025-08-08T05:00:16.687Z
 Commit: c6d87a12380e3189f14c3f5468d3f7d903197030
@@ -1508,7 +1492,6 @@ Files:
 - lib/weights/index.ts (+44/-0)
 - pages/api/run-agents.ts (+0/-40)
 - pages/api/run-predictions.ts (+9/-4)
-=======
 Timestamp: 2025-08-08T04:59:28.223Z
 Commit: 132db6b1138e362404d370f001c195e189b27a67
 Author: Codex
@@ -1532,7 +1515,6 @@ Files:
 - db/policies.test.sql (+32/-0)
 - supabase/migrations/20240901000000_add_indexes_and_rls.sql (+45/-0)
 - supabase/schema.sql (+40/-0)
-=======
 
 
 Timestamp: 2025-08-08T05:23:57.129Z
@@ -1546,7 +1528,6 @@ Files:
 - __tests__/apiContracts.test.ts (+157/-0)
 - package-lock.json (+12/-1)
 - package.json (+4/-3)
-=======
 Timestamp: 2025-08-08T05:20:25.428Z
 Commit: 09e3509275834a955575b2c20f88a89ea817b8c9
 Author: Codex
@@ -1565,7 +1546,6 @@ Message: chore: satisfy lint rules
 Files:
 - components/AppHeader.tsx (+1/-0)
 - components/HeroStrip.tsx (+1/-1)
-=======
 Timestamp: 2025-08-08T05:17:06.202Z
 Commit: a7015313daaa393df25a9eb49f49751d4c39d026
 Author: Codex
@@ -1583,7 +1563,6 @@ Files:
 - __tests__/llmsLog.test.ts (+10/-2)
 - pages/api/logs.ts (+47/-7)
 - pages/history.tsx (+50/-82)
-=======
 
 
 Timestamp: 2025-08-08T05:30:00Z
@@ -1604,7 +1583,6 @@ Files:
 - components/HeroStrip.tsx (+18/-8)
 - llms.txt (+4/-0)
 - pages/index.tsx (+9/-4)
-=======
 Timestamp: 2025-08-08T05:23:19.983Z
 Commit: e79ad05062f1c1e0cf6facc489b88f437627a723
 Author: Codex
@@ -1647,7 +1625,6 @@ Files:
 - scripts/agentSelfReflection.ts (+128/-0)
 - scripts/generateSOPs.ts (+79/-0)
 - scripts/refreshDocs.ts (+54/-0)
-=======
 
 
 
@@ -1660,7 +1637,6 @@ Files:
 - components/PredictionDrawer.tsx (+36/-12)
 - lib/analytics/logUiEvent.ts (+33/-0)
 - lib/hooks/useEventSource.ts (+41/-2)
-=======
 
 Timestamp: 2025-08-08T06:01:23.168Z
 Commit: 1fde5c5b6505b336c8f10b4504620d89fe4ccafe
@@ -1676,7 +1652,6 @@ Files:
 - pages/api/run-predictions.ts (+14/-4)
 - scripts/snapshotWeights.ts (+40/-0)
 - supabase/migrations/20240915000000_create_agent_weights_snapshot_table.sql (+9/-0)
-=======
 
 Timestamp: 2025-08-08T05:55:43.160Z
 Commit: 04fe0dfb7156e76c7092c45864487d5fa573581e
@@ -1689,7 +1664,6 @@ Files:
 - docs/db-schema.md (+26/-3)
 - supabase/migrations/20240901000000_add_indexes_and_rls.sql (+27/-6)
 - supabase/schema.sql (+26/-3)
-=======
 Timestamp: 2025-08-08T05:56:22.247Z
 Commit: 886484ad67ff08a052737703cd0e235e0526fb72
 Author: Codex
@@ -1708,7 +1682,6 @@ Files:
 - pages/api/logs.ts (+9/-0)
 - pages/api/run-agents.ts (+2/-3)
 - pages/api/run-predictions.ts (+10/-5)
-=======
 Timestamp: 2025-08-08T05:57:18.828Z
 Commit: 2ac3632c371cee1fc090894dbd77fa6afb52c0ce
 Author: Codex
@@ -1788,7 +1761,6 @@ Files:
 - pages/api/run-agents.ts (+61/-1)
 - supabase/migrations/20241001000000_create_prediction_cache_table.sql (+6/-0)
 - supabase/schema.sql (+7/-0)
-=======
 Timestamp: 2025-08-08T07:11:22.947Z
 Commit: a4aa3e5dc4e6f338de732b9124c23bba3e027dd3
 Author: Codex
@@ -1816,7 +1788,6 @@ Files:
 - components/PredictionsPanel.tsx (+8/-1)
 - pages/api/admin/purge-cache.ts (+44/-0)
 - pages/api/run-agents.ts (+50/-9)
-=======
 Timestamp: 2025-08-08T07:48:27.482Z
 Commit: 4ebec0295d7c37e1bb999696cbb05b42889f0cfd
 Author: Codex
@@ -1831,7 +1802,6 @@ Files:
 - __tests__/utils/freezeTime.ts (+4/-3)
 - jest.setup.ts (+1/-0)
 - pages/api/upcoming-games.ts (+49/-30)
-=======
 
 
 
@@ -1857,7 +1827,6 @@ Message: feat: add weight calibration script
 Files:
 - package.json (+2/-1)
 - scripts/calibrateWeights.ts (+54/-0)
-=======
 Timestamp: 2025-08-08T08:17:37.426Z
 Commit: 64702a5916578d5d107bedbeb3ab9af2f32289b9
 Author: Codex
@@ -1868,14 +1837,12 @@ Files:
 
 
 
-=======
 
 
 feat(sop): include “Lessons Learned” from recent agent reflections
 - add readRecentAgentReflections helper (read-only, tolerant of missing/corrupt logs)
 - keep centralized async writer (logAgentReflection/writeAgentReflection) as source of truth
 - update SOP generator to merge maintainer notes + lessons learned
-=======
 Timestamp: 2025-08-08T08:40:33.591Z
 Commit: 1c771b197f490649a4882e1444c0b385821d4f82
 Author: Codex
@@ -1883,7 +1850,6 @@ Message: feat: use SWR for reflections
 Files:
 - __tests__/AgentNodeGraph.swr.test.tsx (+45/-0)
 - components/AgentNodeGraph.tsx (+42/-0)
-=======
 
 
 Timestamp: 2025-08-08T08:38:41.900Z
@@ -1895,7 +1861,6 @@ Files:
 - pages/_app.tsx (+2/-0)
 - pages/api/user/onboarding.ts (+46/-0)
 - supabase/migrations/20241015000000_create_user_profiles_table.sql (+4/-0)
-=======
 
 Timestamp: 2025-08-08T08:35:52.343Z
 Commit: 69f387b9024230bf41f6bed279148f083d7aa60b
@@ -1904,7 +1869,6 @@ Message: feat: add odds fallback
 Files:
 - __tests__/adapters.contract.test.ts (+16/-0)
 - lib/data/odds.ts (+5/-1)
-=======
 Timestamp: 2025-08-08T08:29:53.679Z
 Commit: 9246dc60c4a5bcdfb3d2cfda654ac6f27aaca557
 Author: Codex
@@ -1922,7 +1886,6 @@ Message: test agent reflection concurrency
 Files:
 - __tests__/agentReflections.store.test.ts (+56/-0)
 - lib/logAgentReflection.ts (+6/-0)
-=======
 
 
 Timestamp: 2025-08-08T08:57:39.268Z
@@ -1941,7 +1904,6 @@ Files:
 - __tests__/sportsWebhook.hmac.test.ts (+53/-0)
 - lib/utils/verifyWebhookSignature.ts (+8/-0)
 - pages/api/sports-webhook.ts (+46/-0)
-=======
 Timestamp: 2025-08-08T08:50:48.190Z
 Commit: 6afcf0ab259d1f8edbe0a21995047aa708b5fc9d
 Author: Codex
@@ -1971,7 +1933,6 @@ Author: Codex
 Message: ci(constitution): switch PR creation to peter-evans + auto-merge; keep drift as blocking
 Files:
 - .github/workflows/constitution-drift.yml (+70/-0)
-=======
 
 Timestamp: 2025-08-08T09:30:32.963Z
 Commit: 2380bd7c9ee11db49f58b408cfbd33b00c6d4835
@@ -1982,7 +1943,6 @@ Files:
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/AgentExecutionTracker.tsx (+16/-4)
 - jest.setup.ts (+9/-0)
-=======
 Timestamp: 2025-08-08T09:31:55.064Z
 Commit: 18fb92694defa185d23b529533c15d51b61b78e2
 Author: Codex
@@ -1991,7 +1951,6 @@ Files:
 - __tests__/PredictionsPanel.explanations.test.tsx (+58/-0)
 - __tests__/__snapshots__/llmsLog.test.ts.snap (+1/-1)
 - components/PredictionsPanel.tsx (+141/-12)
-=======
 Timestamp: 2025-08-08T09:31:00.153Z
 Commit: c0fd43fb192cb56f387557e784588b1fa65192fd
 Author: Codex
@@ -2009,7 +1968,6 @@ Files:
 - __tests__/DemoMatchupCarousel.test.tsx (+33/-0)
 - components/DemoMatchupCarousel.tsx (+89/-0)
 - mock/demo-matchups.json (+17/-0)
-=======
 Timestamp: 2025-08-08T09:43:55.171Z
 Commit: 94f2d773f66888028f02869d8d8e07b538fb7701
 Author: Codex
@@ -2063,7 +2021,6 @@ Files:
 - lib/schemas/accuracy.ts (+15/-0)
 - lib/schemas/predictions.ts (+52/-0)
 - lib/schemas/reflections.ts (+11/-0)
-=======
 Timestamp: 2025-08-08T09:49:54.019Z
 Commit: 0ea587e571b4f3037132c25b6b91a4fcb38875f9
 Author: Codex
@@ -2086,7 +2043,6 @@ Files:
 - package.json (+9/-2)
 - stories/AgentExecutionTracker.stories.tsx (+23/-0)
 - stories/PredictionsPanel.stories.tsx (+40/-0)
-=======
 Timestamp: 2025-08-08T10:00:21.029Z
 Commit: a2276f2391429cc08763bb630b8379288fcf602c
 Author: Codex
@@ -2097,7 +2053,6 @@ Files:
 - package.json (+2/-1)
 - tests/msw/handlers.ts (+8/-0)
 - tests/msw/server.ts (+4/-0)
-=======
 Timestamp: 2025-08-08T09:57:40.238Z
 Commit: 298561b80ef73cca538f91bf8a63d8ef861d626b
 Author: Codex
@@ -2193,7 +2148,6 @@ Files:
 - lib/i18n/config.ts (+42/-0)
 - locales/en/common.json (+4/-0)
 - locales/es/common.json (+4/-0)
-=======
 
 Timestamp: 2025-08-08T11:11:56.734Z
 Commit: 63b003834ece721d3a28e6d0146a5c913d7c9644
@@ -2203,7 +2157,6 @@ Files:
 - __tests__/theme.persist.test.ts (+21/-0)
 - components/ThemeToggle.tsx (+4/-5)
 - lib/theme/persist.ts (+14/-0)
-=======
 
 Timestamp: 2025-08-08T11:16:58.142Z
 Commit: 7b65c5bf1a2e6290e76458af1959b86c9eaebef8
@@ -2213,7 +2166,6 @@ Files:
 - __tests__/ReasoningDisclosure.test.tsx (+22/-0)
 - components/AgentCard.tsx (+30/-31)
 - components/agents/ReasoningDisclosure.tsx (+38/-0)
-=======
 
 Timestamp: 2025-08-08T11:15:08.862Z
 Commit: e264823d76976f268d261110636c6f15e4f88d91
@@ -2224,7 +2176,6 @@ Files:
 - lib/demoMode.tsx (+3/-0)
 - lib/sw/registerSW.ts (+20/-0)
 - public/sw.js (+37/-0)
-=======
 Timestamp: 2025-08-08T11:14:17.547Z
 Commit: 09c54bd2985207ae4ccf9cbe0f65582c4ebd1843
 Author: Codex
@@ -2232,7 +2183,6 @@ Message: feat: add native share
 Files:
 - components/PredictionDrawer.tsx (+7/-3)
 - lib/share/nativeShare.ts (+25/-0)
-=======
 
 Timestamp: 2025-08-08T11:13:12.692Z
 Commit: 8eca2c4d94ef3eabf519271562631859ac7efcf0
@@ -2242,7 +2192,6 @@ Files:
 - __tests__/Navbar.test.tsx (+25/-0)
 - components/Navbar.tsx (+1/-1)
 
-=======
 Timestamp: 2025-08-08T11:13:52.003Z
 Commit: f77dc878b7e82e08ef369b6397666768e00a9ed1
 Author: Codex
@@ -2251,7 +2200,6 @@ Files:
 - components/AgentCard.tsx (+2/-0)
 - components/GlossaryLink.tsx (+15/-0)
 - components/Navbar.tsx (+2/-0)
-=======
 
 
 
@@ -2266,7 +2214,6 @@ Files:
 - lib/flags/experiments.ts (+11/-0)
 - lib/flags/flags.ts (+34/-0)
 - lib/flags/useFlag.ts (+9/-0)
-=======
 Timestamp: 2025-08-08T11:12:58.755Z
 Commit: cf42f64d69c207403fb8d58497a8c643ee0c4815
 Author: Codex
@@ -2274,7 +2221,6 @@ Message: feat: improve AgentStatusPanel accessibility
 Files:
 - components/AgentStatusPanel.tsx (+17/-8)
 
-=======
 Timestamp: 2025-08-08T11:20:31.007Z
 Commit: bdf022d1b33ecb1aabf3ea4f894595e26e930e91
 Author: Codex
@@ -2287,7 +2233,6 @@ Files:
 - components/trust/TrustSummary.tsx (+79/-0)
 - pages/trust/index.tsx (+73/-0)
 
-=======
 
 Timestamp: 2025-08-08T11:13:28.411Z
 Commit: 0d8d7455c34f5c17b43a3810d1e313409168530b
@@ -2299,7 +2244,6 @@ Files:
 - lib/logUiEvent.test.js (+1/-1)
 - lib/logUiEvent.ts (+3/-1)
 - lib/telemetry/events.ts (+35/-0)
-=======
 
 Timestamp: 2025-08-08T11:15:16.055Z
 Commit: d4af1c627c1083af9b39e0b2d47d56cff42d2939
@@ -2309,7 +2253,6 @@ Files:
 - __tests__/agent-builder.test.tsx (+23/-0)
 - components/agent-builder/Wizard.tsx (+73/-0)
 - lib/agent-builder/schema.ts (+9/-0)
-=======
 
 Timestamp: 2025-08-08T11:14:21.847Z
 Commit: 138f8927dc9fc40a30e989392427ebfd05c19f47
@@ -2319,7 +2262,6 @@ Files:
 - __tests__/AgentLogStream.sse.test.tsx (+15/-0)
 - components/AgentLogStream.tsx (+53/-11)
 - lib/logs/search.ts (+36/-0)
-=======
 
 Timestamp: 2025-08-08T11:14:01.445Z
 Commit: 01b8756f27e2e0c625701e32ae748e95946c6027
@@ -2328,7 +2270,6 @@ Message: feat: add agent trust score widget
 Files:
 - __tests__/AgentTrustScore.test.tsx (+27/-0)
 - components/agents/AgentTrustScore.tsx (+28/-0)
-=======
 
 
 Timestamp: 2025-08-08T11:11:29.359Z
@@ -2340,7 +2281,6 @@ Files:
 - __tests__/AgentsPage.test.tsx (+36/-0)
 - components/agents/AgentTile.tsx (+42/-0)
 - pages/agents/index.tsx (+45/-0)
-=======
 Timestamp: 2025-08-08T11:14:31.397Z
 Commit: 73bc6ee5dbbb2d572666c410aa7ff87270878bee
 Author: Codex
@@ -2349,7 +2289,6 @@ Files:
 - __tests__/demo.page.test.tsx (+27/-0)
 - components/demo/DemoHero.tsx (+40/-0)
 - pages/demo/index.tsx (+41/-0)
-=======
 
 Timestamp: 2025-08-08T11:13:31.757Z
 Commit: ca48d522b295553818dd2cc318d9052b9f07ada0
@@ -2358,7 +2297,6 @@ Message: fix: clean PredictionMarquee merge artifact
 Files:
 - __tests__/marketing/PredictionMarquee.test.tsx (+0/-18)
 - components/marketing/PredictionMarquee.tsx (+0/-45)
-=======
 
 Timestamp: 2025-08-08T11:12:32.836Z
 Commit: 36a824f069c3c55c68d2e530a8aa614bae3d3482
@@ -2370,7 +2308,6 @@ Files:
 - components/Onboarding.tsx (+17/-4)
 - components/onboarding/ProgressStepper.tsx (+19/-0)
 - lib/onboarding/progress.ts (+22/-0)
-=======
 
 Timestamp: 2025-08-08T11:13:14.884Z
 Commit: f5994c41cafcf7b93c715285d944b6ce1d2e0452
@@ -2380,7 +2317,6 @@ Files:
 - __tests__/Onboarding.goal.test.tsx (+25/-0)
 - components/Onboarding.tsx (+25/-1)
 - components/onboarding/GoalPicker.tsx (+22/-0)
-=======
 
 Timestamp: 2025-08-08T11:11:05.639Z
 Commit: 9d28656713e70bddd795495936152f2f40aedbb5
@@ -2390,7 +2326,6 @@ Files:
 - components/AgentVizCanvas.tsx (+75/-2)
 - components/agents/AgentNodePopover.tsx (+67/-0)
 
-=======
 Timestamp: 2025-08-08T11:10:12.452Z
 Commit: 437141caff9fb1bc44082a142eda94d8e3d13a56
 Author: Codex
@@ -2403,7 +2338,6 @@ Files:
 
 
 
-=======
 
 
 
@@ -2414,7 +2348,6 @@ Files:
 
 
 
-=======
 
 
 
@@ -2425,7 +2358,6 @@ Message: chore: add bundle size guard
 Files:
 - .github/workflows/bundle-guard.yml (+43/-0)
 - bundle-budget.json (+3/-0)
-=======
 
 Timestamp: 2025-08-08T12:03:40.344Z
 Commit: cc2b7fd9475ab3c9c83ae46a524d638efda08a68
@@ -2436,7 +2368,6 @@ Files:
 - components/analytics/FunnelChart.tsx (+24/-0)
 - fixtures/funnels.json (+7/-0)
 - pages/admin/funnels.tsx (+67/-0)
-=======
 
 Timestamp: 2025-08-08T11:57:04.845Z
 Commit: 9e5c9915bd47a71dc1d20eff853f73418dfcc706
@@ -2445,7 +2376,6 @@ Message: Add prediction provenance tag component
 Files:
 - __tests__/ProvenanceTag.test.tsx (+14/-0)
 - components/predictions/ProvenanceTag.tsx (+29/-0)
-=======
 Timestamp: 2025-08-08T11:53:10.506Z
 Commit: 5681e6b42f921e8781df6f946559aae96bc689e1
 Author: Codex
@@ -2454,7 +2384,6 @@ Files:
 - __tests__/Heatmap.test.tsx (+27/-0)
 - __tests__/fixtures/heatmap.json (+8/-0)
 - components/agents/Heatmap.tsx (+98/-0)
-=======
 
 
 
@@ -2465,8 +2394,6 @@ Message: feat: add ScenarioExplainer component
 Files:
 - __tests__/ScenarioExplainer.test.tsx (+24/-0)
 - components/agents/ScenarioExplainer.tsx (+46/-0)
-=======
-=======
 Timestamp: 2025-08-08T11:47:24.957Z
 Commit: a55a9f48a805934c78a932c7ebda5d4419e7a97d
 Author: Codex
@@ -2475,7 +2402,6 @@ Files:
 - __tests__/demo.nfl.page.test.tsx (+30/-0)
 - pages/demo/mlb.tsx (+1/-0)
 - pages/demo/nfl.tsx (+76/-0)
-=======
 
 
 Timestamp: 2025-08-08T11:46:03.808Z
@@ -2486,7 +2412,6 @@ Files:
 - __tests__/DisagreementBadge.test.tsx (+47/-0)
 - components/agents/DisagreementBadge.tsx (+51/-0)
 
-=======
 Timestamp: 2025-08-08T11:45:51.107Z
 Commit: 2058c519c38770d8c79061b658fc583f1805db25
 Author: Codex
@@ -2494,7 +2419,6 @@ Message: feat: add agent builder templates
 Files:
 - __tests__/agent-builder.templates.test.ts (+15/-0)
 - lib/agent-builder/templates.ts (+33/-0)
-=======
 
 
 
@@ -2505,8 +2429,6 @@ Message: Add Agent Card mini stories and docs
 Files:
 - docs/agents/mini.md (+10/-0)
 - stories/agents/AgentMini.stories.tsx (+110/-0)
-=======
-=======
 Timestamp: 2025-08-08T11:47:11.905Z
 Commit: 0bc1963a672a743efe359540df0889f92092a8bf
 Author: Codex
@@ -2518,7 +2440,6 @@ Files:
 - docs/model-cards/lineWatcher.md (+16/-0)
 - docs/model-cards/statCruncher.md (+16/-0)
 - docs/model-cards/trendsAgent.md (+16/-0)
-=======
 
 
 Timestamp: 2025-08-08T11:45:29.736Z
@@ -2528,7 +2449,6 @@ Message: feat: add referral link generator
 Files:
 - __tests__/referral.link.test.ts (+32/-0)
 - lib/referral/link.ts (+26/-0)
-=======
 
 Timestamp: 2025-08-08T11:43:08.923Z
 Commit: 8960b5d3983941c137c0120d515583c58f9581ef
@@ -2538,7 +2458,6 @@ Files:
 - __tests__/ConfidenceExplainer.test.tsx (+18/-0)
 - components/predictions/ConfidenceExplainer.tsx (+35/-0)
 
-=======
 
 Timestamp: 2025-08-08T11:43:09.068Z
 Commit: 55ab1d118794a4ad260edbee8c667be13a198158
@@ -2547,7 +2466,6 @@ Message: feat: add data freshness banner
 Files:
 - __tests__/DataFreshness.test.tsx (+21/-0)
 - components/system/DataFreshness.tsx (+39/-0)
-=======
 
 Timestamp: 2025-08-08T11:42:30.248Z
 Commit: 329f2c69043929fb61199204e258c0a586212ae2
@@ -2555,7 +2473,6 @@ Author: Codex
 Message: test: add accessibility contracts
 Files:
 - tests/a11y/contracts.ts (+51/-0)
-=======
 Timestamp: 2025-08-08T11:43:16.706Z
 Commit: b12c12531658ffd771b992fd8448eabb3ecdf87c
 Author: Codex
@@ -2573,13 +2490,10 @@ Message: test: add guest journey playwright spec
 Files:
 - .github/workflows/journey.yml (+20/-0)
 - tests/journey/guest.spec.ts (+22/-0)
-=======
 
 
 
-=======
 
-=======
 
 
 
@@ -2595,7 +2509,6 @@ Files:
 - __tests__/SelfHealBoundary.test.tsx (+29/-0)
 - components/self-heal/FixSuggestionsChip.tsx (+20/-0)
 - components/self-heal/SelfHealBoundary.tsx (+22/-0)
-=======
 
 Timestamp: 2025-08-08T12:51:22.352Z
 Commit: 87ea34131c698279e541df082a3096cf722e37f5
@@ -2604,7 +2517,6 @@ Message: feat(onboarding): add purpose-first setup
 Files:
 - app/onboarding/page.tsx (+89/-0)
 - lib/profile/prefs.ts (+28/-0)
-=======
 
 Timestamp: 2025-08-08T12:46:55.671Z
 Commit: e846fe2219db3d54e1c4a195d9bbbd65d27108d1
@@ -2618,7 +2530,6 @@ Files:
 - lib/i18n/config.tsx (+79/-0)
 - lib/i18n/getDictionary.ts (+5/-0)
 - locales/ar/common.json (+4/-0)
-=======
 
 Timestamp: 2025-08-08T12:47:52.181Z
 Commit: c91433642353fe2e0ab56c734157da950ce71ca9
@@ -2627,7 +2538,6 @@ Message: Add pricing teaser modal
 Files:
 - __tests__/marketing/PricingTeaser.test.tsx (+32/-0)
 - components/marketing/PricingTeaser.tsx (+49/-0)
-=======
 
 
 Timestamp: 2025-08-08T12:42:40.391Z
@@ -2640,7 +2550,6 @@ Files:
 - components/a11y/FocusRing.tsx (+17/-0)
 - components/a11y/FocusTrap.tsx (+41/-0)
 - components/a11y/SkipLink.tsx (+15/-0)
-=======
 
 Timestamp: 2025-08-08T12:41:16.361Z
 Commit: 55f85677b6efb7ed98e8960068115897b3a4ada1
@@ -2649,7 +2558,6 @@ Message: feat: add risk communicator component
 Files:
 - components/health/RiskCommunicator.tsx (+71/-0)
 - stories/health/RiskCommunicator.stories.tsx (+28/-0)
-=======
 Timestamp: 2025-08-08T12:42:23.800Z
 Commit: e5edfe0d155f1c476c587bddf373c477f67fd8a2
 Author: Codex
@@ -2659,7 +2567,6 @@ Files:
 - components/inclusion/persona.css (+44/-0)
 
 
-=======
 Timestamp: 2025-08-08T12:39:51.017Z
 Commit: efa7ee966a62f5986291ec1407685acda237c25a
 Author: Codex
@@ -2671,7 +2578,6 @@ Files:
 - components/lens/LensToggle.tsx (+14/-0)
 - components/lens/index.ts (+4/-0)
 - data/open-datasets.json (+20/-0)
-=======
 
 Timestamp: 2025-08-08T12:39:46.223Z
 Commit: 26050e2c7f521db654f95edeb58ca5df507f2d6a
@@ -2683,7 +2589,6 @@ Files:
 - components/edu/ConfidenceIntervalCard.tsx (+58/-0)
 - components/edu/ErrorBarsCard.tsx (+53/-0)
 - components/edu/ZScoreCard.tsx (+54/-0)
-=======
 
 Timestamp: 2025-08-08T12:40:05.349Z
 Commit: 437c25a99b954291ac01adcd43f16c74b4406b11
@@ -2692,7 +2597,6 @@ Message: feat: add impact dashboard
 Files:
 - app/impact/metrics.json (+34/-0)
 - app/impact/page.tsx (+134/-0)
-=======
 
 Timestamp: 2025-08-08T12:41:34.334Z
 Commit: 76c84b11fc802016cd1911be26fed71f2759a45e
@@ -2701,7 +2605,6 @@ Message: feat: add preflight env check page
 Files:
 - app/dev/preflight/page.tsx (+83/-0)
 - app/layout.tsx (+18/-0)
-=======
 
 Timestamp: 2025-08-08T12:43:33.489Z
 Commit: 122ee1d176a78c20e4f44c93a045dbd429b8730e
@@ -2712,7 +2615,6 @@ Files:
 - app/(heavy)/leaderboard/loading.tsx (+8/-0)
 - app/(heavy)/leaderboard/page.tsx (+28/-0)
 - app/layout.tsx (+10/-0)
-=======
 Timestamp: 2025-08-08T12:41:30.690Z
 Commit: 52307f9f5385f679183131d0e7f6607cf66d07b2
 Author: Codex
@@ -2720,7 +2622,6 @@ Message: feat: add ancient tech gallery
 Files:
 - app/ancient/page.tsx (+128/-0)
 - components/ancient/AncientTechCard.tsx (+71/-0)
-=======
 
 
 Timestamp: 2025-08-08T12:39:36.823Z
@@ -2734,7 +2635,6 @@ Files:
 - app/maps/page.tsx (+87/-0)
 - package-lock.json (+2283/-3391)
 - package.json (+2/-0)
-=======
 
 Timestamp: 2025-08-08T12:39:36.997Z
 Commit: 58a0ba2528a9d15810dfafd0ccd5db42c20a3843
@@ -2750,7 +2650,6 @@ Files:
 - components/ui/skeleton.tsx (+15/-0)
 - components/ui/toaster.tsx (+10/-0)
 - components/ui/welcome.tsx (+16/-0)
-=======
 Timestamp: 2025-08-08T12:39:21.740Z
 Commit: a1875c21f7c6a69b25dbcec1396cdee62c5b8111
 Author: Codex
@@ -2761,7 +2660,6 @@ Files:
 - public/sw.js (+33/-1)
 
 
-=======
 Timestamp: 2025-08-08T12:37:33.324Z
 Commit: b0242cd4976b9e6eb998294b17dda187cabd992f
 Author: Codex
@@ -2785,10 +2683,8 @@ Files:
 - components/story/StoryLayout.tsx (+59/-0)
 - components/story/index.ts (+5/-0)
 - content/stories/first-story.mdx (+16/-0)
-=======
 
 
-=======
 Timestamp: 2025-08-08T12:34:49.121Z
 Commit: a3a1d1a41552849c23a8d076f132af3952b5d7b9
 Author: Codex
@@ -2807,7 +2703,6 @@ Message: docs: explain CI preflight and add env defaults
 Files:
 - .env.example (+5/-0)
 - README.md (+4/-0)
-=======
 
 
 
@@ -2839,7 +2734,6 @@ Files:
 - README.md (+42/-251)
 - agents.ms (+84/-0)
 - llms.txt (+21/-0)
-=======
 
 
 Timestamp: 2025-08-08T13:35:36.992Z
@@ -2849,7 +2743,6 @@ Message: feat(theme): add WCAG contrast checker
 Files:
 - __tests__/theme.contrast.test.ts (+27/-0)
 - lib/theme/contrast.ts (+53/-0)
-=======
 Timestamp: 2025-08-08T13:58:34.847Z
 Commit: 56dd65fd2042141f1f148f55379312f2c5fead38
 Author: Codex
@@ -2857,7 +2750,6 @@ Message: chore: add docstring check
 Files:
 - package.json (+1/-0)
 - scripts/check-docstrings.ts (+78/-0)
-=======
 Timestamp: 2025-08-08T13:32:18.028Z
 Commit: dfdf81f8c51d1974d343e22e69cd5161be833ce3
 Author: Codex
@@ -2866,7 +2758,6 @@ Files:
 - __tests__/telemetry.buffer.test.ts (+12/-0)
 - lib/telemetry/buffer.ts (+35/-0)
 - lib/telemetry/schema.ts (+12/-0)
-=======
 Timestamp: 2025-08-08T13:58:29.912Z
 Commit: cbaa9fd5f88c680a4244beddba8e5eec87e63f95
 Author: Codex
@@ -2874,7 +2765,6 @@ Message: Add empty state component with variants
 Files:
 - components/ui/Empty.tsx (+51/-0)
 - stories/Empty.stories.tsx (+28/-0)
-=======
 Timestamp: 2025-08-08T13:32:52.924Z
 Commit: 20290114b9b023ddfc076b8e7bc2f555ccb86fb5
 Author: Codex
@@ -2888,7 +2778,6 @@ Author: Codex
 Message: feat: add low-impact hook
 Files:
 - hooks/useLowImpact.ts (+35/-0)
-=======
 
 Timestamp: 2025-08-08T13:59:26.090Z
 Commit: 8d00ccf6bd0b7384b8274aa480bc8a39f45fa91a
@@ -2904,7 +2793,6 @@ Author: Codex
 Message: chore: add skeleton stories
 Files:
 - stories/Skeleton.stories.tsx (+48/-0)
-=======
 
 Timestamp: 2025-08-08T13:34:40.538Z
 Commit: d04f7c88eccec59a239e11d59abdf5ebfa51f6df
@@ -2913,7 +2801,6 @@ Message: feat: add run timeline component
 Files:
 - __tests__/RunTimeline.test.tsx (+36/-0)
 - components/agents/RunTimeline.tsx (+97/-0)
-=======
 
 Timestamp: 2025-08-08T13:57:57.992Z
 Commit: b23e9e49ce3501cb900c7b3233cdb72e773b6216
@@ -2924,7 +2811,6 @@ Files:
 - components/viz/Line.tsx (+72/-0)
 - components/viz/Spark.tsx (+13/-0)
 - stories/LightweightCharts.stories.tsx (+24/-0)
-=======
 
 Timestamp: 2025-08-08T13:28:58.377Z
 Commit: db59429060b7161fda47ab4cbf1418ecc85985b8
@@ -2932,7 +2818,6 @@ Author: Codex
 Message: feat: add confidence explainer tooltip
 Files:
 - components/edu/ConfidenceExplainer.tsx (+49/-0)
-=======
 Timestamp: 2025-08-08T13:29:34.158Z
 Commit: a3310c5cc80c3dd8e944fef7413cb8700659d71a
 Author: Codex
@@ -2941,7 +2826,6 @@ Files:
 - components/agents/MiniCard.tsx (+27/-0)
 - fixtures/demo/agent-metrics.json (+7/-0)
 - stories/agents/AgentMini.stories.tsx (+19/-103)
-=======
 
 Timestamp: 2025-08-08T13:29:24.150Z
 Commit: 42467cb70fc736fdce584571c0a56eab39bc4f9c
@@ -2950,7 +2834,6 @@ Message: feat: add client-only feature flags
 Files:
 - components/dev/FlagSwitch.tsx (+44/-0)
 - lib/flags/clientFlags.ts (+40/-0)
-=======
 
 Timestamp: 2025-08-08T13:34:43.578Z
 Commit: e4bccd0a83c64e5de65f8c4e54caa5f81dc98737
@@ -2959,7 +2842,6 @@ Message: feat: add error boundary with retry
 Files:
 - __tests__/SystemErrorBoundary.test.tsx (+58/-0)
 - components/system/ErrorBoundary.tsx (+48/-0)
-=======
 
 Timestamp: 2025-08-08T13:59:49.441Z
 Commit: 8c50a4a2d6fe3480ce32016589618d986ea1ff1b
@@ -2967,7 +2849,6 @@ Author: Codex
 Message: feat: add keyboard shortcut overlay
 Files:
 - components/a11y/Keymap.tsx (+67/-0)
-=======
 Timestamp: 2025-08-08T14:12:40.878Z
 Commit: f41ffc8567523da6e794460e5f1e0708f92b1929
 Author: Codex
@@ -2976,7 +2857,6 @@ Files:
 - __tests__/modal.a11y.test.tsx (+14/-0)
 - components/ui/Modal.tsx (+79/-0)
 - stories/Modal.stories.tsx (+21/-0)
-=======
 Timestamp: 2025-08-08T13:31:45.299Z
 Commit: 6ed9b369bf7e56f15fd184ad9470679efd748f5b
 Author: Codex
@@ -3180,7 +3060,6 @@ Files:
 - lib/logUiEvent.test.js (+1/-1)
 - lib/sportsApi.ts (+21/-0)
 - package.json (+2/-1)
-=======
 Timestamp: 2025-08-09T00:33:06.921Z
 Commit: 5a9d1469c2f97360db2564e0d8958c37786c687d
 Author: Codex
@@ -3199,7 +3078,6 @@ Files:
 - scripts/test-local.sh (+6/-0)
 - test/msw/handlers/sportsHandlers.ts (+20/-0)
 - test/msw/server.ts (+4/-0)
-=======
 
 
 
@@ -3251,6 +3129,36 @@ Files:
 - test/utils/renderWithProviders.tsx (+57/-0)
 - tests/visual/percy.spec.ts (+0/-8)
 
+Timestamp: 2025-08-09T01:55:50.816Z
+Commit: c7dd92b7f4369614f7a4ba22c1c1c34bc3e6beb6
+Author: Codex
+Message: Cleanup merge markers; add permanent guard; finalize route guard + React 18 types; fix jest setup
+Files:
+- .env.example (+1/-3)
+- .env.local.example (+0/-3)
+- .env.test.example (+0/-2)
+- .github/workflows/ci.yml (+28/-54)
+- .github/workflows/lighthouse-ci.yml (+1/-9)
+- .github/workflows/percy.yml (+0/-27)
+- CHANGELOG.md (+0/-20)
+- README.md (+0/-9)
+- __tests__/LandingDeepLink.test.tsx (+2/-2)
+- __tests__/__snapshots__/llmsLog.test.ts.snap (+0/-2)
+- agents/guardianAgent/SOP.md (+3/-0)
+- agents/injuryScout/SOP.md (+4/-1)
+- agents/injuryScout/reflection.json (+1/-6)
+- agents/lineWatcher/SOP.md (+3/-0)
+- agents/statCruncher/SOP.md (+3/-0)
+- agents/trendsAgent/SOP.md (+3/-0)
+- docs/codex-prompt-registry.md (+2/-2)
+- jest.setup.msw.ts (+0/-5)
+- jest.setup.ts (+19/-36)
+- lighthouserc.json (+0/-14)
+- llms.txt (+0/-122)
+- logs/agent-reflections.json (+19/-5)
+- package.json (+2/-2)
+- scripts/checkMergeMarkers.ts (+34/-0)
+=======
 Timestamp: 2025-08-09T01:38:14.244Z
 Commit: 3fee016b2ebee4d469516315b58765aff386995d
 Author: Codex
@@ -3261,4 +3169,5 @@ Files:
 - .eslintrc.json (+2/-4)
 - package-lock.json (+1/-0)
 - package.json (+1/-0)
+
 
