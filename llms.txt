@@ -3161,6 +3161,7 @@ Files:
 - stories/AgentDetailsModal.stories.tsx (+7/-1)
 
 
+
 Timestamp: 2025-08-09T00:46:12.027Z
 Commit: 66300d6dd9f3d45f7b20c50ff4a6e8a9e2f31882
 Author: Codex
@@ -3179,4 +3180,26 @@ Files:
 - lib/logUiEvent.test.js (+1/-1)
 - lib/sportsApi.ts (+21/-0)
 - package.json (+2/-1)
+=======
+Timestamp: 2025-08-09T00:33:06.921Z
+Commit: 5a9d1469c2f97360db2564e0d8958c37786c687d
+Author: Codex
+Message: test: mock sports api and guard network
+Files:
+- .env.example (+1/-0)
+- .env.test.example (+3/-0)
+- README.md (+10/-0)
+- __tests__/fixtures/sports/injuries.json (+16/-0)
+- __tests__/fixtures/sports/odds.json (+16/-0)
+- __tests__/fixtures/sports/schedule.json (+14/-0)
+- jest.setup.ts (+15/-5)
+- lib/test/freezeTime.ts (+23/-0)
+- lib/test/networkGuard.ts (+44/-0)
+- package.json (+2/-2)
+- scripts/test-local.sh (+6/-0)
+- test/msw/handlers/sportsHandlers.ts (+20/-0)
+- test/msw/server.ts (+4/-0)
+=======
+
+
 

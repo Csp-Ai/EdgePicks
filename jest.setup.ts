@@ -1,7 +1,13 @@
+
 import 'dotenv/config';
+=======
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig({ path: '.env.test' });
+
 import '@testing-library/jest-dom';
-import { freezeTime, resetTime } from './test/utils/freezeTime';
-import { freezeRandom, resetRandom } from './test/utils/freezeRandom';
+import { freezeTime, resetTime } from './lib/test/freezeTime';
+import { server } from './test/msw/server';
+import { installNetworkGuard } from './lib/test/networkGuard';
 
 // Block accidental live network in tests (except localhost & msw)
 const origFetch = global.fetch;
@@ -78,9 +84,13 @@ jest.mock('./lib/supabaseClient', () => {
   };
 });
 
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' });
+  installNetworkGuard();
+});
+
 beforeEach(() => {
   freezeTime();
-  freezeRandom();
 });
 
 afterEach(() => {
@@ -88,5 +98,9 @@ afterEach(() => {
   jest.clearAllTimers?.();
   jest.restoreAllMocks();
   resetTime();
-  resetRandom();
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
 });
