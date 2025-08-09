@@ -99,8 +99,114 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (req.method === 'GET') {
+    const { homeTeam, awayTeam, week } = req.query;
+    if (!homeTeam || !awayTeam || !week) {
+      res.status(400).json({ error: 'homeTeam, awayTeam and week required' });
+      return;
+    }
+
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    // @ts-ignore flushHeaders for compat
+    res.flushHeaders?.();
+
+    const matchup: Matchup = {
+      homeTeam: String(homeTeam),
+      awayTeam: String(awayTeam),
+      league: 'NFL',
+      matchDay: parseInt(String(week), 10),
+      time: new Date().toISOString(),
+    };
+
+    try {
+      const { runFlow } = await import('../../lib/flow/runFlow');
+      const flow = await loadFlow('football-pick');
+      const agentList: AgentName[] = flow.agents as AgentName[];
+
+      const scores: Record<string, number> = {
+        [matchup.homeTeam]: 0,
+        [matchup.awayTeam]: 0,
+      };
+
+      const { outputs } = await runFlow(
+        { ...flow, agents: agentList },
+        matchup,
+        (exec) => {
+          const meta = registry.find((a) => a.name === exec.name);
+          if (exec.result && meta) {
+            scores[exec.result.team] += exec.result.score * meta.weight;
+          }
+          res.write(
+            'data: ' +
+              JSON.stringify({
+                type: 'agent',
+                name: exec.name,
+                result: exec.result,
+                error: exec.error,
+                weight: meta?.weight,
+                scoreTotal: exec.scoreTotal,
+                confidenceEstimate: exec.confidenceEstimate,
+                agentDurationMs: exec.agentDurationMs,
+                sessionId: exec.sessionId,
+                description: meta?.description,
+              }) +
+              '\n\n',
+          );
+        },
+        (event) => {
+          res.write(
+            'data: ' +
+              JSON.stringify({ type: 'lifecycle', ...event }) +
+              '\n\n',
+          );
+        }
+      );
+
+      const pick =
+        scores[matchup.homeTeam] >= scores[matchup.awayTeam]
+          ? matchup.homeTeam
+          : matchup.awayTeam;
+      const finalConfidence = Math.max(
+        scores[matchup.homeTeam],
+        scores[matchup.awayTeam]
+      );
+
+      res.write(
+        'data: ' +
+          JSON.stringify({
+            type: 'summary',
+            matchup,
+            agents: outputs as AgentOutputs,
+            pick: {
+              winner: pick,
+              confidence: finalConfidence,
+              topReasons: Object.values(outputs)
+                .map((o) => o.reason)
+                .slice(0, 3),
+            },
+            loggedAt: new Date().toISOString(),
+          }) +
+          '\n\n',
+      );
+      res.end();
+    } catch (err: any) {
+      res.write(
+        'data: ' +
+          JSON.stringify({
+            type: 'error',
+            message: err?.message || 'Failed to run agents',
+          }) +
+          '\n\n',
+      );
+      res.end();
+    }
+    return;
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', ['POST']);
+    res.setHeader('Allow', ['GET', 'POST']);
     res.status(405).end('Method Not Allowed');
     return;
   }
