@@ -34,6 +34,19 @@ npm install
 npm run dev
 ```
 
+## Config
+- `.env.example` – base defaults used by various scripts
+- `.env.local.example` – copy to `.env.local` for local development
+- `.env.test.example` – copy to `.env.test` when running tests
+
+## Vercel
+Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.
+
+## Testing
+```bash
+cp .env.test.example .env.test && npm test
+```
+
 ## Live Demos
 - Production: https://edgepicks.app *(placeholder)*
 - Staging: https://staging.edgepicks.app *(placeholder)*

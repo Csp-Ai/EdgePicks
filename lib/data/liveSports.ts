@@ -1,5 +1,6 @@
 import { Matchup } from '../types';
 import { ENV } from '../env';
+import { sportsApi } from '../sportsApi';
 import mockUpcoming from '../../mock/upcoming-games.json';
 
 // Supported league identifiers.  We expose these so callers can reference the
@@ -7,8 +8,7 @@ import mockUpcoming from '../../mock/upcoming-games.json';
 // the dedicated fetch helpers defined at the bottom of the file.
 export type League = 'NFL' | 'MLB' | 'NBA' | 'NHL';
 
-const SPORTS_API_KEY = ENV.SPORTS_API_KEY;
-const SPORTSDB_TEAM_URL = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/lookupteam.php?id=`;
+const SPORTSDB_TEAM_URL = (id: string) => sportsApi(`lookupteam.php?id=${id}`);
 
 const SPORTS_DB_LEAGUE_IDS: Record<League, string | undefined> = {
   NFL: ENV.SPORTS_DB_NFL_ID,
@@ -100,7 +100,8 @@ async function fetchTeamLogo(
     return cached.logo;
   }
   try {
-    const r = await fetchWithRetry(`${SPORTSDB_TEAM_URL}${id}`, {}, 2, 500, isDev);
+    const { url, headers } = SPORTSDB_TEAM_URL(id);
+    const r = await fetchWithRetry(url, headers ? { headers } : {}, 2, 500, isDev);
     const d = await r.json();
     const team = d.teams && d.teams[0];
     const logo = team?.strTeamBadge;
@@ -165,11 +166,11 @@ async function fetchUpcomingGames(league: League): Promise<Matchup[]> {
   const isDev = process.env.NODE_ENV === 'development';
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];
-  const eventsUrl = `https://www.thesportsdb.com/api/v1/json/${SPORTS_API_KEY}/eventsnextleague.php?id=${leagueId}`;
+  const { url: eventsUrl, headers: eventHeaders } = sportsApi(`eventsnextleague.php?id=${leagueId}`);
   const oddsSport = ODDS_API_SPORT_MAP[league];
   const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/${oddsSport}/odds/`;
   try {
-    const res = await fetchWithRetry(eventsUrl, {}, 2, 500, isDev);
+    const res = await fetchWithRetry(eventsUrl, eventHeaders ? { headers: eventHeaders } : {}, 2, 500, isDev);
     if (res.status === 429) {
       throw new Error('SPORTS_DB_RATE_LIMIT');
     }

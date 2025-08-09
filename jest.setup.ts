@@ -1,6 +1,18 @@
+import 'dotenv/config';
 import '@testing-library/jest-dom';
 import { freezeTime, resetTime } from './test/utils/freezeTime';
 import { freezeRandom, resetRandom } from './test/utils/freezeRandom';
+
+// Block accidental live network in tests (except localhost & msw)
+const origFetch = global.fetch;
+global.fetch = async (input: any, init?: any) => {
+  const url = typeof input === 'string' ? input : input?.url ?? '';
+  const allow = process.env.ALLOW_TEST_NETWORK === '1';
+  if (!allow && url && !url.includes('localhost') && !url.startsWith('http://127.0.0.1')) {
+    throw new Error(`[test-net-guard] Blocked network call in tests: ${url}`);
+  }
+  return origFetch(input as any, init as any);
+};
 
 const originalError = console.error;
 console.error = (...args: any[]) => {
@@ -47,7 +59,6 @@ process.env.NEXTAUTH_URL = 'http://localhost';
 process.env.NEXTAUTH_SECRET = 'secret';
 process.env.GOOGLE_CLIENT_ID = 'google-id';
 process.env.GOOGLE_CLIENT_SECRET = 'google-secret';
-process.env.SPORTS_API_KEY = 'sports-key';
 process.env.LIVE_MODE = 'on';
 process.env.PREDICTION_CACHE_TTL_SEC = '120';
 process.env.MAX_FLOW_CONCURRENCY = '3';

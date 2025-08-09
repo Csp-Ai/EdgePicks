@@ -3161,3 +3161,22 @@ Files:
 - stories/AgentDetailsModal.stories.tsx (+7/-1)
 
 
+Timestamp: 2025-08-09T00:46:12.027Z
+Commit: 66300d6dd9f3d45f7b20c50ff4a6e8a9e2f31882
+Author: Codex
+Message: chore: centralize sports API env loading
+Files:
+- .env.example (+9/-0)
+- .env.local.example (+4/-1)
+- .env.test.example (+5/-0)
+- README.md (+13/-0)
+- __tests__/runPredictions.weights.test.ts (+0/-1)
+- jest.setup.ts (+12/-1)
+- lib/config/env.js (+28/-0)
+- lib/config/env.ts (+30/-0)
+- lib/data/liveSports.ts (+6/-5)
+- lib/data/schedule.ts (+3/-2)
+- lib/logUiEvent.test.js (+1/-1)
+- lib/sportsApi.ts (+21/-0)
+- package.json (+2/-1)
+

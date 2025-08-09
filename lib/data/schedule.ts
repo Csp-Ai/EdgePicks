@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ENV } from '../env';
+import { sportsApi } from '../sportsApi';
 import mockUpcoming from '../../mock/upcoming-games.json';
 import type { Matchup } from '../types';
 
@@ -44,8 +45,8 @@ export async function fetchSchedule(league: League): Promise<Matchup[]> {
   }
   const leagueId = SPORTS_DB_LEAGUE_IDS[league];
   if (!leagueId) return [];
-  const url = `https://www.thesportsdb.com/api/v1/json/${ENV.SPORTS_API_KEY}/eventsnextleague.php?id=${leagueId}`;
-  const res = await fetchWithRetry(url);
+  const { url, headers } = sportsApi(`eventsnextleague.php?id=${leagueId}`);
+  const res = await fetchWithRetry(url, headers ? { headers } : undefined);
   if (res.status === 429) {
     throw new Error('SPORTS_DB_RATE_LIMIT');
   }
