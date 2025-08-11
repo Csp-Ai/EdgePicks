@@ -85,3 +85,38 @@ jest.mock('./lib/supabaseClient', () => {
     },
   };
 });
+
+import "whatwg-fetch";            // fetch in jsdom
+import "@/lib/fetch-guard";       // defines globalThis.originalFetch
+
+// Default mock for app’s API endpoints that tests hit (tune as needed)
+const okJson = (data: any) =>
+  Promise.resolve(
+    new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    }),
+  );
+
+beforeAll(() => {
+  const realFetch = global.fetch.bind(global);
+
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = input.toString();
+
+      if (url.includes("/api/upcoming-games")) {
+        return okJson({ games: [] });
+      }
+      if (url.includes("/api/accuracy")) {
+        return okJson({ value: 0 });
+      }
+      if (url.includes("/api/accuracy-history")) {
+        return okJson({ history: [] });
+      }
+
+      // Fall back to real fetch for anything else (or return a 404-style Response if you prefer)
+      return realFetch(input as any, init);
+    });
+});
