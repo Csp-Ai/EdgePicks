@@ -3430,3 +3430,15 @@ Files:
 - tsconfig.jest.json (+1/-1)
 - tsconfig.json (+2/-1)
 
+Timestamp: 2025-08-11T23:14:58.998Z
+Commit: 0fc03ce4aed18fd1ef8d07c66a246fcac06a6699
+Author: Codex
+Message: fix: guard fetch and lazy theme provider
+Files:
+- app/layout.tsx (+1/-0)
+- app/providers.tsx (+14/-3)
+- jest.setup.ts (+35/-0)
+- lib/fetch-guard.ts (+5/-0)
+- package-lock.json (+20/-1)
+- package.json (+6/-4)
+

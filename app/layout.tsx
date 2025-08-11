@@ -1,3 +1,4 @@
+import "@/lib/fetch-guard";
 import "./globals.css";
 import { Providers } from "./providers";
 import type { Metadata } from "next";
