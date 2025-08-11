@@ -3370,3 +3370,12 @@ Files:
 - scripts/assertClientSafeAgents.ts (+17/-0)
 - tsconfig.json (+11/-5)
 
+Timestamp: 2025-08-11T22:05:33.175Z
+Commit: 379067719f202af8554a2955019fa603c7015934
+Author: Codex
+Message: fix(build): normalize Next revalidate exports and force dynamic where needed
+Files:
+- package.json (+1/-1)
+- scripts/fixRevalidateExports.ts (+54/-0)
+- scripts/guardRevalidateExports.ts (+41/-0)
+
