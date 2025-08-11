@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { agentSpecSchema, AgentSpec } from '../../lib/agent-builder/schema';
+import { agentSpecSchema, AgentSpec } from '@/lib/agent-builder/schema';
 
 export const generateSpec = (description: string): AgentSpec => {
   const words = description.trim().split(/\s+/);

@@ -1,5 +1,5 @@
 import React from 'react';
-import AgentLogStream from '../../components/AgentLogStream';
+import AgentLogStream from '@/components/AgentLogStream';
 
 const AgentLogsPage: React.FC = () => {
   return (

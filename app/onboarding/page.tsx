@@ -8,7 +8,7 @@ import {
   Purpose,
   ConsentTier,
   SustainabilityMode,
-} from '../../lib/profile/prefs';
+} from '@/lib/profile/prefs';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

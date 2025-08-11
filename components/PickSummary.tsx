@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ConfidenceMeter from './ConfidenceMeter';
 import DisagreementBadge from './DisagreementBadge';
 import TeamBadge from './TeamBadge';
-import { getAccuracyHistory } from '../lib/accuracy';
+import { getAccuracyHistory } from '@/lib/accuracy';
 
 type Props = {
   teamA: string;

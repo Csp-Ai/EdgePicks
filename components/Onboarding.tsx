@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import ProgressStepper from './onboarding/ProgressStepper';
 import GoalPicker from './onboarding/GoalPicker';
-import { getProgress, setProgress, clearProgress } from '../lib/onboarding/progress';
+import { getProgress, setProgress, clearProgress } from '@/lib/onboarding/progress';
 
 const STORAGE_KEY = 'onboardingComplete';
 const GOAL_KEY = 'userGoal';

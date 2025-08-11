@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseErrorBoundary from '../sys/ErrorBoundary';
-import { logEvent } from '../../lib/telemetry/logger';
+import { logEvent } from '@/lib/telemetry/logger';
 
 interface Props {
   children: React.ReactNode;

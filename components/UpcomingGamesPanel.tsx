@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TeamBadge from './TeamBadge';
 import ConfidenceMeter, { ConfidenceMeterProps } from './ConfidenceMeter';
-import { AgentExecution } from '../lib/flow/runFlow';
+import { AgentExecution } from '@/lib/flow/runFlow';
 import AgentRationalePanel from './AgentRationalePanel';
 import LoadingShimmer from './LoadingShimmer';
 import EmptyState from './EmptyState';

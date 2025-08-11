@@ -2,19 +2,19 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import '../app/globals.css';
 import '../styles/intelligence.css';
-import Toaster from '../components/ui/toaster';
-import Footer from '../components/Footer';
-import AppHeader from '../components/AppHeader';
-import BetaRibbon from '../components/BetaRibbon';
-import Onboarding from '../components/Onboarding';
-import { DemoModeProvider } from '../lib/demoMode';
+import Toaster from '@/components/ui/toaster';
+import Footer from '@/components/Footer';
+import AppHeader from '@/components/AppHeader';
+import BetaRibbon from '@/components/BetaRibbon';
+import Onboarding from '@/components/Onboarding';
+import { DemoModeProvider } from '@/lib/demoMode';
 
 let DevOnly: React.ComponentType<{ children: React.ReactNode }> | null = null;
 let FocusDock: React.ComponentType | null = null;
 
 if (process.env.NODE_ENV === 'development') {
-  DevOnly = require('../components/dev/DevOnly').default;
-  FocusDock = require('../components/dev/FocusDock').default;
+  DevOnly = require('@/components/dev/DevOnly').default;
+  FocusDock = require('@/components/dev/FocusDock').default;
 }
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {

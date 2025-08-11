@@ -1,7 +1,7 @@
-import ZScoreCard from '../../components/edu/ZScoreCard';
-import ConfidenceIntervalCard from '../../components/edu/ConfidenceIntervalCard';
-import BiasCard from '../../components/edu/BiasCard';
-import ErrorBarsCard from '../../components/edu/ErrorBarsCard';
+import ZScoreCard from '@/components/edu/ZScoreCard';
+import ConfidenceIntervalCard from '@/components/edu/ConfidenceIntervalCard';
+import BiasCard from '@/components/edu/BiasCard';
+import ErrorBarsCard from '@/components/edu/ErrorBarsCard';
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import FocusTrap from '../a11y/FocusTrap';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;

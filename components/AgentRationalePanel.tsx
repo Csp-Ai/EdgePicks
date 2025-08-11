@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { AgentExecution } from '../lib/flow/runFlow';
-import { AgentName } from '../lib/types';
-import { formatAgentName } from '../lib/utils';
+import { AgentExecution } from '@/lib/flow/runFlow';
+import { AgentName } from '@/lib/types';
+import { formatAgentName } from '@/lib/utils';
 import {
   Activity,
   LineChart,

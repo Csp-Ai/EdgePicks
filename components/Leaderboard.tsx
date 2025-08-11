@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { formatAgentName } from '../lib/utils';
+import { formatAgentName } from '@/lib/utils';
 
 interface Stat {
   name: string;

@@ -10,8 +10,8 @@ import {
   Info,
   LucideIcon,
 } from 'lucide-react';
-import { AgentName, AgentResult } from '../lib/types';
-import { formatAgentName } from '../lib/utils';
+import { AgentName, AgentResult } from '@/lib/types';
+import { formatAgentName } from '@/lib/utils';
 import ReasoningDisclosure from './agents/ReasoningDisclosure';
 import ConfidenceMeter from './ConfidenceMeter';
 import GlossaryLink from './GlossaryLink';

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import AgentVizCanvas from '../components/AgentVizCanvas';
-import { mockAgentRuns } from '../lib/mock/agentRuns';
-import { AgentEvent, PredictionFinal } from '../lib/events/agentEvents';
-import { streamAgentRun } from '../lib/mock/streamAgentRun';
+import AgentVizCanvas from '@/components/AgentVizCanvas';
+import { mockAgentRuns } from '@/lib/mock/agentRuns';
+import { AgentEvent, PredictionFinal } from '@/lib/events/agentEvents';
+import { streamAgentRun } from '@/lib/mock/streamAgentRun';
 
 const runKeys = Object.keys(mockAgentRuns) as Array<keyof typeof mockAgentRuns>;
 

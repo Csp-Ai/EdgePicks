@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import AccuracyTrend, { AccuracyHistory } from '../../components/AccuracyTrend';
+import AccuracyTrend, { AccuracyHistory } from '@/components/AccuracyTrend';
 
 interface Props {
   fallbackData: AccuracyHistory;

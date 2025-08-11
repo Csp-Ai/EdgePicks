@@ -1,8 +1,8 @@
 import React from 'react';
 import Tooltip from './Tooltip';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import { AgentName } from '../lib/types';
-import { formatAgentName } from '../lib/utils';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import { AgentName } from '@/lib/types';
+import { formatAgentName } from '@/lib/utils';
 
 interface Props {
   name: AgentName;

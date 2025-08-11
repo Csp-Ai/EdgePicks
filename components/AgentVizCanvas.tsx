@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState } from 'react';
 import AgentNodeGraph from './AgentNodeGraph';
-import { AgentEvent } from '../lib/events/agentEvents';
-import type { AgentName, AgentLifecycle } from '../lib/types';
-import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
+import { AgentEvent } from '@/lib/events/agentEvents';
+import type { AgentName, AgentLifecycle } from '@/lib/types';
+import type { FlowNode, FlowEdge } from '@/lib/dashboard/useFlowVisualizer';
 import AgentNodePopover from './agents/AgentNodePopover';
 
 interface Props {

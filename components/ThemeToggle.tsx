@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getStoredTheme, setStoredTheme } from '../lib/theme/persist';
+import { getStoredTheme, setStoredTheme } from '@/lib/theme/persist';
 
 const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = useState(false);

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getLogStatus, logToSupabase } from '../../lib/logToSupabase';
+import { getLogStatus, logToSupabase } from '@/lib/logToSupabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {

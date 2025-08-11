@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AgentTile from '../../components/agents/AgentTile';
-import { registry, type AgentName } from '../../lib/agents/registry';
-import type { AccuracyPoint } from '../../components/AccuracyTrend';
+import AgentTile from '@/components/agents/AgentTile';
+import { registry, type AgentName } from '@/lib/agents/registry';
+import type { AccuracyPoint } from '@/components/AccuracyTrend';
 
 interface AccuracyHistory {
   history: AccuracyPoint[];

@@ -1,8 +1,8 @@
 import React from 'react';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
-import { supabase } from '../../lib/supabaseClient';
-import { ENV } from '../../lib/env';
+import { supabase } from '@/lib/supabaseClient';
+import { ENV } from '@/lib/env';
 
 interface SnapshotRow {
   agent: string;

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useSession } from 'next-auth/react';
-import { useFlag } from '../../lib/flags/useFlag';
-import type { FlagKey } from '../../lib/flags/experiments';
+import { useFlag } from '@/lib/flags/useFlag';
+import type { FlagKey } from '@/lib/flags/experiments';
 
 interface GuardProps {
   children: ReactNode | (() => ReactNode);

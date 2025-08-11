@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { cn } from '../../lib/utils';
-import { createFuzzySearch, FuzzyOptions } from '../../lib/search/fuzzy';
+import { cn } from '@/lib/utils';
+import { createFuzzySearch, FuzzyOptions } from '@/lib/search/fuzzy';
 
 export interface SearchBoxProps<T> {
   items: T[];

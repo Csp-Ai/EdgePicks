@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { toast, Toast } from '../../lib/ui/toast';
+import { toast, Toast } from '@/lib/ui/toast';
 
 const Toaster: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);

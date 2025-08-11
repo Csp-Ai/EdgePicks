@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import { getStoredTheme, setStoredTheme } from '../../lib/theme/persist';
-import { I18nContext, Locale, locales } from '../../lib/i18n/config';
+import { getStoredTheme, setStoredTheme } from '@/lib/theme/persist';
+import { I18nContext, Locale, locales } from '@/lib/i18n/config';
 
 const LOW_IMPACT_KEY = 'low-impact';
 const LOCALE_KEY = 'locale';

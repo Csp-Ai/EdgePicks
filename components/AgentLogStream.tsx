@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import useEventSource from '../lib/hooks/useEventSource';
+import useEventSource from '@/lib/hooks/useEventSource';
 import { FixedSizeList as List } from 'react-window';
-import { searchLogs, logsToCSV } from '../lib/logs/search';
+import { searchLogs, logsToCSV } from '@/lib/logs/search';
 
 interface AgentLog {
   agent: string;

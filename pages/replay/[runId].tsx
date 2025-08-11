@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import AgentReplay from '../../components/replay/AgentReplay';
+import AgentReplay from '@/components/replay/AgentReplay';
 
 const ReplayPage: React.FC = () => {
   const { query } = useRouter();

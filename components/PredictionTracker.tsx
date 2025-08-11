@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FADE_DURATION, EASE } from '../lib/animations';
-import { logUiEvent } from '../lib/logUiEvent';
+import { FADE_DURATION, EASE } from '@/lib/animations';
+import { logUiEvent } from '@/lib/logUiEvent';
 
 interface Props {
   onReveal: () => void;

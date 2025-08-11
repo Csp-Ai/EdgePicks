@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
-import AgentTimeline from '../lib/dashboard/AgentTimeline';
-import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import AgentStatusPanel from '../components/AgentStatusPanel';
-import MatchupInputForm from '../components/MatchupInputForm';
-import LiveGameLogsPanel from '../components/LiveGameLogsPanel';
-import type { AgentExecution } from '../lib/flow/runFlow';
+import AgentTimeline from '@/lib/dashboard/AgentTimeline';
+import useFlowVisualizer from '@/lib/dashboard/useFlowVisualizer';
+import AgentStatusPanel from '@/components/AgentStatusPanel';
+import MatchupInputForm from '@/components/MatchupInputForm';
+import LiveGameLogsPanel from '@/components/LiveGameLogsPanel';
+import type { AgentExecution } from '@/lib/flow/runFlow';
 
 const DashboardPage: React.FC = () => {
   const { nodes, startTime, handleLifecycleEvent, reset, statuses } =

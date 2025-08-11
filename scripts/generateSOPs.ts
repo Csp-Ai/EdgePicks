@@ -3,7 +3,7 @@ import path from 'path';
 import agentsMeta from '../lib/agents/agents.json';
 import { AgentReflection } from './agentSelfReflection';
 // use the new read helper that coexists with centralized writer
-import { readRecentAgentReflections } from '../lib/readAgentReflections';
+import { readRecentAgentReflections } from '@/lib/readAgentReflections';
 
 interface AgentMeta {
   name: string;

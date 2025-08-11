@@ -1,6 +1,6 @@
 import React from 'react';
-import { AgentName } from '../../lib/agents/registry';
-import { formatAgentName } from '../../lib/utils';
+import { AgentName } from '@/lib/agents/registry';
+import { formatAgentName } from '@/lib/utils';
 
 interface Props {
   name: AgentName;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import AgentTooltip from './AgentTooltip';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import { formatAgentName } from '../lib/utils';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import { formatAgentName } from '@/lib/utils';
 
 type Props = {
   onClose: () => void;

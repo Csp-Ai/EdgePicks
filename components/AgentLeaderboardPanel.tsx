@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatAgentName } from '../lib/utils';
+import { formatAgentName } from '@/lib/utils';
 
 export interface AgentAccuracyEntry {
   name: string;

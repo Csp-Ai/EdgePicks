@@ -1,11 +1,11 @@
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import UpcomingGamesPanel from '../../components/UpcomingGamesPanel';
-import PredictionTracker from '../../components/PredictionTracker';
-import SignInModal from '../../components/SignInModal';
-import LoadingShimmer from '../../components/LoadingShimmer';
-import { FADE_DURATION, EASE } from '../../lib/animations';
-import usePredictionReveal from '../../lib/hooks/usePredictionReveal';
+import UpcomingGamesPanel from '@/components/UpcomingGamesPanel';
+import PredictionTracker from '@/components/PredictionTracker';
+import SignInModal from '@/components/SignInModal';
+import LoadingShimmer from '@/components/LoadingShimmer';
+import { FADE_DURATION, EASE } from '@/lib/animations';
+import usePredictionReveal from '@/lib/hooks/usePredictionReveal';
 
 const PublicMatchupsPage: React.FC = () => {
   const { revealed, showModal, handleReveal, closeModal, session, status } =

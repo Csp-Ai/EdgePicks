@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AgentNodeGraph from './AgentNodeGraph';
-import type { AgentOutputs, AgentLifecycle, PickSummary, AgentName } from '../lib/types';
-import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
+import type { AgentOutputs, AgentLifecycle, PickSummary, AgentName } from '@/lib/types';
+import type { FlowNode, FlowEdge } from '@/lib/dashboard/useFlowVisualizer';
 import { z } from 'zod';
 
 const ReasoningSchema = z.object({
