@@ -3350,3 +3350,23 @@ Files:
 - tsconfig.json (+2/-0)
 - types/react-leaflet-shims.d.ts (+2/-0)
 
+Timestamp: 2025-08-11T21:53:47.026Z
+Commit: 17b46792c85afa326f3c5d70f1604cc90c579f12
+Author: Codex
+Message: fix(rsc/ssg): stop passing functions to client, make agent-interface dynamic, and plug type holes
+Files:
+- app/agent-interface/page.tsx (+40/-3)
+- app/ancient/page.tsx (+4/-0)
+- app/demo-rtl/page.tsx (+4/-0)
+- app/dev/preflight/page.tsx (+4/-0)
+- app/impact/page.tsx (+4/-0)
+- app/learn-stats/page.tsx (+4/-0)
+- app/maps/page.tsx (+8/-4)
+- app/onboarding/page.tsx (+4/-0)
+- components/MatchupInsights.tsx (+2/-2)
+- components/universal/UniversalAgentInterface.tsx (+12/-2)
+- package-lock.json (+11/-0)
+- package.json (+2/-1)
+- scripts/assertClientSafeAgents.ts (+17/-0)
+- tsconfig.json (+11/-5)
+

@@ -20,6 +20,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { SportsAdapter } from "./adapters/SportsAdapter";
 import {
   ChevronRight,
   Play,
@@ -66,6 +67,14 @@ export interface DataAdapter {
   run(id: string, opts?: Record<string, any>): Promise<{ runId: string }>;
   archive?(runId: string): Promise<RunArchive>;
 }
+
+type ClientAgent = {
+  id: string;
+  name: string;
+  description?: string;
+  weight?: number;
+  tags?: string[];
+};
 
 // ---------- Demo Adapter (Sports) ----------
 const DemoSportsAdapter: DataAdapter = {
@@ -239,10 +248,10 @@ function Timeline({ events }: { events: AgentEvent[] }) {
 
 // ---------- Main ----------
 export default function UniversalAgentInterface({
-  adapter = DemoSportsAdapter,
+  agents: _agents,
   streamUrl,
 }: {
-  adapter?: DataAdapter;
+  agents: Record<string, ClientAgent>;
   streamUrl?: string;
 }) {
   const [items, setItems] = useState<Prediction[]>([]);
@@ -253,6 +262,7 @@ export default function UniversalAgentInterface({
   const [lowImpact, setLowImpact] = useState(false);
   const [locale, setLocale] = useState("en");
   const [speed, setSpeed] = useState(1);
+  const adapter = demoMode ? DemoSportsAdapter : SportsAdapter;
   const { events, isRunning } = useAgentStream({ enabled: !!selected, streamUrl, demo: demoMode });
   const ariaLiveRef = useRef<HTMLDivElement>(null);
 
