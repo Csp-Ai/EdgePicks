@@ -3411,3 +3411,22 @@ Files:
 - tsconfig.json (+14/-28)
 - types/{react-leaflet-shims.d.ts => shims.d.ts} (+4/-0)
 
+Timestamp: 2025-08-11T23:02:12.493Z
+Commit: 20920a89437c81a6f0236674b2a9dbc8276fead2
+Author: Codex
+Message: test+types+ui: fix Jest ESM/TS, add shims, wire Providers/theme/toast/fonts, and redirect home to app
+Files:
+- __mocks__/fileMock.js (+1/-0)
+- __mocks__/svgMock.ts (+2/-0)
+- app/globals.css (+4/-0)
+- app/layout.tsx (+14/-12)
+- app/page.tsx (+9/-0)
+- app/providers.tsx (+14/-0)
+- components/a11y/Landmarks.tsx (+2/-8)
+- components/ui/sonner-toaster.tsx (+3/-0)
+- jest.config.ts (+6/-7)
+- package-lock.json (+30/-0)
+- package.json (+4/-1)
+- tsconfig.jest.json (+1/-1)
+- tsconfig.json (+2/-1)
+

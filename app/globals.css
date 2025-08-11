@@ -52,6 +52,7 @@
 
 /* Inline former typography.css rules */
 :root {
+  color-scheme: dark;
   --type-base: 1rem;
   --type-scale: 1.25;
   --baseline: 0.25rem;
@@ -113,3 +114,6 @@
     margin-bottom: calc(var(--baseline) * 6);
   }
 }
+
+/* Leaflet */
+@import "leaflet/dist/leaflet.css";

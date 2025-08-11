@@ -1,12 +1,6 @@
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
-
-type Props = React.HTMLAttributes<HTMLDivElement> & {
-  as?: keyof JSX.IntrinsicElements; // optional polymorphic
-};
-
+type Props = React.HTMLAttributes<HTMLElement> & { as?: keyof JSX.IntrinsicElements };
 export default function Landmarks({ as: As = "main", ...rest }: Props) {
   const Comp: any = As;
-  return <Comp className={cn(rest.className)} {...rest} />;
+  return <Comp {...rest} />;
 }
