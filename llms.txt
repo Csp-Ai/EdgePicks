@@ -3379,3 +3379,14 @@ Files:
 - scripts/fixRevalidateExports.ts (+54/-0)
 - scripts/guardRevalidateExports.ts (+41/-0)
 
+Timestamp: 2025-08-11T22:21:48.241Z
+Commit: 35bb2658e23bda0a3fc30510cdd1abbda40a8307
+Author: Codex
+Message: fix(build): enforce literal `revalidate` on all pages/layouts & remove re-exports
+Files:
+- package.json (+1/-1)
+- scripts/fixRevalidateEverywhere.ts (+61/-0)
+- scripts/fixRevalidateExports.ts (+0/-54)
+- scripts/guardRevalidateEverywhere.ts (+43/-0)
+- scripts/guardRevalidateExports.ts (+0/-41)
+

@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
-    "prebuild": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/fixRevalidateExports.ts && ts-node --project tsconfig.node.json scripts/guardRevalidateExports.ts && npm run setup:dev",
+    "prebuild": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/fixRevalidateEverywhere.ts && ts-node --project tsconfig.node.json scripts/guardRevalidateEverywhere.ts && npm run setup:dev",
     "build": "npm run validate-env && next build",
     "start": "npm run validate-env && next start",
     "test": "jest",
