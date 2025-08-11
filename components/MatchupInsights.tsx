@@ -6,7 +6,7 @@ import AgentExecutionTracker, {
   AgentStatus,
 } from './AgentExecutionTracker';
 import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import type { AgentOutputs, PickSummary } from '../lib/types';
+import type { AgentOutputs, PickSummary, AgentResult } from '../lib/types';
 import type { AgentExecution } from '../lib/flow/runFlow';
 import agentsMeta from '../lib/agents/agents.json';
 
@@ -85,7 +85,7 @@ const MatchupInsights: React.FC<TrackerProps> = ({ events: propEvents, demo }) =
           }}
           onAgent={(exec: AgentExecution) => {
             if (exec.result) {
-              setAgents((prev) => ({ ...prev, [exec.name]: exec.result }));
+              setAgents((prev) => ({ ...prev, [exec.name]: exec.result as AgentResult }));
             }
           }}
           onComplete={(data: { pick: PickSummary }) => setPick(data.pick)}

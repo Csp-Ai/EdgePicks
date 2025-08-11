@@ -1,16 +1,20 @@
 'use client';
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
 
 import clinicData from './data/clinic-density.json';
 import foodData from './data/food-deserts.json';
 import heatData from './data/heat-islands.json';
 
-const MapContainer = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
-const TileLayer = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
-const GeoJSON = dynamic(() => import('react-leaflet').then(m => m.GeoJSON), { ssr: false });
+const MapContainer = nextDynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
+const TileLayer = nextDynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
+const GeoJSON = nextDynamic(() => import('react-leaflet').then(m => m.GeoJSON), { ssr: false });
 
 function getColor(value: number, layer: 'clinic' | 'food' | 'heat') {
   switch (layer) {

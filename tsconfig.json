@@ -24,7 +24,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-    "types": ["node", "./types/react-leaflet-shims"],
+      "types": ["node", "jest", "./types/react-leaflet-shims"],
     "plugins": [
       {
         "name": "next"
@@ -32,15 +32,21 @@
     ]
   },
   "include": [
+    "types/**/*.d.ts",
+    "app",
+    "components",
+    "lib",
+    "pages",
+    "scripts",
+    "tests",
+    "__tests__",
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "scripts/uiSnapshot.ts",
-    "__tests__",
-    "tests"
+    "tests",
+    "__tests__"
   ]
 }
