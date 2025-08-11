@@ -11,6 +11,9 @@
  * // => 0.4
  * ```
  */
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export const getContribution = (score: number, weight: number): number => {
   return score * weight;
 };
@@ -42,6 +45,6 @@ export const formatAgentName = (name: string): string =>
  * // => 'btn active'
  * ```
  */
-export const cn = (
-  ...classes: Array<string | undefined | null | false>
-): string => classes.filter(Boolean).join(' ');
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
