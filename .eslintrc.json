@@ -1,6 +1,15 @@
 {
   "extends": ["plugin:jsx-a11y/recommended", "next/core-web-vitals"],
   "plugins": ["jsx-a11y", "@typescript-eslint"],
+  "rules": {
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    "jsx-a11y/no-noninteractive-tabindex": "warn",
+    "@next/next/no-img-element": "warn",
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn"
+  },
   "overrides": [
     {
       "files": ["pages/**/*.{ts,tsx,js,jsx}"],

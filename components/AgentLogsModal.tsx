@@ -75,11 +75,15 @@ const AgentLogsModal: React.FC<Props> = ({ isOpen, onClose, sessionId, agentId }
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      role="button"
+      tabIndex={0}
       onClick={handleOverlay}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOverlay()}
     >
       <div
         className="bg-white text-gray-900 w-full max-w-lg rounded shadow-md p-4"
         onClick={handleContentClick}
+        role="presentation"
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">{agentId} Logs</h2>

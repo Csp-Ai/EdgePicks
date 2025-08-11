@@ -39,7 +39,10 @@ const TransparencyDrawer: React.FC<TransparencyDrawerProps> = ({
     <div className="fixed inset-0 flex justify-end z-40">
       <div
         className="absolute inset-0 bg-black opacity-30"
+        role="button"
+        tabIndex={0}
         onClick={onClose}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
       />
       <aside className="relative w-96 max-w-full h-full bg-white shadow-xl p-4 overflow-y-auto">
         <div className="flex justify-between items-center mb-4">

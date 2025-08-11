@@ -61,7 +61,10 @@ const AgentDetailsModal: React.FC<AgentDetailsModalProps> = ({ isOpen, onClose, 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      role="button"
+      tabIndex={0}
       onClick={handleOverlayClick}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOverlayClick()}
     >
       <div
         role="dialog"

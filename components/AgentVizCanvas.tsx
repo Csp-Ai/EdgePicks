@@ -115,6 +115,13 @@ const AgentVizCanvas: React.FC<Props> = ({ events, skipAnimations }) => {
               nodeRefs.current[id] = el;
             }}
             onClick={(e) => handleNodeClick(e, id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleNodeClick(e as any, id);
+              }
+            }}
+            role="button"
             data-testid={`node-${id}`}
             data-agent-id={id}
             data-state={state}

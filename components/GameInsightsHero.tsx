@@ -73,7 +73,7 @@ const GameInsightsHero: React.FC<GameInsightsHeroProps> = ({
       <h2 id="game-insights-heading" className="text-xl font-semibold">
         Upcoming Games
       </h2>
-      <ul role="list" className="space-y-3">
+      <ul className="space-y-3">
         {games.slice(0, 6).map((g) => (
           <li
             key={g.id}

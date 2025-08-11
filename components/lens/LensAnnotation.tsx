@@ -14,12 +14,13 @@ const LensAnnotation: React.FC<Props> = ({ datasetId, children }) => {
     <span className="relative">
       {children}
       {active && (
-        <sup
-          className="ml-1 cursor-pointer text-blue-600"
+        <button
+          type="button"
+          className="ml-1 cursor-pointer text-blue-600 align-super"
           onClick={() => open(datasetId)}
         >
-          {index + 1}
-        </sup>
+          <sup>{index + 1}</sup>
+        </button>
       )}
     </span>
   );

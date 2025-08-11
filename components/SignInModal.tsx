@@ -21,7 +21,10 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      role="button"
+      tabIndex={0}
       onClick={handleOverlayClick}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOverlayClick()}
     >
       <div
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"

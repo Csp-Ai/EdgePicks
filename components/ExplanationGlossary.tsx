@@ -45,7 +45,13 @@ const ExplanationGlossary: React.FC<Props> = ({ onClose, highlightAgent }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex">
-      <div className="flex-1 bg-black/50" onClick={onClose} />
+      <div
+        className="flex-1 bg-black/50"
+        role="button"
+        tabIndex={0}
+        onClick={onClose}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
+      />
       <motion.div
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
