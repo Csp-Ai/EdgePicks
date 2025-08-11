@@ -1,3 +1,5 @@
+"use client";
+
 // components/universal/UniversalAgentInterface.tsx
 // Universal Agent Interface — Sports-first, Industry-ready
 // - Upcoming games first (confidence + disagreement)

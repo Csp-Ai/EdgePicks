@@ -3293,3 +3293,12 @@ Files:
 - lib/flags/experiments.ts (+3/-3)
 - lib/flags/flags.ts (+2/-2)
 
+Timestamp: 2025-08-11T20:53:12.572Z
+Commit: c8e9880c6f6ea8e5d98910e52f096aff88e440c3
+Author: Codex
+Message: fix(rsc): mark UniversalAgentInterface as client and isolate any server-only logic
+Files:
+- __tests__/rsc-boundary/UniversalAgentInterface.rsc.test.ts (+7/-0)
+- components/AgentNodeGraph.tsx (+2/-0)
+- components/universal/UniversalAgentInterface.tsx (+2/-0)
+
