@@ -1,33 +1,12 @@
-import { cn } from '@/lib/utils';
-import { ReactNode, HTMLAttributes } from 'react';
+import * as React from "react";
 
-type LandmarkElement = 'nav' | 'main' | 'aside' | 'section' | 'header' | 'footer';
+import { cn } from "@/lib/utils";
 
-interface LandmarksProps extends HTMLAttributes<HTMLElement> {
-  /**
-   * Landmark element to render. Defaults to `nav`.
-   */
-  as?: LandmarkElement;
-  /**
-   * Accessible name for the landmark.
-   */
-  label: string;
-  children: ReactNode;
-}
+type Props = React.HTMLAttributes<HTMLDivElement> & {
+  as?: keyof JSX.IntrinsicElements; // optional polymorphic
+};
 
-export default function Landmarks({
-  as = 'nav',
-  label,
-  className,
-  children,
-  ...props
-}: LandmarksProps) {
-  const Tag = as as keyof JSX.IntrinsicElements;
-  const extraProps = as === 'main' ? { id: 'main' } : {};
-
-  return (
-    <Tag aria-label={label} className={cn(className)} {...extraProps} {...props}>
-      {children}
-    </Tag>
-  );
+export default function Landmarks({ as: As = "main", ...rest }: Props) {
+  const Comp: any = As;
+  return <Comp className={cn(rest.className)} {...rest} />;
 }

@@ -3,8 +3,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
-    "noEmit": true
+    "noEmit": true,
+    "types": ["jest", "node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "__tests__/**/*", "tests/**/*"]
+  "include": ["**/*.ts", "**/*.tsx", "jest.setup.ts", "__tests__/**/*", "tests/**/*"]
 }
