@@ -3390,3 +3390,24 @@ Files:
 - scripts/guardRevalidateEverywhere.ts (+43/-0)
 - scripts/guardRevalidateExports.ts (+0/-41)
 
+Timestamp: 2025-08-11T22:46:40.577Z
+Commit: 310eeea0356e1b75c442e9d2595d794aad9d9274
+Author: Codex
+Message: test+types(build): fix Jest ESM/TS config, add shims, and hard-force dynamic on impact/maps/onboarding
+Files:
+- app/impact/page.tsx (+1/-0)
+- app/layout.tsx (+4/-0)
+- app/maps/page.tsx (+1/-0)
+- app/onboarding/page.tsx (+1/-0)
+- components/MatchupInsights.tsx (+14/-122)
+- components/a11y/Landmarks.tsx (+8/-29)
+- jest.config.js (+0/-12)
+- jest.config.ts (+31/-0)
+- package-lock.json (+26/-4)
+- package.json (+8/-6)
+- scripts/removeStaticParamsForDynamicRoutes.ts (+52/-0)
+- scripts/{uiSnapshot.ts => uiSnapshot.tsx} (+0/-0)
+- tsconfig.jest.json (+5/-2)
+- tsconfig.json (+14/-28)
+- types/{react-leaflet-shims.d.ts => shims.d.ts} (+4/-0)
+

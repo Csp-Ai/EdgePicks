@@ -1,52 +1,38 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "ES2022",
     "module": "esnext",
     "moduleResolution": "bundler",
     "allowJs": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "strict": true,
-    "noEmit": true,
+    "checkJs": false,
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "*"
       ]
     },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "skipLibCheck": true,
-    "incremental": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-      "types": ["node", "jest", "./types/react-leaflet-shims"],
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
   },
   "include": [
+    "next-env.d.ts",
     "types/**/*.d.ts",
     "app",
     "components",
     "lib",
     "pages",
     "scripts",
-    "tests",
     "__tests__",
-    "next-env.d.ts",
-    ".next/types/**/*.ts"
+    "tests",
+    "jest.setup.ts"
   ],
   "exclude": [
-    "node_modules",
-    "scripts/uiSnapshot.ts",
-    "tests",
-    "__tests__"
+    "node_modules"
   ]
 }
