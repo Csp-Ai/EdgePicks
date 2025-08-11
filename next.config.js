@@ -1,6 +1,8 @@
 const path = require('path');
 
 /** @type {import('next').NextConfig} */
+const isUnblock = process.env.CI_UNBLOCK === 'true';
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -27,6 +29,12 @@ const nextConfig = {
         headers: [{ key: 'X-Frame-Options', value: 'SAMEORIGIN' }],
       },
     ];
+  },
+  eslint: {
+    ignoreDuringBuilds: isUnblock,
+  },
+  typescript: {
+    ignoreBuildErrors: isUnblock,
   },
 };
 

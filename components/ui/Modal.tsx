@@ -59,6 +59,10 @@ export const Modal: React.FC<ModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
+      tabIndex={-1}
+      onKeyDown={(e) =>
+        (e.key === 'Enter' || e.key === ' ') && onClose()
+      }
     >
       <FocusTrap>
         <div

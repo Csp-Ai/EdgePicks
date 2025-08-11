@@ -229,14 +229,26 @@ export const FocusDock: React.FC = () => {
       className={`fixed bg-white shadow-lg rounded p-2 text-sm ${state.open ? 'w-64 h-96' : 'w-16 h-8'} overflow-hidden`}
       style={{ bottom: state.dockPos.y, right: state.dockPos.x, zIndex: 1000 }}
     >
-      <div ref={dragRef} className="cursor-move text-center" onClick={() => setState((s) => ({ ...s, open: !s.open }))}>
+      <div
+        ref={dragRef}
+        className="cursor-move text-center"
+        role="button"
+        tabIndex={0}
+        onClick={() => setState((s) => ({ ...s, open: !s.open }))}
+        onKeyDown={(e) =>
+          (e.key === 'Enter' || e.key === ' ') &&
+          setState((s) => ({ ...s, open: !s.open }))
+        }
+      >
         {state.open ? 'Focus Dock' : 'FD'}
       </div>
       {state.open && (
         <div className="mt-2 space-y-2">
           <div>
             <div className="flex items-center justify-between">
-              <label className="font-semibold">Current Focus</label>
+              <label htmlFor="focus-title" className="font-semibold">
+                Current Focus
+              </label>
               <button
                 className="text-xs text-blue-500 disabled:text-gray-400"
                 title={hasWip ? 'Finish or park this first.' : ''}
@@ -247,6 +259,7 @@ export const FocusDock: React.FC = () => {
               </button>
             </div>
             <input
+              id="focus-title"
               className="w-full border p-1 mt-1"
               value={state.focusTitle}
               onChange={(e) => setState((s) => ({ ...s, focusTitle: e.target.value }))}

@@ -22,7 +22,9 @@
     "skipLibCheck": true,
     "incremental": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
+    "types": ["node", "./types/react-leaflet-shims"],
     "plugins": [
       {
         "name": "next"

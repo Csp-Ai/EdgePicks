@@ -85,15 +85,20 @@ const AuditLogList: React.FC = () => {
       </div>
       <ul className="space-y-2">
         {logs.map((log) => (
-          <li
-            key={log.id}
-            className="border rounded p-2 cursor-pointer"
-            onClick={() => setSelected(log)}
-          >
-            <div className="text-xs text-gray-500">
-              {log.timestamp} · {log.type} · {log.severity}
-            </div>
-            <div className="text-sm truncate">{log.message}</div>
+          <li key={log.id} className="border rounded p-2">
+            <button
+              type="button"
+              className="w-full text-left cursor-pointer"
+              onClick={() => setSelected(log)}
+              onKeyDown={(e) =>
+                (e.key === 'Enter' || e.key === ' ') && setSelected(log)
+              }
+            >
+              <div className="text-xs text-gray-500">
+                {log.timestamp} · {log.type} · {log.severity}
+              </div>
+              <div className="text-sm truncate">{log.message}</div>
+            </button>
           </li>
         ))}
       </ul>
@@ -116,7 +121,12 @@ const AuditLogList: React.FC = () => {
       {selected && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          role="button"
+          tabIndex={0}
           onClick={() => setSelected(null)}
+          onKeyDown={(e) =>
+            (e.key === 'Enter' || e.key === ' ') && setSelected(null)
+          }
         >
           <div
             role="dialog"

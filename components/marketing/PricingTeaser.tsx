@@ -21,7 +21,10 @@ const PricingTeaser: React.FC<PricingTeaserProps> = ({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      role="button"
+      tabIndex={0}
       onClick={onKeepDemo}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onKeepDemo()}
       data-testid="pricing-teaser"
     >
       <div

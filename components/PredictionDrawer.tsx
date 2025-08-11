@@ -145,7 +145,13 @@ const PredictionDrawer: React.FC<Props> = ({ game, isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex justify-end z-50" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/50"
+        role="button"
+        tabIndex={0}
+        onClick={onClose}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
+      />
       <div ref={drawerRef} className="relative w-full max-w-md h-full bg-slate-900 text-white flex flex-col rounded-xl overflow-hidden">
         <header className="p-4 sticky top-0 bg-slate-900/95 backdrop-blur border-b border-slate-800">
           <div className="flex items-center justify-between">
