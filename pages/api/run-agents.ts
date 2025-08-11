@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
-import { loadFlow } from '../../lib/flow/loadFlow';
-import { registry, type AgentName } from '../../lib/agents/registry';
-import { logUiEvent } from '../../lib/logUiEvent';
+import { loadFlow } from '@/lib/flow/loadFlow';
+import { registry, type AgentName } from '@/lib/agents/registry';
+import { logUiEvent } from '@/lib/logUiEvent';
 import mockData from '../../__mocks__/run-agents.json';
-import type { AgentOutputs, Matchup } from '../../lib/types';
-import { fetchSchedule, type League } from '../../lib/data/schedule';
-import { ENV } from '../../lib/env';
-import { supabase } from '../../lib/supabaseClient';
+import type { AgentOutputs, Matchup } from '@/lib/types';
+import { fetchSchedule, type League } from '@/lib/data/schedule';
+import { ENV } from '@/lib/env';
+import { supabase } from '@/lib/supabaseClient';
 
 let CACHE_TTL_SECONDS = parseInt(
   process.env.RUN_AGENTS_CACHE_TTL_SECONDS || '60',
@@ -121,7 +121,7 @@ export default async function handler(
     };
 
     try {
-      const { runFlow } = await import('../../lib/flow/runFlow');
+      const { runFlow } = await import('@/lib/flow/runFlow');
       const flow = await loadFlow('football-pick');
       const agentList: AgentName[] = flow.agents as AgentName[];
 
@@ -246,7 +246,7 @@ export default async function handler(
       process.env.PREDICTION_CACHE_TTL_SEC = '300';
     }
 
-    const { runFlow } = await import('../../lib/flow/runFlow');
+    const { runFlow } = await import('@/lib/flow/runFlow');
 
     const flow = await loadFlow('football-pick');
     const agentList: AgentName[] = Array.isArray(agentFilter) && agentFilter.length

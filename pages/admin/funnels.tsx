@@ -2,7 +2,7 @@ import React from 'react';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 import { createClient } from '@supabase/supabase-js';
-import FunnelChart, { FunnelDatum } from '../../components/analytics/FunnelChart';
+import FunnelChart, { FunnelDatum } from '@/components/analytics/FunnelChart';
 
 interface Props {
   data: FunnelDatum[];

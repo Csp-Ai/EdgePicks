@@ -43,22 +43,26 @@ jest.mock('next/router', () => ({
   },
 }));
 
+// EventSource test double (no jest.Mock casting on constructor)
 class MockEventSource {
   url: string;
+  onopen?: (e: Event) => void;
+  onmessage?: (e: MessageEvent) => void;
+  onerror?: (e: Event) => void;
   readyState = 0;
-  onmessage: ((e: MessageEvent) => void) | null = null;
-  onerror: ((e: any) => void) | null = null;
   constructor(url: string) {
     this.url = url;
+    setTimeout(() => this.onopen?.(new Event('open')), 0);
   }
-  addEventListener() {}
-  removeEventListener() {}
-  close() {
-    this.readyState = 2;
-  }
+  close = jest.fn();
+  // helpers for tests:
+  __emitMessage = (data: string) => this.onmessage?.({ data } as MessageEvent);
+  __emitError = () => this.onerror?.(new Event('error'));
 }
-// @ts-ignore
+// @ts-expect-error override in test env
 global.EventSource = MockEventSource;
+
+// Don’t ever reassign NODE_ENV in tests; use guards instead.
 
 process.env.SUPABASE_URL = 'http://localhost';
 process.env.SUPABASE_KEY = 'test-anon';

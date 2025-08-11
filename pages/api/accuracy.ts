@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../lib/supabaseClient';
-import { recomputeAccuracy } from '../../lib/accuracy';
+import { supabase } from '@/lib/supabaseClient';
+import { recomputeAccuracy } from '@/lib/accuracy';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {

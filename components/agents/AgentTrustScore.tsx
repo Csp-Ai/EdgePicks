@@ -1,5 +1,5 @@
 import React from 'react';
-import { AgentOutputs } from '../../lib/types';
+import { AgentOutputs } from '@/lib/types';
 
 export const computeVariance = (agents: Partial<AgentOutputs>): number => {
   const scores = Object.values(agents)

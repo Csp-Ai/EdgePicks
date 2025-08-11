@@ -11,3 +11,4 @@
 - /api/sports-webhook
 - /api/trends
 - /api/upcoming-games
+- /api/version

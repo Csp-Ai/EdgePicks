@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import type { Game } from '../lib/types';
-import { formatKickoff } from '../lib/utils/formatKickoff';
+import type { Game } from '@/lib/types';
+import { formatKickoff } from '@/lib/utils/formatKickoff';
 
 interface Props {
   game: Game;

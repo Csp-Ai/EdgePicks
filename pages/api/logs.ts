@@ -4,11 +4,11 @@ import path from 'path';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 
-import { registry as agentRegistry } from '../../lib/agents/registry';
-import type { AgentMeta, AgentName } from '../../lib/agents/registry';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import type { AgentMeta, AgentName } from '@/lib/agents/registry';
 
-import { readAgentLog } from '../../lib/agentLogsStore';
-import { ENV } from '../../lib/env';
+import { readAgentLog } from '@/lib/agentLogsStore';
+import { ENV } from '@/lib/env';
 
 interface LogEntry {
   id: string;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 export const TypographyH1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   className,

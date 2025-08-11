@@ -1,9 +1,9 @@
 import React from 'react';
 import ScoreBar from './ScoreBar';
 import AgentTooltip from './AgentTooltip';
-import { AgentOutputs } from '../lib/types';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import { formatAgentName } from '../lib/utils';
+import { AgentOutputs } from '@/lib/types';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import { formatAgentName } from '@/lib/utils';
 
 const typeBadge: Record<string, string> = {
   injury: '🏥 Injury',

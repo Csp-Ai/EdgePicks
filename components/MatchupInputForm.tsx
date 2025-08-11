@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AgentOutputs, Matchup, PickSummary, AgentLifecycle } from '../lib/types';
+import { AgentOutputs, Matchup, PickSummary, AgentLifecycle } from '@/lib/types';
 import { matchupCard } from '../styles/cardStyles';
-import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+import type { AgentExecution as BaseAgentExecution } from '@/lib/flow/runFlow';
 
 interface AgentExecution extends BaseAgentExecution {
   weight?: number;

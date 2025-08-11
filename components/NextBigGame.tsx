@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TeamBadge from './TeamBadge';
 import AgentRationalePanel from './AgentRationalePanel';
-import type { AgentExecution } from '../lib/flow/runFlow';
+import type { AgentExecution } from '@/lib/flow/runFlow';
 
 interface BigGame {
   homeTeam: { name: string; logo?: string; score?: number };

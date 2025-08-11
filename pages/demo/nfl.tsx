@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { GetStaticProps } from 'next';
 import { SWRConfig } from 'swr';
-import DemoHero from '../../components/demo/DemoHero';
-import MatchupInsights, { AgentEvent } from '../../components/MatchupInsights';
-import { useDemoMode } from '../../lib/demoMode';
-import upcoming from '../../fixtures/demo/upcoming.json';
-import agentEvents from '../../fixtures/demo/agent-events.json';
-import agentsMeta from '../../lib/agents/agents.json';
+import DemoHero from '@/components/demo/DemoHero';
+import MatchupInsights, { AgentEvent } from '@/components/MatchupInsights';
+import { useDemoMode } from '@/lib/demoMode';
+import upcoming from '@/fixtures/demo/upcoming.json';
+import agentEvents from '@/fixtures/demo/agent-events.json';
+import agentsMeta from '@/lib/agents/agents.json';
 
 type Props = {
   events: AgentEvent[];

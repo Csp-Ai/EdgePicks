@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TrustSummary from '../../components/trust/TrustSummary';
-import AuditActivity from '../../components/trust/AuditActivity';
-import AgentExplainers from '../../components/trust/AgentExplainers';
-import AgreementMeter from '../../components/trust/AgreementMeter';
+import TrustSummary from '@/components/trust/TrustSummary';
+import AuditActivity from '@/components/trust/AuditActivity';
+import AgentExplainers from '@/components/trust/AgentExplainers';
+import AgreementMeter from '@/components/trust/AgreementMeter';
 
 type Tab = 'overview' | 'audit' | 'agents';
 

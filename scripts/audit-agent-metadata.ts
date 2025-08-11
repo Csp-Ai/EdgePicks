@@ -1,5 +1,5 @@
 import path from 'path';
-import { validateAgents } from '../lib/validateAgentMetadata';
+import { validateAgents } from '@/lib/validateAgentMetadata';
 
 try {
   const metaPath = path.join(__dirname, '../lib/agents/agents.json');

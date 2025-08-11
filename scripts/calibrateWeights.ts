@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { supabase } from '../lib/supabaseClient';
-import { computeWeight } from '../lib/weights';
+import { supabase } from '@/lib/supabaseClient';
+import { computeWeight } from '@/lib/weights';
 
 interface OutcomeRow {
   agent: string;

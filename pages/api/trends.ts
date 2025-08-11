@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { loadFlow } from '../../lib/flow/loadFlow';
-import { runFlow } from '../../lib/flow/runFlow';
+import { loadFlow } from '@/lib/flow/loadFlow';
+import { runFlow } from '@/lib/flow/runFlow';
 
 export const config = {
   api: {

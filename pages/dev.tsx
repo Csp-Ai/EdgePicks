@@ -1,5 +1,5 @@
 import React from 'react';
-import DemoToggle from '../components/dev/DemoToggle';
+import DemoToggle from '@/components/dev/DemoToggle';
 
 const DevPage: React.FC = () => {
   return (

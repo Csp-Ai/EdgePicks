@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import DemoHero from '../../components/demo/DemoHero';
-import MatchupInsights, { AgentEvent } from '../../components/MatchupInsights';
-import { useDemoMode } from '../../lib/demoMode';
+import DemoHero from '@/components/demo/DemoHero';
+import MatchupInsights, { AgentEvent } from '@/components/MatchupInsights';
+import { useDemoMode } from '@/lib/demoMode';
 
 const demoEvents: AgentEvent[] = [
   { id: '1', agent: 'injuryScout', status: 'completed', ts: '' },

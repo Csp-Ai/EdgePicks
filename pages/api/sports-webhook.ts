@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { verifyWebhookSignature } from '../../lib/utils/verifyWebhookSignature';
-import { logToSupabase } from '../../lib/logToSupabase';
-import { ENV } from '../../lib/env';
+import { verifyWebhookSignature } from '@/lib/utils/verifyWebhookSignature';
+import { logToSupabase } from '@/lib/logToSupabase';
+import { ENV } from '@/lib/env';
 
 export const config = {
   api: {

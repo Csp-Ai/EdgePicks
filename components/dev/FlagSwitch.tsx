@@ -4,7 +4,7 @@ import {
   clientFlagDefaults,
   ClientFlagKey,
   useClientFlag,
-} from '../../lib/flags/clientFlags';
+} from '@/lib/flags/clientFlags';
 
 export default function FlagSwitch() {
   const keys = Object.keys(clientFlagDefaults) as ClientFlagKey[];

@@ -1,6 +1,6 @@
 import React from 'react';
 import AgentCard from './AgentCard';
-import { AgentOutputs, AgentName } from '../lib/types';
+import { AgentOutputs, AgentName } from '@/lib/types';
 
 interface Props {
   agents: AgentOutputs;

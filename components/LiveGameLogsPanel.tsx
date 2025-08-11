@@ -1,6 +1,6 @@
 import React from 'react';
-import { AgentExecution } from '../lib/flow/runFlow';
-import { formatAgentName } from '../lib/utils';
+import { AgentExecution } from '@/lib/flow/runFlow';
+import { formatAgentName } from '@/lib/utils';
 
 interface Props {
   logs: AgentExecution[][];

@@ -76,6 +76,13 @@ create table if not exists predictions (
   created_at timestamptz default now()
 );
 
+create table if not exists prediction_cache (
+  key text primary key,
+  value jsonb not null,
+  expires_at timestamptz not null,
+  created_at timestamptz default now()
+);
+
 
 create table if not exists agent_outcomes (
   game_id uuid not null references matchups(id) on delete cascade,

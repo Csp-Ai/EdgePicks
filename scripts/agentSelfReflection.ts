@@ -108,7 +108,7 @@ export async function run(): Promise<void> {
   const outcomes = await loadOutcomes(windowDays, live);
   let weights: Record<string, number> | undefined;
   if (process.env.WEIGHTS_DYNAMIC === 'on') {
-    const mod = await import('../lib/weights');
+    const mod = await import('@/lib/weights');
     weights = await mod.getDynamicWeights();
   }
   const timestamp = process.env.FREEZE_TIME || new Date().toISOString();

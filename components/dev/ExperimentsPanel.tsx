@@ -1,6 +1,6 @@
 import React from 'react';
-import { experiments, FlagKey } from '../../lib/flags/experiments';
-import { useFlag } from '../../lib/flags/useFlag';
+import { experiments, FlagKey } from '@/lib/flags/experiments';
+import { useFlag } from '@/lib/flags/useFlag';
 
 export default function ExperimentsPanel() {
   if (process.env.NODE_ENV === 'production') return null;

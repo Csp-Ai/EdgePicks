@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDemoMode } from '../../lib/demoMode';
+import { useDemoMode } from '@/lib/demoMode';
 
 const DemoToggle: React.FC = () => {
   const { enabled, setEnabled } = useDemoMode();

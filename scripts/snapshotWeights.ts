@@ -1,5 +1,5 @@
-import { supabase } from '../lib/supabaseClient';
-import { computeWeight } from '../lib/weights';
+import { supabase } from '@/lib/supabaseClient';
+import { computeWeight } from '@/lib/weights';
 
 interface AgentStatsRow {
   agent: string;

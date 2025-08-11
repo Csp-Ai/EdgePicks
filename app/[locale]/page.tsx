@@ -1,8 +1,8 @@
 'use client';
 
 import { useContext } from 'react';
-import { I18nContext } from '../../lib/i18n/config';
-import { LocaleSwitcher } from '../../lib/i18n/LocaleSwitcher';
+import { I18nContext } from '@/lib/i18n/config';
+import { LocaleSwitcher } from '@/lib/i18n/LocaleSwitcher';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

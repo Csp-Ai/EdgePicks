@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import type { Game } from '../../lib/types';
-import { createFuzzySearch } from '../../lib/search/fuzzy';
+import type { Game } from '@/lib/types';
+import { createFuzzySearch } from '@/lib/search/fuzzy';
 
 interface Props {
   games: Game[];

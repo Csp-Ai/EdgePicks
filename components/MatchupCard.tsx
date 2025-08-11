@@ -5,10 +5,10 @@ import TeamBadge from './TeamBadge';
 import AgentSummary from './AgentSummary';
 import AgentComparePanel from './AgentComparePanel';
 import ScoreBar from './ScoreBar';
-import { AgentOutputs } from '../lib/types';
-import { getContribution, formatAgentName } from '../lib/utils';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import { getAccuracyHistory } from '../lib/accuracy';
+import { AgentOutputs } from '@/lib/types';
+import { getContribution, formatAgentName } from '@/lib/utils';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import { getAccuracyHistory } from '@/lib/accuracy';
 import { matchupCard } from '../styles/cardStyles';
 
 interface BreakdownProps {

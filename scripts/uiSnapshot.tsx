@@ -5,9 +5,9 @@ import puppeteer from 'puppeteer';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import AgentStatusPanel from '../components/AgentStatusPanel';
-import PredictionsPanel from '../components/PredictionsPanel';
-import AgentNodeGraph from '../components/AgentNodeGraph';
+import AgentStatusPanel from '@/components/AgentStatusPanel';
+import PredictionsPanel from '@/components/PredictionsPanel';
+import AgentNodeGraph from '@/components/AgentNodeGraph';
 
 async function run() {
   const browser = await puppeteer.launch();

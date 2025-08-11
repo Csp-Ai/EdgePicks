@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type { Game, PickSummary } from '../lib/types';
-import type { AgentExecution as BaseAgentExecution } from '../lib/flow/runFlow';
+import type { Game, PickSummary } from '@/lib/types';
+import type { AgentExecution as BaseAgentExecution } from '@/lib/flow/runFlow';
 import AgentNodeGraph from './AgentNodeGraph';
 import ConfidenceMeter from './ConfidenceMeter';
 import AgentRationalePanel from './AgentRationalePanel';
 import PickSummaryComp from './PickSummary';
-import useFlowVisualizer from '../lib/dashboard/useFlowVisualizer';
-import useEventSource from '../lib/hooks/useEventSource';
-import { logUiEvent } from '../lib/analytics/logUiEvent';
+import useFlowVisualizer from '@/lib/dashboard/useFlowVisualizer';
+import useEventSource from '@/lib/hooks/useEventSource';
+import { logUiEvent } from '@/lib/analytics/logUiEvent';
 import { Share2 } from 'lucide-react';
-import { nativeShare } from '../lib/share/nativeShare';
+import { nativeShare } from '@/lib/share/nativeShare';
 
 interface Props {
   game: Game | null;

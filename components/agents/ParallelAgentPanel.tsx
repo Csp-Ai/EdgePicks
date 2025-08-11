@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { formatAgentName } from '../../lib/utils';
-import type { AgentName } from '../../lib/agents/registry';
+import { formatAgentName } from '@/lib/utils';
+import type { AgentName } from '@/lib/agents/registry';
 
 const AGENTS: AgentName[] = [
   'injuryScout',

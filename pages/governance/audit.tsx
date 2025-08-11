@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import AuditLogList from '../../components/AuditLogList';
+import AuditLogList from '@/components/AuditLogList';
 
 const AuditPage = () => (
   <>

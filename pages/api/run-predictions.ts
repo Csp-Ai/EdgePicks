@@ -2,16 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import crypto from 'crypto';
 import { authOptions } from './auth/[...nextauth]';
-import { loadFlow } from '../../lib/flow/loadFlow';
-import { runFlow, AgentExecution } from '../../lib/flow/runFlow';
-import { registry } from '../../lib/agents/registry';
-import type { AgentMeta, AgentName } from '../../lib/agents/registry';
-import { ENV } from '../../lib/env';
-import { getDynamicWeights } from '../../lib/weights';
+import { loadFlow } from '@/lib/flow/loadFlow';
+import { runFlow, AgentExecution } from '@/lib/flow/runFlow';
+import { registry } from '@/lib/agents/registry';
+import type { AgentMeta, AgentName } from '@/lib/agents/registry';
+import { ENV } from '@/lib/env';
+import { getDynamicWeights } from '@/lib/weights';
 
-import type { Matchup, AgentOutputs, PickSummary } from '../../lib/types';
-import { logMatchup, logToSupabase } from '../../lib/logToSupabase';
-import { logEvent } from '../../lib/server/logEvent';
+import type { Matchup, AgentOutputs, PickSummary } from '@/lib/types';
+import { logMatchup, logToSupabase } from '@/lib/logToSupabase';
+import { logEvent } from '@/lib/server/logEvent';
 
 interface Game {
   homeTeam: { name: string };

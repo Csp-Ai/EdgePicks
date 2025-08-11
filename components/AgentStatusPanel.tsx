@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { registry as agentRegistry } from '../lib/agents/registry';
-import { formatAgentName } from '../lib/utils';
-import type { AgentLifecycle, AgentName } from '../lib/types';
+import { registry as agentRegistry } from '@/lib/agents/registry';
+import { formatAgentName } from '@/lib/utils';
+import type { AgentLifecycle, AgentName } from '@/lib/types';
 import AgentLogsModal from './AgentLogsModal';
 
 export type AgentStatusMap = Record<

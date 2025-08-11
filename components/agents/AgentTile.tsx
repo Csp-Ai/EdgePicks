@@ -1,8 +1,8 @@
 import React from 'react';
 import { LineChart, Line } from 'recharts';
-import { formatAgentName } from '../../lib/utils';
-import type { AgentName } from '../../lib/agents/registry';
-import type { AccuracyPoint } from '../../components/AccuracyTrend';
+import { formatAgentName } from '@/lib/utils';
+import type { AgentName } from '@/lib/agents/registry';
+import type { AccuracyPoint } from '@/components/AccuracyTrend';
 
 interface Props {
   name: AgentName;

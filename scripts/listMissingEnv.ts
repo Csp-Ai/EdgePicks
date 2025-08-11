@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { REQUIRED_ENV_KEYS } from '../lib/envKeys';
+import { REQUIRED_ENV_KEYS } from '@/lib/envKeys';
 
 const missing = REQUIRED_ENV_KEYS.filter((k) => !process.env[k]);
 

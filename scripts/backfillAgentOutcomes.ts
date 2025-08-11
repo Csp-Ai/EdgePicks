@@ -1,5 +1,5 @@
-import { supabase } from '../lib/supabaseClient';
-import { recordAgentOutcomes } from '../lib/accuracy';
+import { supabase } from '@/lib/supabaseClient';
+import { recordAgentOutcomes } from '@/lib/accuracy';
 
 async function main() {
   const { data, error } = await supabase

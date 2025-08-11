@@ -1,7 +1,7 @@
 import React from 'react';
 import Tooltip from '../Tooltip';
-import { AgentOutputs } from '../../lib/types';
-import { formatAgentName } from '../../lib/utils';
+import { AgentOutputs } from '@/lib/types';
+import { formatAgentName } from '@/lib/utils';
 
 export const computeDisagreement = (
   agents: Partial<AgentOutputs>

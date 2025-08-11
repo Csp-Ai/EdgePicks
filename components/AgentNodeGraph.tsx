@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
-import type { FlowNode, FlowEdge } from '../lib/dashboard/useFlowVisualizer';
+import type { FlowNode, FlowEdge } from '@/lib/dashboard/useFlowVisualizer';
 import type { AgentReflection } from '../types/AgentReflection';
 
 interface Props {

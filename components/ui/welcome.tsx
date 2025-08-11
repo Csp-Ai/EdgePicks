@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from './button';
-import { toast } from '../../lib/ui/toast';
+import { toast } from '@/lib/ui/toast';
 
 const Welcome: React.FC = () => (
   <section className="p-6 space-y-4">
