@@ -18,6 +18,7 @@ const Nav: React.FC = () => {
         <Link
           key={l.href}
           href={l.href}
+          aria-current={pathname === l.href ? 'page' : undefined}
           className={cn(
             'text-sm font-medium hover:underline',
             pathname === l.href ? 'text-blue-600' : 'text-gray-600 dark:text-gray-300'

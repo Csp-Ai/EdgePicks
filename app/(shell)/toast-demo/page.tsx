@@ -2,6 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { toast } from '@/lib/ui/toast';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function ToastDemoPage() {
   useEffect(() => {

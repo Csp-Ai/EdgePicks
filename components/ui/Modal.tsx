@@ -60,9 +60,11 @@ export const Modal: React.FC<ModalProps> = ({
       aria-modal="true"
       aria-labelledby={titleId}
       tabIndex={-1}
-      onKeyDown={(e) =>
-        (e.key === 'Enter' || e.key === ' ') && onClose()
-      }
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
     >
       <FocusTrap>
         <div

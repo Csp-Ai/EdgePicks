@@ -5,10 +5,10 @@
   "scripts": {
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
-    "prebuild": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && ts-node --project tsconfig.node.json scripts/fixRevalidateEverywhere.ts && ts-node --project tsconfig.node.json scripts/guardRevalidateEverywhere.ts && npm run setup:dev",
+    "prebuild": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && ts-node --project tsconfig.node.json scripts/guards/relativeImportLogger.ts && npm run setup:dev",
     "build": "npm run validate-env && next build",
     "start": "npm run validate-env && next start",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
     "test:update": "CI=1 npm test -- -u",
     "test:ci": "CI=1 npm test -- --runInBand",
     "test:a11y": "jest __tests__/a11y.test.tsx",
@@ -37,7 +37,8 @@
     "guard:dry": "CONFLICT_GUARD_DRY_RUN=1 ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "setup:dev": "ts-node --project tsconfig.node.json scripts/bootstrapDevEnv.ts"
+    "setup:dev": "ts-node --project tsconfig.node.json scripts/bootstrapDevEnv.ts",
+    "fix:revalidate": "ts-node --project tsconfig.node.json scripts/codemods/enforceRevalidate.ts"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
@@ -103,6 +104,7 @@
     "storybook": "^7.6.17",
     "tailwindcss": "^3.3.3",
     "ts-jest": "^29.4.1",
+    "ts-morph": "^26.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
     "whatwg-fetch": "^3.6.20",

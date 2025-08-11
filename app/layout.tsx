@@ -3,7 +3,9 @@ import "./globals.css";
 import { Providers } from "./providers";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 export const metadata: Metadata = {
   title: "EdgePicks",
   description: "Sports predictions and agent interface"

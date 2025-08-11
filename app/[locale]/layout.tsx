@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 import { I18nProvider, Locale } from '../../lib/i18n/config';
 import { getDictionary } from '../../lib/i18n/getDictionary';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default async function LocaleLayout({
   children,
