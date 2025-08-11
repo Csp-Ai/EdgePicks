@@ -1,13 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "es2017",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2019",
     "jsx": "react-jsx",
-    "noEmit": true,
-    "verbatimModuleSyntax": false,
-    "allowJs": true,
-    "types": ["jest", "node"]
-  }
+    "noEmit": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "__tests__/**/*", "tests/**/*"]
 }

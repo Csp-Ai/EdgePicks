@@ -3302,3 +3302,25 @@ Files:
 - components/AgentNodeGraph.tsx (+2/-0)
 - components/universal/UniversalAgentInterface.tsx (+2/-0)
 
+Timestamp: 2025-08-11T21:12:47.212Z
+Commit: b3844aa5bcca1f23e4238fa4f75e5f241efe3841
+Author: Codex
+Message: fix(ui/build): add missing shadcn ui primitives and align toolchain configs
+Files:
+- .eslintrc.json (+1/-1)
+- components/ui/badge.tsx (+23/-0)
+- components/ui/card.tsx (+24/-14)
+- components/ui/input.tsx (+19/-0)
+- components/ui/select.tsx (+76/-0)
+- components/ui/sheet.tsx (+51/-0)
+- components/ui/slider.tsx (+23/-0)
+- components/ui/switch.tsx (+23/-0)
+- components/ui/tabs.tsx (+44/-0)
+- components/ui/tooltip.tsx (+14/-0)
+- jest.config.js (+1/-1)
+- lib/utils.ts (+6/-3)
+- package-lock.json (+1391/-1350)
+- package.json (+15/-2)
+- tsconfig.jest.json (+4/-7)
+- tsconfig.json (+30/-4)
+
