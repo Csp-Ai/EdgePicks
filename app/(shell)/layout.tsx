@@ -3,6 +3,9 @@ import Header from '../../components/ui/header';
 import Toaster from '../../components/ui/toaster';
 import Skeleton from '../../components/ui/skeleton';
 import React, { Suspense } from 'react';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

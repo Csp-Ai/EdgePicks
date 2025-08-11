@@ -2,6 +2,9 @@
 
 import Image from 'next/image';
 import Leaderboard from '../../../components/Leaderboard';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function LeaderboardPage() {
   return (

@@ -1,10 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-export const dynamicParams = true;
-
 import { useMemo, useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import {
@@ -16,7 +11,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import data from "./metrics.json";
-import { Card } from "@/components/ui/card";
+ import { Card } from "@/components/ui/card";
+ export const revalidate = 0 as const;
+ export const dynamic = "force-dynamic";
+ export const fetchCache = "force-no-store";
+ export const dynamicParams = true;
 
 interface MetricRecord {
   category: string;

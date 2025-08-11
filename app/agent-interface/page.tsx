@@ -1,9 +1,8 @@
 import UniversalAgentInterface from "@/components/universal/UniversalAgentInterface";
 import { registry } from "@/lib/agents/registry";
 import { flags } from "@/lib/flags/experiments";
-
-export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 function toClientSafeRegistry(reg: any) {

@@ -3442,3 +3442,50 @@ Files:
 - package-lock.json (+20/-1)
 - package.json (+6/-4)
 
+Timestamp: 2025-08-11T23:35:25.068Z
+Commit: 61cf49d3846169594ebc79fef2db32ead7469183
+Author: Codex
+Message: Enforce revalidate exports and stabilize tests
+Files:
+- __tests__/nav/Nav.a11y.test.tsx (+14/-0)
+- __tests__/ui/Button.variants.test.tsx (+19/-0)
+- __tests__/ui/Modal.behavior.test.tsx (+47/-0)
+- app/(heavy)/leaderboard/page.tsx (+3/-0)
+- app/(shell)/about/page.tsx (+5/-3)
+- app/(shell)/layout.tsx (+3/-0)
+- app/(shell)/page.tsx (+5/-3)
+- app/(shell)/toast-demo/page.tsx (+3/-0)
+- app/[locale]/layout.tsx (+3/-0)
+- app/[locale]/page.tsx (+3/-0)
+- app/agent-interface/page.tsx (+1/-2)
+- app/ancient/page.tsx (+1/-2)
+- app/demo-rtl/page.tsx (+1/-2)
+- app/dev/preflight/page.tsx (+1/-2)
+- app/impact/page.tsx (+4/-5)
+- app/layout.tsx (+3/-1)
+- app/learn-stats/page.tsx (+1/-2)
+- app/maps/page.tsx (+4/-5)
+- app/onboarding/page.tsx (+4/-5)
+- app/page.tsx (+1/-2)
+- components/ui/Modal.tsx (+5/-3)
+- components/ui/button.tsx (+4/-2)
+- components/ui/nav.tsx (+1/-0)
+- jest.config.ts (+10/-16)
+- package-lock.json (+100/-0)
+- package.json (+5/-3)
+- scripts/codemods/enforceRevalidate.ts (+75/-0)
+- scripts/fixRevalidateEverywhere.ts (+0/-61)
+- scripts/guardRevalidateEverywhere.ts (+0/-43)
+- scripts/guards/relativeImportLogger.ts (+25/-0)
+- scripts/guards/validateRevalidate.ts (+49/-0)
+- tsconfig.jest.json (+1/-6)
+
+Timestamp: 2025-08-11T23:36:13.570Z
+Commit: 637d0130d39e1c77a105704641e64890319609d8
+Author: Codex
+Message: Use const revalidate on dynamic pages
+Files:
+- app/impact/page.tsx (+5/-5)
+- app/maps/page.tsx (+1/-1)
+- app/onboarding/page.tsx (+1/-1)
+

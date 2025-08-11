@@ -1,10 +1,5 @@
 'use client';
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-export const dynamicParams = true;
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -14,6 +9,10 @@ import {
   ConsentTier,
   SustainabilityMode,
 } from '../../lib/profile/prefs';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const dynamicParams = true;
 
 const purposes: Purpose[] = ['researcher', 'clinician', 'advocate', 'builder'];
 const consents: ConsentTier[] = ['low', 'medium', 'high'];

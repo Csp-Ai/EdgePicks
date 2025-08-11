@@ -1,8 +1,10 @@
 import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 import Skeleton from '../../components/ui/skeleton';
-
-const Welcome = dynamic(() => import('../../components/ui/welcome'), {
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+const Welcome = nextDynamic(() => import('../../components/ui/welcome'), {
   suspense: true,
 });
 
