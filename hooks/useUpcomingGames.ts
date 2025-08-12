@@ -2,14 +2,25 @@
 import useSWR from 'swr';
 import { apiGet } from '@/lib/api';
 import { normalizeUpcomingGames } from '@/lib/normalize';
-import type { UpcomingGame } from '@/lib/types';
+import type { UpcomingGame } from '@/types/game';
 
-export function useUpcomingGames() {
-  return useSWR<UpcomingGame[]>('/api/upcoming-games', async (key) => {
-    const raw = await apiGet<any>(key);
-    return normalizeUpcomingGames(raw);
-  }, {
-    revalidateOnFocus: true,
-    errorRetryCount: 2,
-  });
+export function useUpcomingGames(league?: string) {
+  const { data, error, isLoading } = useSWR<UpcomingGame[]>(
+    '/api/upcoming-games',
+    async () => {
+      const raw = await apiGet<any>('/api/upcoming-games');
+      const games = normalizeUpcomingGames(raw);
+      return league ? games.filter(game => game.league === league) : games;
+    },
+    {
+      revalidateOnFocus: true,
+      errorRetryCount: 2,
+    }
+  );
+
+  return {
+    data,
+    error,
+    isLoading
+  };
 }

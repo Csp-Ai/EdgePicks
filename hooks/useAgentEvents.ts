@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import type { AgentEventUpdate } from '@/types/agent';
 
-export function useAgentEvents(runId: string | null, onUpdate: (data: any) => void) {
+export function useAgentEvents(
+  runId: string | null,
+  onUpdate: (data: AgentEventUpdate) => void
+) {
   const router = useRouter();
 
   useEffect(() => {

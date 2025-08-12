@@ -1,20 +1,24 @@
+'use client';
+
 import { Suspense } from 'react';
 import { SWRConfig } from 'swr';
 import SportsSidebar from '../SportsSidebar';
-import LeagueSection from './LeagueSection';
-import AgentAnalysisPanel from './AgentAnalysisPanel';
+import LeagueSection from '../LeagueSection';
+import AgentAnalysisPanel from '../AgentAnalysisPanel';
 import LoadingShimmer from '@/components/LoadingShimmer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { useLeagues } from '@/hooks/useLeagues';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+type UnifiedDemoLayoutProps = {
+  defaultLeague?: string;
+  children: React.ReactNode;
+};
+
 export default function UnifiedDemoLayout({ 
   defaultLeague = 'NFL',
   children 
-}: { 
-  defaultLeague?: string;
-  children: React.ReactNode;
-}) {
+}: UnifiedDemoLayoutProps) {
   const { leagues, activeLeague, setActiveLeague } = useLeagues(defaultLeague);
 
   return (

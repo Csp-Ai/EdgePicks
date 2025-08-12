@@ -1,4 +1,4 @@
-import type { UpcomingGame } from "@/lib/types";
+import type { UpcomingGame } from "@/types/game";
 
 function toIso(dateStr?: string | null, timeStr?: string | null, epochSec?: number | null): string | null {
   // Prefer epoch seconds if present
@@ -25,64 +25,35 @@ function toIso(dateStr?: string | null, timeStr?: string | null, epochSec?: numb
 
 export function normalizeUpcomingGames(raw: any): UpcomingGame[] {
   const list: any[] = Array.isArray(raw?.data) ? raw.data : Array.isArray(raw) ? raw : [];
-  return list.map((g, i): UpcomingGame => {
-    // Accept a variety of shapes
-    const id =
-      g.id ??
-      g.gameId ??
-      g.idEvent ??
-      g.idGame ??
-      g.event_id ??
-      String(g._id ?? i);
-
-    const home =
-      g.homeTeam ??
-      g.home_team ??
-      g.strHomeTeam ??
-      g.home ??
-      g.teamHome ??
-      "";
-
-    const away =
-      g.awayTeam ??
-      g.away_team ??
-      g.strAwayTeam ??
-      g.away ??
-      g.teamAway ??
-      "";
-
-    // kickoff candidates: ISO, epoch seconds, TheSportsDB date+time
-    const kickoffIso =
-      g.kickoff ??
-      g.commence_time ??
-      g.startTime ??
-      g.start_time ??
-      toIso(g.dateEvent || g.event_date || g.date, g.strTime || g.event_time || g.time, g.epoch || g.timestamp) ??
-      null;
-
-    // odds candidates
-    const odds =
-      g.odds ??
-      (g.prices
-        ? { home: g.prices.home, away: g.prices.away, draw: g.prices.draw ?? undefined }
-        : g.moneyline
-        ? { home: g.moneyline.home, away: g.moneyline.away, draw: g.moneyline.draw ?? undefined }
-        : null);
-
-    const logos =
-      g.logos ??
-      (g.homeLogo || g.awayLogo ? { home: g.homeLogo, away: g.awayLogo } : undefined);
-
-    return {
-      id: String(id),
-      league: g.league || g.sport || "NFL",
-      homeTeam: String(home),
-      awayTeam: String(away),
-      kickoff: kickoffIso || "",
-      odds: odds ?? null,
-      logos: logos ?? {},
-    };
-  });
+  
+  return list
+    .map((game): UpcomingGame | null => {
+      try {
+        const kickoff = toIso(
+          game.dateEvent || game.event_date || game.date,
+          game.strTime || game.event_time || game.time,
+          game.epoch || game.timestamp || game.epochSec
+        );
+        
+        return {
+          id: game.id || game.gameId || game.idEvent || game.idGame || game.event_id || `game-${Date.now()}`,
+          league: game.league || game.competition || game.sport || 'Unknown',
+          homeTeam: game.homeTeam || game.home_team || game.strHomeTeam || game.home || game.teamHome || '',
+          awayTeam: game.awayTeam || game.away_team || game.strAwayTeam || game.away || game.teamAway || '',
+          status: 'upcoming',
+          kickoff: kickoff || undefined,
+          odds: {
+            homeSpread: typeof game.homeSpread === 'number' ? game.homeSpread : undefined,
+            awaySpread: typeof game.awaySpread === 'number' ? game.awaySpread : undefined,
+            total: typeof game.total === 'number' ? game.total : undefined,
+          }
+        };
+      } catch (e) {
+        console.error('Failed to normalize game:', e);
+        return null;
+      }
+    })
+    .filter((game): game is UpcomingGame => game !== null);
 }
 
 export function safeLocalDate(iso: string | null | undefined): string {

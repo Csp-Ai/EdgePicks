@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowJs": true,
     "checkJs": false,
     "jsx": "react-jsx",
@@ -31,6 +31,7 @@
     "lib",
     "pages",
     "scripts",
+    "hooks",
     "__tests__",
     "tests",
     "jest.setup.ts"

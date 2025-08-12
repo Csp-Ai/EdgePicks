@@ -3,19 +3,20 @@
 import React, { useState, useCallback } from 'react';
 import { useAgentEvents } from '@/hooks/useAgentEvents';
 import LoadingShimmer from './LoadingShimmer';
+import type { AgentEvent, AgentEventUpdate } from '@/types/agent';
 
 interface AgentPredictionStreamProps {
   runId: string;
-  onComplete?: (data: any) => void;
+  onComplete?: (data: AgentEventUpdate) => void;
 }
 
 export default function AgentPredictionStream({ runId, onComplete }: AgentPredictionStreamProps) {
-  const [status, setStatus] = useState('running');
-  const [events, setEvents] = useState<any[]>([]);
+  const [status, setStatus] = useState<AgentEventUpdate['status']>('running');
+  const [events, setEvents] = useState<AgentEvent[]>([]);
 
-  const handleUpdate = useCallback((data: any) => {
+  const handleUpdate = useCallback((data: AgentEventUpdate) => {
     setStatus(data.status);
-    if (data.output) {
+    if (data.output && data.status !== 'error') {
       setEvents(prev => [...prev, data.output]);
     }
     if (['completed', 'error'].includes(data.status) && onComplete) {

@@ -1,8 +1,11 @@
+'use client';
+
 import { useCallback } from 'react';
 import { useUpcomingGames } from '@/hooks/useUpcomingGames';
 import { useAgentRun } from '@/hooks/useAgentRun';
 import AgentPredictionStream from '@/components/AgentPredictionStream';
 import GameCard from '@/components/GameCard';
+import type { Game } from '@/types/game';
 
 interface LeagueSectionProps {
   league: string;

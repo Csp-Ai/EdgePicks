@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useAgentRun } from '@/hooks/useAgentRun';
 import { useAgentEvents } from '@/hooks/useAgentEvents';
