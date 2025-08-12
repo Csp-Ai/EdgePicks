@@ -79,6 +79,16 @@ export function buildCacheKey(league: string, gameId: string, agents: string[]) 
   return `${league}:${gameId}:${agents.sort().join(',')}`;
 }
 
+export function cache<T extends (...args: any[]) => Promise<any>>(fn: T): T {
+  let memo: Promise<ReturnType<T>> | null = null;
+  return (async (...args: Parameters<T>) => {
+    if (!memo) {
+      memo = fn(...args);
+    }
+    return memo as Promise<ReturnType<T>>;
+  }) as T;
+}
+
 export async function getCachedPrediction(key: string) {
   const now = Date.now();
   const entry = memoryCache.get(key);

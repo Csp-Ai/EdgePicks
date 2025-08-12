@@ -6,7 +6,7 @@ const tabs = [
   { href: "/", label: "Home" },
   { href: "/predictions", label: "Predictions" },
   { href: "/leaderboard", label: "Leaderboard" },
-  { href: "/demo/mlb", label: "MLB Demo" },
+  { href: "/demo-0to1", label: "Demo", mobileHidden: true },
 ];
 
 export default function SiteHeader() {
@@ -18,11 +18,16 @@ export default function SiteHeader() {
         <nav className="flex gap-4 text-sm">
           {tabs.map(t => {
             const active = pathname === t.href;
+            const base = active
+              ? "text-primary underline underline-offset-4"
+              : "text-muted-foreground hover:text-foreground";
+            const hidden = t.mobileHidden ? "hidden sm:inline" : "";
             return (
               <Link
                 key={t.href}
                 href={t.href}
-                className={active ? "text-primary underline underline-offset-4" : "text-muted-foreground hover:text-foreground"}
+                aria-current={active ? 'page' : undefined}
+                className={`${base} ${hidden}`}
               >
                 {t.label}
               </Link>

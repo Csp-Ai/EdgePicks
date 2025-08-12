@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import { jest } from '@jest/globals';
+import * as swrInternal from 'swr/_internal';
+const swrCache: Map<any, any> = (swrInternal as any).cache;
 import { freezeTime, resetTime } from './lib/test/freezeTime';
 import { server } from './test/msw/server';
 
@@ -13,6 +15,7 @@ afterEach(() => {
   jest.restoreAllMocks();
   resetTime();
   server.resetHandlers();
+  swrCache.clear();
 });
 afterAll(() => server.close());
 

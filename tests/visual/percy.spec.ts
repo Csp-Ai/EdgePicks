@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { test } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
