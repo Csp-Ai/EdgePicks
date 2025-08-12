@@ -39,3 +39,11 @@ export const ENV = parsed.success ? parsed.data : ({} as z.infer<typeof envSchem
 if (process.env.FEATURE_AGENT_INTERFACE === 'true' && !process.env.SPORTS_API_KEY) {
   console.warn('SPORTS_API_KEY missing; running agent interface in demo mode.');
 }
+
+export type FlowMode = 'live' | 'sim';
+/**
+ * Client-safe env access. Use NEXT_PUBLIC_* for anything read in the browser.
+ */
+export const NEXT_PUBLIC_AGENT_FLOW_MODE: FlowMode =
+  (process.env.NEXT_PUBLIC_AGENT_FLOW_MODE as FlowMode) || 'sim';
+

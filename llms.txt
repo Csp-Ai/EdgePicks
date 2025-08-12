@@ -3790,3 +3790,18 @@ Message: test: adjust visualizer render test
 Files:
 - __tests__/AgentFlowVisualizer.render.test.tsx (+2/-2)
 
+Timestamp: 2025-08-12T03:52:54.528Z
+Commit: 606ae5a027407145f83475abdbdfe0620145024f
+Author: Codex
+Message: feat: add simulated agent flow with fallback
+Files:
+- __tests__/AgentFlowVisualizer.fallback.test.tsx (+32/-0)
+- __tests__/AgentFlowVisualizer.test.tsx (+4/-5)
+- app/demo-0to1/page.tsx (+70/-15)
+- components/visuals/AgentFlowVisualizer.tsx (+117/-107)
+- jest.config.ts (+1/-0)
+- lib/env.ts (+8/-0)
+- lib/fetcher.ts (+6/-0)
+- tsconfig.jest.json (+1/-1)
+- types/reactflow.d.ts (+5/-6)
+
