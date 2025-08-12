@@ -1,21 +1,80 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { supabase } from '@/lib/supabaseClient';
+import { ENV } from '@/lib/env';
+
+// Enable streaming responses
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
+function streamResponse(readable: ReadableStream): Response {
+  return new Response(readable, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  });
+}
 
 export async function GET(request: Request) {
-  // Only allow authenticated users to access logs
+  // Authenticate request
   const token = await getToken({ req: request as any });
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  return NextResponse.json({
-    status: 'running',
-    timestamp: new Date().toISOString()
+  const { searchParams } = new URL(request.url);
+  const runId = searchParams.get('runId');
+
+  if (!runId) {
+    return new NextResponse('Run ID is required', { status: 400 });
+  }
+
+  // Create a stream for SSE
+  const stream = new TransformStream();
+  const writer = stream.writable.getWriter();
+
+  // Subscribe to real-time changes
+  const channel = supabase
+    .channel('agent_runs')
+    .on(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'agent_runs',
+        filter: `id=eq.${runId}`,
+      },
+      async (payload) => {
+        try {
+          const data = JSON.stringify(payload.new);
+          await writer.write(
+            new TextEncoder().encode(`data: ${data}\n\n`)
+          );
+
+          // Close stream if agent run is complete
+          if (['completed', 'error'].includes(payload.new.status)) {
+            await writer.close();
+          }
+        } catch (error) {
+          console.error('Error writing to stream:', error);
+          await writer.close();
+        }
+      }
+    )
+    .subscribe();
+
+  // Clean up subscription when client disconnects
+  request.signal.addEventListener('abort', () => {
+    channel.unsubscribe();
   });
+
+  return streamResponse(stream.readable);
 }
 
 export async function POST(request: Request) {
-  // Only allow authenticated users to post logs
+  // Authenticate request
   const token = await getToken({ req: request as any });
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });
@@ -28,23 +87,36 @@ export async function POST(request: Request) {
     return new NextResponse('Type and data are required', { status: 400 });
   }
 
-  // In production this would write to Supabase
-  // For development we write to the filesystem
-  if (process.env.NODE_ENV === 'development') {
-    const { writeFile } = await import('fs/promises');
-    const { join } = await import('path');
-    const logsDir = join(process.cwd(), 'logs');
-    
-    try {
+  try {
+    // Log to Supabase
+    const { error } = await supabase
+      .from(type)
+      .insert([{
+        ...data,
+        environment: ENV.NODE_ENV,
+        timestamp: new Date().toISOString()
+      }]);
+
+    if (error) throw error;
+
+    // In development, also write to filesystem
+    if (ENV.NODE_ENV === 'development') {
+      const { writeFile } = await import('fs/promises');
+      const { join } = await import('path');
+      const logsDir = join(process.cwd(), 'logs');
+
       await writeFile(
         join(logsDir, `${type}-${Date.now()}.json`),
         JSON.stringify(data, null, 2)
       );
-    } catch (error) {
-      console.error('Failed to write log:', error);
-      return new NextResponse('Failed to write log', { status: 500 });
     }
-  }
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Failed to log data:', error);
+    return NextResponse.json(
+      { error: 'Failed to log data' },
+      { status: 500 }
+    );
+  }
 }

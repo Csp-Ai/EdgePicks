@@ -41,6 +41,7 @@ const leagueIcons: Record<string, string> = {
 interface UpcomingGamesPanelProps {
   maxVisible?: number;
   hideValues?: boolean;
+  league?: string;
   cardWrapper?: (args: {
     game: UpcomingGame;
     index: number;
