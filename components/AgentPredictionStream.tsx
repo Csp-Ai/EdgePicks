@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useCallback } from 'react';
 import { useAgentEvents } from '@/hooks/useAgentEvents';
 import LoadingShimmer from './LoadingShimmer';

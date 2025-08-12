@@ -99,16 +99,10 @@ export async function POST(request: Request) {
 
     if (error) throw error;
 
-    // In development, also write to filesystem
+    // Edge runtime doesn't support filesystem operations
+    // Log to console in development
     if (ENV.NODE_ENV === 'development') {
-      const { writeFile } = await import('fs/promises');
-      const { join } = await import('path');
-      const logsDir = join(process.cwd(), 'logs');
-
-      await writeFile(
-        join(logsDir, `${type}-${Date.now()}.json`),
-        JSON.stringify(data, null, 2)
-      );
+      console.log(`[${type}]`, JSON.stringify(data, null, 2));
     }
 
     return NextResponse.json({ success: true });
