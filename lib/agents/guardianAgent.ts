@@ -3,14 +3,27 @@ import { logAgentReflection } from './utils';
 import type { AgentReflection } from '../../types/AgentReflection';
 import type { Matchup } from '../types';
 
+// Ensure matchup type has required fields
+const TeamSchema = z.object({
+  name: z.string(),
+  score: z.number().optional(),
+}).passthrough();
+
 // --- Schemas ---
 const MatchupSchema = z.object({
-  homeTeam: z.string(),
+  homeTeam: TeamSchema,
+  awayTeam: TeamSchema,
+  date: z.string().optional(),
+  odds: z.object({
+    home: z.number(),
+    away: z.number()
+  }).optional(),
 }).passthrough();
 
 const AgentOutputSchema = z.object({
   team: z.string(),
   reason: z.string().optional(),
+  confidence: z.number().optional(),
 });
 
 const AgentOutputsSchema = z.record(AgentOutputSchema);
@@ -70,10 +83,24 @@ export const guardianAgent = async (
   await logAgentReflection('guardianAgent', reflection);
 
   const m = MatchupSchema.parse(matchup);
+  
+  // Determine most confident pick
+  let topTeam = m.homeTeam.name;
+  let maxConfidence = 0;
+  
+  results.forEach(([_, result]) => {
+    const parsed = AgentOutputSchema.parse(result);
+    const confidence = parsed.confidence || 0;
+    if (confidence > maxConfidence) {
+      maxConfidence = confidence;
+      topTeam = parsed.team;
+    }
+  });
+
   return GuardianAgentResultSchema.parse({
-    team: m.homeTeam,
-    score: 0,
-    reason,
+    team: topTeam,
+    score: maxConfidence,
+    reason: warnings.length > 0 ? `Review completed with warnings: ${warnings.join('; ')}` : reason,
     warnings: warnings.length > 0 ? warnings : undefined,
   });
 };

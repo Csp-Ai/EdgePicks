@@ -6,5 +6,9 @@ describe('AgentFlowVisualizer', () => {
     render(<AgentFlowVisualizer />);
     expect(screen.getByText(/Agent Flow/)).toBeInTheDocument();
   });
-});
 
+  it('handles simulation mode when no stream URL is provided', () => {
+    render(<AgentFlowVisualizer />);
+    expect(screen.getByText(/connecting|simulated/i)).toBeInTheDocument();
+  });
+});
