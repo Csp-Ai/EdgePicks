@@ -1,9 +1,9 @@
 'use client';
-import { useApi } from '@/hooks/useApiData';
-import type { UpcomingGame } from '@/lib/types';
+import { useUpcomingGames } from '@/hooks/useUpcomingGames';
+import { safeLocalDate } from '@/lib/normalize';
 
 export default function QuickMatchups() {
-  const { data, error, isLoading } = useApi<UpcomingGame[]>('/api/upcoming-games');
+  const { data, error, isLoading } = useUpcomingGames();
 
   if (isLoading) return <div className="text-sm text-muted-foreground">Loading games…</div>;
   if (error) return <div className="text-sm text-red-500">Failed to load games.</div>;
@@ -14,11 +14,14 @@ export default function QuickMatchups() {
       <div className="flex gap-3 min-w-full">
         {data.map(g => (
           <article key={g.id} className="min-w-[260px] rounded-xl border p-4 hover:bg-accent/40 transition">
-            <div className="text-sm text-muted-foreground">{new Date(g.kickoff).toLocaleString()}</div>
-            <div className="mt-1 font-medium">{g.awayTeam} @ {g.homeTeam}</div>
-            {g.odds && (
+            <div className="text-sm text-muted-foreground">{safeLocalDate(g.kickoff)}</div>
+            <div className="mt-1 font-medium">
+              {g.awayTeam || 'TBD'} @ {g.homeTeam || 'TBD'}
+            </div>
+            {g.odds && (g.odds.home != null || g.odds.away != null) && (
               <div className="mt-2 text-sm">
-                Home: {g.odds.home} • Away: {g.odds.away}{g.odds.draw != null ? ` • Draw: ${g.odds.draw}` : ''}
+                {g.odds.home != null ? `Home: ${g.odds.home}` : 'Home: —'} • {g.odds.away != null ? `Away: ${g.odds.away}` : 'Away: —'}
+                {g.odds.draw != null ? ` • Draw: ${g.odds.draw}` : ''}
               </div>
             )}
             <a href={`/predictions?gameId=${encodeURIComponent(g.id)}`} className="mt-3 inline-flex text-sm text-primary hover:underline">
