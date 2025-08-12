@@ -63,7 +63,7 @@ export function I18nProvider({
     setNamespaces({ common: dict });
   };
 
-  const value = useMemo(
+  const value = useMemo<I18nContextValue>(
     () => ({
       locale,
       dir: locale === 'ar' ? 'rtl' : 'ltr',

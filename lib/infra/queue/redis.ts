@@ -5,7 +5,7 @@ import { ENV } from '../../env';
 export class RedisQueueDriver implements QueueDriver {
   private client: Redis;
   constructor() {
-    this.client = new Redis(ENV.REDIS_URL);
+    this.client = new Redis(ENV.REDIS_URL ?? '');
   }
 
   async enqueue<T>(queue: string, item: T): Promise<void> {

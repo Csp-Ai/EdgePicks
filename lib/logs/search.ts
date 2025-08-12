@@ -17,7 +17,7 @@ export function searchLogs(logs: AgentLog[], query: string): AgentLog[] {
 export function logsToCSV(logs: AgentLog[]): string {
   if (!logs.length) return '';
   const keys = Array.from(
-    logs.reduce((set, log) => {
+    logs.reduce<Set<string>>((set, log) => {
       Object.keys(log).forEach((k) => set.add(k));
       return set;
     }, new Set<string>()),

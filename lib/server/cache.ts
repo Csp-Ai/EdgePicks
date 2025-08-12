@@ -123,3 +123,17 @@ export function purgeCache({ key, prefix }: { key?: string; prefix?: string } = 
   }
 
 }
+
+export async function getClient() {
+  return {
+    async keys(_pattern: string): Promise<string[]> {
+      return Array.from(memoryCache.keys());
+    },
+    async del(...keys: string[]): Promise<void> {
+      keys.forEach(k => memoryCache.delete(k));
+    },
+    async quit(): Promise<void> {
+      // no-op for in-memory client
+    },
+  };
+}

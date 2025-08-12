@@ -5,7 +5,7 @@ import { loadFlow } from '@/lib/flow/loadFlow';
 import { registry, type AgentName } from '@/lib/agents/registry';
 import { logUiEvent } from '@/lib/logUiEvent';
 import mockData from '../../__mocks__/run-agents.json';
-import type { AgentOutputs, Matchup } from '@/lib/types';
+import type { AgentOutputs, Matchup, AgentResult } from '@/lib/types';
 import { fetchSchedule, type League } from '@/lib/data/schedule';
 import { ENV } from '@/lib/env';
 import { supabase } from '@/lib/supabaseClient';
@@ -183,6 +183,7 @@ export default async function handler(
               winner: pick,
               confidence: finalConfidence,
               topReasons: Object.values(outputs)
+                .filter((o): o is AgentResult => Boolean(o))
                 .map((o) => o.reason)
                 .slice(0, 3),
             },

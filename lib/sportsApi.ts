@@ -5,7 +5,7 @@ const TSDbV1 = (path: string) =>
 
 const TSDbV2 = (path: string) => ({
   url: `https://www.thesportsdb.com/api/v2/json/${path}`,
-  headers: { 'X-API-KEY': Env.apiKey },
+  headers: { 'X-API-KEY': Env.apiKey ?? '' },
 });
 
 export function sportsApi(path: string): { url: string; headers?: Record<string, string> } {
@@ -16,6 +16,6 @@ export function sportsApi(path: string): { url: string; headers?: Record<string,
   }
   return {
     url: `https://api.sportsdata.io/${path}`,
-    headers: { 'Ocp-Apim-Subscription-Key': Env.apiKey },
+    headers: { 'Ocp-Apim-Subscription-Key': Env.apiKey ?? '' },
   };
 }
