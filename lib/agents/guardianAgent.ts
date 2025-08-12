@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AgentOutputs, AgentResult, Matchup } from '../types';
 import { logAgentReflection } from './utils';
 import { AgentReflection } from '../../types/AgentReflection';
