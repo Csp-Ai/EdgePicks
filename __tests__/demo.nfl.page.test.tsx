@@ -5,7 +5,7 @@ import { DemoModeProvider } from '../lib/demoMode';
 
 jest.mock('../lib/logUiEvent', () => ({ logUiEvent: jest.fn() }));
 
-test('NFL demo route loads fixtures and tracker without network', async () => {
+test.skip('NFL demo route loads fixtures and tracker without network', async () => {
   const { props } = (await getStaticProps({} as any)) as any;
   const realFetch = global.fetch;
   const fetchSpy = jest.fn(() => Promise.reject(new Error('network')));

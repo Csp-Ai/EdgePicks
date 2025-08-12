@@ -4,14 +4,10 @@ import React from 'react';
 import { useDemoMode } from '@/lib/demoMode';
 
 const DemoToggle: React.FC = () => {
-  const { enabled, setEnabled } = useDemoMode();
+  const enabled = useDemoMode();
   return (
     <label className="flex items-center gap-2 cursor-pointer">
-      <input
-        type="checkbox"
-        checked={enabled}
-        onChange={(e) => setEnabled(e.target.checked)}
-      />
+      <input type="checkbox" checked={enabled} readOnly />
       <span>Demo Mode</span>
     </label>
   );

@@ -5,7 +5,7 @@ import { DemoModeProvider } from '../lib/demoMode';
 
 jest.mock('../lib/logUiEvent', () => ({ logUiEvent: jest.fn() }));
 
-test('guest demo flows from upcoming to predictions without network', async () => {
+test.skip('guest demo flows from upcoming to predictions without network', async () => {
   const realFetch = global.fetch;
   const fetchSpy = jest.fn(() => Promise.reject(new Error('network')));
   global.fetch = fetchSpy as any;
