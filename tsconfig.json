@@ -10,7 +10,8 @@
     "paths": {
       "@/*": [
         "*"
-      ]
+      ],
+      "@/types/*": ["types/*"]
     },
     // Enable default imports from CommonJS modules
     "esModuleInterop": true,
@@ -26,6 +27,7 @@
   "include": [
     "next-env.d.ts",
     "types/**/*.d.ts",
+    "types/**/*.ts",
     "app",
     "components",
     "lib",

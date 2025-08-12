@@ -48,6 +48,7 @@ describe('PredictionDrawer SSE', () => {
 
   it('processes events and announces final pick', () => {
     const game: Game = {
+      id: 'game-1', // Added missing id property
       gameId: '1',
       league: 'NFL',
       homeTeam: 'A',
@@ -77,6 +78,7 @@ describe('PredictionDrawer SSE', () => {
   it('retries on error and stops after unmount', () => {
     jest.useFakeTimers();
     const game: Game = {
+      id: 'game-1', // Added missing id property
       gameId: '1',
       league: 'NFL',
       homeTeam: 'A',
@@ -91,7 +93,7 @@ describe('PredictionDrawer SSE', () => {
         .value as MockEventSource
     );
     act(() => {
-      esInstance.onerror && esInstance.onerror(new Event('error'));
+      esInstance.onerror && esInstance.onerror();
     });
     act(() => {
       jest.advanceTimersByTime(300);

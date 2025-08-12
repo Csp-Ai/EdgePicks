@@ -25,6 +25,7 @@ describe.skip('Landing deep link', () => {
     global.fetch = jest.fn().mockResolvedValue({
       json: async () => [
         {
+          id: 'game-1', // Added missing id property
           gameId: '1',
           league: 'NFL',
           homeTeam: { name: 'A' },

@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient';
 import { getQueueDriver } from './infra/queue';
-import type { AgentOutputs, Matchup, PickSummary } from './types';
+import type { AgentOutputs, Matchup, PickSummary } from '@/lib/types';
 import { recomputeAccuracy, recordAgentOutcomes } from './accuracy';
 
 interface QueueEntry {

@@ -9,6 +9,7 @@ jest.mock('next/image', () => (props: any) => {
 });
 
 const game: Game = {
+  id: 'game-1', // Added missing id property
   gameId: '1',
   league: 'NFL',
   homeTeam: 'Lakers',
@@ -16,12 +17,10 @@ const game: Game = {
   time: '2023-01-01T19:20:00Z',
   homeLogo: '/home.png',
   awayLogo: '/away.png',
-  kickoffDisplay: 'in 2h',
   odds: {
-    spread: -3.5,
-    overUnder: 45.5,
-    moneyline: { home: -150, away: 130 },
-    bookmaker: 'MockBook',
+    homeSpread: -3.5, // Replaced `spread` with `homeSpread`
+    awaySpread: 3.5, // Added `awaySpread`
+    total: 45.5, // Replaced `overUnder` with `total`
   },
 };
 

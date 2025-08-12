@@ -5,6 +5,7 @@ import type { Game } from '../lib/types';
 
 const games: Game[] = [
   {
+    id: 'game-1', // Added missing id property
     gameId: '1',
     league: 'NFL',
     homeTeam: 'Lakers',
@@ -12,6 +13,7 @@ const games: Game[] = [
     time: new Date().toISOString(),
   },
   {
+    id: 'game-2', // Added missing id property
     gameId: '2',
     league: 'NFL',
     homeTeam: 'Bulls',

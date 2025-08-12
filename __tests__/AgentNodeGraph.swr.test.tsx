@@ -7,7 +7,7 @@ import useSWR from 'swr';
 
 const useSWRMock = useSWR as jest.Mock;
 
-const nodes = [{ id: 'n1', label: 'N1', status: 'completed' } as any];
+const nodes = [{ id: 'node-1', label: 'N1', status: 'completed' } as any]; // Updated id for clarity
 const edges: any[] = [];
 
 describe('AgentNodeGraph SWR', () => {

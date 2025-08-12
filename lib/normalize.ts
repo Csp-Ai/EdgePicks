@@ -42,6 +42,8 @@ export function normalizeUpcomingGames(raw: any): UpcomingGame[] {
           awayTeam: game.awayTeam || game.away_team || game.strAwayTeam || game.away || game.teamAway || '',
           status: 'upcoming',
           kickoff: kickoff || undefined,
+          gameId: game.id || game.gameId || game.idEvent || game.idGame || game.event_id || `game-${Date.now()}`,
+          time: kickoff || undefined,
           odds: {
             homeSpread: typeof game.homeSpread === 'number' ? game.homeSpread : undefined,
             awaySpread: typeof game.awaySpread === 'number' ? game.awaySpread : undefined,

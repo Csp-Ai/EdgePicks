@@ -1,4 +1,4 @@
-import { AgentResult, Matchup } from '../types';
+import { AgentResult, Matchup } from '@/types';
 
 import { pseudoMetric, logAgentReflection } from './utils';
 import { AgentReflection } from '../../types/AgentReflection';
@@ -34,6 +34,7 @@ export const injuryScout = async (matchup: Matchup): Promise<AgentResult> => {
   await logAgentReflection('injuryScout', reflection);
 
   return {
+    name: 'InjuryScout', // Added required property
     team: favored,
     score,
     reason,
