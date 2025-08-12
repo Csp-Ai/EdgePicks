@@ -3,6 +3,8 @@ import { SWRConfig } from 'swr';
 import SportsSidebar from './SportsSidebar';
 import LeagueSection from './LeagueSection';
 import AgentAnalysisPanel from './AgentAnalysisPanel';
+import LoadingShimmer from '@/components/LoadingShimmer';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { useLeagues } from '@/hooks/useLeagues';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -36,18 +38,22 @@ export default function UnifiedDemoLayout({
           </div>
 
           <TabsContent value="games" className="space-y-6">
-            <Suspense fallback={<div>Loading games...</div>}>
-              <LeagueSection 
-                league={activeLeague}
-                showPredictions
-              />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingShimmer />}>
+                <LeagueSection 
+                  league={activeLeague}
+                  showPredictions
+                />
+              </Suspense>
+            </ErrorBoundary>
           </TabsContent>
 
           <TabsContent value="predictions" className="space-y-6">
-            <Suspense fallback={<div>Loading predictions...</div>}>
-              <AgentAnalysisPanel />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingShimmer />}>
+                <AgentAnalysisPanel />
+              </Suspense>
+            </ErrorBoundary>
           </TabsContent>
 
           <TabsContent value="trends" className="space-y-6">

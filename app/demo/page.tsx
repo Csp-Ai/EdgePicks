@@ -8,6 +8,8 @@ import LeagueSection from '@/components/LeagueSection';
 import { fetchUpcomingGames } from '@/lib/data';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 export const revalidate = 300; // 5 minutes
 
 interface DemoPageProps {

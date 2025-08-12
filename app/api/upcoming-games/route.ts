@@ -3,6 +3,8 @@ import { ENV } from '@/lib/env';
 import { supabase } from '@/lib/supabaseClient';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 export const revalidate = 300; // Revalidate every 5 minutes
 
 interface GamePrediction {
