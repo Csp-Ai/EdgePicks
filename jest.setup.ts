@@ -39,7 +39,7 @@ jest.mock('next/router', () => ({
       query: {},
       asPath: '/',
       events: { on: jest.fn(), off: jest.fn() },
-      prefetch: jest.fn().mockResolvedValue(null),
+      prefetch: jest.fn<() => Promise<void>>(() => Promise.resolve()),
     };
   },
 }));

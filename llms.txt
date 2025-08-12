@@ -3732,3 +3732,17 @@ Files:
 - jest.config.ts (+2/-1)
 - jest.setup.ts (+1/-0)
 
+Timestamp: 2025-08-12T02:23:57.777Z
+Commit: 57da778d4734363be5fe6869926b06304bf9559a
+Author: Codex
+Message: feat: add demo agent flow visualizer
+Files:
+- __tests__/AgentFlowVisualizer.test.tsx (+9/-0)
+- app/demo-0to1/page.tsx (+21/-0)
+- components/visuals/AgentFlowVisualizer.tsx (+102/-0)
+- jest.config.ts (+4/-1)
+- jest.setup.ts (+1/-1)
+- lib/agents/guardianAgent.ts (+1/-0)
+- lib/agents/supabaseRegistry.ts (+1/-0)
+- scripts/checkMergeMarkers.ts (+3/-1)
+

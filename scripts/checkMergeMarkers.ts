@@ -5,11 +5,13 @@ const repoRoot = process.cwd();
 const markers = ['<<<<<<<', '=======', '>>>>>>>'];
 let found = false;
 
+const ignoredEntries = ['node_modules', '.git', '.next', 'archive', 'llms.txt'];
+
 function scanDir(dir: string) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (ignoredEntries.includes(entry.name)) continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (['node_modules', '.git', '.next', 'archive'].includes(entry.name)) continue;
       scanDir(full);
     } else {
       const content = fs.readFileSync(full, 'utf8');

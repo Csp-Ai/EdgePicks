@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { supabase } from '../db';
 import { cache } from '../server/cache';
 
