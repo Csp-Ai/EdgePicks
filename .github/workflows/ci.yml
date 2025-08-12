@@ -29,12 +29,6 @@ jobs:
       - name: Route conflict dry-run
         run: CONFLICT_GUARD_DRY_RUN=1 npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/checkRouteConflicts.ts
 
-      - name: Typecheck
-        run: npm run typecheck --if-present
-
-      - name: Lint
-        run: npm run lint --if-present
-
       - name: Load test env
         run: echo "$(cat .env.test 2>/dev/null || cat .env.test.example)" >> $GITHUB_ENV
 
@@ -45,3 +39,21 @@ jobs:
         env:
           SKIP_BUILD_ENV_CHECK: '1'
         run: npm run build
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Typecheck
+        run: npm run typecheck
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint

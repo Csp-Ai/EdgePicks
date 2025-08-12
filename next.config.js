@@ -63,6 +63,15 @@ const nextConfig = {
       };
     }
 
+    // Silence Supabase Realtime dynamic import warning on server bundles.
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      {
+        module: /@supabase\/realtime-js\/dist\/module\/lib\/websocket-factory\.js/,
+        message: /Critical dependency: the request of a dependency is an expression/,
+      },
+    ];
+
     return config;
   },
   async headers() {

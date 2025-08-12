@@ -24,7 +24,7 @@
     "test:metadata": "ts-node --project tsconfig.node.json scripts/audit-agent-metadata.ts",
     "postpush": "ts-node --project tsconfig.node.json scripts/log-llms-entry.ts",
     "prepare": "husky",
-    "lint": "eslint .",
+    "lint": "next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "doctor": "npm run lint && npm run typecheck",

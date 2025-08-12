@@ -47,6 +47,19 @@ npm run dev
 - For canonical URLs and accurate redirects, explicitly set `NEXT_PUBLIC_SITE_URL` to your domain.
 - `/api/dev-login` is development-only; in production it returns 404 and skips dev logic.
 
+## Environment Variables
+
+### Production Requirements
+- `NEXT_PUBLIC_SITE_URL`: The public site URL.
+- `VERCEL_URL`: Fallback URL if `NEXT_PUBLIC_SITE_URL` is not set.
+
+### Notes
+- `.env.local` is not generated on Vercel.
+
+## Supabase Client/Server Split
+- **Server/Edge Usage**: Use `createServiceClient()` for server-safe operations.
+- **Client Usage**: Use `getBrowserClient()` for Realtime operations in the browser.
+
 ## Vercel
 Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.
 
