@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import type React from "react";
+import type { Edge as FlowEdge, Node as FlowNode } from "reactflow";
 
 interface AgentStatus {
   name: string;
@@ -17,6 +19,9 @@ const fallbackAgents = [
 export default function AgentFlowVisualizer() {
   const [agents, setAgents] = useState<AgentStatus[]>([]);
   const [top, setTop] = useState<AgentStatus | null>(null);
+  const [nodes, setNodes] = useState<FlowNode[]>([]);
+  const [edges, setEdges] = useState<FlowEdge[]>([]);
+  const applyEdges = (u: React.SetStateAction<FlowEdge[]>) => setEdges(u);
 
   useEffect(() => {
     let es: EventSource | null = null;

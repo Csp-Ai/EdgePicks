@@ -28,12 +28,14 @@ async function run() {
           agents={{ injuryScout: { score: 0.5, reason: 'stub', metadata: {} } } as any}
           pick={null}
           statuses={{ injuryScout: { status: 'completed', durationMs: 0 } } as any}
+          nodes={[]}
+          edges={[]}
         />
       ),
     },
     {
       name: 'AgentNodeGraph',
-      element: <AgentNodeGraph statuses={{ injuryScout: { status: 'started' } } as any} />,
+      element: <AgentNodeGraph nodes={[]} edges={[]} />,
     },
   ];
 

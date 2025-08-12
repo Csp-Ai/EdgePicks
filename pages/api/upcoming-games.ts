@@ -3,7 +3,7 @@ import { fetchSchedule, type League } from '@/lib/data/schedule';
 import { fetchOdds, type OddsGame } from '@/lib/data/odds';
 import { runFlow, AgentExecution } from '@/lib/flow/runFlow';
 import { registry } from '@/lib/agents/registry';
-import type { AgentOutputs, PickSummary } from '@/lib/types';
+import type { AgentOutputs, PickSummary, Matchup } from '@/lib/types';
 import type { PublicPrediction } from '@/lib/types/public';
 import { PublicPredictionListSchema } from '@/lib/schemas/public';
 import { logMatchup } from '@/lib/logToSupabase';
@@ -70,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     games = games.map((g) => {
       const key = [g.homeTeam, g.awayTeam].sort().join(':');
       const gameOdds = oddsMap.get(key);
-      let odds: Result['odds'] = null;
+      let odds: Matchup['odds'];
       if (gameOdds) {
         const bookmaker = gameOdds.bookmakers?.[0];
         const spreads = bookmaker?.markets?.find((m) => m.key === 'spreads')?.outcomes;
@@ -178,7 +178,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 confidence,
                 time: game.time,
                 league: game.league,
-                odds: game.odds,
+                odds: game.odds ?? null,
                 source: game.source,
                 useFallback: game.useFallback,
                 winner,

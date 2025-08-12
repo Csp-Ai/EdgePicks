@@ -3746,3 +3746,22 @@ Files:
 - lib/agents/supabaseRegistry.ts (+1/-0)
 - scripts/checkMergeMarkers.ts (+3/-1)
 
+Timestamp: 2025-08-12T02:59:21.894Z
+Commit: 222519a102988bb65a11a5da04def6ee2c04b32e
+Author: Codex
+Message: Harden AgentFlowVisualizer edge typing
+Files:
+- components/visuals/AgentFlowVisualizer.tsx (+5/-0)
+- lib/dashboard/useFlowVisualizer.ts (+3/-2)
+- lib/i18n/config.tsx (+1/-1)
+- lib/infra/cache/redis.ts (+1/-1)
+- lib/infra/queue/redis.ts (+1/-1)
+- lib/logs/search.ts (+1/-1)
+- lib/server/cache.ts (+14/-0)
+- lib/sportsApi.ts (+2/-2)
+- lib/supabaseClient.ts (+1/-1)
+- pages/api/run-agents.ts (+2/-1)
+- pages/api/upcoming-games.ts (+3/-3)
+- scripts/uiSnapshot.tsx (+3/-1)
+- types/reactflow.d.ts (+13/-0)
+

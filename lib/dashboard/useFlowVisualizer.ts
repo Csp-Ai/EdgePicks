@@ -61,11 +61,12 @@ export default function useFlowVisualizer() {
             flowStartRef.current = event.startedAt;
           }
           if (lastNodeRef.current) {
+            const from = lastNodeRef.current;
             setEdges((es) => [
               ...es,
               {
-                id: `${lastNodeRef.current}-${event.name}`,
-                source: lastNodeRef.current,
+                id: `${from}-${event.name}`,
+                source: from,
                 target: event.name,
               },
             ]);

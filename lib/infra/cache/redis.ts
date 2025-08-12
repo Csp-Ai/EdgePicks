@@ -5,7 +5,7 @@ import { ENV } from '../../env';
 export class RedisCacheDriver implements CacheDriver {
   private client: Redis;
   constructor() {
-    this.client = new Redis(ENV.REDIS_URL);
+    this.client = new Redis(ENV.REDIS_URL ?? '');
   }
 
   async get<T>(key: string): Promise<T | null> {
