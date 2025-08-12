@@ -3710,3 +3710,13 @@ Files:
 - lib/api.ts (+7/-0)
 - lib/normalize.ts (+94/-0)
 
+Timestamp: 2025-08-12T02:03:34.296Z
+Commit: facde0c91e071382d91c9e96a47186b3780d5600
+Author: Codex
+Message: fix(ui): add 'ghost' variant to Button; add smoke test to satisfy test runner
+Files:
+- __tests__/smoke.exists.test.tsx (+12/-0)
+- components/ui/button.tsx (+47/-22)
+- jest.config.ts (+2/-1)
+- jest.setup.ts (+1/-0)
+

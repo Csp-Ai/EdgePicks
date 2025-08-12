@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { jest } from '@jest/globals';
 import { freezeTime, resetTime } from './lib/test/freezeTime';
 import { server } from './test/msw/server';
 
