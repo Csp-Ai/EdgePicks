@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { Metadata } from "next";
 import useSWR from "swr";
 import { jsonFetcher } from "@/lib/fetcher";
@@ -6,13 +6,13 @@ export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-const AgentFlowVisualizer = dynamic(
+const AgentFlowVisualizer = nextDynamic(
   () => import("@/components/visuals/AgentFlowVisualizer"),
   { ssr: false }
 );
 
 export const metadata: Metadata = {
-  title: "0Ã¢ÂÂ1 Live Demo",
+  title: "0→1 Live Demo",
 };
 
 export default function Page() {
@@ -22,13 +22,13 @@ export default function Page() {
   return (
     <div className="container py-8 space-y-8">
       <section id="hero" className="space-y-2">
-        <h1 className="text-2xl font-semibold">ZeroÃ¢ÂÂtoÃ¢ÂÂOne Live Demo</h1>
+        <h1 className="text-2xl font-semibold">Zero‑to‑One Live Demo</h1>
         <p className="text-muted-foreground">This view streams agent activity when available, or simulates it automatically.</p>
         <a href="#live" className="inline-flex items-center rounded-md border px-3 py-1.5 text-sm hover:bg-accent">Jump to Live ↴</a>
       </section>
 
       <section>
-        <h2 className="text-lg font-medium mb-2">TodayÃ¢ÂÂs Matchups</h2>
+        <h2 className="text-lg font-medium mb-2">Today’s Matchups</h2>
         {loadingGames ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -60,7 +60,7 @@ export default function Page() {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm">Top pick</div>
-                  <div className="text-base font-semibold">{preds.topPick.matchup ?? "Ã¢ÂÂ"}</div>
+                  <div className="text-base font-semibold">{preds.topPick.matchup ?? "—"}</div>
                 </div>
                 <div className="text-sm">Confidence: <span className="font-semibold">{Math.round((preds.topPick.confidence ?? 0.6) * 100)}%</span></div>
               </div>
@@ -78,4 +78,3 @@ export default function Page() {
     </div>
   );
 }
-
