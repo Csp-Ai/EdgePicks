@@ -6,6 +6,11 @@ import { ENV } from './lib/env';
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Handle favicon request
+  if (pathname === '/favicon.ico') {
+    return NextResponse.next();
+  }
+
   if (pathname.startsWith('/api')) {
     if (pathname === '/api/dev-login' && process.env.NODE_ENV !== 'development') {
       return NextResponse.json({ error: 'not_found' }, { status: 404 });
