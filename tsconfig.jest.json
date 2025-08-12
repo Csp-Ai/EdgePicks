@@ -4,5 +4,5 @@
     "jsx": "react-jsx",
     "types": ["jest", "node"]
   },
-  "include": ["jest.setup.ts", "__tests__/**/*.ts", "__tests__/**/*.tsx"]
+  "include": ["types/**/*.d.ts", "jest.setup.ts", "__tests__/**/*.ts", "__tests__/**/*.tsx"]
 }

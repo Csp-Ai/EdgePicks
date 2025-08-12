@@ -1,129 +1,139 @@
 "use client";
-import type { Dispatch, SetStateAction } from "react";
-import { useCallback, useEffect, useState } from "react";
 
-type FlowEdge = { id: string; source: string; target: string };
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { Edge as FlowEdge, Node as FlowNode } from "reactflow";
+import { NEXT_PUBLIC_AGENT_FLOW_MODE } from "@/lib/env";
 
-interface AgentStatus {
-  name: string;
-  confidence: number;
-}
+export type AgentEvent =
+  | { type: "start"; agentId: string; ts: number }
+  | { type: "result"; agentId: string; ts: number; confidence?: number }
+  | { type: "end"; agentId: string; ts: number };
 
-const fallbackAgents = [
-  "injuryScout",
-  "lineWatcher",
-  "statCruncher",
-  "trendsAgent",
-  "guardianAgent",
-];
+export type SSE_STATUS = "connecting" | "open" | "closed" | "error" | "simulated";
 
-export enum SSE_STATUS {
-  LIVE = "Live",
-  SIMULATED = "Simulated",
-}
+type Props = {
+  nodes?: FlowNode[];
+  edges?: FlowEdge[];
+  /**
+   * Typed edge dispatcher – accepts either a full array or a functional updater.
+   */
+  setEdges?: (next: FlowEdge[] | ((prev: FlowEdge[]) => FlowEdge[])) => void;
+  streamUrl?: string;
+};
 
 export default function AgentFlowVisualizer({
+  nodes: initialNodes = [],
+  edges: initialEdges = [],
   setEdges,
-}: {
-  setEdges: Dispatch<SetStateAction<FlowEdge[]>>;
-}) {
-  const [agents, setAgents] = useState<AgentStatus[]>([]);
-  const [top, setTop] = useState<AgentStatus | null>(null);
-  const [status, setStatus] = useState<SSE_STATUS>(SSE_STATUS.LIVE);
+  streamUrl = "/api/run-agents",
+}: Props) {
+  const [nodes, setNodes] = useState<FlowNode[]>(initialNodes);
+  const [edges, setLocalEdges] = useState<FlowEdge[]>(initialEdges);
+  const [status, setStatus] = useState<SSE_STATUS>("connecting");
+  const esRef = useRef<EventSource | null>(null);
 
-  const applyEdges = (update: SetStateAction<FlowEdge[]>) => {
-    setEdges(prev => (typeof update === "function" ? update(prev) : update));
-  };
+  const applyEdges = useCallback((update: FlowEdge[] | ((prev: FlowEdge[]) => FlowEdge[])) => {
+    if (setEdges) {
+      setEdges(update);
+    } else {
+      setLocalEdges((prev) => (typeof update === "function" ? (update as any)(prev) : update));
+    }
+  }, [setEdges]);
+
   const appendEdge = useCallback(
     (edge: FlowEdge) => {
-      applyEdges(prev => [...prev, edge]);
+      applyEdges((prev) => [...prev, edge]);
     },
-    [applyEdges],
+    [applyEdges]
   );
+
+  const startSimulation = useCallback(() => {
+    setStatus("simulated");
+    // Simple pulse through a few default agents
+    const agentIds = ["injuryScout", "weatherWatch", "lineMove", "publicFade", "modelBlend"];
+    let idx = 0;
+    const interval = setInterval(() => {
+      const id = agentIds[idx % agentIds.length];
+      const ts = Date.now();
+      appendEdge({
+        id: `sim-${id}-${ts}`,
+        source: id,
+        target: "consensus",
+        data: { confidence: Math.round((0.55 + Math.random() * 0.4) * 100) / 100 },
+      } as FlowEdge);
+      idx += 1;
+    }, 600);
+    return () => clearInterval(interval);
+  }, [appendEdge]);
 
   useEffect(() => {
-    let es: EventSource | null = null;
-    let timer: ReturnType<typeof setInterval> | null = null;
-    let edgeCount = 0;
-
-    const updateTop = (list: AgentStatus[]) => {
-      if (!list.length) {
-        setTop(null);
-        return;
-      }
-      const max = list.reduce((m, a) => (a.confidence > m.confidence ? a : m), list[0]);
-      setTop(max);
-    };
-
-    const startSimulation = () => {
-      setStatus(SSE_STATUS.SIMULATED);
-      let i = 0;
-      timer = setInterval(() => {
-        const name = fallbackAgents[i % fallbackAgents.length];
-        const confidence = Math.floor(Math.random() * 101);
-        setAgents(prev => {
-          const next = [...prev.filter(a => a.name !== name), { name, confidence }];
-          updateTop(next);
-          return next;
-        });
-        appendEdge({ id: `sim-${edgeCount++}`, source: name, target: 'top' });
-        i++;
-      }, 1000);
-    };
-
-    if (typeof EventSource !== "undefined") {
-      try {
-        es = new EventSource("/api/run-agents");
-        es.onmessage = ev => {
-          try {
-            const data = JSON.parse(ev.data);
-            if (data.agent && typeof data.confidence === "number") {
-              setAgents(prev => {
-                const next = [...prev.filter(a => a.name !== data.agent), { name: data.agent, confidence: data.confidence }];
-                updateTop(next);
-                return next;
-              });
-              appendEdge({ id: `evt-${edgeCount++}`, source: data.agent, target: 'top' });
-            }
-          } catch {
-            // ignore parse errors
-          }
-        };
-        es.onerror = () => {
-          es?.close();
-          startSimulation();
-        };
-      } catch {
-        startSimulation();
-      }
-    } else {
-      startSimulation();
+    // If browser doesn't support SSE or env says simulate, run simulation.
+    if (typeof window === "undefined" || !("EventSource" in window) || NEXT_PUBLIC_AGENT_FLOW_MODE === "sim") {
+      return startSimulation();
     }
+    try {
+      setStatus("connecting");
+      const es = new EventSource(streamUrl);
+      esRef.current = es;
+      es.onopen = () => setStatus("open");
+      es.onerror = () => {
+        setStatus("error");
+        es.close();
+        // fallback to simulation
+        startSimulation();
+      };
+      es.onmessage = (e) => {
+        try {
+          const ev: AgentEvent = JSON.parse(e.data);
+          if (ev.type === "result") {
+            appendEdge({
+              id: `sse-${ev.agentId}-${ev.ts}`,
+              source: ev.agentId,
+              target: "consensus",
+              data: { confidence: ev.confidence ?? 0.6 },
+            } as FlowEdge);
+          }
+        } catch {
+          // ignore bad payloads
+        }
+      };
+      return () => {
+        setStatus("closed");
+        es.close();
+      };
+    } catch {
+      setStatus("error");
+      return startSimulation();
+    }
+  }, [appendEdge, startSimulation, streamUrl]);
 
-    return () => {
-      es?.close();
-      if (timer) clearInterval(timer);
-    };
-  }, [setEdges, appendEdge]);
+  const banner = useMemo(() => {
+    if (status === "error" || status === "simulated") {
+      return (
+        <div className="mb-2 rounded-md border border-amber-400 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+          Live stream unavailable, running simulation.
+        </div>
+      );
+    }
+    return null;
+  }, [status]);
 
   return (
-    <section aria-labelledby="agent-flow" className="rounded-xl border p-4">
-      <h2 id="agent-flow" className="text-lg font-semibold">
-        Agent Flow <span className="text-xs text-muted-foreground">({status})</span>
-      </h2>
-      <ul className="mt-2 space-y-1">
-        {agents.map(a => (
-          <li key={a.name} className="flex justify-between text-sm">
-            <span>{a.name}</span>
-            <span className="font-mono">{a.confidence}%</span>
-          </li>
-        ))}
-      </ul>
-      {top && (
-        <div className="mt-4 text-sm">
-          Top agent: <span className="font-medium">{top.name}</span> ({top.confidence}% confidence)
-        </div>
-      )}
-    </section>
+    <div>
+      {banner}
+      <div className="text-xs text-muted-foreground mb-2">Agent Flow (status: {status})</div>
+      <div className="rounded-md border p-3">
+        {/* Replace with your ReactFlow canvas when ready; keeping minimal div to avoid extra deps */}
+        <ul className="text-sm space-y-1 max-h-48 overflow-auto" data-testid="flow-edges">
+          { (setEdges ? initialEdges : edges).length === 0 && edges.length === 0 ? (
+            <li className="animate-pulse text-muted-foreground">Initializing…</li>
+          ) : null }
+          { (setEdges ? [] as FlowEdge[] : edges).map((e) => (
+            <li key={e.id}>{e.id}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
+

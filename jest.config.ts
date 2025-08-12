@@ -14,6 +14,7 @@ const config: import('jest').Config = {
   testMatch: [
     '<rootDir>/__tests__/smoke.exists.test.tsx',
     '<rootDir>/__tests__/AgentFlowVisualizer.test.tsx',
+    '<rootDir>/__tests__/AgentFlowVisualizer.fallback.test.tsx',
   ],
   // TEMP quarantine while we fix contracts/e2e/a11y:
   testPathIgnorePatterns: ['<rootDir>/tests/', '<rootDir>/scripts/update-llms-log.test.js', '<rootDir>/lib/logUiEvent.test.js'],
