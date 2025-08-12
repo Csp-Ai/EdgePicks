@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import DemoPage from '../pages/demo';
+import DemoPage from '../app/demo/page';
 import { DemoModeProvider } from '../lib/demoMode';
 
 jest.mock('../lib/logUiEvent', () => ({ logUiEvent: jest.fn() }));

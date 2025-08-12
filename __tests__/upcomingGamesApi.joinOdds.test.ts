@@ -17,7 +17,7 @@ jest.mock('../lib/utils/fallbackMatchups', () => ({ getFallbackMatchups: jest.fn
 jest.mock('../lib/utils/formatKickoff', () => ({ formatKickoff: () => '' }));
 jest.mock('../lib/agents/registry', () => ({ registry: [] }));
 
-const handler = require('../pages/api/upcoming-games').default;
+const handler = require('../app/api/upcoming-games/route').default;
 const { fetchSchedule } = require('../lib/data/schedule');
 const { fetchOdds } = require('../lib/data/odds');
 const schedule = require('./fixtures/schedule.json');

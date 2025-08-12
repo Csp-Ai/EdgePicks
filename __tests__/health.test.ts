@@ -1,5 +1,5 @@
 /** @jest-environment node */
-import handler from '../pages/api/health';
+import handler from '../app/api/health/route';
 
 const mockRes = () => {
   const res: any = {};

@@ -16,3 +16,13 @@ export async function GET() {
   const site = getPublicSiteUrl();
   return NextResponse.json({ ok: true, site });
 }
+
+export default async function handler(req: Request) {
+  if (!isDev) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
+  const { getPublicSiteUrl } = await import('@/lib/env');
+  const site = getPublicSiteUrl();
+  return NextResponse.json({ ok: true, site });
+}

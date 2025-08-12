@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { createServiceClient } from '@/lib/supabaseClient';
+import { ENV } from '@/lib/env';
 
 // Enable streaming responses
 export const dynamic = 'force-dynamic';
@@ -30,14 +32,7 @@ export async function GET(request: Request) {
     return new NextResponse('Run ID is required', { status: 400 });
   }
 
-  const [{ createClient }, { ENV }] = await Promise.all([
-    import('@/lib/supabaseClient'),
-    import('@/lib/env'),
-  ]);
-  const supabase = createClient(
-    ENV.SUPABASE_URL!,
-    ENV.SUPABASE_SERVICE_ROLE_KEY || ENV.SUPABASE_KEY || ''
-  );
+  const supabase = createServiceClient();
 
   // Create a stream for SSE
   const stream = new TransformStream();
@@ -96,14 +91,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const [{ createClient }, { ENV }] = await Promise.all([
-      import('@/lib/supabaseClient'),
-      import('@/lib/env'),
-    ]);
-    const supabase = createClient(
-      ENV.SUPABASE_URL!,
-      ENV.SUPABASE_SERVICE_ROLE_KEY || ENV.SUPABASE_KEY || ''
-    );
+    const supabase = createServiceClient();
 
     // Log to Supabase
     const { error } = await supabase
@@ -116,20 +104,13 @@ export async function POST(request: Request) {
         },
       ]);
 
-    if (error) throw error;
-
-    // Edge runtime doesn't support filesystem operations
-    // Log to console in development
-    if (ENV.NODE_ENV === 'development') {
-      console.log(`[${type}]`, JSON.stringify(data, null, 2));
+    if (error) {
+      throw error;
     }
 
-    return NextResponse.json({ success: true });
+    return new NextResponse('Logged successfully', { status: 200 });
   } catch (error) {
-    console.error('Failed to log data:', error);
-    return NextResponse.json(
-      { error: 'Failed to log data' },
-      { status: 500 }
-    );
+    console.error('Error logging data:', error);
+    return new NextResponse('Error logging data', { status: 500 });
   }
 }
