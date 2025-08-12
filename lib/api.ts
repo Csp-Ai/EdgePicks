@@ -23,3 +23,10 @@ export const getUpcomingGames = () => apiGet<UpcomingGame[]>('/api/upcoming-game
 export const getAgentEvents = () => apiGet<AgentEvent[]>('/api/agent-events');
 export const getPrediction = (gameId: string) =>
   apiGet<Prediction>(`/api/run-predictions?gameId=${encodeURIComponent(gameId)}`);
+
+// Normalized convenience (kept separate to avoid circular deps in hooks)
+export async function getNormalizedUpcomingGames(): Promise<import("./types").UpcomingGame[]> {
+  const raw = await apiGet<any>("/api/upcoming-games");
+  const { normalizeUpcomingGames } = await import("./normalize");
+  return normalizeUpcomingGames(raw);
+}

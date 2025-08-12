@@ -3700,3 +3700,13 @@ Files:
 - components/visuals/AgentNetwork.tsx (+81/-0)
 - lib/api.ts (+13/-1)
 
+Timestamp: 2025-08-12T01:51:50.722Z
+Commit: b733df72e1f14532d23d9751e1285d775d14f947
+Author: Codex
+Message: feat(home): normalize /api/upcoming-games to canonical type; fix QuickMatchups date/team rendering
+Files:
+- components/predictions/QuickMatchups.tsx (+10/-7)
+- hooks/useUpcomingGames.ts (+15/-0)
+- lib/api.ts (+7/-0)
+- lib/normalize.ts (+94/-0)
+
