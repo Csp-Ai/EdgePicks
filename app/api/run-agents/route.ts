@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { ENV } from '@/lib/env';
-import { supabase } from '@/lib/supabaseClient';
+import { createServiceClient } from '@/lib/supabaseClient';
+import { getFromCache, setToCache } from '@/lib/cache/runCache';
 
 // Simple in-memory cache
 const cache = new Map<string, any>();
@@ -14,11 +15,20 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { agentId, input } = body;
+  const { agentId, input, matchupId, flowKey } = body;
 
   if (!agentId || !input) {
     return new NextResponse('Agent ID and input are required', { status: 400 });
   }
+
+  const cacheKey = `${matchupId}-${flowKey}`;
+  const cachedResult = getFromCache(cacheKey);
+
+  if (cachedResult) {
+    return NextResponse.json(cachedResult);
+  }
+
+  const supabase = createServiceClient();
 
   try {
     // Insert agent run record
@@ -36,11 +46,15 @@ export async function POST(request: Request) {
 
     if (error) throw error;
 
-    // Return run ID for status polling
-    return NextResponse.json({
+    const result = {
       runId: data.id,
-      status: 'pending'
-    });
+      status: 'pending',
+    };
+
+    setToCache(cacheKey, result, 60000); // Cache for 60 seconds
+
+    // Return run ID for status polling
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Failed to start agent run:', error);
     return new NextResponse('Failed to start agent run', { status: 500 });
@@ -79,6 +93,8 @@ export async function GET(request: Request) {
   if (!runId) {
     return new NextResponse('Run ID is required for status check', { status: 400 });
   }
+
+  const supabase = createServiceClient();
 
   try {
     // Get run status

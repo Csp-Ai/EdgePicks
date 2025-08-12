@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { ENV } from '@/lib/env';
-import { supabase } from '@/lib/supabaseClient';
+import { createServiceClient } from '@/lib/supabaseClient';
+
+const supabase = createServiceClient();
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
@@ -65,14 +67,17 @@ async function getMockGames(): Promise<GamePrediction[]> {
   ];
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const url = new URL(request.url);
+    const demoMode = url.searchParams.get('demo');
+
     let games: GamePrediction[];
-    
-    if (ENV.LIVE_MODE === 'on') {
-      games = await getLiveGames();
-    } else {
+
+    if (demoMode === 'on' || (demoMode === null && ENV.LIVE_MODE !== 'on')) {
       games = await getMockGames();
+    } else {
+      games = await getLiveGames();
     }
 
     // Only return games that are upcoming (within next 7 days)

@@ -1,37 +1,58 @@
 import React from 'react';
-import { useUpcomingGames } from '@/hooks/useUpcomingGames';
+import useSWR from 'swr';
+import { apiGet } from '@/lib/api';
 
-export default function UpcomingGamesHero() {
-  const { data: games, isLoading, error } = useUpcomingGames();
+interface Game {
+  gameId: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeLogo: string;
+  awayLogo: string;
+  kickoff: string;
+  moneyline: { home: number; away: number } | null;
+}
 
-  if (isLoading) {
-    return <div>Loading games...</div>;
-  }
+const UpcomingGamesHero: React.FC = () => {
+  const { data, error } = useSWR<Game[]>('/api/upcoming-games', apiGet);
 
   if (error) {
-    return <div>Error loading games: {error.message}</div>;
+    return <div className="p-4 text-red-500">Failed to load upcoming games.</div>;
+  }
+
+  if (!data) {
+    return <div className="p-4 text-gray-500">Loading upcoming games...</div>;
   }
 
   return (
-    <section className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Upcoming Games</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {games?.map((game) => (
-          <div key={game.id} className="p-4 bg-white dark:bg-gray-700 rounded-lg shadow">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <span>{game.homeTeam}</span>
-              </div>
-              <span className="text-gray-500">vs</span>
-              <div className="flex items-center gap-2">
-                <span>{game.awayTeam}</span>
-              </div>
-            </div>
-            <div className="text-sm text-gray-500">Kickoff: {game.kickoff}</div>
-            <div className="text-sm text-gray-500">Odds: {game.odds?.homeSpread} / {game.odds?.awaySpread}</div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+      {data.slice(0, 8).map((game) => (
+        <div
+          key={game.gameId}
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center space-y-2 hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => console.log(`Open Prediction Drawer for ${game.gameId}`)}
+        >
+          <div className="flex items-center space-x-4">
+            <img src={game.homeLogo} alt={game.homeTeam} className="h-12 w-12" />
+            <span className="text-gray-500 dark:text-gray-400">vs</span>
+            <img src={game.awayLogo} alt={game.awayTeam} className="h-12 w-12" />
           </div>
-        ))}
-      </div>
-    </section>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Kickoff: {new Date(game.kickoff).toLocaleString()}
+          </p>
+          {game.moneyline ? (
+            <p className="text-sm text-green-600 dark:text-green-400">
+              Moneyline: Home {game.moneyline.home}, Away {game.moneyline.away}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-500">No odds available</p>
+          )}
+          <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            Predict
+          </button>
+        </div>
+      ))}
+    </div>
   );
-}
+};
+
+export default UpcomingGamesHero;
