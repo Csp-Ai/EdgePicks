@@ -11,7 +11,8 @@ const config: import('jest').Config = {
     '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json', useESM: true }],
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  testMatch: ['<rootDir>/__tests__/smoke.exists.test.tsx'],
   // TEMP quarantine while we fix contracts/e2e/a11y:
-  testPathIgnorePatterns: ['<rootDir>/tests/', '<rootDir>/__tests__', '<rootDir>/scripts/update-llms-log.test.js', '<rootDir>/lib/logUiEvent.test.js'],
+  testPathIgnorePatterns: ['<rootDir>/tests/', '<rootDir>/scripts/update-llms-log.test.js', '<rootDir>/lib/logUiEvent.test.js'],
 };
 export default config;
