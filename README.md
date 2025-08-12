@@ -43,6 +43,9 @@ npm run dev
 - `.env.example` – base defaults used by various scripts
 - `.env.local.example` – template for local development
 - `.env.test.example` – template for tests
+- In production, set either `NEXT_PUBLIC_SITE_URL` or rely on Vercel's `VERCEL_URL`.
+- For canonical URLs and accurate redirects, explicitly set `NEXT_PUBLIC_SITE_URL` to your domain.
+- `/api/dev-login` is development-only; in production it returns 404 and skips dev logic.
 
 ## Vercel
 Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.

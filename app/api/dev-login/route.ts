@@ -1,26 +1,18 @@
 import { NextResponse } from 'next/server';
-import { ENV } from '@/lib/env';
 
-export async function POST(request: Request) {
-  if (ENV.NODE_ENV !== 'development') {
-    return new NextResponse('Not Found', { status: 404 });
+const isDev = process.env.NODE_ENV !== 'production';
+
+// In production, export a no-op 404 to avoid evaluating dev logic/env.
+export const dynamic = 'force-static';
+export const fetchCache = 'force-no-store';
+
+export async function GET() {
+  if (!isDev) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  // Get JSON from request body
-  const body = await request.json();
-  const { email } = body;
-
-  if (!email) {
-    return new NextResponse('Email is required', { status: 400 });
-  }
-
-  // Return mock session for development
-  return NextResponse.json({
-    user: {
-      email,
-      name: 'Dev User',
-      image: null
-    },
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-  });
+  // Dev-only logic lives inside this block so it never runs/imports in prod.
+  const { getPublicSiteUrl } = await import('@/lib/env');
+  const site = getPublicSiteUrl();
+  return NextResponse.json({ ok: true, site });
 }

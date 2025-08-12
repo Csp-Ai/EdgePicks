@@ -3812,3 +3812,19 @@ Message: fix: ensure demo uses nextDynamic and clean typography
 Files:
 - app/demo-0to1/page.tsx (+6/-7)
 
+Timestamp: 2025-08-12T07:01:18.935Z
+Commit: 76163e22f6b02d82c471b655705be38dba7ee70b
+Author: Codex
+Message: chore(build): gate dev routes and harden public site URL
+Files:
+- .env.local.example (+6/-0)
+- .env.production.example (+2/-0)
+- README.md (+3/-0)
+- __tests__/devLogin.prod.test.ts (+29/-0)
+- app/api/dev-login/route.ts (+11/-19)
+- app/favicon.ico/route.ts (+0/-34)
+- app/favicon.ico/route.tsx (+35/-0)
+- jest.config.ts (+1/-0)
+- lib/env.ts (+45/-1)
+- scripts/validateEnv.ts (+28/-34)
+
