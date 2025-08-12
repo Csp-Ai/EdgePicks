@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
 import PredictionsPanel from '../components/PredictionsPanel';
-import type { AgentOutputs } from '../lib/types';
 
 const meta: Meta<typeof PredictionsPanel> = {
   title: 'PredictionsPanel',
@@ -12,7 +11,7 @@ export default meta;
 type Story = StoryObj<typeof PredictionsPanel>;
 
 const baseProps = {
-  agents: {} as AgentOutputs,
+  agents: {} as any,
   statuses: {},
   nodes: [],
   edges: [],

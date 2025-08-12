@@ -1,6 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
+if (
+  process.env.VERCEL ||
+  process.env.CI ||
+  process.env.NODE_ENV === 'production'
+) {
+  console.log('Skipping .env.local bootstrap in CI/production.');
+  process.exit(0);
+}
+
 const envLocal = path.resolve(process.cwd(), '.env.local');
 const envExample = path.resolve(process.cwd(), '.env.local.example');
 

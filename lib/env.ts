@@ -2,16 +2,22 @@ import { z } from 'zod';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+const emptyToUndefined = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess(
+    (v) => (typeof v === 'string' && v.trim() === '' ? undefined : v),
+    schema.optional()
+  );
+
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
+  NEXT_PUBLIC_SITE_URL: emptyToUndefined(z.string().url()),
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
   SUPABASE_KEY: z.string().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
-  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_URL: emptyToUndefined(z.string().url()),
   NEXTAUTH_SECRET: z.string().optional(),
-  NEXTAUTH_URL: z.string().url().optional(),
+  NEXTAUTH_URL: emptyToUndefined(z.string().url()),
   SPORTS_API_KEY: z.string().optional(),
   SPORTS_WEBHOOK_SECRET: z.string().optional(),
   LIVE_MODE: z.enum(['on', 'off']).default('off'),
@@ -20,7 +26,7 @@ const envSchema = z.object({
   MAX_FLOW_CONCURRENCY: z.coerce.number().int().positive().default(3),
   CACHE_DRIVER: z.enum(['memory', 'redis']).default('memory'),
   QUEUE_DRIVER: z.enum(['memory', 'redis']).default('memory'),
-  REDIS_URL: z.string().url().optional(),
+  REDIS_URL: emptyToUndefined(z.string().url()),
   FLOW_CACHE_VERSION: z.string().default('v1'),
   SPORTS_DB_NFL_ID: z.string().optional(),
   SPORTS_DB_MLB_ID: z.string().optional(),
