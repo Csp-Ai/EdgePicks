@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import promptRegistry from '../data/prompt-registry.json';
 

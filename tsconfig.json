@@ -12,7 +12,9 @@
         "*"
       ]
     },
+    // Enable default imports from CommonJS modules
     "esModuleInterop": true,
+    // Allow default import interop for modules without ES exports
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
