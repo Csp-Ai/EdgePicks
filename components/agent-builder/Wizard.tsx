@@ -25,7 +25,7 @@ export const generateSpec = (description: string): AgentSpec => {
     return acc;
   }, {});
 
-  return { name, inputs, weights };
+  return { name, inputs: inputs as [string, ...string[]], weights };
 };
 
 const Wizard: React.FC = () => {

@@ -1,10 +1,12 @@
+"use client";
+
 import React from 'react';
-import { experiments, FlagKey } from '@/lib/flags/experiments';
+import { flags, FlagKey } from '@/lib/flags/experiments';
 import { useFlag } from '@/lib/flags/useFlag';
 
 export default function ExperimentsPanel() {
   if (process.env.NODE_ENV === 'production') return null;
-  const keys = Object.keys(experiments) as FlagKey[];
+  const keys = Object.keys(flags) as FlagKey[];
   return (
     <div>
       {keys.map((key) => {

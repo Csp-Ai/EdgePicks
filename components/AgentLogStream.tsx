@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useMemo, useState } from 'react';
 import useEventSource from '@/lib/hooks/useEventSource';
 import { FixedSizeList as List } from 'react-window';

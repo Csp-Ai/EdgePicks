@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import useSWR from 'swr';
 
@@ -21,7 +23,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const AgentReplay: React.FC<{ runId: string }> = ({ runId }) => {
   const { data, error } = useSWR<ApiResponse>(
     `/api/agent-events?runId=${runId}`,
-    fetcher,
+    fetcher
   );
 
   if (error) {

@@ -3609,3 +3609,54 @@ Files:
 - scripts/snapshotWeights.ts (+2/-2)
 - scripts/uiSnapshot.tsx (+3/-3)
 
+Timestamp: 2025-08-12T00:38:44.580Z
+Commit: bde94eb8c3dfeb8433cfe5c103c452f5481aef2f
+Author: Codex
+Message: fix(app): add "use client" to hook-based components
+Files:
+- components/AccuracyTrend.tsx (+2/-0)
+- components/AgentLogStream.tsx (+2/-0)
+- components/AuditLogList.tsx (+2/-0)
+- components/MatchupInsights.tsx (+2/-0)
+- components/PromptDashboard.tsx (+2/-0)
+- components/dev/DemoToggle.tsx (+2/-0)
+- lib/demoMode.tsx (+2/-0)
+
+Timestamp: 2025-08-12T00:40:18.061Z
+Commit: 25219981674605b1717470b7220ba737c2b70701
+Author: Codex
+Message: chore(ci): add SWR import guard and wire into prebuild
+Files:
+- package.json (+2/-1)
+- scripts/guards/swrImportGuard.ts (+28/-0)
+
+Timestamp: 2025-08-12T00:40:41.231Z
+Commit: e278553eadece7abd30493928eb98d250293b703
+Author: Codex
+Message: feat(demos): make /app/demo/mlb a valid page; unify DemoPageClient
+Files:
+- app/demo/DemoPageClient.tsx (+72/-0)
+- app/demo/mlb/page.tsx (+12/-0)
+- pages/demo/mlb.tsx (+0/-1)
+
+Timestamp: 2025-08-12T00:40:51.144Z
+Commit: 7f36eb444733360c9d51e01c6c3fe1731aa6f348
+Author: Codex
+Message: fix(replay): normalize SWR import in AgentReplay
+Files:
+- components/replay/AgentReplay.tsx (+3/-1)
+
+Timestamp: 2025-08-12T00:43:03.051Z
+Commit: e816e4442dcbec79f92a800b20db1e7e5d97f143
+Author: Codex
+Message: chore(agent-builder): satisfy AgentSpec typing
+Files:
+- components/agent-builder/Wizard.tsx (+1/-1)
+
+Timestamp: 2025-08-12T00:44:14.092Z
+Commit: f75e3934bab7d69a741307b7269da3c75e5b1613
+Author: Codex
+Message: fix(dev): mark ExperimentsPanel as client and correct import
+Files:
+- components/dev/ExperimentsPanel.tsx (+4/-2)
+
