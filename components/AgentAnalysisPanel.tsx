@@ -4,6 +4,7 @@ import React from 'react';
 import { useAgentRun } from '@/hooks/useAgentRun';
 import { useAgentEvents } from '@/hooks/useAgentEvents';
 import LoadingShimmer from './LoadingShimmer';
+import AgentFlowAnimation from '@/components/AgentFlowAnimation';
 
 interface AgentAnalysisPanelProps {
   compact?: boolean;
@@ -12,10 +13,15 @@ interface AgentAnalysisPanelProps {
 export default function AgentAnalysisPanel({ compact = false }: AgentAnalysisPanelProps) {
   const { runId, isRunning, error } = useAgentRun();
   const [events, setEvents] = React.useState<any[]>([]);
+  const [confidence, setConfidence] = React.useState<number | null>(null);
 
   useAgentEvents(runId, (data) => {
     setEvents(prev => [...prev, data]);
   });
+
+  const handleComplete = (finalConfidence: number) => {
+    setConfidence(finalConfidence);
+  };
 
   if (!runId && !isRunning) {
     return (
@@ -48,6 +54,16 @@ export default function AgentAnalysisPanel({ compact = false }: AgentAnalysisPan
           </div>
         )}
       </div>
+
+      {runId && (
+        <AgentFlowAnimation runId={runId} onComplete={handleComplete} />
+      )}
+
+      {confidence !== null && (
+        <p className="mt-4 text-lg font-semibold">
+          EdgePicks recommends with {confidence.toFixed(2)}% confidence.
+        </p>
+      )}
 
       {events.length > 0 ? (
         <div className="space-y-3">
