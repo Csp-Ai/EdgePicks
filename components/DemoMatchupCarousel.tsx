@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import PredictionTracker from './PredictionTracker';
 import matchups from '../mock/demo-matchups.json';

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { SWRConfig } from 'swr';
-import SportsSidebar from './SportsSidebar';
+import SportsSidebar from '../SportsSidebar';
 import LeagueSection from './LeagueSection';
 import AgentAnalysisPanel from './AgentAnalysisPanel';
 import LoadingShimmer from '@/components/LoadingShimmer';
