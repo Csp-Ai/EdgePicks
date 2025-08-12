@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
 import { SWRConfig } from 'swr';
 import DemoHero from '@/components/demo/DemoHero';
-import UpcomingGamesPanel from '@/components/UpcomingGamesPanel';
 import DemoMatchupCarousel from '@/components/DemoMatchupCarousel';
 import LoadingShimmer from '@/components/LoadingShimmer';
+import UnifiedDemoLayout from '@/components/layouts/UnifiedDemoLayout';
+import LeagueSection from '@/components/LeagueSection';
 import { fetchUpcomingGames } from '@/lib/data';
 
 export const runtime = 'edge';
@@ -21,51 +22,40 @@ export default async function DemoPage({ searchParams }: DemoPageProps) {
   const viewType = typeof searchParams?.view === 'string' ? searchParams.view : 'list';
 
   return (
-    <main className="flex flex-col min-h-screen bg-gray-50">
-      <DemoHero />
-      
-      <SWRConfig value={{ fallback: { '/api/upcoming-games': upcoming } }}>
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col gap-8">
-            <section>
-              <h2 className="text-2xl font-bold mb-6">
-                Live Agent Predictions
-              </h2>
-              
-              <Suspense fallback={<LoadingShimmer />}>
-                {viewType === 'carousel' ? (
-                  <DemoMatchupCarousel />
-                ) : (
-                  <UpcomingGamesPanel 
-                    maxVisible={3} 
-                    league={league}
-                  />
-                )}
-              </Suspense>
-            </section>
-
-            <section className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">
-                Agent Analysis Stats
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">94%</div>
-                  <div className="text-sm text-gray-600">Agent Accuracy</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">127</div>
-                  <div className="text-sm text-gray-600">Games Analyzed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">5</div>
-                  <div className="text-sm text-gray-600">Active Agents</div>
-                </div>
-              </div>
-            </section>
+    <SWRConfig value={{ fallback: { '/api/upcoming-games': upcoming } }}>
+      <UnifiedDemoLayout>
+        {/* Hero section with quick stats */}
+        <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">94%</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Agent Accuracy</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400">127</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Games Analyzed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">5</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Active Agents</div>
+            </div>
           </div>
-        </div>
-      </SWRConfig>
-    </main>
+        </section>
+
+        {/* Dynamic content section */}
+        <section className="space-y-6">
+          {viewType === 'carousel' ? (
+            <DemoMatchupCarousel />
+          ) : (
+            <Suspense fallback={<LoadingShimmer />}>
+              <LeagueSection 
+                league={league} 
+                showPredictions
+              />
+            </Suspense>
+          )}
+        </section>
+      </UnifiedDemoLayout>
+    </SWRConfig>
   );
 }
