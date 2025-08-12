@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { supabase } from '@/lib/supabaseClient';
-import { ENV } from '@/lib/env';
 
 // Enable streaming responses
 export const dynamic = 'force-dynamic';
 export const runtime = 'edge';
+export const fetchCache = 'force-no-store';
 
 function streamResponse(readable: ReadableStream): Response {
   return new Response(readable, {
@@ -30,6 +29,15 @@ export async function GET(request: Request) {
   if (!runId) {
     return new NextResponse('Run ID is required', { status: 400 });
   }
+
+  const [{ createClient }, { ENV }] = await Promise.all([
+    import('@/lib/supabaseClient'),
+    import('@/lib/env'),
+  ]);
+  const supabase = createClient(
+    ENV.SUPABASE_URL!,
+    ENV.SUPABASE_SERVICE_ROLE_KEY || ENV.SUPABASE_KEY || ''
+  );
 
   // Create a stream for SSE
   const stream = new TransformStream();
@@ -88,14 +96,25 @@ export async function POST(request: Request) {
   }
 
   try {
+    const [{ createClient }, { ENV }] = await Promise.all([
+      import('@/lib/supabaseClient'),
+      import('@/lib/env'),
+    ]);
+    const supabase = createClient(
+      ENV.SUPABASE_URL!,
+      ENV.SUPABASE_SERVICE_ROLE_KEY || ENV.SUPABASE_KEY || ''
+    );
+
     // Log to Supabase
     const { error } = await supabase
       .from(type)
-      .insert([{
-        ...data,
-        environment: ENV.NODE_ENV,
-        timestamp: new Date().toISOString()
-      }]);
+      .insert([
+        {
+          ...data,
+          environment: ENV.NODE_ENV,
+          timestamp: new Date().toISOString(),
+        },
+      ]);
 
     if (error) throw error;
 

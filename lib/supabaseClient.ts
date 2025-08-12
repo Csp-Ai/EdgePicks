@@ -1,25 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
-import { ENV } from './env';
+import { createClient as _create } from '@supabase/supabase-js';
 
-if (typeof window !== 'undefined') {
-  throw new Error('supabaseClient should only be used server-side');
+export function createClient(url: string, key: string) {
+  return _create(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 
-if (!ENV.SUPABASE_URL) {
-  throw new Error('Missing SUPABASE_URL environment variable');
-}
+export const supabase =
+  process.env.SUPABASE_URL
+    ? createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY ||
+          process.env.SUPABASE_KEY ||
+          ''
+      )
+    : undefined as any;
 
-if (!ENV.SUPABASE_KEY && !ENV.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('Missing SUPABASE_KEY or SUPABASE_SERVICE_ROLE_KEY environment variable');
-}
-
-export const supabase = createClient(
-  ENV.SUPABASE_URL,
-  ENV.SUPABASE_SERVICE_ROLE_KEY || ENV.SUPABASE_KEY || '',
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  }
-);

@@ -3828,3 +3828,16 @@ Files:
 - lib/env.ts (+45/-1)
 - scripts/validateEnv.ts (+28/-34)
 
+Timestamp: 2025-08-12T07:17:21.460Z
+Commit: ee1d537b384259713fa1abd65ae4b014e375f8f6
+Author: Codex
+Message: fix: improve env handling and edge logging
+Files:
+- .env.local.example (+1/-1)
+- app/api/logs/route.ts (+26/-7)
+- app/demo-0to1/page.tsx (+10/-0)
+- lib/env.ts (+10/-4)
+- lib/supabaseClient.ts (+14/-21)
+- scripts/bootstrapDevEnv.ts (+9/-0)
+- stories/PredictionsPanel.stories.tsx (+1/-2)
+
