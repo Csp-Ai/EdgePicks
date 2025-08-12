@@ -26,16 +26,16 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('fallback')).toBeInTheDocument();
   });
 
-  it('withBoundary HOC renders fallback', () => {
+  it('withBoundary HOC renders default fallback', () => {
     const Thrower = () => {
       throw new Error('explode');
     };
 
-    const Safe = withBoundary(Thrower, <span>safe</span>);
+    const Safe = withBoundary(Thrower);
 
     render(<Safe />);
 
-    expect(screen.getByText('safe')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('Something went wrong.');
   });
 });
 

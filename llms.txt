@@ -3684,3 +3684,19 @@ Files:
 - pages/demo/nfl.tsx (+5/-32)
 - pages/predictions.tsx (+1/-1)
 
+Timestamp: 2025-08-12T01:37:55.021Z
+Commit: e68e8339411305f9c85d9ef481d9e8ce2ce3f416
+Author: Codex
+Message: feat(home): neural network hero + quick matchups; keep shell/header; fix api headers & HOC typing
+Files:
+- __tests__/ErrorBoundary.test.tsx (+3/-3)
+- app/(shell)/layout.tsx (+21/-0)
+- app/(shell)/page.tsx (+67/-0)
+- app/page.tsx (+0/-17)
+- components/layout/SiteHeader.tsx (+35/-0)
+- components/predictions/QuickMatchups.tsx (+32/-0)
+- components/sys/withBoundary.tsx (+13/-16)
+- components/ui/toaster.tsx (+5/-2)
+- components/visuals/AgentNetwork.tsx (+81/-0)
+- lib/api.ts (+13/-1)
+

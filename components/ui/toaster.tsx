@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { toast, Toast } from '@/lib/ui/toast';
 
-const Toaster: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Toaster: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {
-    return toast.subscribe((t) => {
+    const unsubscribe = toast.subscribe((t) => {
       setToasts((prev) => {
         const idx = prev.findIndex((p) => p.id === t.id);
         const next = [...prev];
@@ -25,6 +25,9 @@ const Toaster: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }, 3000);
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const portal =

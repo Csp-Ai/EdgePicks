@@ -1,19 +1,16 @@
-import { ComponentType } from 'react';
-import ErrorBoundary, { FallbackRender } from './ErrorBoundary';
+import React, { Component, ComponentType, createElement } from "react";
 
-export default function withBoundary<P>(
-  WrappedComponent: ComponentType<P>,
-  fallback?: React.ReactNode | FallbackRender
-) {
-  const ComponentWithBoundary = (props: P) => (
-    <ErrorBoundary fallback={fallback}>
-      <WrappedComponent {...props} />
-    </ErrorBoundary>
-  );
-
-  const name = WrappedComponent.displayName || WrappedComponent.name || 'Component';
-  ComponentWithBoundary.displayName = `withBoundary(${name})`;
-
-  return ComponentWithBoundary;
+export default function withBoundary<P>(Wrapped: ComponentType<P>) {
+  return class Boundary extends Component<P, { hasError: boolean }> {
+    state = { hasError: false };
+    static getDerivedStateFromError() {
+      return { hasError: true };
+    }
+    componentDidCatch() {}
+    render() {
+      if (this.state.hasError) return <div role="alert">Something went wrong.</div>;
+      return createElement(Wrapped as ComponentType<any>, this.props);
+    }
+  };
 }
 
