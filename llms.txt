@@ -3805,3 +3805,10 @@ Files:
 - tsconfig.jest.json (+1/-1)
 - types/reactflow.d.ts (+5/-6)
 
+Timestamp: 2025-08-12T04:05:05.456Z
+Commit: 9cae2cbd5cdf7a5200569ec043ad2ee3659a8efa
+Author: Codex
+Message: fix: ensure demo uses nextDynamic and clean typography
+Files:
+- app/demo-0to1/page.tsx (+6/-7)
+
