@@ -99,3 +99,34 @@ export interface AgentLifecycle {
   durationMs?: number;
   error?: { message?: string; stack?: string };
 }
+
+// --- API contract types ---
+export type UpcomingGame = {
+  id: string;
+  league: 'NFL' | 'MLB' | string;
+  homeTeam: string;
+  awayTeam: string;
+  kickoff: string; // ISO
+  odds?: { home: number; away: number; draw?: number } | null;
+  logos?: { home?: string; away?: string };
+};
+
+export type AgentRationale = {
+  agent: string;
+  confidence: number; // 0..1
+  reason: string;
+};
+
+export type Prediction = {
+  gameId: string;
+  pick: 'HOME' | 'AWAY' | 'DRAW' | null;
+  rationales: AgentRationale[];
+  updatedAt: string; // ISO
+};
+
+export type AgentEvent = {
+  id: string;
+  agent: string;
+  status: 'pending' | 'running' | 'completed' | 'error';
+  ts: string; // ISO
+};

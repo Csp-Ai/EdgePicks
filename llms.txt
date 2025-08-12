@@ -3660,3 +3660,27 @@ Message: fix(dev): mark ExperimentsPanel as client and correct import
 Files:
 - components/dev/ExperimentsPanel.tsx (+4/-2)
 
+Timestamp: 2025-08-12T01:14:06.545Z
+Commit: 992a42a896450b478fcbc8a4c85a3b56450e57f1
+Author: Codex
+Message: feat(app): wire live data layer (SWR + API client), fix Breadcrumbs, remove demo fetch interception, add smoke test
+Files:
+- __tests__/MatchupInsights.tracker.integration.test.tsx (+0/-36)
+- __tests__/demo.nfl.page.test.tsx (+1/-1)
+- __tests__/demo.page.test.tsx (+1/-1)
+- __tests__/demoMode.endtoend.test.tsx (+4/-5)
+- __tests__/smoke.app.test.tsx (+11/-0)
+- app/demo/DemoPageClient.tsx (+4/-38)
+- components/MatchupInsights.tsx (+0/-20)
+- components/dev/DemoToggle.tsx (+2/-6)
+- components/nav/Breadcrumbs.tsx (+17/-29)
+- components/predictions/MatchupInsights.tsx (+35/-0)
+- hooks/useApiData.ts (+11/-0)
+- lib/api.ts (+12/-30)
+- lib/cn.ts (+1/-0)
+- lib/demoMode.tsx (+17/-80)
+- lib/types.ts (+31/-0)
+- pages/demo/index.tsx (+4/-13)
+- pages/demo/nfl.tsx (+5/-32)
+- pages/predictions.tsx (+1/-1)
+
