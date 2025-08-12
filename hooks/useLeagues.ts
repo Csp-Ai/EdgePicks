@@ -46,7 +46,5 @@ export function useLeagues(defaultLeague = 'NFL') {
     activeLeagueName: activeSummary.name,
     activeLeagueIcon: activeSummary.icon,
     setActiveLeague,
-    activeLeague,
-    setActiveLeague,
   };
 }

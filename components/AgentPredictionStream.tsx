@@ -17,7 +17,7 @@ export default function AgentPredictionStream({ runId, onComplete }: AgentPredic
   const handleUpdate = useCallback((data: AgentEventUpdate) => {
     setStatus(data.status);
     if (data.output && data.status !== 'error') {
-      setEvents(prev => [...prev, data.output]);
+      setEvents(prev => [...prev, data.output as AgentEvent]);
     }
     if (['completed', 'error'].includes(data.status) && onComplete) {
       onComplete(data);

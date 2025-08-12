@@ -61,8 +61,7 @@ export default function LeagueSection({ league, showPredictions }: LeagueSection
           <GameCard
             key={game.id}
             game={game}
-            onAnalyze={showPredictions ? () => handleAnalyze(game.id) : undefined}
-            loading={isRunning}
+            onClick={() => handleAnalyze(game.id)}
           />
         ))}
       </div>
