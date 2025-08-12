@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import type React from "react";
-import type { Edge as FlowEdge, Node as FlowNode } from "reactflow";
+import type { Dispatch, SetStateAction } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+type FlowEdge = { id: string; source: string; target: string };
 
 interface AgentStatus {
   name: string;
@@ -16,16 +17,34 @@ const fallbackAgents = [
   "guardianAgent",
 ];
 
-export default function AgentFlowVisualizer() {
+export enum SSE_STATUS {
+  LIVE = "Live",
+  SIMULATED = "Simulated",
+}
+
+export default function AgentFlowVisualizer({
+  setEdges,
+}: {
+  setEdges: Dispatch<SetStateAction<FlowEdge[]>>;
+}) {
   const [agents, setAgents] = useState<AgentStatus[]>([]);
   const [top, setTop] = useState<AgentStatus | null>(null);
-  const [nodes, setNodes] = useState<FlowNode[]>([]);
-  const [edges, setEdges] = useState<FlowEdge[]>([]);
-  const applyEdges = (u: React.SetStateAction<FlowEdge[]>) => setEdges(u);
+  const [status, setStatus] = useState<SSE_STATUS>(SSE_STATUS.LIVE);
+
+  const applyEdges = (update: SetStateAction<FlowEdge[]>) => {
+    setEdges(prev => (typeof update === "function" ? update(prev) : update));
+  };
+  const appendEdge = useCallback(
+    (edge: FlowEdge) => {
+      applyEdges(prev => [...prev, edge]);
+    },
+    [applyEdges],
+  );
 
   useEffect(() => {
     let es: EventSource | null = null;
     let timer: ReturnType<typeof setInterval> | null = null;
+    let edgeCount = 0;
 
     const updateTop = (list: AgentStatus[]) => {
       if (!list.length) {
@@ -37,6 +56,7 @@ export default function AgentFlowVisualizer() {
     };
 
     const startSimulation = () => {
+      setStatus(SSE_STATUS.SIMULATED);
       let i = 0;
       timer = setInterval(() => {
         const name = fallbackAgents[i % fallbackAgents.length];
@@ -46,6 +66,7 @@ export default function AgentFlowVisualizer() {
           updateTop(next);
           return next;
         });
+        appendEdge({ id: `sim-${edgeCount++}`, source: name, target: 'top' });
         i++;
       }, 1000);
     };
@@ -62,6 +83,7 @@ export default function AgentFlowVisualizer() {
                 updateTop(next);
                 return next;
               });
+              appendEdge({ id: `evt-${edgeCount++}`, source: data.agent, target: 'top' });
             }
           } catch {
             // ignore parse errors
@@ -82,12 +104,12 @@ export default function AgentFlowVisualizer() {
       es?.close();
       if (timer) clearInterval(timer);
     };
-  }, []);
+  }, [setEdges, appendEdge]);
 
   return (
     <section aria-labelledby="agent-flow" className="rounded-xl border p-4">
       <h2 id="agent-flow" className="text-lg font-semibold">
-        Agent Flow
+        Agent Flow <span className="text-xs text-muted-foreground">({status})</span>
       </h2>
       <ul className="mt-2 space-y-1">
         {agents.map(a => (

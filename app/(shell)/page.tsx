@@ -1,9 +1,9 @@
 import nextDynamic from "next/dynamic";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
-
 // Client components (animation/data hooks)
 const AgentNetwork = nextDynamic(() => import("@/components/visuals/AgentNetwork"), { ssr: false });
 const LiveAgentPanel = nextDynamic(() => import("@/components/home/LiveAgentPanel"), { ssr: false });
@@ -26,12 +26,18 @@ export default function HomePage() {
               See how our expert agents analyze live data to give you smarter picks.
             </p>
             <div className="mt-6 flex gap-3">
-              <a href="#matchups" className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:opacity-90">
+              <a
+                href="#matchups"
+                className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:opacity-90"
+              >
                 See Today’s Predictions
               </a>
-              <a href="#how-it-works" className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-accent">
-                How It Works
-              </a>
+              <Link
+                href="/demo-0to1"
+                className={buttonVariants({ variant: 'ghost' })}
+              >
+                Live Demo
+              </Link>
             </div>
           </div>
           <div className="min-h-[260px] lg:min-h-[360px]">

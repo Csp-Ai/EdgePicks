@@ -3765,3 +3765,28 @@ Files:
 - scripts/uiSnapshot.tsx (+3/-1)
 - types/reactflow.d.ts (+13/-0)
 
+Timestamp: 2025-08-12T03:23:10.113Z
+Commit: 18eaf5536136e131d2d7fc59857f445f18d06a73
+Author: Codex
+Message: feat: demo cleanup and typing
+Files:
+- __tests__/AgentFlowVisualizer.render.test.tsx (+26/-0)
+- __tests__/AgentFlowVisualizer.test.tsx (+3/-1)
+- __tests__/supabaseRegistry.test.ts (+3/-1)
+- app/(shell)/page.tsx (+11/-5)
+- app/demo-0to1/page.tsx (+6/-1)
+- components/layout/SiteHeader.tsx (+7/-2)
+- components/visuals/AgentFlowVisualizer.tsx (+31/-9)
+- jest.setup.ts (+3/-0)
+- lib/agents/guardianAgent.ts (+42/-12)
+- lib/agents/supabaseRegistry.ts (+26/-13)
+- lib/server/cache.ts (+10/-0)
+- tests/visual/percy.spec.ts (+0/-1)
+
+Timestamp: 2025-08-12T03:24:18.427Z
+Commit: 5203d94ddb2770c5272a948714692e64cf9e4b2b
+Author: Codex
+Message: test: adjust visualizer render test
+Files:
+- __tests__/AgentFlowVisualizer.render.test.tsx (+2/-2)
+

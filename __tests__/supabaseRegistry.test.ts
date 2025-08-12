@@ -32,7 +32,9 @@ describe('getSupabaseAgentRegistry', () => {
     const first = await getSupabaseAgentRegistry();
     const second = await getSupabaseAgentRegistry();
 
-    expect(first).toEqual(sample);
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+    expect(first.data.get('a1')).toEqual(sample[0]);
     expect(second).toBe(first);
     expect(fromMock).toHaveBeenCalledTimes(1);
     expect(cacheMock).toHaveBeenCalledTimes(1);
