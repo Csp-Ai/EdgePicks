@@ -3711,7 +3711,6 @@ Files:
 - components/home/HowItWorks.tsx (+51/-0)
 - components/home/LiveAgentPanel.tsx (+38/-0)
 - components/home/StickyNavBar.tsx (+45/-0)
-=======
 Timestamp: 2025-08-12T01:51:50.722Z
 Commit: b733df72e1f14532d23d9751e1285d775d14f947
 Author: Codex
@@ -3848,7 +3847,6 @@ Message: Handle fetch errors in GameInsightsHero
 Files:
 - __tests__/GameInsightsHero.test.tsx (+10/-0)
 - components/GameInsightsHero.tsx (+24/-2)
-=======
 Timestamp: 2025-08-15T03:05:32.653Z
 Commit: 48fb323504f6ab04e900fc275aca0ae1fae021fd
 Author: Codex
@@ -3857,7 +3855,6 @@ Files:
 - __tests__/mapAgentEventsToGraph.test.ts (+39/-0)
 - components/universal/mapAgentEventsToGraph.ts (+44/-3)
 - jest.config.ts (+1/-0)
-=======
 Timestamp: 2025-08-15T03:04:55.229Z
 Commit: 61525c6297a9245e046e4c910e7dd419b525cc56
 Author: Codex
@@ -3951,7 +3948,6 @@ Files:
 - lib/config/env.js (+14/-3)
 - lib/config/env.ts (+14/-3)
 - lib/supabaseClient.ts (+28/-10)
-=======
 Timestamp: 2025-08-15T04:24:25.873Z
 Commit: 4803944b52f0a2d01f08daa1519b0bcd8eb1cb10
 Author: Codex
@@ -3982,9 +3978,6 @@ Files:
 - components/marketing/PricingTeaser.tsx (+11/-8)
 - components/ui/Modal.tsx (+15/-13)
 - lib/i18n/config.tsx (+11/-8)
-=======
-
-
 Timestamp: 2025-08-15T04:47:49.955Z
 Commit: b9c5de3aec22c0c92072ab618d38fc6e0323f4af
 Author: Codex
@@ -4001,4 +3994,13 @@ Files:
 - app/api/health/route.ts (+5/-5)
 - components/UpcomingGamesHero.tsx (+0/-4)
 - package.json (+3/-2)
+
+Timestamp: 2025-08-15T05:18:02.339Z
+Commit: 6bf5ebafd38cc4b319e4d9faf46fc6e388d592a6
+Author: Codex
+Message: chore: harden upcoming-games and cleanup health
+Files:
+- app/api/health/route.ts (+5/-2)
+- app/api/upcoming-games/route.ts (+29/-95)
+- llms.txt (+0/-7)
 
