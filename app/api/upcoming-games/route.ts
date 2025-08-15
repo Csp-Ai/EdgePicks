@@ -4,7 +4,6 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { ENV } from "@/lib/config/env";
 import { createClient } from "@supabase/supabase-js";
-// Optional: demo fallback if envs aren’t present
 import { getFallbackMatchups } from "@/lib/utils/fallbackMatchups";
 
 function makePublicClient() {
@@ -18,8 +17,8 @@ export async function GET() {
   try {
     const supa = makePublicClient();
     if (!supa) {
-      // No env available: don’t crash build; return safe empty/demo data
-      return NextResponse.json({ games: getFallbackMatchups?.() ?? [] }, { status: 200 });
+      // No env available: don’t crash build; return safe demo data
+      return NextResponse.json({ games: getFallbackMatchups() }, { status: 200 });
     }
 
     // TODO: replace with your actual query
