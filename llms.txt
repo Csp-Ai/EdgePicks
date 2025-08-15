@@ -3841,3 +3841,11 @@ Files:
 - scripts/bootstrapDevEnv.ts (+9/-0)
 - stories/PredictionsPanel.stories.tsx (+1/-2)
 
+Timestamp: 2025-08-15T03:04:35.008Z
+Commit: de4a659c68b07cac2070c72b0968a503a3d3354a
+Author: Codex
+Message: Handle fetch errors in GameInsightsHero
+Files:
+- __tests__/GameInsightsHero.test.tsx (+10/-0)
+- components/GameInsightsHero.tsx (+24/-2)
+
