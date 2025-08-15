@@ -3993,3 +3993,12 @@ Files:
 - app/api/dev-login/route.ts (+25/-12)
 - components/UpcomingGamesHero.tsx (+3/-2)
 
+Timestamp: 2025-08-15T04:58:21.290Z
+Commit: 3dde9aa3edbf7e87476088e2c7fb2ac11a330f9c
+Author: Codex
+Message: fix health route and add conflict guard
+Files:
+- app/api/health/route.ts (+5/-5)
+- components/UpcomingGamesHero.tsx (+0/-4)
+- package.json (+3/-2)
+
