@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
 import useSWR from 'swr';
+=======
 import Image from 'next/image';
 =======
 // @ts-expect-error -- swr's types may not expose the named export yet
