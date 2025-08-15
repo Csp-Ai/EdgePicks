@@ -3841,3 +3841,12 @@ Files:
 - scripts/bootstrapDevEnv.ts (+9/-0)
 - stories/PredictionsPanel.stories.tsx (+1/-2)
 
+Timestamp: 2025-08-15T03:05:32.653Z
+Commit: 48fb323504f6ab04e900fc275aca0ae1fae021fd
+Author: Codex
+Message: feat: map agent events to graph edges
+Files:
+- __tests__/mapAgentEventsToGraph.test.ts (+39/-0)
+- components/universal/mapAgentEventsToGraph.ts (+44/-3)
+- jest.config.ts (+1/-0)
+
