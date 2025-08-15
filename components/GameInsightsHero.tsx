@@ -17,14 +17,20 @@ export type GameInsightsHeroProps = {
   onSeeAgents?: () => void; // opens Matchup Insights with Advanced View
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Failed to fetch upcoming games');
+  }
+  return res.json();
+};
 
 const GameInsightsHero: React.FC<GameInsightsHeroProps> = ({
   games: gamesProp,
   isLoading: loadingProp,
   onSeeAgents,
 }) => {
-  const { data, isLoading: swrLoading } = useSWR<GameInsightsHeroProps['games']>(
+  const { data, error, isLoading: swrLoading } = useSWR<GameInsightsHeroProps['games']>(
     gamesProp ? null : '/api/upcoming-games',
     fetcher,
     { revalidateOnFocus: false, dedupingInterval: 30000 },
@@ -45,6 +51,22 @@ const GameInsightsHero: React.FC<GameInsightsHeroProps> = ({
     return (
       <section aria-label="Upcoming games" className="p-4">
         <LoadingShimmer lines={6} lineClassName="h-16" />
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section aria-label="Upcoming games" className="p-4 text-center space-y-4">
+        <p>Failed to load upcoming games.</p>
+        {onSeeAgents && (
+          <button
+            onClick={onSeeAgents}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            See agents in action
+          </button>
+        )}
       </section>
     );
   }

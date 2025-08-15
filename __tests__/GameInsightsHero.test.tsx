@@ -33,5 +33,15 @@ describe('GameInsightsHero', () => {
     fireEvent.click(screen.getByRole('button', { name: 'See agents in action' }));
     expect(onSeeAgents).toHaveBeenCalled();
   });
+
+  it('shows error state when fetch fails', async () => {
+    const originalFetch = global.fetch;
+    global.fetch = jest.fn().mockResolvedValue({ ok: false } as Response) as any;
+    render(<GameInsightsHero />);
+    expect(
+      await screen.findByText('Failed to load upcoming games.'),
+    ).toBeInTheDocument();
+    global.fetch = originalFetch;
+  });
 });
 
