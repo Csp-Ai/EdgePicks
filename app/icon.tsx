@@ -1,15 +1,10 @@
 // @ts-nocheck
 import { ImageResponse } from 'next/server';
 
-export const runtime = 'edge';
-export const contentType = 'image/x-icon';
+export const size = { width: 32, height: 32 };
+export const contentType = 'image/png';
 
-const size = {
-  width: 32,
-  height: 32,
-} as const;
-
-export async function GET() {
+export default function Icon() {
   return new ImageResponse(
     (
       <div
@@ -27,9 +22,6 @@ export async function GET() {
         EP
       </div>
     ),
-    {
-      width: 32,
-      height: 32,
-    }
+    size
   );
 }

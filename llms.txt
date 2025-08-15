@@ -4069,4 +4069,13 @@ Files:
 - components/LiveStatsStrip.tsx (+51/-0)
 - components/ValueProps.tsx (+26/-0)
 - lib/ui/kpis.ts (+12/-0)
+=======
+Timestamp: 2025-08-15T07:18:29.517Z
+Commit: 110bb5dc2a477a8fdd076d023bd8711495c5117b
+Author: Codex
+Message: refactor: remove favicon route and use next font
+Files:
+- app/favicon.ico/route.ts (+0/-0)
+- app/{favicon.ico/route.tsx => icon.tsx} (+4/-12)
+- app/layout.tsx (+4/-4)
 
