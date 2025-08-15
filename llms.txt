@@ -3941,3 +3941,12 @@ Files:
 - lib/supabaseClient.ts (+14/-25)
 - lib/telemetry/logger.ts (+4/-2)
 
+Timestamp: 2025-08-15T04:24:25.873Z
+Commit: 4803944b52f0a2d01f08daa1519b0bcd8eb1cb10
+Author: Codex
+Message: docs: update readme and agent metadata
+Files:
+- AGENTS.md (+2/-1)
+- CHANGELOG.md (+7/-0)
+- README.md (+15/-1)
+

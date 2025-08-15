@@ -3160,3 +3160,10 @@ Files:
 - logs/agent-reflections.json (+19/-5)
 - package.json (+2/-2)
 - scripts/checkMergeMarkers.ts (+34/-0)
+
+Timestamp: 2025-08-15T04:23:48Z
+Summary:
+- README refreshed with agent overview, trust hub, and feature flag info
+- AGENTS.md dated for current release
+Testing:
+- npm test — passed
