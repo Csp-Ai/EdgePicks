@@ -128,7 +128,8 @@
     "zod-to-json-schema": "^3.24.6"
   },
   "overrides": {
-    "rimraf": "^5.0.5",
-    "glob": "^10.3.12"
+    "@radix-ui/primitive": "^1.0.1",
+    "rimraf": "^5.0.10",
+    "glob": "^10.3.10"
   }
 }
