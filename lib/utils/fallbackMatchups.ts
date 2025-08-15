@@ -1,18 +1,37 @@
-import { Matchup } from '../types';
+export interface DemoMatchup {
+  id: string;
+  home: string;
+  away: string;
+  kickoff: string; // ISO timestamp
+  odds: {
+    home: number | null;
+    away: number | null;
+  } | null;
+}
 
-export function getFallbackMatchups(): (Matchup & { useFallback: true })[] {
+export function getFallbackMatchups(): DemoMatchup[] {
   return [
     {
-      id: 'nfl-DAL-NYG-2025-09-07',
-      gameId: 'DAL-NYG-2025-09-07',
-      homeTeam: 'Dallas Cowboys',
-      awayTeam: 'New York Giants',
-      time: '2025-09-07T20:20:00Z',
-      league: 'NFL',
-      homeLogo: 'https://a.espncdn.com/i/teamlogos/nfl/500/dal.png',
-      awayLogo: 'https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png',
-      useFallback: true,
-      source: 'fallback',
+      id: 'demo-nfl-1',
+      home: 'Dallas Cowboys',
+      away: 'New York Giants',
+      kickoff: '2025-09-07T20:20:00Z',
+      odds: { home: null, away: null },
+    },
+    {
+      id: 'demo-nfl-2',
+      home: 'Green Bay Packers',
+      away: 'Chicago Bears',
+      kickoff: '2025-09-14T17:00:00Z',
+      odds: { home: null, away: null },
+    },
+    {
+      id: 'demo-nfl-3',
+      home: 'San Francisco 49ers',
+      away: 'Los Angeles Rams',
+      kickoff: '2025-09-21T20:25:00Z',
+      odds: { home: null, away: null },
     },
   ];
 }
+
