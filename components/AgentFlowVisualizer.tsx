@@ -1,16 +1,52 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ForceGraph2D from "react-force-graph";
+import dynamic from "next/dynamic";
+import type { NodeObject, LinkObject } from "force-graph";
 import LoadingShimmer from "./LoadingShimmer";
-import { getDemoGraph, type AgentGraph, type AgentNode, type AgentLink } from "@/lib/agents/demoGraph";
+import { demoGraph } from "@/lib/agents/demoGraph";
 
-const roleColors: Record<AgentNode["role"], string> = {
+const ForceGraph2D = dynamic(
+  () => import("react-force-graph").then((m) => m.ForceGraph2D),
+  { ssr: false },
+) as unknown as typeof import("react-force-graph").ForceGraph2D;
+
+type Role = "scout" | "analyst" | "model" | "arbiter";
+
+export interface AgentNode extends NodeObject {
+  id: string;            // stable id
+  label: string;         // display name
+  role: Role;            // node color key
+  confidence: number;    // 0..1 (used for size/legend)
+}
+
+export interface AgentLink extends LinkObject<AgentNode> {
+  source: string | AgentNode;
+  target: string | AgentNode;
+  confidence: number;    // 0..1 (used for width)
+}
+
+interface DetailedAgentNode extends AgentNode {
+  summary: string;
+  logs: string[];
+  lastEvent: string;
+}
+
+interface DetailedAgentLink extends AgentLink {
+  type: "data" | "modeling" | "arbitration" | "explain";
+  lastEvent: string;
+}
+
+type AgentGraph = { nodes: DetailedAgentNode[]; links: DetailedAgentLink[] };
+
+const roleColors: Record<Role, string> = {
   scout: "#3b82f6",
-  cruncher: "#f97316",
+  analyst: "#f97316",
+  model: "#a855f7",
   arbiter: "#84cc16",
-  explainer: "#a855f7",
 };
+
+const roleToColor = (role: Role): string => roleColors[role];
 
 const filterOptions = [
   { label: "All", value: "all" },
@@ -22,7 +58,7 @@ const filterOptions = [
 
 export default function AgentFlowVisualizer() {
   const [graph, setGraph] = useState<AgentGraph | null>(null);
-  const [selected, setSelected] = useState<AgentNode | null>(null);
+  const [selected, setSelected] = useState<DetailedAgentNode | null>(null);
   const [filter, setFilter] = useState<string>("all");
   const [width, setWidth] = useState<number | null>(null);
 
@@ -35,7 +71,7 @@ export default function AgentFlowVisualizer() {
         const data = (await res.json()) as AgentGraph;
         if (active) setGraph(data);
       } catch {
-        if (active) setGraph(getDemoGraph());
+        if (active) setGraph(demoGraph as AgentGraph);
       }
     }
     load();
@@ -64,8 +100,10 @@ export default function AgentFlowVisualizer() {
     return <LoadingShimmer lines={4} />;
   }
 
-  const filtered = filter === "all" ? graph.links : graph.links.filter((l) => l.type === filter);
-  const data = { nodes: graph.nodes, links: filtered };
+  const filtered =
+    filter === "all" ? graph.links : graph.links.filter((l) => l.type === filter);
+  const nodes: AgentNode[] = graph.nodes;
+  const links: AgentLink[] = filtered;
 
   return (
     <div className="relative">
@@ -83,13 +121,31 @@ export default function AgentFlowVisualizer() {
           ))}
         </select>
       </div>
-      <ForceGraph2D
-        graphData={data}
-        nodeColor={(node) => roleColors[(node as AgentNode).role]}
-        nodeLabel={(node) => `${(node as AgentNode).id}: ${(node as AgentNode).lastEvent} (${Math.round((node as AgentNode).confidence * 100)}%)`}
-        linkWidth={(link) => Math.max(1, (link as AgentLink).confidence * 3)}
-        linkLabel={(link) => `${(link as AgentLink).lastEvent} (${Math.round((link as AgentLink).confidence * 100)}%)`}
-        onNodeClick={(node) => setSelected(node as AgentNode)}
+      <ForceGraph2D<AgentNode, AgentLink>
+        graphData={{ nodes, links }}
+        nodeCanvasObject={(node: AgentNode, ctx: CanvasRenderingContext2D, scale: number) => {
+          const radius = Math.max(4, 8 * (node.confidence ?? 0.5));
+          ctx.fillStyle = roleToColor(node.role);
+          ctx.beginPath();
+          ctx.arc(node.x ?? 0, node.y ?? 0, radius, 0, 2 * Math.PI, false);
+          ctx.fill();
+          const label = node.label;
+          ctx.font = `${12 / scale}px Sans-Serif`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#000";
+          ctx.fillText(label, node.x ?? 0, (node.y ?? 0) - radius - 4);
+        }}
+        nodePointerAreaPaint={(node: AgentNode, color: string, ctx: CanvasRenderingContext2D) => {
+          const radius = Math.max(4, 8 * (node.confidence ?? 0.5));
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(node.x ?? 0, node.y ?? 0, radius, 0, 2 * Math.PI, false);
+          ctx.fill();
+        }}
+        linkWidth={(link: AgentLink) => Math.max(1, 4 * (link.confidence ?? 0.5))}
+        linkColor={(link: AgentLink) => roleToColor((link.source as AgentNode).role)}
+        onNodeClick={(node: AgentNode) => setSelected(node as DetailedAgentNode)}
         width={width ?? 800}
         height={500}
       />

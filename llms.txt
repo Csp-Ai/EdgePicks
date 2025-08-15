@@ -4079,3 +4079,11 @@ Files:
 - app/{favicon.ico/route.tsx => icon.tsx} (+4/-12)
 - app/layout.tsx (+4/-4)
 
+Timestamp: 2025-08-15T07:47:43.057Z
+Commit: 1f09cfe7c1dda5f1989e316288aec1a4a0fbb71d
+Author: Codex
+Message: fix agent graph imports & types
+Files:
+- components/AgentFlowVisualizer.tsx (+72/-16)
+- lib/agents/demoGraph.ts (+71/-76)
+
