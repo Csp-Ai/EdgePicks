@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 
 const headers = {
-  "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
+  "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=300",
 };
 
 /**
