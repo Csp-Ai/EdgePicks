@@ -4002,3 +4002,12 @@ Files:
 - components/UpcomingGamesHero.tsx (+0/-4)
 - package.json (+3/-2)
 
+Timestamp: 2025-08-15T05:22:57.685Z
+Commit: 096d7a617e126ed83e0513a36d1977ccb93eeb7c
+Author: Codex
+Message: chore: remove deprecated npm proxy config
+Files:
+- .npmrc (+2/-0)
+- package.json (+1/-1)
+- vercel.json (+1/-1)
+
