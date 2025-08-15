@@ -4004,3 +4004,12 @@ Files:
 - app/api/upcoming-games/route.ts (+29/-95)
 - llms.txt (+0/-7)
 
+Timestamp: 2025-08-15T05:27:26.653Z
+Commit: 65f79d78c1bbc7b4a0a7581ba66da605aa18ad13
+Author: Codex
+Message: chore: enforce node 20 and quiet npm
+Files:
+- .npmrc (+5/-0)
+- .nvmrc (+1/-0)
+- package.json (+12/-1)
+
