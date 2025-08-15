@@ -4025,3 +4025,17 @@ Files:
 
 
 
+Timestamp: 2025-08-15T05:44:24.826Z
+Commit: a1a1f9d7d3cc7941f01a7422e830dd4c2d8ee1ad
+Author: Codex
+Message: feat: add conflict marker guard
+Files:
+- package.json (+2/-2)
+
+Timestamp: 2025-08-15T05:44:34.038Z
+Commit: 60047d438dff44f4279012b79234108592f14764
+Author: Codex
+Message: chore: add conflict detection script
+Files:
+- scripts/checkConflicts.js (+34/-0)
+
