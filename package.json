@@ -10,7 +10,7 @@
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
     "prebuild": "npm config delete http-proxy || true && npm config delete https-proxy || true && ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && npm run fix:aliases && npm run guard:aliases && npm run guard:swr && npm run setup:dev",
-    "build": "npm run validate-env && npm run check-conflicts && npm run typecheck && npm run lint && next build",
+      "build": "npm run check-conflicts && npm run validate-env && npm run typecheck && npm run lint && next build",
     "start": "npm run validate-env && next start",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
     "fix:aliases": "ts-node --project tsconfig.node.json scripts/codemods/aliasImports.ts",
@@ -48,7 +48,7 @@
     "build-storybook": "storybook build",
     "setup:dev": "ts-node --project tsconfig.node.json scripts/bootstrapDevEnv.ts",
     "fix:revalidate": "ts-node --project tsconfig.node.json scripts/codemods/enforceRevalidate.ts",
-    "check-conflicts": "git ls-files -z | xargs -0 grep -nH -E '^(<<<<<<<|=======|>>>>>>>)' && echo 'Conflict markers found' && exit 2 || echo 'No conflict markers'",
+      "check-conflicts": "node scripts/checkConflicts.js",
     "normalize-proxy": "npm config delete http-proxy || true && npm config delete https-proxy || true && npm config delete HTTP-PROXY || true && npm config delete HTTPS-PROXY || true",
     "preinstall": "node scripts/npmProxyNormalize.mjs",
     "ci-install": "npm ci --prefer-offline --no-audit --no-fund"
