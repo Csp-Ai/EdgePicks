@@ -50,7 +50,7 @@
     "fix:revalidate": "ts-node --project tsconfig.node.json scripts/codemods/enforceRevalidate.ts",
     "check-conflicts": "git ls-files -z | xargs -0 grep -nH -E '^(<<<<<<<|=======|>>>>>>>)' && echo 'Conflict markers found' && exit 2 || echo 'No conflict markers'",
     "normalize-proxy": "npm config delete http-proxy || true && npm config delete https-proxy || true && npm config delete HTTP-PROXY || true && npm config delete HTTPS-PROXY || true",
-    "preinstall": "npm run normalize-proxy",
+    "preinstall": "node scripts/npmProxyNormalize.mjs",
     "ci-install": "npm ci --prefer-offline --no-audit --no-fund"
   },
   "dependencies": {
