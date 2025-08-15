@@ -3,7 +3,7 @@ import { getToken } from 'next-auth/jwt';
 import { supabaseServer } from '@/lib/supabaseClient';
 import { ENV } from '@/lib/env';
 
-// Enable streaming responses
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
@@ -31,48 +31,53 @@ export async function GET(request: Request) {
     return new NextResponse('Run ID is required', { status: 400 });
   }
 
-  const supabase = supabaseServer();
+  try {
+    const supabase = supabaseServer();
 
-  // Create a stream for SSE
-  const stream = new TransformStream();
-  const writer = stream.writable.getWriter();
+    // Create a stream for SSE
+    const stream = new TransformStream();
+    const writer = stream.writable.getWriter();
 
-  // Subscribe to real-time changes
-  const channel = supabase
-    .channel('agent_runs')
-    .on(
-      'postgres_changes',
-      {
-        event: 'UPDATE',
-        schema: 'public',
-        table: 'agent_runs',
-        filter: `id=eq.${runId}`,
-      },
-      async (payload) => {
-        try {
-          const data = JSON.stringify(payload.new);
-          await writer.write(
-            new TextEncoder().encode(`data: ${data}\n\n`)
-          );
+    // Subscribe to real-time changes
+    const channel = supabase
+      .channel('agent_runs')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'agent_runs',
+          filter: `id=eq.${runId}`,
+        },
+        async (payload) => {
+          try {
+            const data = JSON.stringify(payload.new);
+            await writer.write(new TextEncoder().encode(`data: ${data}\n\n`));
 
-          // Close stream if agent run is complete
-          if (['completed', 'error'].includes(payload.new.status)) {
+            // Close stream if agent run is complete
+            if (['completed', 'error'].includes(payload.new.status)) {
+              await writer.close();
+            }
+          } catch (error) {
+            console.error('Error writing to stream:', error);
             await writer.close();
           }
-        } catch (error) {
-          console.error('Error writing to stream:', error);
-          await writer.close();
         }
-      }
-    )
-    .subscribe();
+      )
+      .subscribe();
 
-  // Clean up subscription when client disconnects
-  request.signal.addEventListener('abort', () => {
-    channel.unsubscribe();
-  });
+    // Clean up subscription when client disconnects
+    request.signal.addEventListener('abort', () => {
+      channel.unsubscribe();
+    });
 
-  return streamResponse(stream.readable);
+    return streamResponse(stream.readable);
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err?.message ?? 'Internal error' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
@@ -108,8 +113,11 @@ export async function POST(request: Request) {
     }
 
     return new NextResponse('Logged successfully', { status: 200 });
-  } catch (error) {
-    console.error('Error logging data:', error);
-    return new NextResponse('Error logging data', { status: 500 });
+  } catch (err: any) {
+    console.error('Error logging data:', err);
+    return NextResponse.json(
+      { error: err?.message ?? 'Error logging data' },
+      { status: 500 }
+    );
   }
 }

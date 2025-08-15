@@ -3941,3 +3941,14 @@ Files:
 - lib/supabaseClient.ts (+14/-25)
 - lib/telemetry/logger.ts (+4/-2)
 
+Timestamp: 2025-08-15T04:35:11.253Z
+Commit: 7de51cd5e02a816763c7db09f3b5d7c52eddbc57
+Author: Codex
+Message: chore: improve supabase env handling
+Files:
+- app/api/logs/route.ts (+51/-43)
+- components/UpcomingGamesHero.tsx (+3/-2)
+- lib/config/env.js (+14/-3)
+- lib/config/env.ts (+14/-3)
+- lib/supabaseClient.ts (+28/-10)
+

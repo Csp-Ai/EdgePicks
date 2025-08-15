@@ -1,5 +1,6 @@
 import React from 'react';
-import useSWR from 'swr';
+// @ts-expect-error -- swr's types may not expose the named export yet
+import { useSWR } from 'swr';
 import { apiGet } from '@/lib/api';
 import { logEvent } from '@/lib/telemetry/logger';
 
@@ -26,7 +27,7 @@ const UpcomingGamesHero: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-      {data.slice(0, 8).map((game) => (
+      {data.slice(0, 8).map((game: Game) => (
         <div
           key={game.gameId}
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center space-y-2 hover:shadow-lg transition-shadow cursor-pointer"
