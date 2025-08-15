@@ -6,6 +6,7 @@ import { useAgentRun } from '@/hooks/useAgentRun';
 import AgentPredictionStream from '@/components/AgentPredictionStream';
 import GameCard from '@/components/GameCard';
 import type { Game } from '@/types/game';
+import { logEvent } from '@/lib/telemetry/logger';
 
 interface LeagueSectionProps {
   league: string;
@@ -72,7 +73,11 @@ export default function LeagueSection({ league, showPredictions }: LeagueSection
             runId={runId}
             onComplete={(data) => {
               // Handle prediction completion
-              console.log('Prediction complete:', data);
+              void logEvent({
+                level: 'info',
+                name: 'prediction-complete',
+                meta: { runId, data },
+              });
             }}
           />
         </div>

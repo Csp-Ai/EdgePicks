@@ -5,13 +5,15 @@
     "moduleResolution": "node",
     "allowJs": true,
     "checkJs": false,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "*"
       ],
-      "@/types/*": ["types/*"]
+      "@/types/*": [
+        "types/*"
+      ]
     },
     // Enable default imports from CommonJS modules
     "esModuleInterop": true,
@@ -22,7 +24,21 @@
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "incremental": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -36,7 +52,8 @@
     "hooks",
     "__tests__",
     "tests",
-    "jest.setup.ts"
+    "jest.setup.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

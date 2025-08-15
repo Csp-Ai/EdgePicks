@@ -1,6 +1,7 @@
 import React from 'react';
 import useSWR from 'swr';
 import { apiGet } from '@/lib/api';
+import { logEvent } from '@/lib/telemetry/logger';
 
 interface Game {
   gameId: string;
@@ -29,7 +30,13 @@ const UpcomingGamesHero: React.FC = () => {
         <div
           key={game.gameId}
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center space-y-2 hover:shadow-lg transition-shadow cursor-pointer"
-          onClick={() => console.log(`Open Prediction Drawer for ${game.gameId}`)}
+          onClick={() =>
+            void logEvent({
+              level: 'info',
+              name: 'open-prediction-drawer',
+              meta: { gameId: game.gameId },
+            })
+          }
         >
           <div className="flex items-center space-x-4">
             <img src={game.homeLogo} alt={game.homeTeam} className="h-12 w-12" />
