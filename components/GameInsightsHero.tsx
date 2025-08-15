@@ -1,5 +1,6 @@
 import React from 'react';
 import useSWR from 'swr';
+import Image from 'next/image';
 import LoadingShimmer from './LoadingShimmer';
 
 export type GameInsightsHeroProps = {
@@ -104,19 +105,23 @@ const GameInsightsHero: React.FC<GameInsightsHeroProps> = ({
           >
             <div className="flex items-center gap-2">
               {g.homeLogoUrl && (
-                <img
+                <Image
                   src={g.homeLogoUrl}
                   alt={`${g.home} logo`}
                   className="w-6 h-6"
+                  width={24}
+                  height={24}
                 />
               )}
               <span>{g.home}</span>
               <span className="text-gray-500">vs</span>
               {g.awayLogoUrl && (
-                <img
+                <Image
                   src={g.awayLogoUrl}
                   alt={`${g.away} logo`}
                   className="w-6 h-6"
+                  width={24}
+                  height={24}
                 />
               )}
               <span>{g.away}</span>

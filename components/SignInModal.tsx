@@ -10,12 +10,10 @@ interface SignInModalProps {
 const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  const handleOverlayClick = () => {
-    onClose();
-  };
-
-  const handleContentClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleOverlayClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   return (
@@ -24,12 +22,11 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => {
       role="button"
       tabIndex={0}
       onClick={handleOverlayClick}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOverlayClick()}
+      onKeyDown={(e) =>
+        (e.key === 'Enter' || e.key === ' ') && handleOverlayClick(e)
+      }
     >
-      <div
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
-        onClick={handleContentClick}
-      >
+      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
         <h2 className="text-xl font-semibold mb-4 text-center">Sign in</h2>
         <Button className="w-full" onClick={() => signIn('google')}>
           Sign in with Google

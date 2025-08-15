@@ -55,8 +55,11 @@ const AgentDetailsModal: React.FC<AgentDetailsModalProps> = ({ isOpen, onClose, 
 
   if (!isOpen) return null;
 
-  const handleOverlayClick = () => onClose();
-  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+  const handleOverlayClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
   return (
     <div
@@ -64,7 +67,12 @@ const AgentDetailsModal: React.FC<AgentDetailsModalProps> = ({ isOpen, onClose, 
       role="button"
       tabIndex={0}
       onClick={handleOverlayClick}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOverlayClick()}
+      onKeyDown={(e) => {
+        handleKeyDown(e);
+        if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+          handleOverlayClick(e);
+        }
+      }}
     >
       <div
         role="dialog"
@@ -72,8 +80,6 @@ const AgentDetailsModal: React.FC<AgentDetailsModalProps> = ({ isOpen, onClose, 
         aria-labelledby="agent-details-title"
         className="bg-white w-full max-w-md rounded p-4 shadow-md text-gray-900"
         ref={modalRef}
-        onClick={stopPropagation}
-        onKeyDown={handleKeyDown}
         tabIndex={-1}
       >
         <div className="flex justify-between items-center mb-4">

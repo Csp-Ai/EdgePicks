@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PredictionTracker from './PredictionTracker';
 import matchups from '../mock/demo-matchups.json';
 
@@ -14,23 +14,23 @@ const DemoMatchupCarousel: React.FC = () => {
   const next = () => setIndex((i) => (i + 1) % total);
   const prev = () => setIndex((i) => (i - 1 + total) % total);
 
-  const start = () => {
+  const start = useCallback(() => {
     timerRef.current = setInterval(() => {
       setIndex((i) => (i + 1) % total);
     }, DEMO_CAROUSEL_INTERVAL);
-  };
+  }, [total]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     start();
-  };
+  }, [start]);
 
   useEffect(() => {
     start();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, []);
+  }, [start]);
 
   const handleNext = () => {
     next();

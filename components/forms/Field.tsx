@@ -24,7 +24,8 @@ export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
   ({ children, id, error, className, ...props }, ref) => {
-    const fieldId = id ?? React.useId();
+    const reactId = React.useId();
+    const fieldId = id ?? reactId;
     const errorId = `${fieldId}-error`;
 
     return (

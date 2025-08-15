@@ -40,7 +40,7 @@ const AgentExecutionTracker: React.FC<Props> = ({
   const [runId, setRunId] = useState(0);
   const base = useMemo(
     () => Object.fromEntries(agents.map((a) => [a.name, 'pending' as AgentStatus])),
-    [agents, runId],
+    [agents],
   );
 
   const [statuses, setStatuses] = useState<Record<string, AgentStatus>>(base);

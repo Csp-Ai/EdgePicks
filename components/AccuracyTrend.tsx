@@ -48,8 +48,7 @@ const AccuracyTrend: React.FC<{ fallbackData: AccuracyHistory }> = ({ fallbackDa
   const [range, setRange] = useState<'1W' | '1M' | 'All'>('1M');
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
   const prefersReducedMotion = usePrefersReducedMotion();
-
-  const history = data?.history ?? [];
+  const history = useMemo(() => data?.history ?? [], [data]);
 
   const agents = useMemo(() => {
     if (!history[0]) return [];

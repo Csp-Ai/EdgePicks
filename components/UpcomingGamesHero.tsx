@@ -2,6 +2,11 @@
 
 import React from 'react';
 import useSWR from 'swr';
+=======
+import Image from 'next/image';
+=======
+// @ts-expect-error -- swr's types may not expose the named export yet
+import { useSWR } from 'swr';
 import { apiGet } from '@/lib/api';
 import { logEvent } from '@/lib/telemetry/logger';
 
@@ -32,6 +37,8 @@ const UpcomingGamesHero: React.FC = () => {
         <div
           key={game.gameId}
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center space-y-2 hover:shadow-lg transition-shadow cursor-pointer"
+          role="button"
+          tabIndex={0}
           onClick={() =>
             void logEvent({
               level: 'info',
@@ -39,11 +46,32 @@ const UpcomingGamesHero: React.FC = () => {
               meta: { gameId: game.gameId },
             })
           }
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              void logEvent({
+                level: 'info',
+                name: 'open-prediction-drawer',
+                meta: { gameId: game.gameId },
+              });
+            }
+          }}
         >
           <div className="flex items-center space-x-4">
-            <img src={game.homeLogo} alt={game.homeTeam} className="h-12 w-12" />
+            <Image
+              src={game.homeLogo}
+              alt={game.homeTeam}
+              className="h-12 w-12"
+              width={48}
+              height={48}
+            />
             <span className="text-gray-500 dark:text-gray-400">vs</span>
-            <img src={game.awayLogo} alt={game.awayTeam} className="h-12 w-12" />
+            <Image
+              src={game.awayLogo}
+              alt={game.awayTeam}
+              className="h-12 w-12"
+              width={48}
+              height={48}
+            />
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-300">
             Kickoff: {new Date(game.kickoff).toLocaleString()}
