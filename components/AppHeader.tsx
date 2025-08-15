@@ -10,13 +10,8 @@ interface Props {
 }
 
 export default function AppHeader({ isAuthenticated }: Props) {
-  let authed = isAuthenticated ?? false;
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    authed = !!useSession().data;
-  } catch {
-    // ignore – use provided prop
-  }
+  const { data: session } = useSession();
+  const authed = isAuthenticated ?? !!session;
 
   return (
     <header className="border-b border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
