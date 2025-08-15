@@ -2,27 +2,40 @@ import { NextResponse } from 'next/server';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-// In production, export a no-op 404 to avoid evaluating dev logic/env.
-export const dynamic = 'force-static';
-export const fetchCache = 'force-no-store';
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function POST(req: Request) {
   if (!isDev) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  // Dev-only logic lives inside this block so it never runs/imports in prod.
-  const { getPublicSiteUrl } = await import('@/lib/env');
-  const site = getPublicSiteUrl();
-  return NextResponse.json({ ok: true, site });
+  try {
+    const body = await req.json().catch(() => ({}));
+    const { supabaseServer } = await import('@/lib/supabaseClient');
+    const supa = supabaseServer();
+    void supa;
+    void body;
+    return NextResponse.json({ ok: true, mode: 'dev' });
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err?.message ?? 'Internal error' },
+      { status: 500 },
+    );
+  }
 }
 
-export default async function handler(req: Request) {
+export async function GET(_req: Request) {
   if (!isDev) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  const { getPublicSiteUrl } = await import('@/lib/env');
-  const site = getPublicSiteUrl();
-  return NextResponse.json({ ok: true, site });
+  try {
+    return NextResponse.json({ ok: true, mode: 'dev' });
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err?.message ?? 'Internal error' },
+      { status: 500 },
+    );
+  }
 }

@@ -3962,3 +3962,11 @@ Files:
 - README.md (+15/-1)
 
 
+Timestamp: 2025-08-15T04:47:49.955Z
+Commit: b9c5de3aec22c0c92072ab618d38fc6e0323f4af
+Author: Codex
+Message: refactor: fix swr import and dev login route
+Files:
+- app/api/dev-login/route.ts (+25/-12)
+- components/UpcomingGamesHero.tsx (+3/-2)
+

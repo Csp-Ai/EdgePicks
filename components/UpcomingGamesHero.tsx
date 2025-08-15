@@ -1,6 +1,7 @@
+"use client";
+
 import React from 'react';
-// @ts-expect-error -- swr's types may not expose the named export yet
-import { useSWR } from 'swr';
+import useSWR from 'swr';
 import { apiGet } from '@/lib/api';
 import { logEvent } from '@/lib/telemetry/logger';
 
