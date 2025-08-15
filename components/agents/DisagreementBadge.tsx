@@ -7,8 +7,8 @@ export const computeDisagreement = (
   agents: Partial<AgentOutputs>
 ): number => {
   const picks = Object.values(agents)
-    .map((r) => r?.team)
-    .filter((t): t is string => typeof t === 'string');
+    .map((r) => r?.team ?? '')
+    .filter((t): t is string => t !== '');
   if (picks.length === 0) return 0;
   const counts = picks.reduce<Record<string, number>>((acc, team) => {
     acc[team] = (acc[team] || 0) + 1;

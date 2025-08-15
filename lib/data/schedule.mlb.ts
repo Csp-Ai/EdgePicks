@@ -19,6 +19,7 @@ const MlbScheduleSchema = z.array(MlbGameSchema);
 export function normalizeMlbSchedule(data: unknown): Matchup[] {
   const games = MlbScheduleSchema.parse(data);
   return games.map((g) => ({
+    id: `mlb-${g.id}`,
     homeTeam: g.home,
     awayTeam: g.away,
     time: g.commence_time,

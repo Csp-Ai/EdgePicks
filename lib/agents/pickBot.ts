@@ -1,7 +1,7 @@
 import { loadAgents } from './loadAgents';
-import { Matchup, PickResult } from '../types';
+import { Matchup, PickWithReasoning, Reason } from '../types';
 
-export const pickBot = async (matchup: Matchup): Promise<PickResult> => {
+export const pickBot = async (matchup: Matchup): Promise<PickWithReasoning> => {
   const agents = await loadAgents();
   const results = await Promise.all(agents.map((a) => a.run(matchup)));
 
@@ -10,15 +10,22 @@ export const pickBot = async (matchup: Matchup): Promise<PickResult> => {
 
   results.forEach((result, idx) => {
     const weight = agents[idx].weight;
-    scores[result.team] += result.score * weight;
+    const key = result.team;
+    if (key === undefined) return;
+    const score = result?.score ?? 0;
+    scores[key] += score * weight;
   });
 
   const pick = scores[teams[0]] >= scores[teams[1]] ? teams[0] : teams[1];
   const confidence = Math.max(scores[teams[0]], scores[teams[1]]);
 
   return {
-    pick,
+    winner: pick,
     confidence,
-    reasons: results.map((r) => r.reason),
+    reasons: results.map((r) => ({
+      agent: r.name,
+      explanation: r.reason,
+      weight: 1,
+    })) as Reason[],
   };
 };

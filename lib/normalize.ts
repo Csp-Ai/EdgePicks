@@ -1,4 +1,4 @@
-import type { UpcomingGame } from "@/types/game";
+import type { Matchup } from "@/lib/types";
 
 function toIso(dateStr?: string | null, timeStr?: string | null, epochSec?: number | null): string | null {
   // Prefer epoch seconds if present
@@ -23,11 +23,11 @@ function toIso(dateStr?: string | null, timeStr?: string | null, epochSec?: numb
   return null;
 }
 
-export function normalizeUpcomingGames(raw: any): UpcomingGame[] {
+export function normalizeUpcomingGames(raw: any): Matchup[] {
   const list: any[] = Array.isArray(raw?.data) ? raw.data : Array.isArray(raw) ? raw : [];
   
   return list
-    .map((game): UpcomingGame | null => {
+    .map((game): Matchup | null => {
       try {
         const kickoff = toIso(
           game.dateEvent || game.event_date || game.date,
@@ -40,22 +40,21 @@ export function normalizeUpcomingGames(raw: any): UpcomingGame[] {
           league: game.league || game.competition || game.sport || 'Unknown',
           homeTeam: game.homeTeam || game.home_team || game.strHomeTeam || game.home || game.teamHome || '',
           awayTeam: game.awayTeam || game.away_team || game.strAwayTeam || game.away || game.teamAway || '',
-          status: 'upcoming',
           kickoff: kickoff || undefined,
           gameId: game.id || game.gameId || game.idEvent || game.idGame || game.event_id || `game-${Date.now()}`,
-          time: kickoff || undefined,
+          time: kickoff || '',
           odds: {
             homeSpread: typeof game.homeSpread === 'number' ? game.homeSpread : undefined,
             awaySpread: typeof game.awaySpread === 'number' ? game.awaySpread : undefined,
             total: typeof game.total === 'number' ? game.total : undefined,
-          }
+          },
         };
       } catch (e) {
         console.error('Failed to normalize game:', e);
         return null;
       }
     })
-    .filter((game): game is UpcomingGame => game !== null);
+    .filter((game): game is Matchup => game !== null);
 }
 
 export function safeLocalDate(iso: string | null | undefined): string {

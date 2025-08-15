@@ -3,7 +3,7 @@ import { AgentOutputs } from '@/lib/types';
 
 export const computeVariance = (agents: Partial<AgentOutputs>): number => {
   const scores = Object.values(agents)
-    .map((r) => r?.score)
+    .map((r) => r?.score ?? 0)
     .filter((s): s is number => typeof s === 'number');
   if (scores.length === 0) return 0;
   const mean = scores.reduce((sum, s) => sum + s, 0) / scores.length;

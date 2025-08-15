@@ -31,6 +31,7 @@ export const statCruncher = async (matchup: Matchup): Promise<AgentResult> => {
   await logAgentReflection('statCruncher', reflection);
 
   return {
+    name: 'statCruncher',
     team: favored,
     score,
     reason,

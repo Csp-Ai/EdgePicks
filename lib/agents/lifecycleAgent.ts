@@ -12,10 +12,10 @@ export function lifecycleAgent(
   if (!matchup) return;
   try {
     const agents: AgentOutputs = {} as AgentOutputs;
+    const duration = 'durationMs' in event ? event.durationMs ?? 0 : 0;
     const pick: PickSummary = {
       winner: event.name,
-      confidence: event.durationMs ?? 0,
-      topReasons: [`status: ${event.status}`],
+      confidence: duration,
     };
     logMatchup(matchup, agents, pick, null, 'lifecycle');
   } catch (err) {

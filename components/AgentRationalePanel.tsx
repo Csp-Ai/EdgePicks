@@ -29,7 +29,9 @@ const AgentRationalePanel: React.FC<Props> = ({ executions, winner }) => {
   const agents = executions.filter(
     (e) => e.result && e.name !== 'guardianAgent'
   ) as Required<AgentExecution>[];
-  const maxScore = Math.max(...agents.map((a) => a.result.score));
+  const maxScore = Math.max(
+    ...agents.map((a) => a.result.score ?? 0)
+  );
   const [expanded, setExpanded] = useState<Record<AgentName, boolean>>({});
 
   const toggle = (name: AgentName) =>
@@ -38,10 +40,11 @@ const AgentRationalePanel: React.FC<Props> = ({ executions, winner }) => {
   return (
     <div className="flex flex-col gap-2">
       {agents.map(({ name, result }) => {
-        const disagree = result.team !== winner;
-        const delta = Math.round((maxScore - result.score) * 100);
+        const score = result?.score ?? 0;
+        const disagree = result?.team !== winner;
+        const delta = Math.round((maxScore - score) * 100);
         const Icon = (agentIcons[name] || Info) as LucideIcon;
-        const reason = result.reason;
+        const reason = result?.reason ?? '';
         const isLong = reason.length > 200;
         const showFull = expanded[name];
         const displayText = showFull ? reason : reason.slice(0, 200);
@@ -58,9 +61,9 @@ const AgentRationalePanel: React.FC<Props> = ({ executions, winner }) => {
               <span className="flex items-center gap-2">
                 <Icon className="w-4 h-4" /> {formatAgentName(name)}
               </span>
-              <span className="px-2 py-0.5 bg-slate-700 rounded-full text-xs">
-                {Math.round(result.score * 100)}%
-              </span>
+                <span className="px-2 py-0.5 bg-slate-700 rounded-full text-xs">
+                  {Math.round(score * 100)}%
+                </span>
             </div>
             <p className="text-xs text-gray-300 mt-1">
               {displayText}

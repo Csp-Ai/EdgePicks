@@ -6,6 +6,7 @@ import AgentSummary from './AgentSummary';
 import AgentComparePanel from './AgentComparePanel';
 import ScoreBar from './ScoreBar';
 import { AgentOutputs } from '@/lib/types';
+import { getAgent, AgentKey } from '@/lib/types/compat';
 import { getContribution, formatAgentName } from '@/lib/utils';
 import { registry as agentRegistry } from '@/lib/agents/registry';
 import { getAccuracyHistory } from '@/lib/accuracy';
@@ -30,7 +31,7 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
       </div>
       <ul className="space-y-2 text-sm">
         {agentRegistry.map(({ name, weight }) => {
-          const score = agents[name].score;
+          const score = getAgent(agents, name as AgentKey)?.score ?? 0;
           const contribution = getContribution(score, weight);
           const contributionPct = total > 0 ? (contribution / total) * 100 : 0;
           const display = formatAgentName(name);

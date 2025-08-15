@@ -70,6 +70,7 @@ export const trendsAgent = async (_: Matchup): Promise<TrendsResult> => {
   await logAgentReflection('trendsAgent', reflection);
 
   return {
+    name: 'trendsAgent',
     team: 'N/A',
     score: 0,
     reason: 'Trends analysis',

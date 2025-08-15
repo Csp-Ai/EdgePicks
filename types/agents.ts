@@ -27,9 +27,6 @@ export type AgentLifecycle =
   | { type: 'complete'; agent: AgentName; status: 'completed'; durationMs: number; endedAt: string } // Added properties
   | { type: 'error'; agent: AgentName; status: 'errored'; message: string; durationMs?: number; endedAt?: string }; // Added properties
 
-export interface AgentOutputs {
-  results: AgentResult[]; // Explicitly defined
-  lifecycle: AgentLifecycle[]; // Explicitly defined
-}
+export type AgentOutputs = Record<AgentName, AgentResult>;
 
 export type AgentFunc = (args: unknown) => Promise<AgentResult>;

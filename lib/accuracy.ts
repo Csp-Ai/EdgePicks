@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient';
 import { registry as agentRegistry } from './agents/registry';
 import type { AgentName, AgentOutputs } from './types';
+import { getAgent, AgentKey } from './types/compat';
 
 interface MatchupRow {
   agents: AgentOutputs;
@@ -56,7 +57,7 @@ export async function recomputeAccuracy() {
 
     // Agent stats
     agentRegistry.forEach(({ name }) => {
-      const pick = row.agents?.[name]?.team;
+      const pick = getAgent(row.agents || {}, name as AgentKey)?.team;
       if (!pick) return;
       if (pick === actual) {
         agentTallies[name as AgentName].wins += 1;

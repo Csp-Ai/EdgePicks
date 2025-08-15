@@ -11,6 +11,8 @@ import pLimit from 'p-limit';
 import { ENV } from '../env';
 import crypto from 'crypto';
 import { getCacheDriver } from '../infra/cache';
+import { AgentKey } from '../types/compat';
+import { toNum } from '../num';
 
 export interface AgentExecution {
   name: AgentName;
@@ -86,24 +88,31 @@ export async function runFlow(
         batch.map(({ name, idx, agent }) =>
           limit(async () => {
             console.log(`[runFlow] ${name} input:`, matchup);
-            const start = Date.now();
-            onLifecycle?.({ name, status: 'started', startedAt: start });
+              const start = Date.now();
+              onLifecycle?.({
+                name,
+                type: 'start',
+                agent: name,
+                status: 'started',
+                startedAt: new Date(start).toISOString(),
+              });
             try {
-              const result = await agent.run(matchup, outputs);
+              const result = await agent.run(matchup);
               const end = Date.now();
               const duration = end - start;
               console.log(`[runFlow] ${name} output:`, result);
-              outputs[name] = result;
+              outputs[name as AgentKey] = result;
               const exec: AgentExecution = { name, result };
               executions[idx] = exec;
               onAgent?.(exec);
-              onLifecycle?.({
-                name,
-                status: 'completed',
-                startedAt: start,
-                endedAt: end,
-                durationMs: duration,
-              });
+                onLifecycle?.({
+                  name,
+                  type: 'complete',
+                  agent: name,
+                  status: 'completed',
+                  endedAt: new Date(end).toISOString(),
+                  durationMs: duration,
+                });
             } catch (err: any) {
               const end = Date.now();
               const duration = end - start;
@@ -114,11 +123,12 @@ export async function runFlow(
               onAgent?.(exec);
               onLifecycle?.({
                 name,
+                type: 'error',
+                agent: name,
                 status: 'errored',
-                startedAt: start,
-                endedAt: end,
+                endedAt: new Date(end).toISOString(),
                 durationMs: duration,
-                error: errorInfo,
+                message: errorInfo.message,
               });
             }
           })
@@ -139,21 +149,28 @@ export async function runFlow(
       }
       console.log(`[runFlow] ${name} input:`, matchup);
       const start = Date.now();
-      onLifecycle?.({ name, status: 'started', startedAt: start });
+      onLifecycle?.({
+        name,
+        type: 'start',
+        agent: name,
+        status: 'started',
+        startedAt: new Date(start).toISOString(),
+      });
       try {
-        const result = await agent.run(matchup, outputs);
+        const result = await agent.run(matchup);
         const end = Date.now();
         const duration = end - start;
         console.log(`[runFlow] ${name} output:`, result);
-        outputs[name] = result;
+        outputs[name as AgentKey] = result;
         const exec: AgentExecution = { name, result };
         executions[index] = exec;
         onAgent?.(exec);
         onLifecycle?.({
           name,
+          type: 'complete',
+          agent: name,
           status: 'completed',
-          startedAt: start,
-          endedAt: end,
+          endedAt: new Date(end).toISOString(),
           durationMs: duration,
         });
       } catch (err: any) {
@@ -166,11 +183,12 @@ export async function runFlow(
         onAgent?.(exec);
         onLifecycle?.({
           name,
+          type: 'error',
+          agent: name,
           status: 'errored',
-          startedAt: start,
-          endedAt: end,
+          endedAt: new Date(end).toISOString(),
           durationMs: duration,
-          error: errorInfo,
+          message: errorInfo.message,
         });
       }
       index++;
@@ -178,7 +196,7 @@ export async function runFlow(
   }
 
   const result: FlowRunResult = { outputs, executions };
-  await cacheDriver.set(key, result, ENV.PREDICTION_CACHE_TTL_SEC);
+  await cacheDriver.set(key, result, toNum(ENV.PREDICTION_CACHE_TTL_SEC));
   return result;
 }
 

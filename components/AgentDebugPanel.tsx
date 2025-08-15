@@ -2,6 +2,7 @@ import React from 'react';
 import ScoreBar from './ScoreBar';
 import AgentTooltip from './AgentTooltip';
 import { AgentOutputs } from '@/lib/types';
+import { getAgent, AgentKey } from '@/lib/types/compat';
 import { registry as agentRegistry } from '@/lib/agents/registry';
 import { formatAgentName } from '@/lib/utils';
 
@@ -20,7 +21,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
     <div>
       <div className="space-y-4 sm:hidden">
         {agentRegistry.map(({ name, weight, type }) => {
-          const result = agents[name];
+          const result = getAgent(agents, name as AgentKey);
           const display = formatAgentName(name);
           if (!result) {
             return (
@@ -30,8 +31,9 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               </div>
             );
           }
-          const scorePct = result.score * 100;
-          const weighted = result.score * weight;
+          const score = result?.score ?? 0;
+          const scorePct = score * 100;
+          const weighted = score * weight;
           const weightedPct = weighted * 100;
           const badge = typeBadge[type] || type;
 
@@ -49,7 +51,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               <div className="mt-2">
                 <ScoreBar percent={scorePct} className="w-full" />
                 <div className="mt-1 font-mono text-sm">
-                  {result.score.toFixed(2)} ({Math.round(scorePct)}%)
+                  {score.toFixed(2)} ({Math.round(scorePct)}%)
                 </div>
               </div>
               <div className="mt-2">
@@ -67,7 +69,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
               </div>
               {result.warnings && result.warnings.length > 0 && (
                 <ul className="mt-2 text-xs text-yellow-700 list-disc pl-4">
-                  {result.warnings.map((w, i) => (
+                  {result.warnings.map((w: string, i: number) => (
                     <li key={i}>{w}</li>
                   ))}
                 </ul>
@@ -89,7 +91,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
           </thead>
           <tbody>
             {agentRegistry.map(({ name, weight, type }) => {
-              const result = agents[name];
+              const result = getAgent(agents, name as AgentKey);
               const display = formatAgentName(name);
               if (!result) {
                 return (
@@ -101,8 +103,9 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                   </tr>
                 );
               }
-              const scorePct = result.score * 100;
-              const weighted = result.score * weight;
+              const score = result?.score ?? 0;
+              const scorePct = score * 100;
+              const weighted = score * weight;
               const weightedPct = weighted * 100;
               const badge = typeBadge[type] || type;
 
@@ -116,7 +119,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                     <div className="flex items-center gap-2">
                       <ScoreBar percent={scorePct} />
                       <span className="w-20 text-right font-mono">
-                        {result.score.toFixed(2)} ({Math.round(scorePct)}%)
+                        {score.toFixed(2)} ({Math.round(scorePct)}%)
                       </span>
                     </div>
                   </td>
@@ -132,7 +135,7 @@ const AgentDebugPanel: React.FC<Props> = ({ agents }) => {
                     <div className="truncate" title={result.reason}>{result.reason}</div>
                     {result.warnings && result.warnings.length > 0 && (
                       <ul className="mt-1 list-disc pl-4 text-yellow-700">
-                        {result.warnings.map((w, i) => (
+                        {result.warnings.map((w: string, i: number) => (
                           <li key={i}>{w}</li>
                         ))}
                       </ul>

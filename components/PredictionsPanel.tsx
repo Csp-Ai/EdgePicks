@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import AgentNodeGraph from './AgentNodeGraph';
-import type { AgentOutputs, AgentLifecycle, PickSummary, AgentName } from '@/lib/types';
+import type {
+  AgentOutputs,
+  AgentLifecycle,
+  PickSummary,
+  AgentName,
+  Reason,
+} from '@/lib/types';
 import type { FlowNode, FlowEdge } from '@/lib/dashboard/useFlowVisualizer';
 import { z } from 'zod';
 
@@ -19,6 +25,7 @@ type PickWithReasoning = PickSummary & {
   reasoning?: unknown;
   betType?: string;
   impliedEdge?: number;
+  reasons?: Reason[];
 };
 
 const ConfidenceBar: React.FC<{ percent: number; label: string }> = ({
@@ -159,10 +166,10 @@ const PredictionsPanel: React.FC<Props> = ({
                 </div>
               )}
             </div>
-          ) : pick.topReasons && pick.topReasons.length > 0 ? (
+          ) : pick.reasons && pick.reasons.length > 0 ? (
             <ul className="mt-2 list-disc list-inside text-sm text-gray-300">
-              {pick.topReasons.map((r, i) => (
-                <li key={i}>{r}</li>
+              {pick.reasons.map((r: Reason, i: number) => (
+                <li key={i}>{r.explanation}</li>
               ))}
             </ul>
           ) : (
@@ -190,9 +197,6 @@ const PredictionsPanel: React.FC<Props> = ({
                 <div className="text-xs text-gray-400 flex flex-wrap gap-2">
                   {typeof result.weight !== 'undefined' && (
                     <span>Weight: {result.weight}</span>
-                  )}
-                  {typeof result.scoreTotal !== 'undefined' && (
-                    <span>Score: {result.scoreTotal.toFixed(2)}</span>
                   )}
                 </div>
                 {typeof result.confidenceEstimate !== 'undefined' && (
