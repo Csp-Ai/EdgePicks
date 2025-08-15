@@ -14,7 +14,7 @@ This project uses modular agents that provide explainable scores for each matchu
 
 ## Agents (Detailed)
 
-Last Updated: 2025-08-05
+Last Updated: 2025-08-15
 
 | Name | Purpose | Type | Weight | Sources | Special Notes |
 | --- | --- | --- | --- | --- | --- |
@@ -35,3 +35,4 @@ trendsAgent and guardianAgent operate with a weight of 0 to handle analytics and
 - All agents should return JSON using the schema `{ agent, score, reasoning, metadata? }`.
 
 - Run `npm test` before committing changes.
+- See `README.md` for a high-level overview of active agents.
