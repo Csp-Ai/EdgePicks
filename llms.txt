@@ -3849,4 +3849,15 @@ Files:
 - __tests__/mapAgentEventsToGraph.test.ts (+39/-0)
 - components/universal/mapAgentEventsToGraph.ts (+44/-3)
 - jest.config.ts (+1/-0)
+=======
+Timestamp: 2025-08-15T03:04:55.229Z
+Commit: 61525c6297a9245e046e4c910e7dd419b525cc56
+Author: Codex
+Message: refactor: call hooks unconditionally
+Files:
+- components/AppHeader.tsx (+2/-7)
+- components/system/Guard.tsx (+4/-17)
+- next-env.d.ts (+2/-1)
+- tsconfig.json (+22/-5)
+
 
