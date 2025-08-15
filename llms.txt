@@ -3922,3 +3922,10 @@ Files:
 - pages/api/trends.ts (+11/-1)
 - types/agents.ts (+1/-4)
 
+Timestamp: 2025-08-15T04:02:20.876Z
+Commit: 781d572ca731a02e6c121912c21b72fcb0398689
+Author: Codex
+Message: chore: remove legacy root page
+Files:
+- pages/index.tsx (+0/-9)
+
