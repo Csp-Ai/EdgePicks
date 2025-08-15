@@ -4,6 +4,7 @@ import { AgentEvent } from '@/lib/events/agentEvents';
 import type { AgentName, AgentLifecycle } from '@/lib/types';
 import type { FlowNode, FlowEdge } from '@/lib/dashboard/useFlowVisualizer';
 import AgentNodePopover from './agents/AgentNodePopover';
+import { logEvent } from '@/lib/telemetry/logger';
 
 interface Props {
   events: AgentEvent[];
@@ -70,8 +71,7 @@ const AgentVizCanvas: React.FC<Props> = ({ events, skipAnimations }) => {
 
   const handleRunSolo = (id: string) => {
     // Placeholder for solo run action
-    // eslint-disable-next-line no-console
-    console.log('Run solo', id);
+    void logEvent({ level: 'debug', name: 'agent-run-solo', meta: { id } });
   };
 
   const { nodes, edges } = useMemo(() => {
