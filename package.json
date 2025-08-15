@@ -9,7 +9,7 @@
   "scripts": {
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
-    "prebuild": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && npm run fix:aliases && npm run guard:aliases && npm run guard:swr && npm run setup:dev",
+    "prebuild": "npm config delete http-proxy || true && npm config delete https-proxy || true && ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && npm run fix:aliases && npm run guard:aliases && npm run guard:swr && npm run setup:dev",
     "build": "npm run validate-env && npm run check-conflicts && npm run typecheck && npm run lint && next build",
     "start": "npm run validate-env && next start",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",

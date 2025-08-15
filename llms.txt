@@ -3995,6 +3995,15 @@ Files:
 - components/UpcomingGamesHero.tsx (+0/-4)
 - package.json (+3/-2)
 
+Timestamp: 2025-08-15T05:22:57.685Z
+Commit: 096d7a617e126ed83e0513a36d1977ccb93eeb7c
+Author: Codex
+Message: chore: remove deprecated npm proxy config
+Files:
+- .npmrc (+2/-0)
+- package.json (+1/-1)
+- vercel.json (+1/-1)
+=======
 Timestamp: 2025-08-15T05:18:02.339Z
 Commit: 6bf5ebafd38cc4b319e4d9faf46fc6e388d592a6
 Author: Codex
@@ -4004,6 +4013,7 @@ Files:
 - app/api/upcoming-games/route.ts (+29/-95)
 - llms.txt (+0/-7)
 
+
 Timestamp: 2025-08-15T05:27:26.653Z
 Commit: 65f79d78c1bbc7b4a0a7581ba66da605aa18ad13
 Author: Codex
@@ -4012,4 +4022,6 @@ Files:
 - .npmrc (+5/-0)
 - .nvmrc (+1/-0)
 - package.json (+12/-1)
+
+
 
