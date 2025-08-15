@@ -6,6 +6,20 @@ import {
   useClientFlag,
 } from '@/lib/flags/clientFlags';
 
+function FlagToggle({ flag }: { flag: ClientFlagKey }) {
+  const [value, set] = useClientFlag(flag);
+  return (
+    <label style={{ display: 'block' }}>
+      <input
+        type="checkbox"
+        checked={value}
+        onChange={(e) => set(e.target.checked)}
+      />{' '}
+      {flag}
+    </label>
+  );
+}
+
 export default function FlagSwitch() {
   const keys = Object.keys(clientFlagDefaults) as ClientFlagKey[];
   if (keys.length === 0) return null;
@@ -25,19 +39,9 @@ export default function FlagSwitch() {
           zIndex: 1000,
         }}
       >
-        {keys.map((key) => {
-          const [value, set] = useClientFlag(key);
-          return (
-            <label key={key} style={{ display: 'block' }}>
-              <input
-                type="checkbox"
-                checked={value}
-                onChange={(e) => set(e.target.checked)}
-              />{' '}
-              {key}
-            </label>
-          );
-        })}
+        {keys.map((key) => (
+          <FlagToggle key={key} flag={key} />
+        ))}
       </div>
     </DevOnly>
   );

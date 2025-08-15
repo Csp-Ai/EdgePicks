@@ -14,8 +14,12 @@ const PricingTeaser: React.FC<PricingTeaserProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const stopPropagation = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleOverlayClick = (
+    e: React.MouseEvent | React.KeyboardEvent,
+  ) => {
+    if (e.target === e.currentTarget) {
+      onKeepDemo();
+    }
   };
 
   return (
@@ -23,14 +27,13 @@ const PricingTeaser: React.FC<PricingTeaserProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       role="button"
       tabIndex={0}
-      onClick={onKeepDemo}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onKeepDemo()}
+      onClick={handleOverlayClick}
+      onKeyDown={(e) =>
+        (e.key === 'Enter' || e.key === ' ') && handleOverlayClick(e)
+      }
       data-testid="pricing-teaser"
     >
-      <div
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm text-center space-y-4"
-        onClick={stopPropagation}
-      >
+      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm text-center space-y-4">
         <h2 className="text-xl font-semibold">Unlock full access</h2>
         <p className="text-sm text-slate-700">
           Upgrade to get unlimited picks and deeper insights.

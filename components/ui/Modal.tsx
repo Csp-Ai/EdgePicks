@@ -42,26 +42,23 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === overlayRef.current) {
+    if (e.target === e.currentTarget) {
       onClose();
     }
-  };
-
-  const stopPropagation = (e: React.MouseEvent) => {
-    e.stopPropagation();
   };
 
   return (
     <div
       ref={overlayRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onMouseDown={handleOverlayClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      tabIndex={-1}
+      role="button"
+      tabIndex={0}
+      onClick={handleOverlayClick}
       onKeyDown={(e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+        if (
+          (e.key === 'Enter' || e.key === ' ') &&
+          e.target === e.currentTarget
+        ) {
           onClose();
         }
       }}
@@ -69,9 +66,14 @@ export const Modal: React.FC<ModalProps> = ({
       <FocusTrap>
         <div
           ref={contentRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
           tabIndex={-1}
-          className={cn('bg-white text-gray-900 p-6 rounded shadow-md focus:outline-none', className)}
-          onMouseDown={stopPropagation}
+          className={cn(
+            'bg-white text-gray-900 p-6 rounded shadow-md focus:outline-none',
+            className,
+          )}
           {...props}
         >
           <h2 id={titleId} className="text-lg font-semibold mb-4">

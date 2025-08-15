@@ -11,8 +11,6 @@ interface StatePeekProps<T> {
 }
 
 export default function StatePeek<T>({ store, label = 'State' }: StatePeekProps<T>) {
-  if (process.env.NODE_ENV === 'production') return null;
-
   const [state, setState] = useState<T>(store.getState());
 
   useEffect(() => {
@@ -21,6 +19,8 @@ export default function StatePeek<T>({ store, label = 'State' }: StatePeekProps<
     });
     return unsubscribe;
   }, [store]);
+
+  if (process.env.NODE_ENV === 'production') return null;
 
   return (
     <details>

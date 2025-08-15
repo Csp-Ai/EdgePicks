@@ -125,16 +125,22 @@ const AuditLogList: React.FC = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
           role="button"
           tabIndex={0}
-          onClick={() => setSelected(null)}
-          onKeyDown={(e) =>
-            (e.key === 'Enter' || e.key === ' ') && setSelected(null)
-          }
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelected(null);
+          }}
+          onKeyDown={(e) => {
+            if (
+              (e.key === 'Enter' || e.key === ' ') &&
+              e.target === e.currentTarget
+            ) {
+              setSelected(null);
+            }
+          }}
         >
           <div
             role="dialog"
             aria-modal="true"
             className="bg-white rounded p-4 max-w-md w-full"
-            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-lg font-semibold mb-2">Log Detail</h2>
             <p className="text-xs text-gray-500 mb-2">

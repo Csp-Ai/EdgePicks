@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useMemo, useState, ReactNode } from 'react';
+import React, { createContext, useMemo, useState, ReactNode, useCallback } from 'react';
 import enCommon from '../../locales/en/common.json';
 import esCommon from '../../locales/es/common.json';
 import arCommon from '../../locales/ar/common.json';
@@ -52,16 +52,19 @@ export function I18nProvider({
     Object.keys(initialNamespaces).length ? initialNamespaces : { common: initialCommon[initialLocale] },
   );
 
-  const loadNamespace = async (ns: string) => {
-    const dict = await loadForLocale(locale, ns);
-    setNamespaces(prev => ({ ...prev, [ns]: dict }));
-  };
+  const loadNamespace = useCallback(
+    async (ns: string) => {
+      const dict = await loadForLocale(locale, ns);
+      setNamespaces((prev) => ({ ...prev, [ns]: dict }));
+    },
+    [locale],
+  );
 
-  const setLocale = async (newLocale: Locale) => {
+  const setLocale = useCallback(async (newLocale: Locale) => {
     const dict = await loadForLocale(newLocale, 'common');
     setLocaleState(newLocale);
     setNamespaces({ common: dict });
-  };
+  }, []);
 
   const value = useMemo<I18nContextValue>(
     () => ({
@@ -71,7 +74,7 @@ export function I18nProvider({
       setLocale,
       loadNamespace,
     }),
-    [locale, namespaces],
+    [locale, namespaces, setLocale, loadNamespace],
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

@@ -16,7 +16,6 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, className }) => {
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
-      tabIndex={0}
     >
       {children}
       {open && (
