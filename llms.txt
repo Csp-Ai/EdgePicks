@@ -4045,3 +4045,17 @@ Message: chore(lockfile): regenerate after full install
 Files:
 - package-lock.json (+20776/-12806)
 
+Timestamp: 2025-08-15T06:56:10.367Z
+Commit: d539ec6d6a8f5ac2b705a18de2931ea467df501a
+Author: Codex
+Message: fix(codemod): resolve glob dynamically
+Files:
+- scripts/codemods/aliasImports.ts (+48/-13)
+
+Timestamp: 2025-08-15T06:56:39.192Z
+Commit: 72101a2cfca4d0be1dffd71f5e1533c06f520260
+Author: Codex
+Message: chore(lockfile): refresh after alias-codemod fix
+Files:
+- package-lock.json (+15992/-21196)
+
