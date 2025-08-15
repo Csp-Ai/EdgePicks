@@ -3961,4 +3961,27 @@ Files:
 - CHANGELOG.md (+7/-0)
 - README.md (+15/-1)
 
+Timestamp: 2025-08-15T04:43:27.096Z
+Commit: f9eeb196e150e0c3b1b63dccd86beb54a13eb158
+Author: Codex
+Message: fix: resolve ESLint warnings
+Files:
+- components/AccuracyTrend.tsx (+1/-2)
+- components/AgentDetailsModal.tsx (+11/-5)
+- components/AgentExecutionTracker.tsx (+1/-1)
+- components/AuditLogList.tsx (+11/-5)
+- components/DemoMatchupCarousel.tsx (+6/-6)
+- components/GameInsightsHero.tsx (+7/-2)
+- components/SignInModal.tsx (+8/-11)
+- components/Tooltip.tsx (+0/-1)
+- components/UpcomingGamesHero.tsx (+26/-2)
+- components/dev/ExperimentsPanel.tsx (+17/-13)
+- components/dev/FlagSwitch.tsx (+17/-13)
+- components/dev/StatePeek.tsx (+2/-2)
+- components/forms/Field.tsx (+2/-1)
+- components/marketing/PricingTeaser.tsx (+11/-8)
+- components/ui/Modal.tsx (+15/-13)
+- lib/i18n/config.tsx (+11/-8)
+=======
+
 
