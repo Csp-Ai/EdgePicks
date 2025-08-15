@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { loadFlow } from '@/lib/flow/loadFlow';
 import { runFlow } from '@/lib/flow/runFlow';
+import type { Matchup } from '@/lib/types';
 
 export const config = {
   api: {
@@ -19,9 +20,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const flowName = typeof flowNameParam === 'string' ? flowNameParam : 'trends';
   const flow = await loadFlow(flowName);
 
+  const matchup: Matchup = {
+    id: 'trends-placeholder',
+    gameId: 'trends-placeholder',
+    homeTeam: '',
+    awayTeam: '',
+    time: new Date().toISOString(),
+    league: '',
+  };
+
   await runFlow(
     flow,
-    { homeTeam: '', awayTeam: '', time: '', league: '' },
+    matchup,
     ({ name, result, error }) => {
       if (!error && result) {
         res.write(`data: ${JSON.stringify({ type: 'agent', name, result })}\n\n`);

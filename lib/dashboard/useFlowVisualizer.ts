@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import type { AgentLifecycle, AgentName } from '../types';
+import { toNum } from '../num';
 
 export type NodeStatus = 'pending' | 'running' | 'completed' | 'errored';
 
@@ -56,9 +57,9 @@ export default function useFlowVisualizer() {
 
         if (event.status === 'started') {
           updated.status = 'running';
-          updated.startedAt = event.startedAt;
-          if (flowStartRef.current === null || event.startedAt < flowStartRef.current) {
-            flowStartRef.current = event.startedAt;
+          updated.startedAt = toNum(event.startedAt);
+          if (flowStartRef.current === null || toNum(event.startedAt) < flowStartRef.current) {
+            flowStartRef.current = toNum(event.startedAt);
           }
           if (lastNodeRef.current) {
             const from = lastNodeRef.current;
@@ -74,12 +75,12 @@ export default function useFlowVisualizer() {
           lastNodeRef.current = event.name;
         } else if (event.status === 'completed') {
           updated.status = 'completed';
-          updated.endedAt = event.endedAt;
-          updated.durationMs = event.durationMs;
+          updated.endedAt = toNum(event.endedAt);
+          updated.durationMs = toNum(event.durationMs);
         } else if (event.status === 'errored') {
           updated.status = 'errored';
-          updated.endedAt = event.endedAt;
-          updated.durationMs = event.durationMs;
+          updated.endedAt = toNum(event.endedAt);
+          updated.durationMs = toNum(event.durationMs);
         }
 
         return { ...prev, [event.name]: updated };
@@ -94,7 +95,7 @@ export default function useFlowVisualizer() {
           ...prev,
           [event.name]: {
             status: event.status,
-            durationMs: event.durationMs,
+            durationMs: toNum(event.durationMs),
           },
         };
       });
@@ -103,7 +104,7 @@ export default function useFlowVisualizer() {
   );
 
   const nodeList = Object.values(nodes).sort(
-    (a, b) => (a.startedAt ?? 0) - (b.startedAt ?? 0)
+    (a, b) => toNum(a.startedAt) - toNum(b.startedAt)
   );
 
   return {

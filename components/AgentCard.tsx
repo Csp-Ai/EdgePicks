@@ -63,11 +63,12 @@ const AgentCard: React.FC<Props> = ({
     );
   }
 
-  const scorePct = Math.round(result.score * 100);
+  const score = result?.score ?? 0;
+  const scorePct = Math.round(score * 100);
   const glowColor =
-    result.score > 0.66
+    score > 0.66
       ? 'rgba(34,197,94,0.6)'
-      : result.score > 0.33
+      : score > 0.33
       ? 'rgba(250,204,21,0.6)'
       : 'rgba(239,68,68,0.6)';
   const Icon = (agentIcons[name] || Info) as LucideIcon;
@@ -80,7 +81,7 @@ const AgentCard: React.FC<Props> = ({
     >
       <div className="flex items-start justify-between">
         <ReasoningDisclosure
-          reason={result.reason}
+          reason={result.reason ?? ''}
           className="flex items-center gap-2 font-medium cursor-pointer"
           tabIndex={0}
           onMouseEnter={() =>

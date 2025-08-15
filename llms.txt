@@ -3885,3 +3885,40 @@ Files:
 - llms.txt (+8/-0)
 - tsconfig.test.json (+4/-0)
 
+Timestamp: 2025-08-15T03:53:21.576Z
+Commit: 125eedb177e02adf1ff424ac4e35f3981f838253
+Author: Codex
+Message: feat: normalize odds and tighten types
+Files:
+- components/AgentCard.tsx (+5/-4)
+- components/AgentComparePanel.tsx (+8/-2)
+- components/AgentDebugPanel.tsx (+13/-10)
+- components/AgentRationalePanel.tsx (+10/-7)
+- components/AgentSummary.tsx (+2/-1)
+- components/MatchupCard.tsx (+2/-1)
+- components/PredictionsPanel.tsx (+11/-7)
+- components/agents/AgentTrustScore.tsx (+1/-1)
+- components/agents/DisagreementBadge.tsx (+2/-2)
+- components/predictions/MatchupInsights.tsx (+28/-18)
+- components/predictions/QuickMatchups.tsx (+21/-16)
+- hooks/useUpcomingGames.ts (+2/-2)
+- lib/accuracy.ts (+2/-1)
+- lib/agents/injuryScout.ts (+2/-2)
+- lib/agents/lifecycleAgent.ts (+2/-2)
+- lib/agents/lineWatcher.ts (+25/-21)
+- lib/agents/loadAgents.ts (+6/-3)
+- lib/agents/pickBot.ts (+12/-5)
+- lib/agents/statCruncher.ts (+1/-0)
+- lib/agents/trendsAgent.ts (+1/-0)
+- lib/dashboard/useFlowVisualizer.ts (+10/-9)
+- lib/data/schedule.mlb.ts (+1/-0)
+- lib/flow/runFlow.ts (+41/-23)
+- lib/mock/agentOutput.ts (+19/-7)
+- lib/normalize.ts (+6/-7)
+- lib/num.ts (+2/-0)
+- lib/odds/normalize.ts (+8/-0)
+- lib/types/compat.ts (+5/-0)
+- lib/utils/fallbackMatchups.ts (+2/-0)
+- pages/api/trends.ts (+11/-1)
+- types/agents.ts (+1/-4)
+

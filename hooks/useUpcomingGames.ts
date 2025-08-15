@@ -2,10 +2,10 @@
 import useSWR from 'swr';
 import { apiGet } from '@/lib/api';
 import { normalizeUpcomingGames } from '@/lib/normalize';
-import type { UpcomingGame } from '@/types/game';
+import type { Matchup } from '@/lib/types';
 
 export function useUpcomingGames(league?: string) {
-  const { data, error, isLoading } = useSWR<UpcomingGame[]>(
+  const { data, error, isLoading } = useSWR<Matchup[]>(
     '/api/upcoming-games',
     async () => {
       const raw = await apiGet<any>('/api/upcoming-games');

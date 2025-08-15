@@ -3,13 +3,16 @@ import { pseudoMetric, logAgentReflection } from './utils';
 import { AgentReflection } from '../../types/AgentReflection';
 import { fetchOdds, type OddsGame } from '../data/odds';
 import type { League } from '../data/schedule';
+import { toNormalizedOdds } from '../odds/normalize';
 
 export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
   // Map line movement to confidence.
   // Input: point spread movement (movement).
   // Score: 0.5 base + movement/20, capped at 1.
-  let odds = matchup.odds;
-  if (!odds) {
+  let odds = toNormalizedOdds(matchup.odds);
+  let bookTitle: string | undefined;
+  let lastUpdate: string | undefined;
+  if (!odds.homeSpread && !odds.awaySpread && !odds.total) {
     const oddsData = await fetchOdds(matchup.league as League);
     const game: OddsGame | undefined = oddsData.find(
       (o) =>
@@ -19,37 +22,36 @@ export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
     const bookmaker = game?.bookmakers?.[0];
     const spreads = bookmaker?.markets?.find((m) => m.key === 'spreads')?.outcomes;
     const totals = bookmaker?.markets?.find((m) => m.key === 'totals')?.outcomes;
-    const h2h = bookmaker?.markets?.find((m) => m.key === 'h2h')?.outcomes;
-    odds = game
-      ? {
-          spread: spreads?.find((o) => o.name === matchup.homeTeam)?.point ?? undefined,
-          overUnder: totals?.[0]?.point ?? undefined,
-          moneyline: {
-            home: h2h?.find((o) => o.name === matchup.homeTeam)?.price ?? undefined,
-            away: h2h?.find((o) => o.name === matchup.awayTeam)?.price ?? undefined,
-          },
-          bookmaker: bookmaker?.title,
-          lastUpdate: bookmaker?.last_update,
-        }
-      : undefined;
+    odds = toNormalizedOdds({
+      spread: {
+        home: spreads?.find((o) => o.name === matchup.homeTeam)?.point,
+        away: spreads?.find((o) => o.name === matchup.awayTeam)?.point,
+      },
+      total: totals?.[0]?.point,
+    });
+    bookTitle = bookmaker?.title;
+    lastUpdate = bookmaker?.last_update;
   }
 
-  if (odds?.spread !== undefined) {
-    const favored = odds.spread < 0 ? matchup.homeTeam : matchup.awayTeam;
-    const movement = Math.abs(odds.spread);
+  if (odds.homeSpread !== undefined) {
+    const spread = odds.homeSpread;
+    const favored = spread < 0 ? matchup.homeTeam : matchup.awayTeam;
+    const movement = Math.abs(spread);
     const score = Math.min(1, 0.5 + movement / 20);
-    const reason = `Spread ${odds.spread} from ${odds.bookmaker} (updated ${odds.lastUpdate})`;
+    const reason = `Spread ${spread} from ${bookTitle ?? 'book'} (updated ${lastUpdate ?? 'n/a'})`;
     const reflection: AgentReflection = {
       whatIObserved: reason,
       whatIChose: `Favored ${favored}`,
       whatCouldImprove: 'Track live line movement',
     };
     await logAgentReflection('lineWatcher', reflection);
-    return {
+    const result: AgentResult = {
+      name: 'lineWatcher',
       team: favored,
       score,
       reason,
     };
+    return result;
   }
 
   const [homeLine, awayLine] = await Promise.all([
@@ -69,9 +71,11 @@ export const lineWatcher = async (matchup: Matchup): Promise<AgentResult> => {
   };
   await logAgentReflection('lineWatcher', reflection);
 
-  return {
+  const result: AgentResult = {
+    name: 'lineWatcher',
     team: favored,
     score,
     reason,
   };
+  return result;
 };

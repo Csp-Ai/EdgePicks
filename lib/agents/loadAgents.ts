@@ -1,6 +1,9 @@
-import type { Agent } from './registry';
+import type { AgentMeta } from './registry';
 import { registry } from './registry';
-import type { AgentFunc } from '../types';
+import type { AgentResult, Matchup } from '../types';
+
+type AgentFunc = (matchup: Matchup) => Promise<AgentResult>;
+type Agent = AgentMeta & { run: AgentFunc };
 
 export async function loadAgents(): Promise<Agent[]> {
   const [{ injuryScout }, { lineWatcher }, { statCruncher }, { trendsAgent }, { guardianAgent }] = await Promise.all([
@@ -16,7 +19,7 @@ export async function loadAgents(): Promise<Agent[]> {
     lineWatcher,
     statCruncher,
     trendsAgent,
-    guardianAgent,
+    guardianAgent: guardianAgent as unknown as AgentFunc,
   };
 
   return registry.map((meta) => ({

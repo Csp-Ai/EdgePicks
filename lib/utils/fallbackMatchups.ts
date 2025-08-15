@@ -3,6 +3,8 @@ import { Matchup } from '../types';
 export function getFallbackMatchups(): (Matchup & { useFallback: true })[] {
   return [
     {
+      id: 'nfl-DAL-NYG-2025-09-07',
+      gameId: 'DAL-NYG-2025-09-07',
       homeTeam: 'Dallas Cowboys',
       awayTeam: 'New York Giants',
       time: '2025-09-07T20:20:00Z',
