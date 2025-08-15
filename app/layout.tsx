@@ -8,15 +8,15 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 export const metadata: Metadata = {
   title: "EdgePicks",
-  description: "Sports predictions and agent interface"
+  description: "Sports predictions and agent interface",
 };
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+    <html lang="en">
+      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>
