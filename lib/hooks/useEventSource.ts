@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-
-/* eslint-disable react-hooks/rules-of-hooks */
 
 interface Options {
   enabled?: boolean;
 }
 
-interface HookState<T = any> {
+interface HookState<T = unknown> {
   status: 'idle' | 'connecting' | 'open' | 'error';
   events: T[];
   lastMessage: T | null;
@@ -15,13 +13,13 @@ interface HookState<T = any> {
   reconnect: () => void;
 }
 
-export default function useEventSource(
+export default function useEventSource<T = unknown>(
   url: string | null,
   options: Options = {}
-): HookState {
+): HookState<T> {
   const { enabled = true } = options;
-  const [events, setEvents] = useState<any[]>([]);
-  const [lastMessage, setLastMessage] = useState<any | null>(null);
+  const [events, setEvents] = useState<T[]>([]);
+  const [lastMessage, setLastMessage] = useState<T | null>(null);
   const [status, setStatus] = useState<'idle' | 'connecting' | 'open' | 'error'>(
     'idle'
   );
@@ -33,7 +31,7 @@ export default function useEventSource(
   const lastActivityRef = useRef<number>(Date.now());
   const router = useRouter();
 
-  const connect = () => {
+  const connect = useCallback(() => {
     if (!url || !enabled) return;
     setStatus('connecting');
     const es = new EventSource(url);
@@ -44,7 +42,7 @@ export default function useEventSource(
           .map((l: string) => l.trim())
           .filter(Boolean)
           .forEach((line: string) => {
-            const data = JSON.parse(line);
+            const data = JSON.parse(line) as T;
             setEvents((prev) => [...prev, data]);
             setLastMessage(data);
             setStatus('open');
@@ -57,7 +55,7 @@ export default function useEventSource(
     };
     es.onerror = (e) => {
       setStatus('error');
-      setError(e as any);
+      setError(e as Event);
       es.close();
       if (retryRef.current < 5) {
         const base = Math.min(2000, 250 * Math.pow(2, retryRef.current));
@@ -75,13 +73,13 @@ export default function useEventSource(
         connect();
       }
     }, 30000);
-  };
+  }, [url, enabled]);
 
-  const reconnect = () => {
+  const reconnect = useCallback(() => {
     retryRef.current = 0;
     esRef.current?.close();
     connect();
-  };
+  }, [connect]);
 
   useEffect(() => {
     if (url && enabled) {
@@ -98,8 +96,7 @@ export default function useEventSource(
         heartbeatRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, enabled]);
+  }, [url, enabled, reconnect]);
 
   useEffect(() => {
     if (!router?.events) return;
