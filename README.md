@@ -17,13 +17,27 @@ EdgePicks aims to demonstrate how responsible machine intelligence can enhance r
 ## Feature Highlights
 - Live prediction panel with real-time reasoning
 - Accuracy leaderboard and dark mode
-- 21-track roadmap modules:
+- Trust & Transparency hub with accuracy, audit, and agent explainers
+- Feature flag provider and experiments panel
+- Extensible roadmap modules such as:
   - Parallel Agent Runner
   - Consent Banner
   - Carbon HUD
   - Ancient Tech Gallery
   - Community Impact Dashboard
   - ...and more
+
+## Agents
+
+EdgePicks coordinates a roster of modular agents (see [AGENTS.md](AGENTS.md)):
+
+- **injuryScout** – scans injury reports and roster depth.
+- **lineWatcher** – tracks betting line movement.
+- **statCruncher** – compares efficiency metrics.
+- **trendsAgent** – reviews historical trends and momentum.
+- **guardianAgent** – audits outputs for inconsistencies.
+
+Each agent returns structured JSON `{ agent, score, reasoning, metadata? }` to keep decisions explainable.
 
 ## Quick Start
 ```bash

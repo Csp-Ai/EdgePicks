@@ -3951,4 +3951,14 @@ Files:
 - lib/config/env.js (+14/-3)
 - lib/config/env.ts (+14/-3)
 - lib/supabaseClient.ts (+28/-10)
+=======
+Timestamp: 2025-08-15T04:24:25.873Z
+Commit: 4803944b52f0a2d01f08daa1519b0bcd8eb1cb10
+Author: Codex
+Message: docs: update readme and agent metadata
+Files:
+- AGENTS.md (+2/-1)
+- CHANGELOG.md (+7/-0)
+- README.md (+15/-1)
+
 
