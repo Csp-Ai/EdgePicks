@@ -2,6 +2,10 @@
   "name": "edgepicks",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.19.x",
+    "npm": ">=10"
+  },
   "scripts": {
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
@@ -44,7 +48,10 @@
     "build-storybook": "storybook build",
     "setup:dev": "ts-node --project tsconfig.node.json scripts/bootstrapDevEnv.ts",
     "fix:revalidate": "ts-node --project tsconfig.node.json scripts/codemods/enforceRevalidate.ts",
-    "check-conflicts": "git ls-files -z | xargs -0 grep -nH -E '^(<<<<<<<|=======|>>>>>>>)' && echo 'Conflict markers found' && exit 2 || echo 'No conflict markers'"
+    "check-conflicts": "git ls-files -z | xargs -0 grep -nH -E '^(<<<<<<<|=======|>>>>>>>)' && echo 'Conflict markers found' && exit 2 || echo 'No conflict markers'",
+    "normalize-proxy": "npm config delete http-proxy || true && npm config delete https-proxy || true && npm config delete HTTP-PROXY || true && npm config delete HTTPS-PROXY || true",
+    "preinstall": "npm run normalize-proxy",
+    "ci-install": "npm ci --prefer-offline --no-audit --no-fund"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
@@ -119,5 +126,9 @@
     "typescript": "^5.9.2",
     "whatwg-fetch": "^3.6.20",
     "zod-to-json-schema": "^3.24.6"
+  },
+  "overrides": {
+    "rimraf": "^5.0.5",
+    "glob": "^10.3.12"
   }
 }
