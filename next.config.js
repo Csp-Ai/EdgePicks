@@ -80,6 +80,10 @@ const nextConfig = {
         source: '/(.*)',
         headers: [
           {
+            key: 'Content-Security-Policy',
+            value: "script-src 'self';",
+          },
+          {
             key: 'X-DNS-Prefetch-Control',
             value: 'on',
           },
