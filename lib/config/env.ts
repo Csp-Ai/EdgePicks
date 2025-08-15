@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 type Provider = 'sportsdata' | 'thesportsdb';
 
 const provider = (process.env.SPORTS_API_PROVIDER ?? 'sportsdata') as Provider;
@@ -16,13 +14,16 @@ if (isProdLike && !apiKey) {
   throw new Error('[env] Missing required env: SPORTS_API_KEY');
 }
 
-export const Env = {
+export const ENV = {
+  NODE_ENV: process.env.NODE_ENV ?? 'development',
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
   provider,
   tdbVersion,
   apiKey,
   isTest,
   isProdLike,
-  SUPABASE_URL: process.env.SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  SUPABASE_KEY: process.env.SUPABASE_KEY,
 };
+
+export const Env = ENV;
