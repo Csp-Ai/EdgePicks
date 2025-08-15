@@ -36,7 +36,7 @@ function makePublicClient() {
 }
 
 const headers = {
-  "Cache-Control": "public, max-age=15, s-maxage=60, stale-while-revalidate=300",
+  "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=300",
 };
 
 export async function GET() {
