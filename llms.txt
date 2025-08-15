@@ -4059,6 +4059,17 @@ Message: chore(lockfile): refresh after alias-codemod fix
 Files:
 - package-lock.json (+15992/-21196)
 
+Timestamp: 2025-08-15T07:14:31.786Z
+Commit: df4809d6c3838343c4af44a7369eb21d011e92dc
+Author: Codex
+Message: feat: add bold hero with value props and live stats
+Files:
+- app/(shell)/page.tsx (+8/-63)
+- components/Hero.tsx (+34/-0)
+- components/LiveStatsStrip.tsx (+51/-0)
+- components/ValueProps.tsx (+26/-0)
+- lib/ui/kpis.ts (+12/-0)
+=======
 Timestamp: 2025-08-15T07:18:29.517Z
 Commit: 110bb5dc2a477a8fdd076d023bd8711495c5117b
 Author: Codex
