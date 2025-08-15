@@ -50,12 +50,12 @@
     "pages",
     "scripts",
     "hooks",
-    "__tests__",
-    "tests",
     "jest.setup.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "__tests__/**/*",
+    "tests/**/*"
   ]
 }

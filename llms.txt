@@ -3869,3 +3869,19 @@ Files:
 - tsconfig.json (+22/-5)
 
 
+Timestamp: 2025-08-15T03:33:19.808Z
+Commit: c9c74bd8b1309028ae0d283e645ce06c5b1c7836
+Author: Codex
+Message: chore: split test typechecking
+Files:
+- package.json (+1/-0)
+- tsconfig.json (+3/-3)
+
+Timestamp: 2025-08-15T03:33:26.083Z
+Commit: 1af1f2526324d412ba1c2badf478cbc8d3ba06e3
+Author: Codex
+Message: chore: split test typechecking
+Files:
+- llms.txt (+8/-0)
+- tsconfig.test.json (+4/-0)
+
