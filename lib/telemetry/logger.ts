@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient';
+import { supabaseClient, supabaseServer } from '../supabaseClient';
 
 export interface TelemetryEvent {
   level: 'debug' | 'info' | 'warn' | 'error';
@@ -20,7 +20,9 @@ class ConsoleSink implements TelemetrySink {
 class SupabaseSink implements TelemetrySink {
   async log({ level, name, meta }: TelemetryEvent): Promise<void> {
     const entry = { level, name, meta, ts: new Date().toISOString() };
-    const { error } = await supabase.from('telemetry').insert(entry);
+    const client =
+      typeof window === 'undefined' ? supabaseServer() : supabaseClient;
+    const { error } = await client.from('telemetry').insert(entry);
     if (error) {
       console.error('Failed to log telemetry event', error);
     }

@@ -1,29 +1,18 @@
-import { createClient as _createClient } from '@supabase/supabase-js';
-import { Env } from '@/lib/config/env';
+import { createClient } from '@supabase/supabase-js';
+import { ENV } from '@/lib/config/env';
 
-/** Server/Edge-safe factory (no realtime assumptions) */
-export function createServiceClient() {
-  const url = Env.SUPABASE_URL!;
-  const key = Env.SUPABASE_SERVICE_ROLE_KEY || Env.SUPABASE_KEY || '';
-  return _createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
-}
+export const supabaseClient = createClient(
+  ENV.NEXT_PUBLIC_SUPABASE_URL,
+  ENV.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  { auth: { persistSession: true } }
+);
 
-/** Browser client for UI features that need persisted session */
-export function createBrowserClient() {
-  if (typeof window === 'undefined') throw new Error('createBrowserClient() on server');
-  const url = Env.SUPABASE_URL!;
-  const key = Env.SUPABASE_KEY || '';
-  return _createClient(url, key, { auth: { autoRefreshToken: true, persistSession: true } });
-}
+export const supabaseServer = () =>
+  createClient(ENV.NEXT_PUBLIC_SUPABASE_URL, ENV.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false },
+  });
 
-/** 🔁 Back-compat named export for tests & legacy code */
-export const supabase = (() => {
-  // Create a lightweight server instance for code paths/tests expecting `supabase`
-  try {
-    return createServiceClient();
-  } catch {
-    // In typecheck-only contexts without env, return a typed dummy
-    return _createClient('https://example.supabase.co', 'anon', { auth: { autoRefreshToken: false, persistSession: false } });
-  }
-})();
+export const createServiceClient = supabaseServer;
+
+export const supabase = supabaseServer();
 

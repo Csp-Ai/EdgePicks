@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { createServiceClient } from '@/lib/supabaseClient';
+import { supabaseServer } from '@/lib/supabaseClient';
 import { ENV } from '@/lib/env';
 
 // Enable streaming responses
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 export const fetchCache = 'force-no-store';
 
 function streamResponse(readable: ReadableStream): Response {
@@ -32,7 +31,7 @@ export async function GET(request: Request) {
     return new NextResponse('Run ID is required', { status: 400 });
   }
 
-  const supabase = createServiceClient();
+  const supabase = supabaseServer();
 
   // Create a stream for SSE
   const stream = new TransformStream();
@@ -91,7 +90,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const supabase = createServiceClient();
+    const supabase = supabaseServer();
 
     // Log to Supabase
     const { error } = await supabase
