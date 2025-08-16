@@ -4,6 +4,7 @@ const path = require('path');
 const isUnblock = process.env.CI_UNBLOCK === 'true';
 
 const nextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'a.espncdn.com' },

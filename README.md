@@ -106,3 +106,19 @@ We welcome ethical AI contributions with a sustainability focus. Please read [CO
 ## Contact & Licensing
 - License: [MIT](LICENSE)
 - Questions: opensource@edgepicks.app
+
+## Cloud Run production env
+
+Set these on the Cloud Run service (prefer Secret Manager for secrets):
+
+- NEXTAUTH_URL=https://<your-cloud-run-service-url>
+- NEXTAUTH_SECRET=<openssl rand -base64 32>
+- GOOGLE_CLIENT_ID=<OAuth 2.0 Web client ID>
+- GOOGLE_CLIENT_SECRET=<OAuth 2.0 client secret>
+
+**Google Console OAuth settings**
+Authorized redirect URI:
+  https://<your-cloud-run-service-url>/api/auth/callback/google
+
+Authorized JavaScript origins:
+  https://<your-cloud-run-service-url>
