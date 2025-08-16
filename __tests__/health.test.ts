@@ -1,21 +1,10 @@
 /** @jest-environment node */
-import handler from '../app/api/health/route';
-
-const mockRes = () => {
-  const res: any = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  return res;
-};
+import { GET } from '../app/api/health/route';
 
 describe('health API', () => {
   it('returns ok', async () => {
-    const req: any = {};
-    const res = mockRes();
-
-    await handler(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ status: 'ok' });
+    const res = await GET();
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe('ok');
   });
 });

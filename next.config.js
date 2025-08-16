@@ -4,6 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 const isUnblock = process.env.CI_UNBLOCK === 'true';
 
+const nextConfig = {
+  output: 'standalone',
+=======
 /** @type {import('next').NextConfig} */
 const baseConfig = {
   images: {

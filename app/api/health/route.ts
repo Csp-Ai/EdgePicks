@@ -1,18 +1,10 @@
-export const runtime = "edge";
+export const revalidate = 0;
 export const dynamic = "force-dynamic";
-
-import { NextResponse } from "next/server";
+export const fetchCache = "force-no-store";
 
 export async function GET() {
-  return NextResponse.json(
-    { ok: true, service: "edgepicks", status: "healthy" },
-    {
-      status: 200,
-      headers: {
-        "Cache-Control":
-          "public, max-age=60, s-maxage=60, stale-while-revalidate=300",
-      },
-    }
-  );
+  return new Response("ok", {
+    status: 200,
+    headers: { "Cache-Control": "public, max-age=5, s-maxage=5, stale-while-revalidate=30" }
+  });
 }
-
