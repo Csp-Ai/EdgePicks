@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
-import { motion } from "framer-motion";
+import { useMemo, useState, useTransition, useEffect } from "react";
+import { loadMotion } from "@/lib/motion/lazy";
 import {
   LineChart,
   Line,
@@ -11,7 +11,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import data from "./metrics.json";
- import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+let motion: any = null;
  export const revalidate = 0 as const;
  export const dynamic = "force-dynamic";
  export const fetchCache = "force-no-store";
@@ -30,8 +31,15 @@ const metrics = data as MetricRecord[];
 const categories = Array.from(new Set(metrics.map((m) => m.category)));
 
 export default function ImpactDashboard() {
+  const [, force] = useState(0);
   const [selected, setSelected] = useState<string>("All");
   const [isPending, startTransition] = useTransition();
+  useEffect(() => {
+    loadMotion().then(({ m }) => {
+      motion = m.motion;
+      force((x) => x + 1);
+    });
+  }, []);
 
   const filtered = useMemo(() => {
     return selected === "All"
@@ -68,6 +76,8 @@ export default function ImpactDashboard() {
       setSelected(category);
     });
   };
+
+  if (!motion) return <div />;
 
   return (
     <div className="p-6 space-y-6">

@@ -3,6 +3,12 @@ import 'dotenv/config';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+// If we're only analyzing bundles, allow dummy envs.
+if (process.env.ANALYZE === 'true') {
+  console.log('ℹ️ ANALYZE mode: skipping strict env validation.');
+  process.exit(0);
+}
+
 function assert(msg: string, cond: boolean) {
   if (!cond) {
     console.error(`❌ ${msg}`);
