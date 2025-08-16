@@ -4087,3 +4087,15 @@ Files:
 - components/AgentFlowVisualizer.tsx (+72/-16)
 - lib/agents/demoGraph.ts (+71/-76)
 
+Timestamp: 2025-08-16T01:56:07.799Z
+Commit: 252fa9d0893c2bf326461128d69c2c26523f9f27
+Author: Codex
+Message: fix: migrate ImageResponse imports and guard
+Files:
+- __tests__/icon.compile.test.ts (+6/-0)
+- app/icon.tsx (+16/-13)
+- jest.config.ts (+1/-0)
+- package-lock.json (+208/-10)
+- package.json (+4/-2)
+- scripts/guards/imageResponseImportGuard.ts (+40/-0)
+
