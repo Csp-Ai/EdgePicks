@@ -9,7 +9,7 @@ import {
   ShieldAlert,
   Info,
   LucideIcon,
-} from 'lucide-react';
+} from '@/icons';
 import { AgentName, AgentResult } from '@/lib/types';
 import { formatAgentName } from '@/lib/utils';
 import ReasoningDisclosure from './agents/ReasoningDisclosure';

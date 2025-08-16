@@ -10,7 +10,7 @@ import {
   ShieldAlert,
   Info,
   LucideIcon,
-} from 'lucide-react';
+} from '@/icons';
 
 interface Props {
   executions: AgentExecution[];

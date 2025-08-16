@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { loadMotion } from "@/lib/motion/lazy";
+let motion: any = null;
 
 interface Item {
   title: string;
@@ -8,6 +10,14 @@ interface Item {
 }
 
 export default function ValueProps() {
+  const [, force] = useState(0);
+  useEffect(() => {
+    loadMotion().then(({ m }) => {
+      motion = m.motion;
+      force((x) => x + 1);
+    });
+  }, []);
+  if (!motion) return <div />;
   const items: Item[] = [
     {
       title: "Transparent agents",

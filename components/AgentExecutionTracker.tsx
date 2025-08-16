@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CheckCircle2, AlertTriangle, Circle } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Circle } from '@/icons';
 
 export type AgentStatus = 'pending' | 'running' | 'completed' | 'error';
 

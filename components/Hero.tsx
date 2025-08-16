@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { loadMotion } from "@/lib/motion/lazy";
 import { buttonVariants } from "@/components/ui/button";
+let motion: any = null;
 
 const container = {
   hidden: { opacity: 0, y: 20 },
@@ -19,6 +21,14 @@ const item = {
 };
 
 export default function Hero() {
+  const [, force] = useState(0);
+  useEffect(() => {
+    loadMotion().then(({ m }) => {
+      motion = m.motion;
+      force((x) => x + 1);
+    });
+  }, []);
+  if (!motion) return <div />;
   return (
     <section className="relative overflow-hidden rounded-2xl border bg-gradient-to-b from-background to-background/60 py-32">
       <span

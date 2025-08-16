@@ -54,9 +54,11 @@
     "preinstall": "node scripts/npmProxyNormalize.mjs",
     "ci-install": "npm ci --prefer-offline --no-audit --no-fund",
     "guard:image": "ts-node --project tsconfig.node.json scripts/guards/imageResponseImportGuard.ts",
-    "analyze": "ANALYZE=true next build",
+    "analyze": "cross-env ANALYZE=true NODE_ENV=production SPORTS_API_KEY=DUMMY_ANALYZE NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321 NEXT_PUBLIC_SUPABASE_ANON_KEY=dummy-anon next build && node scripts/perf/printBundleHints.mjs",
     "analyze:view": "ANALYZE=true next build && npx http-server .next/analyze -p 5050 -o",
-    "perf:report": "node scripts/perf/printBundleHints.mjs"
+    "perf:report": "node scripts/perf/printBundleHints.mjs",
+    "analyze:profile": "cross-env ANALYZE=true NODE_ENV=production ENV_PROFILE=analyze SPORTS_API_KEY=DUMMY_ANALYZE NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321 NEXT_PUBLIC_SUPABASE_ANON_KEY=dummy-anon next build && node scripts/perf/printBundleHints.mjs",
+    "fix:icons": "ts-node --project tsconfig.node.json scripts/codemods/iconsToProxy.ts"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
@@ -134,7 +136,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
     "whatwg-fetch": "^3.6.20",
-    "zod-to-json-schema": "^3.24.6"
+    "zod-to-json-schema": "^3.24.6",
+    "cross-env": "^7.0.3"
   },
   "overrides": {
     "@radix-ui/primitive": "^1.0.1",

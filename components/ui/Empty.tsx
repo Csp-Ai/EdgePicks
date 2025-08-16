@@ -1,5 +1,5 @@
 import React from 'react';
-import { Inbox, FileX2, ShieldAlert, LucideIcon } from 'lucide-react';
+import { Inbox, FileX2, ShieldAlert, LucideIcon } from '@/icons';
 import { cn } from '@/lib/utils';
 
 export interface EmptyProps {
