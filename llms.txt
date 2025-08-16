@@ -4130,3 +4130,21 @@ Files:
 - package.json (+5/-1)
 - scripts/perf/printBundleHints.mjs (+8/-0)
 
+Timestamp: 2025-08-16T03:45:22.282Z
+Commit: 0e0bdf7b1f94c661176658f9f2348d72114d7e44
+Author: Codex
+Message: chore: add merge-marker guard and clean config
+Files:
+- .husky/pre-commit (+1/-1)
+- __tests__/checkMergeMarkers.smoke.test.ts (+1/-1)
+- next.config.js (+14/-7)
+- package.json (+2/-1)
+- scripts/checkMergeMarkers.ts (+0/-36)
+
+Timestamp: 2025-08-16T03:45:48.342Z
+Commit: 93b12bffde51fb1a5c481ec80b86f0eec1bcbcd4
+Author: Codex
+Message: chore: add merge-marker guard script
+Files:
+- scripts/guards/checkMergeMarkers.ts (+28/-0)
+

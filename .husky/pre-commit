@@ -3,7 +3,7 @@
 
 # noop to ensure node exists
 node -e "try{require('fs').readFileSync('.', {encoding:'utf8'});}catch{}"
-ts-node --project tsconfig.node.json scripts/checkMergeMarkers.ts
+npm run precommit:merge-guard
 
 npm run lint && npm run typecheck
 # Optional: run a tiny smoke build in CI only (not on local pre-commit)
