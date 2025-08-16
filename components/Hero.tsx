@@ -20,7 +20,12 @@ const item = {
 
 export default function Hero() {
   return (
-    <section className="grid-bg relative overflow-hidden rounded-2xl border bg-gradient-to-b from-background to-background/60 py-32">
+    <section className="relative overflow-hidden rounded-2xl border bg-gradient-to-b from-background to-background/60 py-32">
+      <span
+        className="grid-bg pointer-events-none absolute inset-0 -z-10"
+        aria-label="Animated grid background"
+        role="img"
+      />
       <motion.div
         variants={container}
         initial="hidden"

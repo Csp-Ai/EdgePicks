@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import nextDynamic from 'next/dynamic';
 import { apiGet } from '@/lib/api';
 
 interface AccuracyData {
@@ -9,35 +10,65 @@ interface AccuracyData {
   sparkline: number[];
 }
 
-const AccuracySnapshot: React.FC = () => {
+const LineChart = nextDynamic(async () => (await import('recharts')).LineChart as any, { ssr: false }) as any;
+const Line = nextDynamic(async () => (await import('recharts')).Line as any, { ssr: false }) as any;
+const XAxis = nextDynamic(async () => (await import('recharts')).XAxis as any, { ssr: false }) as any;
+const YAxis = nextDynamic(async () => (await import('recharts')).YAxis as any, { ssr: false }) as any;
+const Tooltip = nextDynamic(async () => (await import('recharts')).Tooltip as any, { ssr: false }) as any;
+const ResponsiveContainer = nextDynamic(async () => (await import('recharts')).ResponsiveContainer as any, { ssr: false }) as any;
+
+export default function AccuracySnapshot() {
   const [accuracy, setAccuracy] = useState<AccuracyData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchAccuracyData = async () => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setVisible(true);
+        io.disconnect();
+      }
+    });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    (async () => {
       try {
         const data = await apiGet<AccuracyData>('/api/accuracy');
         setAccuracy(data);
-      } catch (err) {
-        console.error('Failed to fetch accuracy data:', err);
-        setError('Failed to load accuracy data.');
+      } catch {
+        setAccuracy(null);
       }
-    };
+    })();
+  }, [visible]);
 
-    fetchAccuracyData();
-  }, []);
-
-  if (error) {
-    return <div className="p-4 text-red-500">{error}</div>;
+  if (!visible) {
+    return <div ref={ref} className="p-4 text-gray-500">Loading accuracy data...</div>;
   }
 
   if (!accuracy) {
-    return <div className="p-4 text-gray-500">Loading accuracy data...</div>;
+    return <div ref={ref} className="p-4 text-gray-500">Loading accuracy data...</div>;
   }
 
+  const chartData = accuracy.sparkline.map((value, index) => ({ index, value }));
+
   return (
-    <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+    <div ref={ref} className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
       <h3 className="text-lg font-semibold">Accuracy Snapshot</h3>
+      <div className="mt-4 h-40 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData}>
+            <XAxis dataKey="index" hide />
+            <YAxis domain={[0, 1]} hide />
+            <Tooltip formatter={(v: number) => `${Math.round(v * 100)}%`} />
+            <Line type="monotone" dataKey="value" stroke="#3b82f6" dot={false} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
       <div className="mt-4 space-y-2">
         <p className="text-sm text-gray-700 dark:text-gray-300">
           Last 30 Days: {accuracy.last30Days.toFixed(2)}%
@@ -45,24 +76,13 @@ const AccuracySnapshot: React.FC = () => {
         <p className="text-sm text-gray-700 dark:text-gray-300">
           Last 90 Days: {accuracy.last90Days.toFixed(2)}%
         </p>
-        <div className="flex items-center space-x-1">
-          {accuracy.sparkline.map((value, index) => (
-            <div
-              key={index}
-              className="h-2 bg-blue-500 rounded"
-              style={{ width: '10px', height: `${value * 100}%` }}
-            ></div>
-          ))}
-        </div>
       </div>
       <button
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        onClick={() => window.location.href = '/leaderboard'}
+        onClick={() => (window.location.href = '/leaderboard')}
       >
         See Leaderboard
       </button>
     </div>
   );
-};
-
-export default AccuracySnapshot;
+}

@@ -77,6 +77,14 @@ npm run dev
 ## Vercel
 Set `SPORTS_API_PROVIDER`, `SPORTS_API_KEY`, and `THESPORTSDB_API_VERSION` in both Production and Preview environments.
 
+## Runtime
+Runtime: Node 20.19.x across local, CI, and Vercel. Vercel uses `engines.node`—leave Project Settings at any value; the warning is silenced by aligning versions locally and documenting the policy.
+
+## Performance Playbook
+- Run `npm run analyze` to produce bundle stats in `.next/analyze`.
+- Optionally `npm run perf:report` for quick hints.
+- Defer heavy UI until user interaction or when elements enter the viewport.
+
 ## Routing Rules
 - UI routes live in `app/**`.
 - `pages/` is reserved for `pages/api/**` only.

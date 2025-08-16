@@ -4099,3 +4099,21 @@ Files:
 - package.json (+4/-2)
 - scripts/guards/imageResponseImportGuard.ts (+40/-0)
 
+Timestamp: 2025-08-16T02:54:41.777Z
+Commit: 1c8da740c7762829419dc4e4eee9bdf8b06f864f
+Author: Codex
+Message: chore: add bundle analyzer and lazy load heavy ui
+Files:
+- .node-version (+1/-0)
+- README.md (+8/-0)
+- app/(shell)/page.tsx (+10/-3)
+- app/agent-interface/page.tsx (+15/-2)
+- app/demo/page.tsx (+13/-24)
+- components/AccuracySnapshot.tsx (+48/-28)
+- components/Hero.tsx (+6/-1)
+- components/TrustBar.tsx (+9/-4)
+- next.config.js (+19/-42)
+- package-lock.json (+179/-0)
+- package.json (+5/-1)
+- scripts/perf/printBundleHints.mjs (+8/-0)
+
