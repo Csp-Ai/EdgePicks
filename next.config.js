@@ -1,10 +1,14 @@
 const path = require('path');
-
-/** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 const isUnblock = process.env.CI_UNBLOCK === 'true';
 
 const nextConfig = {
   output: 'standalone',
+=======
+/** @type {import('next').NextConfig} */
+const baseConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'a.espncdn.com' },
@@ -15,10 +19,8 @@ const nextConfig = {
   },
   transpilePackages: ['ioredis', '@upstash/redis'],
   webpack: (config, { isServer }) => {
-    // Alias configuration
     config.resolve.alias['@'] = path.resolve(__dirname);
-    
-    // Node.js polyfills
+
     config.resolve.fallback = {
       ...(config.resolve.fallback || {}),
       dns: false,
@@ -30,7 +32,6 @@ const nextConfig = {
       path: false,
     };
 
-    // Optimize bundle size
     if (!isServer) {
       config.optimization = {
         ...config.optimization,
@@ -64,7 +65,6 @@ const nextConfig = {
       };
     }
 
-    // Silence Supabase Realtime dynamic import warning on server bundles.
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),
       {
@@ -80,30 +80,12 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "script-src 'self';",
-          },
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
+          { key: 'Content-Security-Policy', value: "script-src 'self';" },
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
         ],
       },
       {
@@ -113,24 +95,18 @@ const nextConfig = {
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
           { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version' },
-        ]
+        ],
       },
       {
         source: '/_next/static/(.*)',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {
         source: '/images/(.*)',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400',
-          },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
         ],
       },
     ];
@@ -141,7 +117,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: isUnblock,
   },
+  experimental: {
+    ...(process.env.EXP_DISABLE_TURBOPACK ? {} : {}),
+  },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(baseConfig);
 
