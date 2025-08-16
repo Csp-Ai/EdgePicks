@@ -40,15 +40,20 @@ function CoversLogo(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-const logos = [ESPNLogo, AthleticLogo, FiveThirtyEightLogo, CoversLogo];
+const logos = [
+  { Component: ESPNLogo, label: 'ESPN logo' },
+  { Component: AthleticLogo, label: 'The Athletic logo' },
+  { Component: FiveThirtyEightLogo, label: 'FiveThirtyEight logo' },
+  { Component: CoversLogo, label: 'Covers logo' },
+];
 
 export default function TrustBar() {
   return (
-    <section className="py-8">
+    <section className="py-8" aria-label="Trusted sports brands">
       <p className="mb-4 text-center text-sm text-muted-foreground">As seen in</p>
       <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-        {logos.map((Logo, i) => (
-          <Logo key={i} className="h-6 text-foreground" aria-hidden="true" />
+        {logos.map(({ Component, label }, i) => (
+          <Component key={i} className="h-6 text-foreground" role="img" aria-label={label} />
         ))}
       </div>
     </section>

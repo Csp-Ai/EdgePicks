@@ -52,7 +52,10 @@
     "normalize-proxy": "npm config delete http-proxy || true && npm config delete https-proxy || true && npm config delete HTTP-PROXY || true && npm config delete HTTPS-PROXY || true",
     "preinstall": "node scripts/npmProxyNormalize.mjs",
     "ci-install": "npm ci --prefer-offline --no-audit --no-fund",
-    "guard:image": "ts-node --project tsconfig.node.json scripts/guards/imageResponseImportGuard.ts"
+    "guard:image": "ts-node --project tsconfig.node.json scripts/guards/imageResponseImportGuard.ts",
+    "analyze": "ANALYZE=true next build",
+    "analyze:view": "ANALYZE=true next build && npx http-server .next/analyze -p 5050 -o",
+    "perf:report": "node scripts/perf/printBundleHints.mjs"
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
@@ -88,6 +91,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.0",
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.54.2",
     "@storybook/addon-a11y": "^7.6.17",
