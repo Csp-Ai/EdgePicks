@@ -6,6 +6,7 @@ const config: import('jest').Config = {
     '^@/(.*)$': '<rootDir>/$1',
     '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/fileMock.js',
     '\\.(svg)$': '<rootDir>/__mocks__/svgMock.ts',
+    'react-force-graph-2d': '<rootDir>/__mocks__/identityMock.ts',
   },
   transform: {
     '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json', useESM: true }],
@@ -18,8 +19,9 @@ const config: import('jest').Config = {
     '<rootDir>/__tests__/devLogin.prod.test.ts',
     '<rootDir>/__tests__/mapAgentEventsToGraph.test.ts',
     '<rootDir>/__tests__/icon.compile.test.ts',
+    '<rootDir>/tests/agent-graph.compile.test.ts',
   ],
   // TEMP quarantine while we fix contracts/e2e/a11y:
-  testPathIgnorePatterns: ['<rootDir>/tests/', '<rootDir>/scripts/update-llms-log.test.js', '<rootDir>/lib/logUiEvent.test.js'],
+  testPathIgnorePatterns: ['<rootDir>/scripts/update-llms-log.test.js', '<rootDir>/lib/logUiEvent.test.js'],
 };
 export default config;

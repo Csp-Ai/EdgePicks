@@ -40,9 +40,9 @@ function Stat({ value, label, suffix = "" }: StatProps) {
 }
 
 export default function LiveStatsStrip() {
-  const kpis = getKpis();
+  const [kpis] = useState(getKpis);
   return (
-    <section className="flex flex-wrap justify-center gap-8 rounded-xl border bg-background/40 p-6">
+    <section className="flex flex-wrap justify-center gap-8 rounded-xl border bg-background/40 p-4">
       <Stat value={kpis.usersHelped} label="Users helped" />
       <Stat value={kpis.avgAccuracy} label="Avg accuracy" suffix="%" />
       <Stat value={kpis.co2Saved} label="CO₂ saved" suffix="kg" />
