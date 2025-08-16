@@ -1,5 +1,14 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+interface Item {
+  title: string;
+  description: string;
+}
+
 export default function ValueProps() {
-  const items = [
+  const items: Item[] = [
     {
       title: "Transparent agents",
       description: "Every decision traced to its source.",
@@ -13,14 +22,26 @@ export default function ValueProps() {
       description: "Performance metrics update in real time.",
     },
   ];
+
   return (
-    <section className="grid gap-8 py-12 md:grid-cols-3">
+    <motion.section
+      className="grid gap-8 py-10 md:grid-cols-3"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
+    >
       {items.map((item) => (
-        <div key={item.title} className="text-center">
+        <motion.div
+          key={item.title}
+          className="text-center"
+          variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}
+        >
           <h3 className="text-xl font-semibold">{item.title}</h3>
           <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-        </div>
+        </motion.div>
       ))}
-    </section>
+    </motion.section>
   );
 }
+
