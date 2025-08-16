@@ -4,11 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 const isUnblock = process.env.CI_UNBLOCK === 'true';
 
-const nextConfig = {
-  output: 'standalone',
-=======
 /** @type {import('next').NextConfig} */
-const baseConfig = {
+const base = {
+  output: process.env.STANDALONE === 'true' ? 'standalone' : undefined,
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'a.espncdn.com' },
@@ -16,6 +14,7 @@ const baseConfig = {
       { protocol: 'https', hostname: 'static.www.nfl.com' },
       { protocol: 'https', hostname: '*.cloudfront.net' },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
   transpilePackages: ['ioredis', '@upstash/redis'],
   webpack: (config, { isServer }) => {
@@ -94,7 +93,11 @@ const baseConfig = {
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version' },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value:
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+          },
         ],
       },
       {
@@ -120,7 +123,11 @@ const baseConfig = {
   experimental: {
     ...(process.env.EXP_DISABLE_TURBOPACK ? {} : {}),
   },
+  modularizeImports: {
+    'lodash-es': { transform: 'lodash-es/{{member}}' },
+    'date-fns': { transform: 'date-fns/{{member}}' },
+    'lucide-react': { transform: 'lucide-react/dist/esm/icons/{{member}}' },
+  },
 };
 
-module.exports = withBundleAnalyzer(baseConfig);
-
+module.exports = withBundleAnalyzer(base);

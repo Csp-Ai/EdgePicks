@@ -7,7 +7,7 @@ import os from 'os';
 describe('checkMergeMarkers script', () => {
   const repoRoot = join(__dirname, '..');
   const project = join(repoRoot, 'tsconfig.node.json');
-  const script = join(repoRoot, 'scripts/checkMergeMarkers.ts');
+  const script = join(repoRoot, 'scripts/guards/checkMergeMarkers.ts');
   const run = (cwd: string) =>
     spawnSync('node', ['-r', 'ts-node/register', script], {
       cwd,
