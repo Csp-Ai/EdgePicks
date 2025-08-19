@@ -1,11 +1,13 @@
+"use client";
 import React, { useState } from 'react';
 import TrustSummary from '@/components/trust/TrustSummary';
 import AuditActivity from '@/components/trust/AuditActivity';
 import AgentExplainers from '@/components/trust/AgentExplainers';
 import AgreementMeter from '@/components/trust/AgreementMeter';
-
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 type Tab = 'overview' | 'audit' | 'agents';
-
 const TrustPage: React.FC = () => {
   const [tab, setTab] = useState<Tab>('overview');
   const tabs: { id: Tab; label: string }[] = [

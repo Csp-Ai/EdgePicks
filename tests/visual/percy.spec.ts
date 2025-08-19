@@ -3,7 +3,7 @@ import percySnapshot from '@percy/playwright';
 
 test.use({ baseURL: 'http://localhost:3000' });
 
-const routes = ['/', '/predictions', '/public', '/logs/agents'];
+const routes = ['/', '/predictions', '/agents', '/logs'];
 
 for (const route of routes) {
   test(`snapshot ${route}`, async ({ page }) => {
