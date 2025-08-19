@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { NodeObject, LinkObject } from "force-graph";
 import type { ForceGraphMethods } from "react-force-graph-2d";
 import { demoGraph } from "@/lib/agents/demoGraph";
@@ -9,6 +10,8 @@ import AgentLegend from "@/components/AgentLegend";
 import AgentLogPanel from "@/components/AgentLogPanel";
 import type { Role } from "@/lib/agents/roles";
 import { ROLE_COLOR, ROLE_DASH } from "@/lib/agents/roles";
+import { ROLE_COLOR } from "@/lib/agents/roles";
+import useResizeObserver from "@/hooks/useResizeObserver";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -32,6 +35,15 @@ export interface AgentLink extends LinkObject<AgentNode> {
 
 
 export default function AgentFlowVisualizer() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { width, height } = useResizeObserver(containerRef, { minW: 320, minH: 240 });
+  const initialRoles: Role[] = searchParams?.get("roles")
+    ? (searchParams.get("roles")!.split(",") as Role[])
+    : ["scout", "analyst", "model", "arbiter"];
+  const initialMode = (searchParams?.get("mode") as "all" | "active" | "role") || "all";
+  const initialZoom = parseFloat(searchParams?.get("zoom") || "1");
   const [graph, setGraph] = useState<{ nodes: AgentNode[]; links: AgentLink[] } | null>(null);
   const [selected, setSelected] = useState<AgentNode | null>(null);
   const [force, setForce] = useState(60);
@@ -39,6 +51,10 @@ export default function AgentFlowVisualizer() {
   const [roles, setRoles] = useState<Role[]>(["scout", "analyst", "model", "arbiter"]);
   const [paused, setPaused] = useState(false);
   const [width, setWidth] = useState<number>(0);
+  const [roles, setRoles] = useState<Role[]>(initialRoles);
+  const [mode, setMode] = useState<"all" | "active" | "role">(initialMode);
+  const [zoom, setZoom] = useState(initialZoom);
+  const [prefersReduced, setPrefersReduced] = useState(false);
   const fgRef = useRef<ForceGraphMethods>();
   const frame = useRef<number>();
 
@@ -60,15 +76,21 @@ export default function AgentFlowVisualizer() {
   }, []);
 
   useEffect(() => {
-    const handle = () => setWidth(window.innerWidth);
-    handle();
-    window.addEventListener("resize", handle);
-    return () => window.removeEventListener("resize", handle);
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const set = () => setPrefersReduced(mql.matches);
+    set();
+    mql.addEventListener("change", set);
+    return () => mql.removeEventListener("change", set);
   }, []);
 
   const filtered = useMemo(() => {
     if (!graph) return { nodes: [], links: [] };
-    const nodes = graph.nodes.filter((n) => roles.includes(n.role));
+    let nodes = graph.nodes;
+    if (mode === "active") {
+      nodes = nodes.filter((n) => (n.logs?.length || 0) > 0);
+    } else if (mode === "role") {
+      nodes = nodes.filter((n) => roles.includes(n.role));
+    }
     const nodeIds = new Set(nodes.map((n) => n.id));
     const links = graph.links.filter(
       (l) =>
@@ -76,7 +98,7 @@ export default function AgentFlowVisualizer() {
         nodeIds.has(typeof l.target === "string" ? l.target : l.target.id),
     );
     return { nodes, links };
-  }, [graph, roles]);
+  }, [graph, roles, mode]);
 
   const nodeCanvasObject = useMemo(
     () =>
@@ -104,7 +126,7 @@ export default function AgentFlowVisualizer() {
   const nodePointerAreaPaint = useMemo(
     () =>
       function (n: AgentNode, color: string, ctx: CanvasRenderingContext2D) {
-        const size = 4 + (n.confidence ?? 0.5) * 8;
+        const size = Math.max(20, 4 + (n.confidence ?? 0.5) * 8);
         ctx.beginPath();
         ctx.arc(n.x!, n.y!, size, 0, 2 * Math.PI, false);
         ctx.fillStyle = color;
@@ -115,7 +137,10 @@ export default function AgentFlowVisualizer() {
 
   const refresh = useCallback(() => {
     if (frame.current) cancelAnimationFrame(frame.current);
-    frame.current = requestAnimationFrame(() => (fgRef.current as any)?.refresh());
+    frame.current = requestAnimationFrame(() => {
+      const current: any = fgRef.current;
+      if (current && typeof current.refresh === "function") current.refresh();
+    });
   }, []);
 
   useEffect(() => {
@@ -135,6 +160,29 @@ export default function AgentFlowVisualizer() {
     if (paused) fgRef.current?.pauseAnimation();
     else fgRef.current?.resumeAnimation();
   }, [paused]);
+    const current: any = fgRef.current;
+    if (!current || typeof current.d3Zoom !== "function") return;
+    const zoomObj = current.d3Zoom();
+    const handle = (event: any) => setZoom(event.transform.k);
+    zoomObj.on("zoom", handle);
+    return () => zoomObj.on("zoom", null);
+  }, [filtered]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("mode", mode);
+    if (mode === "role") params.set("roles", roles.join(","));
+    params.set("zoom", zoom.toFixed(2));
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [mode, roles, zoom, router]);
+
+  const appliedInitialZoom = useRef(false);
+  useEffect(() => {
+    if (!appliedInitialZoom.current && fgRef.current) {
+      fgRef.current.zoom(zoom);
+      appliedInitialZoom.current = true;
+    }
+  }, [zoom, width, height]);
 
   const toggleRole = (r: Role) => {
     setRoles((prev) => (prev.includes(r) ? prev.filter((p) => p !== r) : [...prev, r]));
@@ -144,20 +192,11 @@ export default function AgentFlowVisualizer() {
     fgRef.current?.zoomToFit(400);
   };
 
-  if (width && width < 640) {
-    return (
-      <div className="flex h-64 items-center justify-center rounded-md border p-4 text-center text-sm text-muted-foreground">
-        Rotate your device or use desktop to explore the agent graph.
-      </div>
-    );
-  }
-
   if (!graph) {
     return <div className="h-64" />;
   }
-
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative h-[min(70vh,640px)]">
       <ForceGraph2D
         ref={fgRef}
         graphData={filtered}
@@ -169,7 +208,8 @@ export default function AgentFlowVisualizer() {
         nodeLabel={(n: AgentNode) => `${n.label} (${n.role}, ${Math.round(n.confidence * 100)}%)`}
         onNodeClick={(n: AgentNode) => setSelected(n)}
         width={width}
-        height={500}
+        height={height}
+        cooldownTicks={prefersReduced ? 0 : undefined}
       />
       <div className="absolute top-2 right-2 space-y-2 rounded-md bg-background/80 p-3 text-xs shadow">
         <label className="flex items-center gap-2">
@@ -193,6 +233,17 @@ export default function AgentFlowVisualizer() {
           />
           <span>Link arrows</span>
         </label>
+        <select
+          value={mode}
+          onChange={(e) => setMode(e.target.value as any)}
+          className="rounded border px-1 py-0.5"
+          aria-label="Graph density"
+        >
+          <option value="all">All</option>
+          <option value="active">Active Only</option>
+          <option value="role">By Role</option>
+        </select>
+        {mode === "role" && <AgentLegend activeRoles={roles} onToggle={toggleRole} />}
         <button
           onClick={() => setPaused((p) => !p)}
           role="switch"
@@ -208,7 +259,6 @@ export default function AgentFlowVisualizer() {
         >
           Reset
         </button>
-        <AgentLegend activeRoles={roles} onToggle={toggleRole} />
       </div>
       <table className="sr-only" aria-hidden={false}>
         <caption>Agent network summary</caption>

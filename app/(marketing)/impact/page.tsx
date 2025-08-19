@@ -12,10 +12,10 @@ import {
 } from "recharts";
 import data from "./metrics.json";
 import { Card } from "@/components/ui/card";
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 let motion: any = null;
- export const revalidate = 0 as const;
- export const dynamic = "force-dynamic";
- export const fetchCache = "force-no-store";
  export const dynamicParams = true;
 
 interface MetricRecord {

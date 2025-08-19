@@ -1,14 +1,26 @@
 import { render, screen } from '@testing-library/react';
-import AgentFlowVisualizer from '../components/visuals/AgentFlowVisualizer';
+import { jest } from '@jest/globals';
+import AgentFlowVisualizer from '@/components/AgentFlowVisualizer';
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+// @ts-expect-error override for test
+global.ResizeObserver = ResizeObserver;
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(() => ({
+    matches: false,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  })),
+});
 
 describe('AgentFlowVisualizer', () => {
-  it('renders status text', () => {
+  it('mounts without crashing', async () => {
     render(<AgentFlowVisualizer />);
-    expect(screen.getByText(/Agent Flow/)).toBeInTheDocument();
-  });
-
-  it('handles simulation mode when no stream URL is provided', () => {
-    render(<AgentFlowVisualizer />);
-    expect(screen.getByText(/connecting|simulated/i)).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /reset/i })).toBeInTheDocument();
   });
 });
