@@ -14,6 +14,15 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   transpilePackages: ['ioredis', '@upstash/redis'],
+  modularizeImports: {
+    'date-fns': { transform: 'date-fns/{{member}}' },
+    'lodash-es': { transform: 'lodash-es/{{member}}' },
+    // lucide: per docs, importing icons directly is best. This mapping helps when you use named imports.
+    'lucide-react': { transform: 'lucide-react/dist/esm/icons/{{member}}' },
+    'react-use': { transform: 'react-use/esm/{{member}}' },
+  },
+  // ⚠️ DO NOT set optimizePackageImports for 'react' / 'react-dom' in this repo (pages router SSR glitches)
+  // optimizePackageImports: ['react', 'react-dom'],
   webpack: (config, { isServer }) => {
     config.resolve.alias['@'] = path.resolve(__dirname);
 
@@ -116,16 +125,6 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: isUnblock,
-  },
-  experimental: {
-    ...(process.env.EXP_DISABLE_TURBOPACK ? {} : {}),
-    modularizeImports: {
-      'date-fns': { transform: 'date-fns/{{member}}' },
-      'lodash-es': { transform: 'lodash-es/{{member}}' },
-      'lucide-react': { transform: 'lucide-react/dist/esm/icons/{{member}}' },
-      'react-use': { transform: 'react-use/esm/{{member}}' },
-    },
-    optimizePackageImports: ['react', 'react-dom'],
   },
   compiler: {
     removeConsole:
