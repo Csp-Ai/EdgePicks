@@ -1,5 +1,5 @@
 import path from 'path';
-import { Project, SyntaxKind, Node, Expression } from 'ts-morph';
+import { Project, SyntaxKind, Node, Expression, VariableDeclaration } from 'ts-morph';
 
 const project = new Project({
   tsConfigFilePath: path.join(process.cwd(), 'tsconfig.node.json'),
@@ -8,21 +8,26 @@ const project = new Project({
 
 const files = project.addSourceFilesAtPaths('app/**/*.{ts,tsx}');
 
-interface Violation {
-  file: string;
-  export: string;
-  hint: string;
+function isLiteralNumberOrFalse(expr: Expression | undefined): boolean {
+  if (!expr) return false;
+  if (Node.isNumericLiteral(expr)) return true;
+  if (Node.isPrefixUnaryExpression(expr)) {
+    return Node.isNumericLiteral(expr.getOperand());
+  }
+  if (expr.getKind() === SyntaxKind.FalseKeyword) return true;
+  if (Node.isAsExpression(expr)) return isLiteralNumberOrFalse(expr.getExpression());
+  return false;
 }
 
-function isNumberOrFalse(expr: Expression | undefined): boolean {
-  if (!expr) return false;
-  const kind = expr.getKind();
-  if (kind === SyntaxKind.FalseKeyword) return true;
-  if (kind === SyntaxKind.NumericLiteral || kind === SyntaxKind.PrefixUnaryExpression) return true;
-  if (kind === SyntaxKind.AsExpression) {
-    return isNumberOrFalse((expr as any).getExpression());
+function getNumber(expr: Expression | undefined): number | undefined {
+  if (!expr) return undefined;
+  if (Node.isNumericLiteral(expr)) return Number(expr.getLiteralText());
+  if (Node.isPrefixUnaryExpression(expr)) {
+    const op = expr.getOperand();
+    if (Node.isNumericLiteral(op)) return -Number(op.getLiteralText());
   }
-  return false;
+  if (Node.isAsExpression(expr)) return getNumber(expr.getExpression());
+  return undefined;
 }
 
 function getString(expr: Expression | undefined): string | undefined {
@@ -30,50 +35,113 @@ function getString(expr: Expression | undefined): string | undefined {
   if (Node.isStringLiteral(expr) || Node.isNoSubstitutionTemplateLiteral(expr)) {
     return expr.getLiteralText();
   }
-  if (expr.getKind() === SyntaxKind.AsExpression) {
-    return getString((expr as any).getExpression());
-  }
+  if (Node.isAsExpression(expr)) return getString(expr.getExpression());
   return undefined;
 }
 
-const validDynamic = ['auto', 'error', 'force-dynamic', 'force-static'];
-const validFetchCache = ['default', 'only-cache', 'only-no-store', 'force-no-store'];
+type ExportName = 'revalidate' | 'dynamic' | 'fetchCache' | 'runtime';
 
-const violations: Violation[] = [];
+const productExtras = [
+  'agent-interface',
+  'agents',
+  'leaderboard',
+  'logs',
+  'predictions',
+  'maps',
+  'onboarding',
+  'toast-demo',
+];
+
+function isMarketing(filePath: string): boolean {
+  return filePath.startsWith('app/(marketing)/') || filePath.startsWith('app/about/');
+}
+
+function isProduct(filePath: string): boolean {
+  if (filePath.startsWith('app/(product)/')) return true;
+  return productExtras.some((dir) => filePath.startsWith(`app/${dir}/`));
+}
+
+function isRouteEntry(filePath: string): boolean {
+  const base = path.basename(filePath);
+  return base === 'page.tsx' || base === 'layout.tsx';
+}
+
+const violations: Record<string, string[]> = {};
+
+function record(file: string, decl: VariableDeclaration | undefined, expected: string) {
+  const found = decl ? decl.getText() : '(missing)';
+  const diff = `- ${found}\n+ ${expected}`;
+  (violations[file] ??= []).push(diff);
+}
 
 for (const sourceFile of files) {
   const filePath = path.relative(process.cwd(), sourceFile.getFilePath());
+  const exported: Partial<Record<ExportName, VariableDeclaration>> = {};
+
   for (const stmt of sourceFile.getVariableStatements()) {
     if (!stmt.hasExportKeyword()) continue;
     for (const decl of stmt.getDeclarations()) {
-      const name = decl.getName();
-      const init = decl.getInitializer();
-      if (name === 'revalidate') {
-        if (!isNumberOrFalse(init)) {
-          violations.push({ file: filePath, export: 'revalidate', hint: 'must be a number or false' });
-        }
-      } else if (name === 'dynamic') {
-        const val = getString(init);
-        if (!val || !validDynamic.includes(val)) {
-          violations.push({ file: filePath, export: 'dynamic', hint: `must be one of ${validDynamic.join(', ')}` });
-        }
-      } else if (name === 'fetchCache') {
-        const val = getString(init);
-        if (!val || !validFetchCache.includes(val)) {
-          violations.push({ file: filePath, export: 'fetchCache', hint: `must be one of ${validFetchCache.join(', ')}` });
-        }
-      } else if (name === 'runtime') {
-        const val = getString(init);
-        if (val === 'edge' && filePath.includes('(marketing)')) {
-          violations.push({ file: filePath, export: 'runtime', hint: 'edge runtime disabled on marketing pages' });
-        }
+      const name = decl.getName() as ExportName;
+      if (['revalidate', 'dynamic', 'fetchCache', 'runtime'].includes(name)) {
+        exported[name] = decl;
       }
+    }
+  }
+
+  const routeFile = isRouteEntry(filePath);
+  const marketing = routeFile && isMarketing(filePath);
+  const product = routeFile && isProduct(filePath);
+
+  const revalidateDecl = exported.revalidate;
+  if (revalidateDecl && !isLiteralNumberOrFalse(revalidateDecl.getInitializer())) {
+    record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
+  }
+
+  if (marketing) {
+    const val = getNumber(revalidateDecl?.getInitializer());
+    if (val !== 60) {
+      record(filePath, revalidateDecl, 'export const revalidate = 60 as const;');
+    }
+    const dynamicDecl = exported.dynamic;
+    const dyn = getString(dynamicDecl?.getInitializer());
+    if (dyn !== 'auto') {
+      record(filePath, dynamicDecl, "export const dynamic = 'auto';");
+    }
+    const fetchDecl = exported.fetchCache;
+    const fetch = getString(fetchDecl?.getInitializer());
+    if (fetch !== 'default') {
+      record(filePath, fetchDecl, "export const fetchCache = 'default';");
+    }
+    const runtimeDecl = exported.runtime;
+    const runtime = getString(runtimeDecl?.getInitializer());
+    if (runtime === 'edge') {
+      record(filePath, runtimeDecl, '// runtime removed for static ISR');
+    }
+  } else if (product) {
+    const val = getNumber(revalidateDecl?.getInitializer());
+    if (val !== 0) {
+      record(filePath, revalidateDecl, 'export const revalidate = 0 as const;');
+    }
+    const dynamicDecl = exported.dynamic;
+    const dyn = getString(dynamicDecl?.getInitializer());
+    if (dyn !== 'force-dynamic') {
+      record(filePath, dynamicDecl, "export const dynamic = 'force-dynamic';");
+    }
+    const fetchDecl = exported.fetchCache;
+    const fetch = getString(fetchDecl?.getInitializer());
+    if (fetch !== 'force-no-store') {
+      record(filePath, fetchDecl, "export const fetchCache = 'force-no-store';");
     }
   }
 }
 
-if (violations.length) {
-  console.error('Segment config violations');
-  console.table(violations);
+if (Object.keys(violations).length) {
+  console.error('Segment config violations:');
+  for (const [file, diffs] of Object.entries(violations)) {
+    console.error(`\n${file}`);
+    for (const d of diffs) {
+      console.error(d);
+    }
+  }
   process.exit(1);
 }
