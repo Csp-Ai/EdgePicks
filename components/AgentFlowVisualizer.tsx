@@ -8,7 +8,7 @@ import { demoGraph } from "@/lib/agents/demoGraph";
 import AgentLegend from "@/components/AgentLegend";
 import AgentLogPanel from "@/components/AgentLogPanel";
 import type { Role } from "@/lib/agents/roles";
-import { ROLE_COLOR } from "@/lib/agents/roles";
+import { ROLE_COLOR, ROLE_DASH } from "@/lib/agents/roles";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -19,6 +19,7 @@ export interface AgentNode extends NodeObject {
   label: string;
   role: Role;
   confidence: number;
+  status?: string;
   summary?: string;
   logs?: string[];
 }
@@ -36,6 +37,7 @@ export default function AgentFlowVisualizer() {
   const [force, setForce] = useState(60);
   const [showArrows, setShowArrows] = useState(true);
   const [roles, setRoles] = useState<Role[]>(["scout", "analyst", "model", "arbiter"]);
+  const [paused, setPaused] = useState(false);
   const [width, setWidth] = useState<number>(0);
   const fgRef = useRef<ForceGraphMethods>();
   const frame = useRef<number>();
@@ -84,6 +86,11 @@ export default function AgentFlowVisualizer() {
         ctx.arc(n.x!, n.y!, size, 0, 2 * Math.PI, false);
         ctx.fillStyle = ROLE_COLOR[n.role];
         ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.setLineDash(ROLE_DASH[n.role]);
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+        ctx.setLineDash([]);
         if (scale > 1.6) {
           ctx.font = `${Math.max(8, size + 4)}px Inter, system-ui`;
           ctx.textAlign = "center";
@@ -113,11 +120,21 @@ export default function AgentFlowVisualizer() {
 
   useEffect(() => {
     refresh();
-  }, [roles, showArrows, force, refresh]);
+  }, [roles, showArrows, force, paused, refresh]);
 
   useEffect(() => {
     (fgRef.current?.d3Force("charge") as any)?.strength(-force);
   }, [force]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (media.matches) setPaused(true);
+  }, []);
+
+  useEffect(() => {
+    if (paused) fgRef.current?.pauseAnimation();
+    else fgRef.current?.resumeAnimation();
+  }, [paused]);
 
   const toggleRole = (r: Role) => {
     setRoles((prev) => (prev.includes(r) ? prev.filter((p) => p !== r) : [...prev, r]));
@@ -177,14 +194,54 @@ export default function AgentFlowVisualizer() {
           <span>Link arrows</span>
         </label>
         <button
+          onClick={() => setPaused((p) => !p)}
+          role="switch"
+          aria-checked={!paused}
+          className="rounded border px-2 py-1 focus-visible:ring-2 ring-offset-2"
+        >
+          {paused ? 'Resume motion' : 'Pause motion'}
+        </button>
+        <button
           onClick={resetCamera}
-          className="rounded border px-2 py-1"
+          className="rounded border px-2 py-1 focus-visible:ring-2 ring-offset-2"
           aria-label="Reset graph view"
         >
           Reset
         </button>
         <AgentLegend activeRoles={roles} onToggle={toggleRole} />
       </div>
+      <table className="sr-only" aria-hidden={false}>
+        <caption>Agent network summary</caption>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtered.nodes.map((n) => (
+            <tr
+              key={n.id}
+              tabIndex={0}
+              className="focus-visible:ring-2 ring-offset-2 outline-none"
+              onClick={() => setSelected(n)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelected(n);
+                }
+              }}
+            >
+              <td>{n.label}</td>
+              <td>{n.role}</td>
+              <td>{n.status ?? 'unknown'}</td>
+              <td>{Math.round((n.confidence ?? 0) * 100)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <AgentLogPanel node={selected} onClose={() => setSelected(null)} />
     </div>
   );
