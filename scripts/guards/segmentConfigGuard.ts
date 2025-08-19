@@ -7,6 +7,7 @@ const project = new Project({
 });
 
 const files = project.addSourceFilesAtPaths('app/**/*.{ts,tsx}');
+const componentFiles = project.addSourceFilesAtPaths('components/**/*.tsx');
 
 function isLiteralNumberOrFalse(expr: Expression | undefined): boolean {
   if (!expr) return false;
@@ -174,6 +175,35 @@ for (const sourceFile of files) {
     const dyn = getString(dynamicDecl?.getInitializer());
     if (dyn !== 'force-dynamic') {
       record(filePath, dynamicDecl, "export const dynamic = 'force-dynamic';");
+    }
+  }
+}
+
+for (const sourceFile of componentFiles) {
+  const filePath = path.relative(process.cwd(), sourceFile.getFilePath());
+
+  for (const ed of sourceFile.getExportDeclarations()) {
+    if (ed.isNamespaceExport()) {
+      (warnings[filePath] ??= []).push(
+        `export * from '${ed.getModuleSpecifierValue()}' may hide revalidate; avoid wildcard exports in components.`
+      );
+    }
+  }
+
+  for (const stmt of sourceFile.getVariableStatements()) {
+    if (!stmt.hasExportKeyword()) continue;
+    for (const decl of stmt.getDeclarations()) {
+      const name = decl.getName();
+      if (name === 'fetchCache') {
+        const fetch = getString(decl.getInitializer());
+        (warnings[filePath] ??= []).push(
+          `export const fetchCache = '${fetch ?? '<unknown>'}';`
+        );
+      } else if (name === 'revalidate' && !isLiteralNumberOrFalse(decl.getInitializer())) {
+        (warnings[filePath] ??= []).push(
+          'revalidate should be a literal in components.'
+        );
+      }
     }
   }
 }

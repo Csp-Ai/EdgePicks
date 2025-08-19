@@ -1,39 +1,30 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import NoPrefetchLink from "@/components/NoPrefetchLink";
 
 const tabs = [
   { href: "/", label: "Home" },
-  { href: "/predictions", label: "Predictions", prefetch: false },
-  { href: "/agents", label: "Agents", prefetch: false },
-  { href: "/logs", label: "Logs", prefetch: false },
-  { href: "/leaderboard", label: "Leaderboard", prefetch: false },
+  { href: "/predictions", label: "Predictions" },
+  { href: "/agents", label: "Agents" },
+  { href: "/logs", label: "Logs" },
+  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/demo", label: "Demo", mobileHidden: true },
 ];
 
 export default function SiteHeader() {
-  const pathname = usePathname();
   return (
     <header className="border-b">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-semibold">EdgePicks</Link>
+        <NoPrefetchLink href="/" className="font-semibold">EdgePicks</NoPrefetchLink>
         <nav className="flex gap-4 text-sm">
           {tabs.map(t => {
-            const active = pathname === t.href;
-            const base = active
-              ? "text-primary underline underline-offset-4"
-              : "text-muted-foreground hover:text-foreground";
             const hidden = t.mobileHidden ? "hidden sm:inline" : "";
             return (
-              <Link
+              <NoPrefetchLink
                 key={t.href}
                 href={t.href}
-                prefetch={t.prefetch}
-                aria-current={active ? 'page' : undefined}
-                className={`${base} ${hidden}`}
+                className={`${hidden} text-muted-foreground hover:text-foreground`}
               >
                 {t.label}
-              </Link>
+              </NoPrefetchLink>
             );
           })}
         </nav>

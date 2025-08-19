@@ -1,16 +1,6 @@
-"use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import NoPrefetchLink from '@/components/NoPrefetchLink';
 
 export default function StickyNavBar() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 320);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  if (!show) return null;
   return (
     <nav aria-label="Quick Nav" className="fixed inset-x-0 bottom-3 z-40">
       <div className="mx-auto max-w-5xl">
@@ -27,14 +17,14 @@ export default function StickyNavBar() {
               </a>
             </li>
             <li>
-              <Link href="/leaderboard" prefetch={false} className="hover:underline">
+              <NoPrefetchLink href="/leaderboard" className="hover:underline">
                 Leaderboard
-              </Link>
+              </NoPrefetchLink>
             </li>
             <li>
-              <Link href="/predictions" prefetch={false} className="hover:underline">
+              <NoPrefetchLink href="/predictions" className="hover:underline">
                 My Picks
-              </Link>
+              </NoPrefetchLink>
             </li>
           </ul>
         </div>
@@ -42,4 +32,3 @@ export default function StickyNavBar() {
     </nav>
   );
 }
-

@@ -1,11 +1,8 @@
 const path = require('path');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
 const isUnblock = process.env.CI_UNBLOCK === 'true';
 
 /** @type {import('next').NextConfig} */
-const base = {
+const nextConfig = {
   output: process.env.STANDALONE === 'true' ? 'standalone' : undefined,
   images: {
     remotePatterns: [
@@ -122,12 +119,23 @@ const base = {
   },
   experimental: {
     ...(process.env.EXP_DISABLE_TURBOPACK ? {} : {}),
+    modularizeImports: {
+      'date-fns': { transform: 'date-fns/{{member}}' },
+      'lodash-es': { transform: 'lodash-es/{{member}}' },
+      'lucide-react': { transform: 'lucide-react/dist/esm/icons/{{member}}' },
+      'react-use': { transform: 'react-use/esm/{{member}}' },
+    },
+    optimizePackageImports: ['react', 'react-dom'],
   },
-  modularizeImports: {
-    'lodash-es': { transform: 'lodash-es/{{member}}' },
-    'date-fns': { transform: 'date-fns/{{member}}' },
-    'lucide-react': { transform: 'lucide-react/dist/esm/icons/{{member}}' },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
 };
 
-module.exports = withBundleAnalyzer(base);
+if (process.env.ANALYZE === '1') {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: true });
+  module.exports = withBundleAnalyzer(nextConfig);
+} else {
+  module.exports = nextConfig;
+}

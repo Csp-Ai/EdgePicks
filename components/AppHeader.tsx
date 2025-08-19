@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import NoPrefetchLink from '@/components/NoPrefetchLink';
 import { useSession, signIn } from 'next-auth/react';
 
 interface Props {
@@ -18,20 +18,20 @@ export default function AppHeader({ isAuthenticated }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:grid sm:grid-cols-3 sm:items-center gap-2 sm:gap-0 h-full sm:h-16 py-4 sm:py-0">
           <div className="flex items-center justify-center sm:justify-start">
-            <Link href="/" className="beta-h1">
+            <NoPrefetchLink href="/" className="beta-h1">
               EdgePicks
-            </Link>
+            </NoPrefetchLink>
           </div>
           <nav className="order-3 sm:order-2 flex justify-center gap-6" role="navigation">
-            <Link href="/#live-games" className="py-2 hover:underline">
+            <NoPrefetchLink href="/#live-games" className="py-2 hover:underline">
               Live
-            </Link>
-            <Link href="/history" className="py-2 hover:underline">
+            </NoPrefetchLink>
+            <NoPrefetchLink href="/history" className="py-2 hover:underline">
               History
-            </Link>
-            <Link href="/leaderboard" prefetch={false} className="py-2 hover:underline">
+            </NoPrefetchLink>
+            <NoPrefetchLink href="/leaderboard" className="py-2 hover:underline">
               Leaderboard
-            </Link>
+            </NoPrefetchLink>
           </nav>
           <div className="order-2 sm:order-3 flex justify-end items-center min-w-[150px] min-h-[44px]">
             {!authed && (

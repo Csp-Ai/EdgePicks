@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import Link from 'next/link';
+import NoPrefetchLink from '@/components/NoPrefetchLink';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 import GlossaryLink from './GlossaryLink';
@@ -8,8 +8,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 const links = [
-  { href: '/predictions', label: 'Predictions', prefetch: false },
-  { href: '/leaderboard', label: 'Leaderboard', prefetch: false },
+  { href: '/predictions', label: 'Predictions' },
+  { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/history', label: 'History' }
 ];
 
@@ -80,9 +80,9 @@ export default function Navbar() {
           </button>
           <div className="hidden sm:flex gap-4">
             {links.map(link => (
-              <Link key={link.href} href={link.href} prefetch={link.prefetch} className="px-2 py-1 border rounded">
+              <NoPrefetchLink key={link.href} href={link.href} className="px-2 py-1 border rounded">
                 {link.label}
-              </Link>
+              </NoPrefetchLink>
             ))}
           </div>
         </div>
@@ -137,15 +137,14 @@ export default function Navbar() {
               className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 p-4 flex flex-col gap-2 sm:hidden z-20"
             >
               {links.map(link => (
-                <Link
+                <NoPrefetchLink
                   key={link.href}
                   href={link.href}
-                  prefetch={link.prefetch}
                   className="px-2 py-1 border rounded"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
-                </Link>
+                </NoPrefetchLink>
               ))}
             </motion.div>
           )}
