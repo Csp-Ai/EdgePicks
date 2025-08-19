@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import Leaderboard from '@/components/Leaderboard';
 export const revalidate = 0 as const;

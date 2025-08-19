@@ -1,3 +1,5 @@
+import { globbySync } from 'globby';
+import { readFileSync } from 'fs';
 jest.mock('next/navigation', () => ({}));
 
 describe('segment config contract', () => {
@@ -20,5 +22,14 @@ describe('segment config contract', () => {
     expect(mod.revalidate).toBe(0);
     expect(mod.dynamic).toBe('force-dynamic');
     expect('fetchCache' in mod).toBe(false);
+  });
+
+  test('no revalidate re-exports or wildcards in routes', () => {
+    const files = globbySync(['app/**/{page,layout}.tsx']);
+    for (const f of files) {
+      const src = readFileSync(f, 'utf8');
+      expect(src).not.toMatch(/export\s+\{\s*revalidate[^}]*\}\s*from/);
+      expect(src).not.toMatch(/export\s*\*\s*from/);
+    }
   });
 });

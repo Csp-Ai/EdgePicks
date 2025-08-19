@@ -20,8 +20,9 @@ export interface Game {
 
 export async function fetchUpcomingGames(league?: string): Promise<Game[]> {
   try {
+    const base = ENV.NEXT_PUBLIC_SITE_URL ?? '';
     const response = await fetch(
-      `${ENV.NEXT_PUBLIC_SITE_URL}/api/upcoming-games${league ? `?league=${league}` : ''}`,
+      `${base}/api/upcoming-games${league ? `?league=${league}` : ''}`,
       {
         next: { revalidate: 300 } // Cache for 5 minutes
       }
