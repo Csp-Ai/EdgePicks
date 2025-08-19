@@ -111,11 +111,22 @@ Runtime: Node 20.19.x across local, CI, and Vercel. Vercel uses `engines.node`â€
 - `pages/` is reserved for `pages/api/**` only.
 - During build, any conflicting `pages/*.tsx|jsx` is auto-archived to `archive/pages/**`.
 - Use `npm run guard:dry` to preview moves locally.
-### Segment Config Rules
-- Marketing pages use ISR with `revalidate = 60` and default cache.
-- Product pages are dynamic with `revalidate = 0` and `force-no-store`.
-- Never export objects for `revalidate`; it must be a number or `false`.
-- In Vercel, set Project Settings â†’ Node 20.x to silence the engines warning.
+### ISR vs Dynamic
+
+Marketing routes (`app/(marketing)` and `app/about`) use ISR with:
+
+- `revalidate = 60`
+- `dynamic = 'auto'`
+- `fetchCache = 'default'`
+
+Product and other live-data routes (`app/(product)` and pages like `/agent-interface`, `/maps`, `/onboarding`, `/toast-demo`) are fully dynamic:
+
+- `revalidate = 0`
+- `dynamic = 'force-dynamic'`
+- `fetchCache = 'force-no-store'`
+
+Run `npm run guard:segments` to verify these rules locally. Builds require **Node 20.x**; set the Vercel project accordingly.
+Never export objects for `revalidate`; it must be a number or `false` literal.
 
 ## Testing
 ```bash

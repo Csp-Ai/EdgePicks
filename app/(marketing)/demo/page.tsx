@@ -6,9 +6,9 @@ import LoadingShimmer from '@/components/LoadingShimmer';
 import UnifiedDemoLayout from '@/components/layouts/UnifiedDemoLayout';
 import LeagueSection from '@/components/LeagueSection';
 import { fetchUpcomingGames } from '@/lib/data';
-export const revalidate = 300;
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export const revalidate = 60 as const;
+export const dynamic = 'auto';
+export const fetchCache = 'default';
 // Lazy heavy visual components
 const DemoMatchupCarousel = nextDynamic(() => import('@/components/DemoMatchupCarousel'), { ssr: false });
 const AccuracySnapshot = nextDynamic(() => import('@/components/AccuracySnapshot'), { ssr: false });
