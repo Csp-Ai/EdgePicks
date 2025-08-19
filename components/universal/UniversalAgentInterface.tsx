@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AccessibleTooltip } from "@/components/ui/accessible-tooltip";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
@@ -190,21 +190,16 @@ function StatusBadge({ status }: { status: AgentEvent["status"] }) {
 function DisagreementChip({ on }: { on?: boolean }) {
   if (!on) return null;
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="rounded-2xl border border-yellow-300 bg-yellow-50 text-yellow-900"
-          >
-            disagreement
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Some agents disagreed — tap to view rationale deltas.</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <AccessibleTooltip content="Some agents disagreed — tap to view rationale deltas.">
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        className="rounded-2xl border border-yellow-300 bg-yellow-50 text-yellow-900"
+      >
+        disagreement
+      </Button>
+    </AccessibleTooltip>
   );
 }
 

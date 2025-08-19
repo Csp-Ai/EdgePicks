@@ -11,6 +11,7 @@ import { getContribution, formatAgentName } from '@/lib/utils';
 import { registry as agentRegistry } from '@/lib/agents/registry';
 import { getAccuracyHistory } from '@/lib/accuracy';
 import { matchupCard } from '../styles/cardStyles';
+import { AccessibleTooltip } from './ui/accessible-tooltip';
 
 interface BreakdownProps {
   agents: AgentOutputs;
@@ -22,12 +23,9 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
     <div className="mt-4">
       <div className="flex items-center gap-1 mb-2">
         <h4 className="font-semibold text-sm">Confidence Breakdown</h4>
-        <span
-          className="text-gray-400 text-xs cursor-help"
-          title="Final confidence is the sum of each agent score multiplied by its weight."
-        >
-          ?
-        </span>
+        <AccessibleTooltip content="Final confidence is the sum of each agent score multiplied by its weight.">
+          <span className="text-gray-400 text-xs cursor-help">?</span>
+        </AccessibleTooltip>
       </div>
       <ul className="space-y-2 text-sm">
         {agentRegistry.map(({ name, weight }) => {
@@ -42,15 +40,19 @@ const ConfidenceBreakdown: React.FC<BreakdownProps> = ({ agents, total }) => {
           )}%) to the final pick`;
 
           return (
-            <li key={name} className="flex items-center gap-2 cursor-help" title={tooltip}>
-              <span className="w-28">{display}</span>
-              <div className="flex items-center flex-1 gap-2">
-                <ScoreBar percent={contributionPct} />
-                <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
-                <span className="w-24 text-right font-mono">
-                  {contribution.toFixed(2)} ({Math.round(contributionPct)}%)
-                </span>
-              </div>
+            <li key={name}>
+              <AccessibleTooltip content={tooltip}>
+                <div className="flex items-center gap-2 cursor-help" tabIndex={0} role="button">
+                  <span className="w-28">{display}</span>
+                  <div className="flex items-center flex-1 gap-2">
+                    <ScoreBar percent={contributionPct} />
+                    <span className="w-16 text-right font-mono">{score.toFixed(2)}</span>
+                    <span className="w-24 text-right font-mono">
+                      {contribution.toFixed(2)} ({Math.round(contributionPct)}%)
+                    </span>
+                  </div>
+                </div>
+              </AccessibleTooltip>
             </li>
           );
         })}

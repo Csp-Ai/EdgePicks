@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from '../Tooltip';
+import { AccessibleTooltip } from '../ui/accessible-tooltip';
 import { AgentOutputs } from '@/lib/types';
 import { formatAgentName } from '@/lib/utils';
 
@@ -40,11 +40,13 @@ const DisagreementBadge: React.FC<Props> = ({ agents, className }) => {
   );
 
   return (
-    <Tooltip content={content} className={className}>
-      <span className="inline-block px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs">
+    <AccessibleTooltip content={content}>
+      <span
+        className={`inline-block px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs ${className || ''}`}
+      >
         {percent}% disagree
       </span>
-    </Tooltip>
+    </AccessibleTooltip>
   );
 };
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loadMotion } from "@/lib/motion/lazy";
+import { betaCopyEnabled } from "@/lib/flags/beta";
 let motion: any = null;
 
 interface Item {
@@ -21,15 +22,21 @@ export default function ValueProps() {
   const items: Item[] = [
     {
       title: "Transparent agents",
-      description: "Every decision traced to its source.",
+      description: betaCopyEnabled
+        ? "Every decision traced to its source; no guarantees."
+        : "Every decision traced to its source.",
     },
     {
       title: "Evidence-linked picks",
-      description: "Tap into the rationale behind every pick.",
+      description: betaCopyEnabled
+        ? "Inspect the rationale behind each pick."
+        : "Tap into the rationale behind every pick.",
     },
     {
       title: "Live accuracy",
-      description: "Performance metrics update in real time.",
+      description: betaCopyEnabled
+        ? "Performance metrics update in real time; expect swings."
+        : "Performance metrics update in real time.",
     },
   ];
 

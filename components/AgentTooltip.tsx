@@ -1,5 +1,6 @@
 import React from 'react';
-import Tooltip from './Tooltip';
+import { AccessibleTooltip } from './ui/accessible-tooltip';
+import { cloneElement, isValidElement, ReactElement } from 'react';
 import { registry as agentRegistry } from '@/lib/agents/registry';
 import { AgentName } from '@/lib/types';
 import { formatAgentName } from '@/lib/utils';
@@ -13,9 +14,13 @@ interface Props {
 const AgentTooltip: React.FC<Props> = ({ name, children, className }) => {
   const meta = agentRegistry.find((a) => a.name === name);
   if (!meta) return <>{children}</>;
+  const trigger = isValidElement(children)
+    ? cloneElement(children as ReactElement, {
+        className: className ?? children.props.className,
+      })
+    : <span className={className}>{children}</span>;
   return (
-    <Tooltip
-      className={className}
+    <AccessibleTooltip
       content={
         <div>
           <div className="font-medium">{formatAgentName(name)}</div>
@@ -23,8 +28,8 @@ const AgentTooltip: React.FC<Props> = ({ name, children, className }) => {
         </div>
       }
     >
-      {children}
-    </Tooltip>
+      {trigger}
+    </AccessibleTooltip>
   );
 };
 

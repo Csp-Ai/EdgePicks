@@ -28,8 +28,11 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => {
     >
       <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
         <h2 className="text-xl font-semibold mb-4 text-center">Sign in</h2>
-        <Button className="w-full" onClick={() => signIn('google')}>
-          Sign in with Google
+        <Button
+          className="w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+          onClick={() => signIn('credentials')}
+        >
+          Continue
         </Button>
       </div>
     </div>
