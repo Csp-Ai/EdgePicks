@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { href: "/", label: "Home" },
   { href: "/predictions", label: "Predictions" },
+  { href: "/agents", label: "Agents" },
+  { href: "/logs", label: "Logs" },
   { href: "/leaderboard", label: "Leaderboard" },
-  { href: "/demo-0to1", label: "Demo", mobileHidden: true },
+  { href: "/demo", label: "Demo", mobileHidden: true },
 ];
 
 export default function SiteHeader() {

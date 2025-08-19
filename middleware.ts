@@ -36,6 +36,14 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  const legacy: Record<string, string> = {
+    '/demo/nfl': '/demo',
+    '/logs/agents': '/logs',
+  };
+  if (legacy[pathname]) {
+    return NextResponse.redirect(new URL(legacy[pathname], req.url), 308);
+  }
+
   if (pathname === '/' || pathname.startsWith('/auth')) {
     return NextResponse.next();
   }
