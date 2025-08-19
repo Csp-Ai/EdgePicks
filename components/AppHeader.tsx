@@ -29,7 +29,7 @@ export default function AppHeader({ isAuthenticated }: Props) {
             <Link href="/history" className="py-2 hover:underline">
               History
             </Link>
-            <Link href="/leaderboard" className="py-2 hover:underline">
+            <Link href="/leaderboard" prefetch={false} className="py-2 hover:underline">
               Leaderboard
             </Link>
           </nav>

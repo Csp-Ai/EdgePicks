@@ -27,12 +27,12 @@ export default function StickyNavBar() {
               </a>
             </li>
             <li>
-              <Link href="/leaderboard" className="hover:underline">
+              <Link href="/leaderboard" prefetch={false} className="hover:underline">
                 Leaderboard
               </Link>
             </li>
             <li>
-              <Link href="/predictions" className="hover:underline">
+              <Link href="/predictions" prefetch={false} className="hover:underline">
                 My Picks
               </Link>
             </li>
