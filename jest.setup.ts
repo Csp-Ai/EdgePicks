@@ -47,6 +47,15 @@ jest.mock('next/router', () => ({
   },
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return { replace: jest.fn(), push: jest.fn() };
+  },
+  useSearchParams() {
+    return new URLSearchParams();
+  },
+}));
+
 // EventSource test double (no jest.Mock casting on constructor)
 class MockEventSource {
   url: string;
@@ -122,6 +131,9 @@ beforeAll(() => {
       }
       if (url.includes("/api/accuracy-history")) {
         return okJson({ history: [] });
+      }
+      if (url.includes("/api/agent-graph")) {
+        return okJson({ nodes: [], links: [] });
       }
 
       // Fall back to real fetch for anything else (or return a 404-style Response if you prefer)

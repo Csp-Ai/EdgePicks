@@ -4199,6 +4199,23 @@ Files:
 - lib/flags/beta.ts (+1/-0)
 - pages/auth/signin.tsx (+3/-3)
 
+Timestamp: 2025-08-19T03:57:24.910Z
+Commit: 07ef1745a2532f8e40b00c0dca8c530883c7340a
+Author: Codex
+Message: feat: make agent graph responsive
+Files:
+- __mocks__/identityMock.ts (+11/-2)
+- __tests__/AgentFlowVisualizer.test.tsx (+20/-8)
+- components/AgentFlowVisualizer.tsx (+71/-22)
+- hooks/useResizeObserver.ts (+26/-0)
+- jest.setup.ts (+12/-0)
+
+Timestamp: 2025-08-19T03:57:59.831Z
+Commit: 070b7f2d11349055709f7e0db3bb7ec26a8e7834
+Author: Codex
+Message: fix: handle missing search params
+Files:
+- components/AgentFlowVisualizer.tsx (+3/-3)
 Timestamp: 2025-08-19T03:59:51.059Z
 Commit: 00aefbbe02da270275a2c03146cdaad4c1ff3643
 Author: Codex
