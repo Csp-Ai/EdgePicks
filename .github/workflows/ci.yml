@@ -60,6 +60,8 @@ jobs:
           key: ${{ runner.os }}-next-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-next-
+      - name: Segment config guard
+        run: npm run guard:segments
       - env:
           SKIP_BUILD_ENV_CHECK: '1'
         run: npm run build

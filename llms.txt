@@ -4242,3 +4242,20 @@ Files:
 - pages/demo/nfl.tsx (+0/-49)
 - tests/visual/percy.spec.ts (+1/-1)
 
+Timestamp: 2025-08-19T04:36:22.704Z
+Commit: 26db06ad637366aacb90166b64b7337c5f0179f7
+Author: Codex
+Message: chore: normalize segment config
+Files:
+- .github/workflows/ci.yml (+2/-0)
+- README.md (+5/-0)
+- __tests__/segmentConfig.contract.test.ts (+15/-0)
+- app/(marketing)/impact/page.tsx (+3/-1)
+- app/(marketing)/layout.tsx (+3/-1)
+- app/(marketing)/page.tsx (+3/-1)
+- app/(marketing)/trust/page.tsx (+3/-1)
+- app/about/page.tsx (+3/-1)
+- app/agent-interface/page.tsx (+1/-1)
+- package.json (+1/-0)
+- scripts/guards/segmentConfigGuard.ts (+79/-0)
+
