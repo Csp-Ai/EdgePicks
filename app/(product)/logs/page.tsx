@@ -3,7 +3,6 @@ import React from 'react';
 import AgentLogStream from '@/components/AgentLogStream';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 const AgentLogsPage: React.FC = () => {
   return (
     <main className="min-h-screen bg-gray-50 p-6" suppressHydrationWarning>

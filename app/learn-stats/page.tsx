@@ -4,7 +4,6 @@ import BiasCard from '@/components/edu/BiasCard';
 import ErrorBarsCard from '@/components/edu/ErrorBarsCard';
 export const revalidate = 0 as const;
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 
 export default function LearnStatsPage() {
   return (

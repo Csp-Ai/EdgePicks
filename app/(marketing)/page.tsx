@@ -4,7 +4,6 @@ import TrustBar from "@/components/TrustBar";
 import ValueProps from "@/components/ValueProps";
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 // Defer LiveStatsStrip until visible (example: small component still lazy for demo)
 const LiveStatsStrip = nextDynamic(() => import("@/components/LiveStatsStrip"), { ssr: false });
 

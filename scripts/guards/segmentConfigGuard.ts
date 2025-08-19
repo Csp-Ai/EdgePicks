@@ -67,6 +67,7 @@ function isRouteEntry(filePath: string): boolean {
 }
 
 const violations: Record<string, string[]> = {};
+const warnings: Record<string, string[]> = {};
 
 function record(file: string, decl: VariableDeclaration | undefined, expected: string) {
   const found = decl ? decl.getText() : '(missing)';
@@ -93,8 +94,30 @@ for (const sourceFile of files) {
   const product = routeFile && isProduct(filePath);
 
   const revalidateDecl = exported.revalidate;
-  if (revalidateDecl && !isLiteralNumberOrFalse(revalidateDecl.getInitializer())) {
-    record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
+  if (revalidateDecl) {
+    const init = revalidateDecl.getInitializer();
+    if (
+      Node.isObjectLiteralExpression(init) ||
+      Node.isIdentifier(init) ||
+      Node.isCallExpression(init) ||
+      Node.isBinaryExpression(init)
+    ) {
+      record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
+    } else if (!isLiteralNumberOrFalse(init)) {
+      record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
+    }
+  }
+
+  const fetchDecl = exported.fetchCache;
+  if (fetchDecl) {
+    const fetch = getString(fetchDecl.getInitializer());
+    if (fetch === 'default') {
+      record(filePath, fetchDecl, '// remove fetchCache export');
+    } else {
+      (warnings[filePath] ??= []).push(
+        `export const fetchCache = '${fetch ?? '<unknown>'}';`
+      );
+    }
   }
 
   if (marketing) {
@@ -106,11 +129,6 @@ for (const sourceFile of files) {
     const dyn = getString(dynamicDecl?.getInitializer());
     if (dyn !== 'auto') {
       record(filePath, dynamicDecl, "export const dynamic = 'auto';");
-    }
-    const fetchDecl = exported.fetchCache;
-    const fetch = getString(fetchDecl?.getInitializer());
-    if (fetch !== 'default') {
-      record(filePath, fetchDecl, "export const fetchCache = 'default';");
     }
     const runtimeDecl = exported.runtime;
     const runtime = getString(runtimeDecl?.getInitializer());
@@ -127,11 +145,6 @@ for (const sourceFile of files) {
     if (dyn !== 'force-dynamic') {
       record(filePath, dynamicDecl, "export const dynamic = 'force-dynamic';");
     }
-    const fetchDecl = exported.fetchCache;
-    const fetch = getString(fetchDecl?.getInitializer());
-    if (fetch !== 'force-no-store') {
-      record(filePath, fetchDecl, "export const fetchCache = 'force-no-store';");
-    }
   }
 }
 
@@ -144,4 +157,14 @@ if (Object.keys(violations).length) {
     }
   }
   process.exit(1);
+}
+
+if (Object.keys(warnings).length) {
+  console.warn('Segment config warnings:');
+  for (const [file, diffs] of Object.entries(warnings)) {
+    console.warn(`\n${file}`);
+    for (const d of diffs) {
+      console.warn(d);
+    }
+  }
 }

@@ -4,7 +4,6 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import "@/app/globals.css";
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 export const metadata: Metadata = {
   title: "EdgePicks",
   description: "AI-powered sports research assistant",

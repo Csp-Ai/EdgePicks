@@ -32,9 +32,8 @@ async function main() {
     if (!/export\s+const\s+dynamic\s*=/.test(out)) {
       out = `export const dynamic = "force-dynamic";\n${out}`;
     }
-    if (!/export\s+const\s+fetchCache\s*=/.test(out)) {
-      out = `export const fetchCache = "force-no-store";\n${out}`;
-    }
+    // Remove any fetchCache exports; dynamic="force-dynamic" already implies no-store
+    out = out.replace(/export\s+const\s+fetchCache\s*=[^;]+;\n?/g, "");
     // normalize revalidate
     if (/export\s+const\s+revalidate\s*=/.test(out)) {
       out = out.replace(/export\s+const\s+revalidate\s*=\s*[^;]+;/g, "export const revalidate = 0;");

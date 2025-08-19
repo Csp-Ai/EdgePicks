@@ -1,7 +1,6 @@
 import AncientTechCard from '@/components/ancient/AncientTechCard';
 export const revalidate = 0 as const;
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 
 interface TechData {
   title: string;

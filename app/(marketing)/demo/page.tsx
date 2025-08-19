@@ -8,7 +8,6 @@ import LeagueSection from '@/components/LeagueSection';
 import { fetchUpcomingGames } from '@/lib/data';
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 // Lazy heavy visual components
 const DemoMatchupCarousel = nextDynamic(() => import('@/components/DemoMatchupCarousel'), { ssr: false });
 const AccuracySnapshot = nextDynamic(() => import('@/components/AccuracySnapshot'), { ssr: false });

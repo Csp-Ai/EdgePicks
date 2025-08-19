@@ -5,7 +5,6 @@ import { ENV } from '@/lib/env';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 
 function streamResponse(readable: ReadableStream): Response {
   return new Response(readable, {

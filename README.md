@@ -117,13 +117,11 @@ Marketing routes (`app/(marketing)` and `app/about`) use ISR with:
 
 - `revalidate = 60`
 - `dynamic = 'auto'`
-- `fetchCache = 'default'`
 
 Product and other live-data routes (`app/(product)` and pages like `/agent-interface`, `/maps`, `/onboarding`, `/toast-demo`) are fully dynamic:
 
 - `revalidate = 0`
 - `dynamic = 'force-dynamic'`
-- `fetchCache = 'force-no-store'`
 
 Run `npm run guard:segments` to verify these rules locally. Builds require **Node 20.x**; set the Vercel project accordingly.
 Never export objects for `revalidate`; it must be a number or `false` literal.

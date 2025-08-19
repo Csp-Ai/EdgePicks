@@ -1,6 +1,5 @@
 export const revalidate = 0 as const;
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 const DOCS_URL = 'https://github.com/EdgePicks/EdgePicks#environment-variables';
 
 interface EnvVar {

@@ -14,7 +14,6 @@ import data from "./metrics.json";
 import { Card } from "@/components/ui/card";
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 let motion: any = null;
  export const dynamicParams = true;
 

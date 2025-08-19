@@ -5,7 +5,6 @@ import { I18nContext } from '@/lib/i18n/config';
 import { LocaleSwitcher } from '@/lib/i18n/LocaleSwitcher';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 
 export default function Page() {
   const { t } = useContext(I18nContext);
