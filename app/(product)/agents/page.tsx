@@ -1,7 +1,11 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import AgentTile from '@/components/agents/AgentTile';
 import { registry, type AgentName } from '@/lib/agents/registry';
 import type { AccuracyPoint } from '@/components/AccuracyTrend';
+export const revalidate = 0 as const;
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 interface AccuracyHistory {
   history: AccuracyPoint[];

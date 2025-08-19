@@ -4216,4 +4216,29 @@ Author: Codex
 Message: fix: handle missing search params
 Files:
 - components/AgentFlowVisualizer.tsx (+3/-3)
+Timestamp: 2025-08-19T03:59:51.059Z
+Commit: 00aefbbe02da270275a2c03146cdaad4c1ff3643
+Author: Codex
+Message: refactor: consolidate routing under app
+Files:
+- app/{ => (marketing)}/demo/DemoPageClient.tsx (+0/-0)
+- app/{ => (marketing)}/demo/mlb/page.tsx (+3/-5)
+- app/(marketing)/demo/nfl/route.ts (+6/-0)
+- app/{ => (marketing)}/demo/page.tsx (+0/-0)
+- app/{ => (marketing)}/impact/metrics.json (+0/-0)
+- app/{ => (marketing)}/impact/page.tsx (+3/-3)
+- app/{(shell) => (marketing)}/layout.tsx (+0/-0)
+- app/{(shell) => (marketing)}/page.tsx (+2/-4)
+- pages/trust/index.tsx => app/(marketing)/trust/page.tsx (+4/-2)
+- pages/agents/index.tsx => app/(product)/agents/page.tsx (+4/-0)
+- app/{(heavy) => (product)}/leaderboard/head.tsx (+0/-0)
+- app/{(heavy) => (product)}/leaderboard/loading.tsx (+0/-0)
+- app/{(heavy) => (product)}/leaderboard/page.tsx (+0/-0)
+- app/(product)/logs/agents/route.ts (+6/-0)
+- pages/logs/agents.tsx => app/(product)/logs/page.tsx (+4/-1)
+- pages/predictions.tsx => app/(product)/predictions/page.tsx (+4/-1)
+- components/layout/SiteHeader.tsx (+3/-1)
+- middleware.ts (+8/-0)
+- pages/demo/nfl.tsx (+0/-49)
+- tests/visual/percy.spec.ts (+1/-1)
 
