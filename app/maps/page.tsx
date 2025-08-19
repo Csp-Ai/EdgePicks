@@ -9,7 +9,6 @@ import foodData from './data/food-deserts.json';
 import heatData from './data/heat-islands.json';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 export const dynamicParams = true;
 
 const MapContainer = nextDynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import nextDynamic from 'next/dynamic';
 export const revalidate = 0 as const;
 export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 const AgentFlowVisualizer = nextDynamic(() => import('@/components/AgentFlowVisualizer'), { ssr: false });
 
 export default function Page() {

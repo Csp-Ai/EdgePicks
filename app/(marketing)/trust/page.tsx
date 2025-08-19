@@ -6,7 +6,6 @@ import AgentExplainers from '@/components/trust/AgentExplainers';
 import AgreementMeter from '@/components/trust/AgreementMeter';
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 type Tab = 'overview' | 'audit' | 'agents';
 const TrustPage: React.FC = () => {
   const [tab, setTab] = useState<Tab>('overview');

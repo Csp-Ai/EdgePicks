@@ -3,7 +3,6 @@ import nextDynamic from 'next/dynamic';
 import Skeleton from '@/components/ui/skeleton';
 export const revalidate = 60 as const;
 export const dynamic = 'auto';
-export const fetchCache = 'default';
 const AboutContent = nextDynamic(() => import('@/components/ui/about-content'), {
   suspense: true,
 });

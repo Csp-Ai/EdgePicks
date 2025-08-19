@@ -60,7 +60,7 @@ for (const sourceFile of files) {
 
   const imports = sourceFile.getImportDeclarations();
   const insertIndex = imports.length ? sourceFile.getStatements().indexOf(imports[imports.length-1]) + 1 : 0;
-  sourceFile.insertStatements(insertIndex, `export const revalidate = ${value};\nexport const dynamic = "force-dynamic";\nexport const fetchCache = "force-no-store";`);
+  sourceFile.insertStatements(insertIndex, `export const revalidate = ${value};\nexport const dynamic = "force-dynamic";`);
 
   const newText = sourceFile.getFullText();
   if (original !== newText) {
