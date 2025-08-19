@@ -4199,3 +4199,33 @@ Files:
 - lib/flags/beta.ts (+1/-0)
 - pages/auth/signin.tsx (+3/-3)
 
+Timestamp: 2025-08-19T03:57:00.736Z
+Commit: 7de75909ed6159ab4249d5597e71b1b6365d7014
+Author: Codex
+Message: feat: unify agent flow adapters
+Files:
+- __tests__/AgentFlowVisualizer.fallback.test.tsx (+0/-32)
+- __tests__/AgentFlowVisualizer.render.test.tsx (+0/-26)
+- __tests__/AgentFlowVisualizer.test.tsx (+0/-14)
+- __tests__/viz.playground.test.tsx (+0/-43)
+- app/demo-0to1/page.tsx (+4/-0)
+- components/AgentFlowVisualizer.tsx (+62/-10)
+- pages/viz.tsx (+0/-129)
+
+Timestamp: 2025-08-19T03:57:26.416Z
+Commit: c80e573cd44cbe07b27c412d9864b94b240fb3f7
+Author: Codex
+Message: test: cover adapter edge stream
+Files:
+- __tests__/AgentFlowVisualizer.adapter.test.tsx (+29/-0)
+- lib/agents/dataAdapter.ts (+84/-0)
+
+Timestamp: 2025-08-19T03:59:33.895Z
+Commit: 9d45512edc25774db54aaf98c08c8e70c8bcac63
+Author: Codex
+Message: test: add adapter-based visualizer case
+Files:
+- __tests__/AgentFlowVisualizer.adapter.test.tsx (+10/-3)
+- components/AgentFlowVisualizer.tsx (+1/-1)
+- jest.config.ts (+1/-2)
+

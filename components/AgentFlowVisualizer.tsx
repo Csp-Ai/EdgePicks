@@ -4,11 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { NodeObject, LinkObject } from "force-graph";
 import type { ForceGraphMethods } from "react-force-graph-2d";
-import { demoGraph } from "@/lib/agents/demoGraph";
 import AgentLegend from "@/components/AgentLegend";
 import AgentLogPanel from "@/components/AgentLogPanel";
 import type { Role } from "@/lib/agents/roles";
 import { ROLE_COLOR } from "@/lib/agents/roles";
+import type { Adapter } from "@/lib/agents/dataAdapter";
+import { demoAdapter, liveAdapter } from "@/lib/agents/dataAdapter";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -30,7 +32,9 @@ export interface AgentLink extends LinkObject<AgentNode> {
 }
 
 
-export default function AgentFlowVisualizer() {
+type Props = { adapter?: Adapter };
+
+export default function AgentFlowVisualizer({ adapter }: Props) {
   const [graph, setGraph] = useState<{ nodes: AgentNode[]; links: AgentLink[] } | null>(null);
   const [selected, setSelected] = useState<AgentNode | null>(null);
   const [force, setForce] = useState(60);
@@ -39,23 +43,54 @@ export default function AgentFlowVisualizer() {
   const [width, setWidth] = useState<number>(0);
   const fgRef = useRef<ForceGraphMethods>();
   const frame = useRef<number>();
+  const router = useRouter();
+  const pathname = usePathname() || "/";
+  const searchParams = useSearchParams();
+
+  const [mode, setMode] = useState<"live" | "demo">(() => {
+    const param = searchParams?.get("mode");
+    if (param === "live" || param === "demo") return param;
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === "true" || pathname.startsWith("/demo-0to1")) {
+      return "demo";
+    }
+    return "live";
+  });
+
+  const activeAdapter = adapter ?? (mode === "demo" ? demoAdapter : liveAdapter);
 
   useEffect(() => {
-    let active = true;
+    let cancelled = false;
+    const ctrl = new AbortController();
     (async () => {
       try {
-        const res = await fetch("/api/agent-graph");
-        if (!res.ok) throw new Error("bad");
-        const data = (await res.json()) as { nodes: AgentNode[]; links: AgentLink[] };
-        if (active) setGraph(data);
+        const snap = await activeAdapter.snapshot({ demo: mode === "demo" });
+        if (!cancelled) setGraph({ nodes: snap.nodes as AgentNode[], links: snap.edges as AgentLink[] });
       } catch {
-        if (active) setGraph(demoGraph);
+        // ignore snapshot errors
+      }
+      try {
+        for await (const ev of activeAdapter.stream({ demo: mode === "demo", signal: ctrl.signal })) {
+          if (cancelled) break;
+          setGraph((prev) => {
+            const base = prev ?? { nodes: [], links: [] };
+            if (ev.type === "node") {
+              return { ...base, nodes: [...base.nodes, ev.payload] };
+            }
+            if (ev.type === "edge") {
+              return { ...base, links: [...base.links, ev.payload] };
+            }
+            return base;
+          });
+        }
+      } catch {
+        // stream ended
       }
     })();
     return () => {
-      active = false;
+      cancelled = true;
+      ctrl.abort();
     };
-  }, []);
+  }, [activeAdapter, mode]);
 
   useEffect(() => {
     const handle = () => setWidth(window.innerWidth);
@@ -108,7 +143,7 @@ export default function AgentFlowVisualizer() {
 
   const refresh = useCallback(() => {
     if (frame.current) cancelAnimationFrame(frame.current);
-    frame.current = requestAnimationFrame(() => (fgRef.current as any)?.refresh());
+    frame.current = requestAnimationFrame(() => (fgRef.current as any)?.refresh?.());
   }, []);
 
   useEffect(() => {
@@ -139,8 +174,22 @@ export default function AgentFlowVisualizer() {
     return <div className="h-64" />;
   }
 
+  const toggleMode = () => {
+    const next = mode === "live" ? "demo" : "live";
+    const params = new URLSearchParams(searchParams ? searchParams.toString() : "");
+    params.set("mode", next);
+    router.replace(`${pathname}?${params.toString()}`);
+    setMode(next);
+  };
+
   return (
     <div className="relative">
+      <button
+        onClick={toggleMode}
+        className="absolute left-2 top-2 z-10 rounded border bg-background/80 px-2 py-1 text-xs shadow"
+      >
+        {mode === "live" ? "View in Demo mode" : "View in Live mode"}
+      </button>
       <ForceGraph2D
         ref={fgRef}
         graphData={filtered}
@@ -186,6 +235,9 @@ export default function AgentFlowVisualizer() {
         <AgentLegend activeRoles={roles} onToggle={toggleRole} />
       </div>
       <AgentLogPanel node={selected} onClose={() => setSelected(null)} />
+      <div data-testid="edge-count" className="hidden">
+        {filtered.links.length}
+      </div>
     </div>
   );
 }

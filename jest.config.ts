@@ -14,8 +14,7 @@ const config: import('jest').Config = {
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   testMatch: [
     '<rootDir>/__tests__/smoke.exists.test.tsx',
-    '<rootDir>/__tests__/AgentFlowVisualizer.test.tsx',
-    '<rootDir>/__tests__/AgentFlowVisualizer.fallback.test.tsx',
+    '<rootDir>/__tests__/AgentFlowVisualizer.adapter.test.tsx',
     '<rootDir>/__tests__/devLogin.prod.test.ts',
     '<rootDir>/__tests__/mapAgentEventsToGraph.test.ts',
     '<rootDir>/__tests__/icon.compile.test.ts',
