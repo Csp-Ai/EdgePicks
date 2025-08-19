@@ -6,54 +6,60 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install deps
-        run: npm ci
-
-      # Fail PRs immediately if merge markers exist
-      - name: Merge marker guard
-        run: npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/checkMergeMarkers.ts
-
-      # Show route conflicts in dry-run (no file changes in CI)
-      - name: Route conflict dry-run
-        run: CONFLICT_GUARD_DRY_RUN=1 npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/checkRouteConflicts.ts
-
-      - name: Load test env
-        run: echo "$(cat .env.test 2>/dev/null || cat .env.test.example)" >> $GITHUB_ENV
-
-      - name: Tests
-        run: CI=1 npm test -- --runInBand --silent
-
-      - name: Build (CI non-prod)
-        env:
-          SKIP_BUILD_ENV_CHECK: '1'
-        run: npm run build
-
   typecheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Typecheck
-        run: npm run typecheck
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run verify:guards
+      - run: npm run typecheck
 
   lint:
     runs-on: ubuntu-latest
+    needs: typecheck
     steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Lint
-        run: npm run lint
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - name: Load test env
+        run: echo "$(cat .env.test 2>/dev/null || cat .env.test.example)" >> $GITHUB_ENV
+      - run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-next-
+      - env:
+          SKIP_BUILD_ENV_CHECK: '1'
+        run: npm run build

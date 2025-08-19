@@ -39,6 +39,22 @@ EdgePicks coordinates a roster of modular agents (see [AGENTS.md](AGENTS.md)):
 
 Each agent returns structured JSON `{ agent, score, reasoning, metadata? }` to keep decisions explainable.
 
+## Development
+
+- Requires **Node 20.x**. Set the Vercel project to Node.js 20.x to avoid build warnings.
+- Install dependencies with `npm ci`.
+
+### Local vs CI
+
+- Local commits run codemods and guards via `npm run precommit` (husky).
+- CI runs the same checks in verify mode with `npm run verify:guards`.
+
+Run fast checks before pushing:
+
+```bash
+npm run typecheck && npm run lint && npm test
+```
+
 ## Quick Start
 ```bash
 git clone https://github.com/Csp-Ai/EdgePicks.git
