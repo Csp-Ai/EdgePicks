@@ -10,7 +10,6 @@ import AgentLegend from "@/components/AgentLegend";
 import AgentLogPanel from "@/components/AgentLogPanel";
 import type { Role } from "@/lib/agents/roles";
 import { ROLE_COLOR, ROLE_DASH } from "@/lib/agents/roles";
-import { ROLE_COLOR } from "@/lib/agents/roles";
 import useResizeObserver from "@/hooks/useResizeObserver";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
@@ -48,10 +47,8 @@ export default function AgentFlowVisualizer() {
   const [selected, setSelected] = useState<AgentNode | null>(null);
   const [force, setForce] = useState(60);
   const [showArrows, setShowArrows] = useState(true);
-  const [roles, setRoles] = useState<Role[]>(["scout", "analyst", "model", "arbiter"]);
-  const [paused, setPaused] = useState(false);
-  const [width, setWidth] = useState<number>(0);
   const [roles, setRoles] = useState<Role[]>(initialRoles);
+  const [paused, setPaused] = useState(false);
   const [mode, setMode] = useState<"all" | "active" | "role">(initialMode);
   const [zoom, setZoom] = useState(initialZoom);
   const [prefersReduced, setPrefersReduced] = useState(false);
@@ -160,6 +157,7 @@ export default function AgentFlowVisualizer() {
     if (paused) fgRef.current?.pauseAnimation();
     else fgRef.current?.resumeAnimation();
   }, [paused]);
+  useEffect(() => {
     const current: any = fgRef.current;
     if (!current || typeof current.d3Zoom !== "function") return;
     const zoomObj = current.d3Zoom();

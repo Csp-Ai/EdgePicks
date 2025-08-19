@@ -12,9 +12,7 @@ import {
 } from "recharts";
 import data from "./metrics.json";
 import { Card } from "@/components/ui/card";
-export const revalidate = 0 as const;
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export const revalidate = 60;
 let motion: any = null;
  export const dynamicParams = true;
 

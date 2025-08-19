@@ -4,9 +4,7 @@ import TrustSummary from '@/components/trust/TrustSummary';
 import AuditActivity from '@/components/trust/AuditActivity';
 import AgentExplainers from '@/components/trust/AgentExplainers';
 import AgreementMeter from '@/components/trust/AgreementMeter';
-export const revalidate = 0 as const;
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export const revalidate = 60;
 type Tab = 'overview' | 'audit' | 'agents';
 const TrustPage: React.FC = () => {
   const [tab, setTab] = useState<Tab>('overview');

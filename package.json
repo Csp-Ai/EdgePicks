@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "20.19.x",
+    "node": "20.x",
     "npm": ">=10"
   },
   "scripts": {
     "bootstrap:env": "node scripts/bootstrap-env.mjs",
     "dev": "npm run bootstrap:env && next dev",
-    "prebuild": "npm config delete http-proxy || true && npm config delete https-proxy || true && ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/guards/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && npm run fix:aliases && npm run guard:aliases && npm run guard:swr && npm run guard:image && npm run setup:dev",
+    "dev:prep": "ts-node --project tsconfig.node.json scripts/checkRouteConflicts.ts && ts-node --project tsconfig.node.json scripts/guards/checkMergeMarkers.ts && ts-node --project tsconfig.node.json scripts/assertClientSafeAgents.ts && ts-node --project tsconfig.node.json scripts/removeStaticParamsForDynamicRoutes.ts && npm run fix:revalidate && ts-node --project tsconfig.node.json scripts/guards/validateRevalidate.ts && npm run fix:aliases && npm run guard:aliases && npm run guard:swr && npm run guard:image && npm run setup:dev",
+    "precommit": "npm run dev:prep",
+    "prebuild": "node -e \"process.exit(process.env.CI?0:1)\" || npm run dev:prep",
+    "verify:guards": "ts-node --project tsconfig.node.json scripts/guards/enforceAliasImports.ts && ts-node --project tsconfig.node.json scripts/guards/swrImportGuard.ts && ts-node --project tsconfig.node.json scripts/guards/imageResponseImportGuard.ts --verify",
     "precommit:merge-guard": "ts-node --project tsconfig.node.json scripts/guards/checkMergeMarkers.ts",
     "build": "npm run check-conflicts && npm run validate-env && npm run typecheck && npm run lint && next build",
     "start": "npm run validate-env && next start",
