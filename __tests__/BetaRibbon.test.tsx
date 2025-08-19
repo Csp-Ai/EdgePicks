@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import BetaRibbon from '../components/BetaRibbon';
+import BetaRibbon from '@/components/BetaRibbon';
 
 describe('BetaRibbon', () => {
   beforeEach(() => {
@@ -11,6 +11,15 @@ describe('BetaRibbon', () => {
     expect(screen.getByText(/Welcome to EdgePicks Beta/)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /dismiss beta ribbon/i }));
     expect(localStorage.getItem('betaRibbonDismissed')).toBe('1');
+    rerender(<BetaRibbon />);
+    expect(screen.queryByText(/Welcome to EdgePicks Beta/)).toBeNull();
+  });
+
+  it('allows keyboard dismissal with Escape', () => {
+    const { rerender } = render(<BetaRibbon />);
+    const button = screen.getByRole('button', { name: /dismiss beta ribbon/i });
+    button.focus();
+    fireEvent.keyDown(button, { key: 'Escape' });
     rerender(<BetaRibbon />);
     expect(screen.queryByText(/Welcome to EdgePicks Beta/)).toBeNull();
   });

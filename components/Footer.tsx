@@ -7,6 +7,7 @@ export default function Footer() {
         <Link href="/terms">Terms</Link>
         <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
+        <Link href="/dev/preflight">Report an issue</Link>
       </div>
     </footer>
   );

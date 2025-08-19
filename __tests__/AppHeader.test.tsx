@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
-import AppHeader from '../components/AppHeader';
+import AppHeader from '@/components/AppHeader';
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
@@ -18,14 +18,14 @@ describe('AppHeader', () => {
     expect(screen.getByText('Live')).toBeInTheDocument();
     const nav = screen.getByRole('navigation');
     expect(nav).toHaveClass('justify-center');
-    const btn = screen.getByRole('button', { name: 'Sign in with Google' });
-    expect(btn).toHaveClass('focus:ring-2');
+    const btn = screen.getByRole('button', { name: 'Continue' });
+    expect(btn).toHaveClass('focus-visible:ring-2');
   });
 
   it('hides sign in when authenticated', () => {
     (useSession as jest.Mock).mockReturnValue({ data: {}, status: 'authenticated' });
     render(<AppHeader />);
-    expect(screen.queryByText('Sign in with Google')).not.toBeInTheDocument();
+    expect(screen.queryByText('Continue')).not.toBeInTheDocument();
   });
 });
 

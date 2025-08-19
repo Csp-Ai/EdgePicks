@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import DisagreementBadge, { computeDisagreement } from '../components/agents/DisagreementBadge';
-import type { AgentOutputs } from '../lib/types';
+import DisagreementBadge, { computeDisagreement } from '@/components/agents/DisagreementBadge';
+import type { AgentOutputs } from '@/lib/types';
 
 describe('computeDisagreement', () => {
   it('calculates fraction of agents not in majority', () => {
@@ -24,15 +24,15 @@ describe('DisagreementBadge component', () => {
     expect(screen.getByText('33% disagree')).toBeInTheDocument();
   });
 
-  it('shows agent picks in tooltip on hover', () => {
+  it('shows agent picks in tooltip on focus', async () => {
     const agents: Partial<AgentOutputs> = {
       injuryScout: { team: 'A', score: 0.7, reason: '' },
       statCruncher: { team: 'B', score: 0.4, reason: '' },
     };
     render(<DisagreementBadge agents={agents} />);
     const badge = screen.getByText(/disagree/);
-    fireEvent.mouseEnter(badge);
-    expect(screen.getByText('InjuryScout: A')).toBeInTheDocument();
+    fireEvent.focus(badge);
+    expect(await screen.findByText('InjuryScout: A')).toBeInTheDocument();
     expect(screen.getByText('StatCruncher: B')).toBeInTheDocument();
   });
 

@@ -118,10 +118,10 @@ export default function Navbar() {
             </>
           ) : (
             <button
-              onClick={() => signIn('google')}
-              className="px-2 py-1 border rounded"
+              onClick={() => signIn('credentials')}
+              className="px-2 py-1 border rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
-              Sign in with Google
+              Continue
             </button>
           )}
         </div>

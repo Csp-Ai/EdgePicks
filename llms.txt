@@ -4168,3 +4168,34 @@ Files:
 - scripts/codemods/iconsToProxy.ts (+10/-0)
 - scripts/validateEnv.ts (+6/-0)
 
+Timestamp: 2025-08-19T03:38:34.905Z
+Commit: cc77086b2651a03469110840f6b3a4b0131d1d6e
+Author: Codex
+Message: feat: prepare beta launch with guest access
+Files:
+- .env.example (+5/-1)
+- .env.production.example (+9/-0)
+- README.md (+8/-10)
+- __tests__/AppHeader.test.tsx (+4/-4)
+- __tests__/BetaRibbon.test.tsx (+10/-1)
+- __tests__/DisagreementBadge.test.tsx (+5/-5)
+- __tests__/Navbar.test.tsx (+3/-3)
+- __tests__/Onboarding.a11y.test.tsx (+27/-0)
+- __tests__/Tooltips.a11y.test.tsx (+18/-0)
+- cloudbuild.yaml (+18/-30)
+- components/AgentTooltip.tsx (+10/-5)
+- components/AppHeader.tsx (+3/-3)
+- components/BetaRibbon.tsx (+2/-1)
+- components/Footer.tsx (+1/-0)
+- components/Hero.tsx (+9/-2)
+- components/MatchupCard.tsx (+17/-15)
+- components/Navbar.tsx (+3/-3)
+- components/SignInModal.tsx (+5/-2)
+- components/ValueProps.tsx (+10/-3)
+- components/agents/DisagreementBadge.tsx (+6/-4)
+- components/edu/ConfidenceExplainer.tsx (+10/-25)
+- components/ui/accessible-tooltip.tsx (+27/-0)
+- components/universal/UniversalAgentInterface.tsx (+11/-16)
+- lib/flags/beta.ts (+1/-0)
+- pages/auth/signin.tsx (+3/-3)
+

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadMotion } from "@/lib/motion/lazy";
 import { buttonVariants } from "@/components/ui/button";
+import { betaCopyEnabled } from "@/lib/flags/beta";
 let motion: any = null;
 
 const container = {
@@ -46,10 +47,16 @@ export default function Hero() {
           variants={item}
           className="text-4xl font-bold leading-tight sm:text-5xl"
         >
-          AI-Powered Sports Picks, Made Transparent.
+          {betaCopyEnabled
+            ? "EdgePicks Beta: transparent AI sports picks"
+            : "AI-Powered Sports Picks, Made Transparent."}
         </motion.h1>
         <motion.p variants={item} className="mt-4 text-lg text-muted-foreground">
-          Our expert agents explain every pick with <span className="font-semibold">live</span> data and evidence you can audit.
+          {betaCopyEnabled
+            ? "Experimental preview — no gameplay guarantees, transparency first."
+            : (
+                <>Our expert agents explain every pick with <span className="font-semibold">live</span> data and evidence you can audit.</>
+              )}
         </motion.p>
         <motion.div
           variants={item}

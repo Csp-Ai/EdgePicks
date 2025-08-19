@@ -22,8 +22,9 @@ export default function BetaRibbon() {
         <span className="text-center w-full sm:text-left">Welcome to EdgePicks Beta — results may shift.</span>
         <button
           onClick={dismiss}
-          className="mt-1 sm:mt-0 sm:ml-4 px-3 py-1 rounded bg-emerald-200 dark:bg-emerald-800 hover:opacity-80 transition-opacity motion-reduce:transition-none"
+          className="mt-1 sm:mt-0 sm:ml-4 px-3 py-1 rounded bg-emerald-200 dark:bg-emerald-800 hover:opacity-80 transition-opacity motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
           aria-label="Dismiss beta ribbon"
+          onKeyDown={(e) => e.key === 'Escape' && dismiss()}
         >
           Dismiss
         </button>

@@ -1,32 +1,20 @@
-substitutions:
-  _SERVICE: "edgepicks"   # change if you want another Cloud Run service name
-  _REGION: "us-west2"     # set to your region
-
 steps:
-- name: "gcr.io/cloud-builders/docker"
-  id: "Build Docker image"
-  args: ["build", "-t", "us-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$_SERVICE:$_COMMIT_SHA", "."]
-
-- name: "gcr.io/cloud-builders/docker"
-  id: "Push Docker image"
-  args: ["push", "us-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$_SERVICE:$_COMMIT_SHA"]
-
-- name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
-  id: "Deploy to Cloud Run"
-  entrypoint: gcloud
-  args:
-    [
-      "run","deploy","$_SERVICE",
-      "--image","us-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$_SERVICE:$_COMMIT_SHA",
-      "--region","$_REGION",
-      "--platform","managed",
-      "--allow-unauthenticated",
-      "--port","8080",
-      "--cpu","1",
-      "--memory","512Mi",
-      "--max-instances","10",
-      "--set-env-vars","NEXT_TELEMETRY_DISABLED=1,HOSTNAME=0.0.0.0"
-    ]
-
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','$LOCATION-docker.pkg.dev/$PROJECT_ID/edgepicks/app:$COMMIT_SHA','.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push','$LOCATION-docker.pkg.dev/$PROJECT_ID/edgepicks/app:$COMMIT_SHA']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - edgepicks
+      - --image=$LOCATION-docker.pkg.dev/$PROJECT_ID/edgepicks/app:$COMMIT_SHA
+      - --region=$LOCATION
+      - --platform=managed
+      - --allow-unauthenticated
+      - --port=8080
+      - --set-env-vars=NEXTAUTH_URL=https://$SERVICE_URL,NEXT_PUBLIC_SITE_URL=https://$SERVICE_URL
+      - --set-secrets=NEXTAUTH_SECRET=projects/$PROJECT_ID/secrets/NEXTAUTH_SECRET:latest
 images:
-- "us-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$_SERVICE:$_COMMIT_SHA"
+  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/edgepicks/app:$COMMIT_SHA'
