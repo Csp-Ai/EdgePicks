@@ -10,7 +10,6 @@ import AgentLegend from "@/components/AgentLegend";
 import AgentLogPanel from "@/components/AgentLogPanel";
 import type { Role } from "@/lib/agents/roles";
 import { ROLE_COLOR, ROLE_DASH } from "@/lib/agents/roles";
-import useResizeObserver from "@/hooks/useResizeObserver";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -37,7 +36,17 @@ export default function AgentFlowVisualizer() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const { width, height } = useResizeObserver(containerRef, { minW: 320, minH: 240 });
+  const [size, setSize] = useState<{ w: number; h: number }>({ w: 0, h: 500 });
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const el = containerRef.current;
+    const ro = new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
+      requestAnimationFrame(() => setSize({ w: Math.round(width), h: 500 }));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const initialRoles: Role[] = searchParams?.get("roles")
     ? (searchParams.get("roles")!.split(",") as Role[])
     : ["scout", "analyst", "model", "arbiter"];
@@ -180,7 +189,7 @@ export default function AgentFlowVisualizer() {
       fgRef.current.zoom(zoom);
       appliedInitialZoom.current = true;
     }
-  }, [zoom, width, height]);
+  }, [zoom, size.w, size.h]);
 
   const toggleRole = (r: Role) => {
     setRoles((prev) => (prev.includes(r) ? prev.filter((p) => p !== r) : [...prev, r]));
@@ -194,7 +203,7 @@ export default function AgentFlowVisualizer() {
     return <div className="h-64" />;
   }
   return (
-    <div ref={containerRef} className="relative h-[min(70vh,640px)]">
+    <div ref={containerRef} className="relative">
       <ForceGraph2D
         ref={fgRef}
         graphData={filtered}
@@ -205,8 +214,8 @@ export default function AgentFlowVisualizer() {
         linkWidth={(l: AgentLink) => 1 + (l.confidence ?? 0.5) * 2}
         nodeLabel={(n: AgentNode) => `${n.label} (${n.role}, ${Math.round(n.confidence * 100)}%)`}
         onNodeClick={(n: AgentNode) => setSelected(n)}
-        width={width}
-        height={height}
+        width={size.w}
+        height={size.h}
         cooldownTicks={prefersReduced ? 0 : undefined}
       />
       <div className="absolute top-2 right-2 space-y-2 rounded-md bg-background/80 p-3 text-xs shadow">

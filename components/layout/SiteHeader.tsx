@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 
 const tabs = [
   { href: "/", label: "Home" },
-  { href: "/predictions", label: "Predictions" },
-  { href: "/agents", label: "Agents" },
-  { href: "/logs", label: "Logs" },
-  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/predictions", label: "Predictions", prefetch: false },
+  { href: "/agents", label: "Agents", prefetch: false },
+  { href: "/logs", label: "Logs", prefetch: false },
+  { href: "/leaderboard", label: "Leaderboard", prefetch: false },
   { href: "/demo", label: "Demo", mobileHidden: true },
 ];
 
@@ -28,6 +28,7 @@ export default function SiteHeader() {
               <Link
                 key={t.href}
                 href={t.href}
+                prefetch={t.prefetch}
                 aria-current={active ? 'page' : undefined}
                 className={`${base} ${hidden}`}
               >

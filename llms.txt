@@ -4291,3 +4291,29 @@ Files:
 - lib/sportsApi.ts (+12/-13)
 - scripts/guards/segmentConfigGuard.ts (+40/-10)
 
+Timestamp: 2025-08-19T06:14:47.291Z
+Commit: 2f8c3367786e8d22a4592707723e9fbf6d5637cc
+Author: Codex
+Message: perf(ux): add route skeletons, fence heavy libs, remove stray fetchCache; add JS budget guard; cheaper graph resize
+Files:
+- .npmrc (+2/-0)
+- app/(marketing)/impact/loading.tsx (+9/-0)
+- app/(marketing)/trust/loading.tsx (+9/-0)
+- app/(product)/agents/loading.tsx (+9/-0)
+- app/(product)/leaderboard/loading.tsx (+5/-4)
+- app/(product)/logs/loading.tsx (+9/-0)
+- app/(product)/predictions/loading.tsx (+9/-0)
+- app/agent-interface/loading.tsx (+9/-0)
+- app/maps/MapClient.tsx (+6/-0)
+- app/maps/loading.tsx (+9/-0)
+- app/maps/page.tsx (+4/-4)
+- app/onboarding/loading.tsx (+9/-0)
+- app/toast-demo/loading.tsx (+9/-0)
+- components/AgentFlowVisualizer.tsx (+15/-6)
+- components/AppHeader.tsx (+1/-1)
+- components/Navbar.tsx (+4/-3)
+- components/home/StickyNavBar.tsx (+2/-2)
+- components/layout/SiteHeader.tsx (+5/-4)
+- package.json (+1/-1)
+- scripts/guards/jsBudgetGuard.js (+16/-0)
+

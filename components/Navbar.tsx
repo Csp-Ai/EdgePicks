@@ -8,8 +8,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 const links = [
-  { href: '/predictions', label: 'Predictions' },
-  { href: '/leaderboard', label: 'Leaderboard' },
+  { href: '/predictions', label: 'Predictions', prefetch: false },
+  { href: '/leaderboard', label: 'Leaderboard', prefetch: false },
   { href: '/history', label: 'History' }
 ];
 
@@ -80,7 +80,7 @@ export default function Navbar() {
           </button>
           <div className="hidden sm:flex gap-4">
             {links.map(link => (
-              <Link key={link.href} href={link.href} className="px-2 py-1 border rounded">
+              <Link key={link.href} href={link.href} prefetch={link.prefetch} className="px-2 py-1 border rounded">
                 {link.label}
               </Link>
             ))}
@@ -140,6 +140,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={link.prefetch}
                   className="px-2 py-1 border rounded"
                   onClick={() => setMobileOpen(false)}
                 >
