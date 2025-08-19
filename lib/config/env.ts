@@ -10,8 +10,12 @@ let apiKey = process.env.SPORTS_API_KEY;
 if (!apiKey && provider === 'thesportsdb' && !isProdLike) {
   apiKey = '123';
 }
-if (isProdLike && !apiKey) {
-  throw new Error('[env] Missing required env: SPORTS_API_KEY');
+
+export function getSportsApiKey(): string {
+  if (!apiKey) {
+    throw new Error('[env] Missing required env: SPORTS_API_KEY');
+  }
+  return apiKey;
 }
 
 export const ENV = {

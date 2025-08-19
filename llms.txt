@@ -4259,3 +4259,35 @@ Files:
 - package.json (+1/-0)
 - scripts/guards/segmentConfigGuard.ts (+79/-0)
 
+Timestamp: 2025-08-19T05:50:06.404Z
+Commit: 67a75b7df4f27c76416e32bd98c3fbf0da1ac983
+Author: Codex
+Message: fix(revalidate): ban re-exports & non-literal initializers; inline literals per segment; guard + tests
+Files:
+- __tests__/segmentConfig.contract.test.ts (+11/-0)
+- app/(marketing)/demo/nfl/route.ts (+3/-0)
+- app/(marketing)/impact/ImpactDashboardClient.tsx (+144/-0)
+- app/(marketing)/impact/page.tsx (+4/-143)
+- app/(marketing)/trust/TrustPageClient.tsx (+71/-0)
+- app/(marketing)/trust/page.tsx (+4/-71)
+- app/(product)/agents/AgentsPageClient.tsx (+46/-0)
+- app/(product)/agents/page.tsx (+3/-44)
+- app/(product)/leaderboard/page.tsx (+0/-2)
+- app/(product)/logs/agents/route.ts (+3/-0)
+- app/(product)/logs/page.tsx (+2/-5)
+- app/(product)/predictions/page.tsx (+2/-5)
+- app/[locale]/page.tsx (+0/-2)
+- app/agent-interface/AgentInterfaceClient.tsx (+22/-0)
+- app/agent-interface/page.tsx (+2/-20)
+- app/maps/CommunityNeedsMapClient.tsx (+86/-0)
+- app/maps/page.tsx (+3/-85)
+- app/onboarding/OnboardingClient.tsx (+87/-0)
+- app/onboarding/page.tsx (+3/-87)
+- app/toast-demo/ToastDemoClient.tsx (+20/-0)
+- app/toast-demo/page.tsx (+3/-19)
+- lib/config/env.js (+4/-2)
+- lib/config/env.ts (+6/-2)
+- lib/data.ts (+2/-1)
+- lib/sportsApi.ts (+12/-13)
+- scripts/guards/segmentConfigGuard.ts (+40/-10)
+

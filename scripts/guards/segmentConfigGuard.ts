@@ -63,7 +63,7 @@ function isProduct(filePath: string): boolean {
 
 function isRouteEntry(filePath: string): boolean {
   const base = path.basename(filePath);
-  return base === 'page.tsx' || base === 'layout.tsx';
+  return base === 'page.tsx' || base === 'layout.tsx' || base === 'route.ts';
 }
 
 const violations: Record<string, string[]> = {};
@@ -75,9 +75,40 @@ function record(file: string, decl: VariableDeclaration | undefined, expected: s
   (violations[file] ??= []).push(diff);
 }
 
+function fail(file: string, msg: string) {
+  (violations[file] ??= []).push(msg);
+}
+
 for (const sourceFile of files) {
   const filePath = path.relative(process.cwd(), sourceFile.getFilePath());
   const exported: Partial<Record<ExportName, VariableDeclaration>> = {};
+
+  for (const ed of sourceFile.getExportDeclarations()) {
+    const specs = ed.getNamedExports();
+    for (const spec of specs) {
+      const name = spec.getName();
+      const alias = spec.getAliasNode()?.getText();
+      if (name === 'revalidate' || alias === 'revalidate') {
+        fail(
+          filePath,
+          'revalidate must be declared as a literal in this file; re-exports are forbidden.'
+        );
+      }
+    }
+    if (ed.isNamespaceExport()) {
+      const target = ed.getModuleSpecifierSourceFile();
+      if (target && target.getExportSymbols().some((s) => s.getName() === 'revalidate')) {
+        fail(
+          filePath,
+          'revalidate must be declared as a literal in this file; re-exports are forbidden.'
+        );
+      } else {
+        (warnings[filePath] ??= []).push(
+          `export * from '${ed.getModuleSpecifierValue()}' may hide revalidate; avoid wildcard exports in routes.`
+        );
+      }
+    }
+  }
 
   for (const stmt of sourceFile.getVariableStatements()) {
     if (!stmt.hasExportKeyword()) continue;
@@ -96,15 +127,14 @@ for (const sourceFile of files) {
   const revalidateDecl = exported.revalidate;
   if (revalidateDecl) {
     const init = revalidateDecl.getInitializer();
-    if (
-      Node.isObjectLiteralExpression(init) ||
-      Node.isIdentifier(init) ||
-      Node.isCallExpression(init) ||
-      Node.isBinaryExpression(init)
-    ) {
-      record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
-    } else if (!isLiteralNumberOrFalse(init)) {
-      record(filePath, revalidateDecl, 'export const revalidate = <number | false>;');
+    if (!isLiteralNumberOrFalse(init)) {
+      const kind = Node.isAsExpression(init)
+        ? init.getExpression().getKindName()
+        : init?.getKindName();
+      fail(
+        filePath,
+        `Found revalidate as ${kind} — use a numeric literal (e.g., export const revalidate = 60 as const;).`
+      );
     }
   }
 
