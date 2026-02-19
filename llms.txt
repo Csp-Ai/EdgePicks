@@ -4317,3 +4317,10 @@ Files:
 - package.json (+1/-1)
 - scripts/guards/jsBudgetGuard.js (+16/-0)
 
+Timestamp: 2026-02-19T00:47:30.553Z
+Commit: ead1fb50d82cca18637eb273df4874c90a6120c9
+Author: Codex
+Message: docs: add ResearchBets architecture extraction
+Files:
+- docs/researchbets-architecture-extraction.md (+151/-0)
+
